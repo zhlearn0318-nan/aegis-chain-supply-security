@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "baseline_id": "skilltrustbench-v1.0-full5520-cisco-static-v1",
+  "decision": "accepted_with_caveats",
+  "comparison_ready": true,
+  "performance_measured": true,
+  "accepted_at": "2026-08-15",
+  "verification_status": "verified",
+  "reasons": [
+    "All 5,520 cases reached a terminal result and all completed sample tree hashes were unchanged.",
+    "Metrics, confusion matrix, and error slices were independently recomputed from per-case results.",
+    "All declared run outputs passed byte-size and SHA-256 verification.",
+    "The scanner, policy, dataset revision, mapping, and abstention rules are explicit."
+  ],
+  "caveats": [
+    "Metric definitions were frozen before scanning in the pilot contract, but the full-dataset scope record is frozen after the completed run.",
+    "The full run is therefore a verified engineering baseline, not a preregistered blind test.",
+    "148 cases abstained because of endpoint protection, platform path incompatibility, or scanner runtime errors."
+  ],
+  "acceptance_method": "Local evidence record because the quest artifact confirmation service is unavailable in this workspace."
+}

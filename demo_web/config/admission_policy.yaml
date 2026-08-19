@@ -1,0 +1,16 @@
+schema_version: "1.0"
+policy_id: "aegis-chain-local-default"
+version: "1.0.0"
+description: "Aegis Chain 本地静态准入默认策略；保持 M1.2 严重度门禁语义不变。"
+
+decision:
+  block_severities:
+    - CRITICAL
+    - HIGH
+  review_severities:
+    - MEDIUM
+    - LOW
+  allow_severities:
+    - INFO
+    - SAFE
+  fail_closed: true

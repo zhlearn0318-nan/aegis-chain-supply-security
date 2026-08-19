@@ -1,0 +1,6 @@
+[project]
+name = "fixture-benign-package"
+version = "0.1.0"
+description = "A harmless local package used for scanner false-positive testing."
+requires-python = ">=3.10"
+dependencies = []

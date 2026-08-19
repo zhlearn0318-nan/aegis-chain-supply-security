@@ -1,0 +1,60 @@
+{
+  "date": "2026-07-31",
+  "platform": "Windows 10 Home China x64",
+  "skill_scanner": {
+    "official_repository": "https://github.com/cisco-ai-defense/skill-scanner",
+    "commit": "4dee90371890ff23e1b21ea974e02847eacaa464",
+    "package_version": "2.0.13.dev3+g4dee90371",
+    "python": "3.11",
+    "installed": true,
+    "cli_available": true,
+    "targeted_tests": {
+      "passed": 139,
+      "skipped": 6,
+      "xfailed": 1
+    },
+    "fixture_evaluation": {
+      "samples": 9,
+      "threshold": "HIGH_OR_CRITICAL",
+      "tp": 2,
+      "tn": 1,
+      "fp": 1,
+      "fn": 5,
+      "accuracy": 0.3333,
+      "precision": 0.6667,
+      "recall": 0.2857,
+      "f1": 0.4
+    },
+    "assessment": "usable_as_framework_not_as_standalone_detector"
+  },
+  "mcp_scanner": {
+    "official_repository": "https://github.com/cisco-ai-defense/mcp-scanner",
+    "commit": "51966cce214ae057e69c3a672307911f5026e255",
+    "package_version": "4.8.2",
+    "python": "3.13.14",
+    "rust_build_dependency": "1.96.0",
+    "installed": true,
+    "cli_available": true,
+    "targeted_tests": {
+      "passed": 114
+    },
+    "static_fixture_evaluation": {
+      "samples": 6,
+      "safe": 3,
+      "unsafe": 3,
+      "correct": 6
+    },
+    "dependency_fixture_evaluation": {
+      "urllib3_1_24_1_findings": 14,
+      "fixed_requirements_findings": 0
+    },
+    "assessment": "usable_with_windows_wrapper_and_fail_closed_validation"
+  },
+  "not_validated_without_credentials": [
+    "Cisco AI Defense API analyzer",
+    "LLM analyzer",
+    "LLM meta analyzer",
+    "MCP behavioral alignment analyzer",
+    "VirusTotal analyzer"
+  ]
+}

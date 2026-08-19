@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "contract_id": "skilltrustbench-v1.0-audited-pilot90-metrics-v1",
+  "baseline_id": "skilltrustbench-v1.0-audited-pilot90",
+  "status": "frozen_before_first_scan",
+  "task": "three_class_static_agent_skill_security_screening",
+  "primary_metric": "strict_macro_f1",
+  "dataset": {
+    "repository": "cuhk-zhuque/SkillTrustBench",
+    "content_revision": "762d5388b3a047b26df9679582af868a0e5b2c8f",
+    "split": "deterministic_balanced_pilot90",
+    "cases": 90,
+    "case_ids_sha256": "59dd01a97225b9efef24fa0a7a7a0213fd7e36614b71f5adb7522d16fa518800"
+  },
+  "prediction_mapping": {
+    "ALLOW": "normal",
+    "REVIEW": "suspicious",
+    "BLOCK": "malicious",
+    "UNKNOWN": "abstain",
+    "failed": "abstain"
+  },
+  "abstention_policy": {
+    "strict_metrics": "Count abstentions as incorrect predictions against their ground-truth class.",
+    "covered_only_metrics": "Exclude abstentions only for a diagnostic secondary view.",
+    "required_reporting": ["coverage", "failure_rate", "abstention_count"]
+  },
+  "operational_gate": {
+    "not_auto_allowed": ["REVIEW", "BLOCK", "UNKNOWN"],
+    "warning": "Operational fail-closed effectiveness is not a substitute for detection F1."
+  },
+  "metrics": [
+    {"name": "coverage", "direction": "higher", "required": true, "definition": "non_abstained_cases / all_cases"},
+    {"name": "failure_rate", "direction": "lower", "required": true, "definition": "failed_or_unknown_cases / all_cases"},
+    {"name": "strict_macro_f1", "direction": "higher", "required": true, "role": "primary", "definition": "Unweighted mean of normal, suspicious and malicious F1; abstentions count as errors."},
+    {"name": "covered_macro_f1", "direction": "higher", "required": true, "role": "diagnostic_only", "definition": "Macro F1 over non-abstained cases only."},
+    {"name": "malicious_recall", "direction": "higher", "required": true, "definition": "correct_malicious / all_malicious"},
+    {"name": "malicious_fnr", "direction": "lower", "required": true, "definition": "1 - malicious_recall; abstentions are misses"},
+    {"name": "non_normal_recall", "direction": "higher", "required": true, "definition": "predicted_suspicious_or_malicious among all suspicious_or_malicious ground truth"},
+    {"name": "normal_fpr", "direction": "lower", "required": true, "definition": "normal cases predicted suspicious or malicious / all normal cases"},
+    {"name": "per_risk_label_recall", "direction": "higher", "required": true, "definition": "For each T01-T09 label: cases predicted suspicious or malicious / all ground-truth cases bearing that label; abstentions are misses.", "labels": ["T01", "T02", "T03", "T04", "T05", "T06", "T07", "T08", "T09"]},
+    {"name": "latency_median_ms", "direction": "lower", "required": true},
+    {"name": "latency_p95_ms", "direction": "lower", "required": true},
+    {"name": "latency_max_ms", "direction": "lower", "required": true}
+  ],
+  "required_outputs": [
+    "per_case_results.jsonl",
+    "metrics.json",
+    "confusion_matrix.json",
+    "false_positive_cases.jsonl",
+    "false_negative_cases.jsonl",
+    "run_manifest.json"
+  ],
+  "claim_boundaries": [
+    "The balanced pilot is for engineering validation and is not representative of real-world prevalence.",
+    "No performance claim may be made until the frozen pilot has been scanned without changing the selected cases or mapping.",
+    "Covered-only metrics may not be reported without strict metrics and coverage.",
+    "Operational not-auto-allow rate may not be presented as detection accuracy."
+  ]
+}

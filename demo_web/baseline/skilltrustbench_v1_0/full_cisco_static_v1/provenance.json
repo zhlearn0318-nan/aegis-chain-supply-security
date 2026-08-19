@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "baseline_id": "skilltrustbench-v1.0-full5520-cisco-static-v1",
+  "baseline_kind": "verified_local_full_dataset_static_scan",
+  "frozen_at": "2026-08-15",
+  "parent_run_id": "2026-08-14-skilltrustbench-full-cisco-parallel-v1",
+  "dataset": {
+    "repository": "cuhk-zhuque/SkillTrustBench",
+    "content_revision": "762d5388b3a047b26df9679582af868a0e5b2c8f",
+    "split": "full_dataset_v1.0",
+    "cases": 5520,
+    "case_ids_sha256": "99ed464424ef589d76d28f5762fd88dc0b62bd96dc88dfcd9a5b867add9ab4a1",
+    "source_manifest_sha256": "3a061cda6145151fbac0cbabfab7ee16e7ca60d50659eb45c73807dd037ba6ac"
+  },
+  "scanner": {
+    "name": "Cisco Skill Scanner",
+    "version_output": "skill-scanner 2.0.13.dev3+g4dee90371",
+    "executable_sha256": "b31b66fce1b8466ba5c49e1084ee972b746e00d4ebdcaeab78ad6b38a0dce366",
+    "command_template": [
+      "F:\\揭榜挂帅\\supply_chain_reproduction\\.runtime_skill\\Scripts\\skill-scanner.exe",
+      "scan",
+      "<case_dir>",
+      "--format",
+      "json",
+      "--output-json",
+      "<temporary_output>",
+      "--compact"
+    ],
+    "allowed_analyzers": [
+      "bytecode",
+      "pipeline",
+      "static_analyzer"
+    ],
+    "optional_flags_enabled": [],
+    "timeout_seconds_per_case": 150,
+    "parallel_workers": 4
+  },
+  "policy": {
+    "id": "aegis-chain-local-default",
+    "version": "1.0.0",
+    "sha256": "010ca27b327e5098b11d7819563b40a607cac7698ac01019740557b8eaececf5"
+  },
+  "evaluation_path": "tools/evaluation/run_skilltrustbench.py --mode full --workers 4",
+  "evidence_root": "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\artifacts\\analysis\\2026-08-14-skilltrustbench-full-cisco-parallel-v1"
+}

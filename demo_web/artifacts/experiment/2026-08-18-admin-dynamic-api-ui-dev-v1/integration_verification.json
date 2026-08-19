@@ -1,0 +1,113 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-18-admin-dynamic-api-ui-dev-v1",
+  "status": "completed",
+  "started_at": "2026-08-18T14:51:02.226364+00:00",
+  "completed_at": "2026-08-18T14:51:02.914978+00:00",
+  "elapsed_ms": 689,
+  "fixture_set_id": "aegis-safe-dynamic-fixtures-v1",
+  "fixture_set_sha256": "5e55d920c8ab478f99136ede2aaf86c4debb5660fffca104049ba646a22a2477",
+  "api": {
+    "create_status": 202,
+    "detail_status": 200,
+    "history_status": 200,
+    "custom_body_status": 400
+  },
+  "checks": {
+    "create_http_202": true,
+    "custom_body_http_400": true,
+    "custom_body_stable_error": true,
+    "detail_http_200": true,
+    "history_http_200": true,
+    "job_completed": true,
+    "fixtures_3_of_3": true,
+    "mechanisms_7_of_7": true,
+    "negative_metrics_zero": true,
+    "events_info_only": true,
+    "events_policy_effect_none": true,
+    "token_not_in_responses": true,
+    "token_not_in_sqlite_payload": true,
+    "fixture_paths_not_exposed": true,
+    "job_workspace_removed": true,
+    "no_browser_persistent_storage_api": true
+  },
+  "metrics": {
+    "schema_version": "1.0",
+    "fixture_set_id": "aegis-safe-dynamic-fixtures-v1",
+    "fixtures_total": 3,
+    "fixtures_completed": 3,
+    "fixtures_failed": 0,
+    "expected_checks_total": 7,
+    "expected_checks_passed": 7,
+    "policy_violations": 0,
+    "timeouts": 0,
+    "event_parse_errors": 0,
+    "event_type_counts": {
+      "environment_read": 3,
+      "file_read": 1,
+      "file_write": 1,
+      "network_connect": 1,
+      "process_spawn": 1,
+      "stdin_read": 1
+    },
+    "server_receipts": 1,
+    "server_payload_matches": 1,
+    "non_info_evidence": 0,
+    "raw_token_leaks": 0,
+    "protected_samples_read": 0,
+    "protected_samples_executed": 0,
+    "internet_connections_allowed": 0,
+    "decision_changes": 0,
+    "duration_ms": {
+      "total": 580,
+      "mean": 193.33333333333334,
+      "max": 225
+    }
+  },
+  "fixture_results": [
+    {
+      "fixture_id": "process_stdio",
+      "status": "completed",
+      "duration_ms": 225,
+      "policy_violations": 0,
+      "timed_out": false
+    },
+    {
+      "fixture_id": "file_io",
+      "status": "completed",
+      "duration_ms": 165,
+      "policy_violations": 0,
+      "timed_out": false
+    },
+    {
+      "fixture_id": "loopback_network",
+      "status": "completed",
+      "duration_ms": 190,
+      "policy_violations": 0,
+      "timed_out": false
+    }
+  ],
+  "event_type_counts": {
+    "environment_read": 3,
+    "file_read": 1,
+    "file_write": 1,
+    "network_connect": 1,
+    "process_spawn": 1,
+    "stdin_read": 1
+  },
+  "safety_boundary": {
+    "execution_trust": "self_built_hash_locked_only",
+    "accepts_user_code": false,
+    "accepts_user_paths": false,
+    "accepts_custom_commands": false,
+    "workspace_write_only": true,
+    "network_allowance": "127.0.0.1_ephemeral_only",
+    "raw_values_retained": false,
+    "evidence_severity": "INFO",
+    "policy_effect": "none",
+    "decision_changes": 0
+  },
+  "token_value_retained": false,
+  "protected_samples_read": 0,
+  "protected_samples_executed": 0
+}

@@ -1,0 +1,205 @@
+{
+  "schema_version": "1.0",
+  "contract_id": "skilltrustbench-v1.0-full5520-cisco-static-metrics-v1",
+  "baseline_id": "skilltrustbench-v1.0-full5520-cisco-static-v1",
+  "status": "frozen_post_run_from_preexisting_metric_definitions",
+  "task": "three_class_static_agent_skill_security_screening",
+  "primary_metric": "strict_macro_f1",
+  "dataset": {
+    "repository": "cuhk-zhuque/SkillTrustBench",
+    "content_revision": "762d5388b3a047b26df9679582af868a0e5b2c8f",
+    "split": "full_dataset_v1.0",
+    "cases": 5520,
+    "case_ids_sha256": "99ed464424ef589d76d28f5762fd88dc0b62bd96dc88dfcd9a5b867add9ab4a1",
+    "source_manifest_sha256": "3a061cda6145151fbac0cbabfab7ee16e7ca60d50659eb45c73807dd037ba6ac"
+  },
+  "prediction_mapping": {
+    "ALLOW": "normal",
+    "REVIEW": "suspicious",
+    "BLOCK": "malicious",
+    "UNKNOWN": "abstain",
+    "failed": "abstain"
+  },
+  "abstention_policy": {
+    "strict_metrics": "Count abstentions as incorrect predictions against their ground-truth class.",
+    "covered_only_metrics": "Exclude abstentions only for a diagnostic secondary view.",
+    "required_reporting": [
+      "coverage",
+      "failure_rate",
+      "abstention_count"
+    ]
+  },
+  "operational_gate": {
+    "not_auto_allowed": [
+      "REVIEW",
+      "BLOCK",
+      "UNKNOWN"
+    ],
+    "warning": "Operational fail-closed effectiveness is not a substitute for detection F1."
+  },
+  "metrics": [
+    {
+      "name": "coverage",
+      "direction": "higher",
+      "required": true,
+      "definition": "non_abstained_cases / all_cases"
+    },
+    {
+      "name": "failure_rate",
+      "direction": "lower",
+      "required": true,
+      "definition": "failed_or_unknown_cases / all_cases"
+    },
+    {
+      "name": "strict_macro_f1",
+      "direction": "higher",
+      "required": true,
+      "role": "primary",
+      "definition": "Unweighted mean of normal, suspicious and malicious F1; abstentions count as errors."
+    },
+    {
+      "name": "covered_macro_f1",
+      "direction": "higher",
+      "required": true,
+      "role": "diagnostic_only",
+      "definition": "Macro F1 over non-abstained cases only."
+    },
+    {
+      "name": "malicious_recall",
+      "direction": "higher",
+      "required": true,
+      "definition": "correct_malicious / all_malicious"
+    },
+    {
+      "name": "malicious_fnr",
+      "direction": "lower",
+      "required": true,
+      "definition": "1 - malicious_recall; abstentions are misses"
+    },
+    {
+      "name": "non_normal_recall",
+      "direction": "higher",
+      "required": true,
+      "definition": "predicted_suspicious_or_malicious among all suspicious_or_malicious ground truth"
+    },
+    {
+      "name": "normal_fpr",
+      "direction": "lower",
+      "required": true,
+      "definition": "normal cases predicted suspicious or malicious / all normal cases"
+    },
+    {
+      "name": "per_risk_label_recall",
+      "direction": "higher",
+      "required": true,
+      "definition": "For each T01-T09 label: cases predicted suspicious or malicious / all ground-truth cases bearing that label; abstentions are misses.",
+      "labels": [
+        "T01",
+        "T02",
+        "T03",
+        "T04",
+        "T05",
+        "T06",
+        "T07",
+        "T08",
+        "T09"
+      ]
+    },
+    {
+      "name": "latency_median_ms",
+      "direction": "lower",
+      "required": true
+    },
+    {
+      "name": "latency_p95_ms",
+      "direction": "lower",
+      "required": true
+    },
+    {
+      "name": "latency_max_ms",
+      "direction": "lower",
+      "required": true
+    }
+  ],
+  "observed_values": {
+    "coverage": 0.9731884057971014,
+    "failure_rate": 0.02681159420289855,
+    "strict_macro_f1": 0.5089564820312642,
+    "covered_macro_f1": 0.5156943492378917,
+    "malicious_recall": 0.7111421585749214,
+    "malicious_fnr": 0.28885784142507864,
+    "non_normal_recall": 0.7737941707505803,
+    "normal_fpr": 0.2866707242848448,
+    "per_risk_label_recall": {
+      "T01": {
+        "support": 1425,
+        "detected": 1137,
+        "recall": 0.7978947368421052
+      },
+      "T02": {
+        "support": 164,
+        "detected": 136,
+        "recall": 0.8292682926829268
+      },
+      "T03": {
+        "support": 812,
+        "detected": 601,
+        "recall": 0.7401477832512315
+      },
+      "T04": {
+        "support": 2860,
+        "detected": 2282,
+        "recall": 0.7979020979020979
+      },
+      "T05": {
+        "support": 1077,
+        "detected": 757,
+        "recall": 0.702878365831012
+      },
+      "T06": {
+        "support": 96,
+        "detected": 42,
+        "recall": 0.4375
+      },
+      "T07": {
+        "support": 124,
+        "detected": 102,
+        "recall": 0.8225806451612904
+      },
+      "T08": {
+        "support": 240,
+        "detected": 234,
+        "recall": 0.975
+      },
+      "T09": {
+        "support": 1120,
+        "detected": 752,
+        "recall": 0.6714285714285714
+      }
+    },
+    "latency_median_ms": 6180.0,
+    "latency_p95_ms": 6487,
+    "latency_max_ms": 47839
+  },
+  "required_outputs": [
+    "per_case_results.jsonl",
+    "metrics.json",
+    "confusion_matrix.json",
+    "false_positive_cases.jsonl",
+    "false_negative_cases.jsonl",
+    "run_manifest.json",
+    "verification.json"
+  ],
+  "known_deviations": [
+    "Metric definitions were frozen before scanning in the pilot contract, but the full-dataset scope record is frozen after the completed run.",
+    "The full run is therefore a verified engineering baseline, not a preregistered blind test.",
+    "148 cases abstained because of endpoint protection, platform path incompatibility, or scanner runtime errors."
+  ],
+  "claim_boundaries": [
+    "This full-dataset result may be reported as the frozen Cisco static baseline.",
+    "The same 5,520 cases must not be repeatedly tuned and then presented as an unbiased final evaluation.",
+    "The sealed regression split is for engineering regression detection, not a new independent benchmark.",
+    "Covered-only metrics may not be reported without strict metrics, coverage, and abstention counts.",
+    "Operational not-auto-allow rate may not be presented as detection accuracy."
+  ]
+}

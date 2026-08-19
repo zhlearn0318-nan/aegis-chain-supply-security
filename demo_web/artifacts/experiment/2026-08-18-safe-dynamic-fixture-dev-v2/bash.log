@@ -1,0 +1,6 @@
+run_id=2026-08-18-safe-dynamic-fixture-dev-v2
+command=F:\揭榜挂帅\supply_chain_reproduction\.runtime_mcp313\Scripts\python.exe tools\dynamic\run_safe_fixture_audit.py --run-id 2026-08-18-safe-dynamic-fixture-dev-v2 --output artifacts\experiment\2026-08-18-safe-dynamic-fixture-dev-v2
+execution_interface=exec_command
+required_bash_exec_artifact_memory_interfaces=unavailable
+status=completed
+elapsed_seconds=0.666

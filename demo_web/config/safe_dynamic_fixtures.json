@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "fixture_set_id": "aegis-safe-dynamic-fixtures-v1",
+  "execution_trust": "self_built_hash_locked_only",
+  "fixture_root": "tools/dynamic/fixtures",
+  "fixtures": [
+    {
+      "id": "process_stdio",
+      "script": "process_stdio.py",
+      "sha256": "bd4ecc2792d55818c67df7556f7a2f2af6e890876f0a15fa32c25a0d2c155289",
+      "timeout_seconds": 5,
+      "stdin_payload": "DYNFIXTURE_STDIN_9C2E6A1F",
+      "environment": {
+        "AEGIS_FIXTURE_MODE": "DYNFIXTURE_ENV_8A5D3C7E"
+      },
+      "allow_loopback": false,
+      "loopback_payload": "",
+      "allowed_child_argv_tails": [
+        [
+          "-I",
+          "-c",
+          "import sys; data=sys.stdin.read(); sys.stdout.write(str(len(data)))"
+        ]
+      ],
+      "expected_events": {
+        "stdin_read": 1,
+        "environment_read": 1,
+        "process_spawn": 1
+      }
+    },
+    {
+      "id": "file_io",
+      "script": "file_io.py",
+      "sha256": "ae231cbbb8878e1493dbcdc00da0edbffef29531cf61285618d5f1f40131783d",
+      "timeout_seconds": 5,
+      "stdin_payload": "",
+      "environment": {},
+      "allow_loopback": false,
+      "loopback_payload": "",
+      "allowed_child_argv_tails": [],
+      "expected_events": {
+        "file_write": 1,
+        "file_read": 1
+      }
+    },
+    {
+      "id": "loopback_network",
+      "script": "loopback_network.py",
+      "sha256": "9d3ba1952cb16e5a2307f25f62eef8d198e980eb948da902f00ca728cd79ab7b",
+      "timeout_seconds": 5,
+      "stdin_payload": "",
+      "environment": {},
+      "allow_loopback": true,
+      "loopback_payload": "DYNFIXTURE_LOOPBACK_2F6C9B4D",
+      "allowed_child_argv_tails": [],
+      "expected_events": {
+        "environment_read": 2,
+        "network_connect": 1
+      }
+    }
+  ]
+}

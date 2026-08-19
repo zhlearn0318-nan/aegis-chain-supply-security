@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "baseline_id": "skilltrustbench-v1.0-audited-pilot90",
+  "decision": "accepted_with_caveats",
+  "comparison_ready": true,
+  "performance_measured": false,
+  "accepted_at": "2026-08-10",
+  "reasons": [
+    "Official source identity, fixed revision, license and local file integrity were verified.",
+    "The deterministic pilot is balanced and covers T01-T09.",
+    "The metric contract was frozen before scanning.",
+    "The importer is fail-closed, static-only and repeatable."
+  ],
+  "caveats": [
+    "This 90-case balanced pilot is not the official representative 10% subset and cannot support prevalence claims.",
+    "The current upstream README checksum table is stale after the audited refresh.",
+    "No dedicated peer-reviewed SkillTrustBench dataset paper was identified in this audit.",
+    "No accuracy, recall or F1 result exists yet."
+  ],
+  "acceptance_method": "Local evidence record because the quest artifact confirmation service is unavailable in this workspace."
+}

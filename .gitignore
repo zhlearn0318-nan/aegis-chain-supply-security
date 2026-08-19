@@ -1,0 +1,64 @@
+# Python environments and package caches
+.conda*/
+.runtime*/
+.venv*/
+.build*/
+.uv_cache/
+.snyk_test_home/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Downloaded datasets, vendor checkouts and generated scan outputs
+datasets/
+third_party/
+results/*
+!results/availability_summary.json
+!results/comparison_summary.md
+!results/*_locked_requirements.txt
+
+# Demo runtime state and generated frontend dependencies
+demo_web/data/
+demo_web/logs/
+demo_web/.server.pid
+demo_web/frontend/node_modules/
+demo_web/frontend/dist/
+
+# Keep only the two accepted dynamic-integration evidence families
+demo_web/artifacts/*
+!demo_web/artifacts/experiment/
+demo_web/artifacts/experiment/*
+!demo_web/artifacts/experiment/2026-08-18-safe-dynamic-fixture-dev-v2/
+!demo_web/artifacts/experiment/2026-08-18-admin-dynamic-api-ui-dev-v1/
+demo_web/artifacts/**/pytest-temp*/
+demo_web/artifacts/**/fixture_workspaces/
+
+# Document render/QA scratch directories
+docs/_report_assets/
+demo_web/docs/.qa*/
+demo_web/docs/.docx_qa_assets/
+
+# Local secrets and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+secrets.json
+
+# Editor and operating-system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.tmp
+*~

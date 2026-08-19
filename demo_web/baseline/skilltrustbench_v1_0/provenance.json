@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "baseline_id": "skilltrustbench-v1.0-audited-pilot90",
+  "baseline_kind": "imported_dataset_baseline",
+  "prepared_at": "2026-08-10",
+  "dataset": {
+    "name": "SkillTrustBench",
+    "publisher": [
+      "Tencent Zhuque Lab",
+      "The Chinese University of Hong Kong, Shenzhen"
+    ],
+    "repository": "https://huggingface.co/datasets/cuhk-zhuque/SkillTrustBench",
+    "project_page": "https://matrix.tencent.com/skilltrustbench/",
+    "version": "v1.0 audited refresh",
+    "content_revision": "762d5388b3a047b26df9679582af868a0e5b2c8f",
+    "license": "CC BY-NC-SA 4.0"
+  },
+  "importer": "tools/datasets/prepare_skilltrustbench.py",
+  "import_command": "..\\.runtime_mcp313\\Scripts\\python.exe tools\\datasets\\prepare_skilltrustbench.py",
+  "generated_data_root": "../../../datasets/skilltrustbench_v1_0",
+  "selection": {
+    "method": "Cover T01-T09 greedily among non-normal cases, then fill each class by SHA-256(seed + ':' + case_id).",
+    "seed": "aegis-chain-skilltrustbench-pilot-v1",
+    "cases": 90,
+    "per_class": 30,
+    "case_ids_file": "pilot_case_ids.txt",
+    "case_ids_sha256": "59dd01a97225b9efef24fa0a7a7a0213fd7e36614b71f5adb7522d16fa518800"
+  },
+  "upstream_caveat": "The current README checksum table is stale after the audited refresh; fixed-revision Git blob IDs, LFS SHA-256 and byte sizes were used instead.",
+  "performance_results": null
+}

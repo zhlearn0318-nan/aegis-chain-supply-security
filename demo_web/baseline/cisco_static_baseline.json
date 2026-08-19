@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "baseline_id": "cisco-static-2026-07-31",
+  "frozen_at": "2026-08-07",
+  "purpose": "作为后续自研规则、证据关联和动态验证的对照组，禁止把它包装成最终创新成果。",
+  "engines": {
+    "skill_scanner": {
+      "repository": "https://github.com/cisco-ai-defense/skill-scanner",
+      "commit": "4dee90371890ff23e1b21ea974e02847eacaa464",
+      "package_version": "2.0.13.dev3+g4dee90371",
+      "python": "3.11"
+    },
+    "mcp_scanner": {
+      "repository": "https://github.com/cisco-ai-defense/mcp-scanner",
+      "commit": "51966cce214ae057e69c3a672307911f5026e255",
+      "package_version": "4.8.2",
+      "python": "3.13.14"
+    }
+  },
+  "decision_contract": {
+    "ALLOW": "扫描完整且没有 LOW 及以上发现",
+    "REVIEW": "至少存在 LOW 或 MEDIUM 发现，但没有 HIGH/CRITICAL",
+    "BLOCK": "至少存在 HIGH 或 CRITICAL 发现",
+    "UNKNOWN": "扫描失败、超时、输出缺失或输出无法解析；必须失败闭锁"
+  },
+  "metrics": {
+    "skill_fixture_set": {
+      "samples": 9,
+      "threshold": "HIGH_OR_CRITICAL",
+      "tp": 2,
+      "tn": 1,
+      "fp": 1,
+      "fn": 5,
+      "accuracy": 0.3333,
+      "precision": 0.6667,
+      "recall": 0.2857,
+      "f1": 0.4
+    },
+    "mcp_static_fixture_set": {
+      "samples": 6,
+      "safe": 3,
+      "unsafe": 3,
+      "correct": 6
+    }
+  },
+  "primary_improvement_targets": [
+    "Skill 恶意样本召回率",
+    "安全教育文本导致的误报",
+    "跨 Skill/MCP 的组合攻击链",
+    "扫描器异常时的 fail-closed 门禁",
+    "静态告警的受控动态复核"
+  ],
+  "limitations": [
+    "9 个 Skill 和 6 个 MCP 对象仅是 smoke test，不能作为最终准确率结论。",
+    "未使用 LLM、Cisco AI Defense 或 VirusTotal API。",
+    "当前结论主要来自静态分析，不能证明运行时绝对安全。"
+  ],
+  "latest_smoke_run": {
+    "date": "2026-08-07",
+    "job_id": "153e4820691a4cf2996902920cef3dad",
+    "target": "fixtures/skills/malicious_exfiltration",
+    "status": "completed",
+    "decision": "BLOCK",
+    "findings": 4,
+    "critical": 1,
+    "duration_ms": 4901,
+    "artifact_sha256": "b7a2bba0825aa01a733368530af8096b7668a57f11b3df8533df3a8dd5510dce"
+  }
+}

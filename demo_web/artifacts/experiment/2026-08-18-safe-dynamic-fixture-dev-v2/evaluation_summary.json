@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-18-safe-dynamic-fixture-dev-v2",
+  "claim_verdict": "supported_on_safe_fixtures",
+  "evaluation_summary": {
+    "takeaway": "Hash-locked safe fixtures completed 3/3 with 0 policy violations.",
+    "claim_update": "strengthens",
+    "baseline_relation": "not_comparable",
+    "comparability": "high",
+    "failure_mode": "none",
+    "next_action": "continue"
+  },
+  "evidence_boundary": [
+    "Only self-built, SHA-256 locked Python fixtures were executed.",
+    "The Python audit hook is cooperative instrumentation, not an OS sandbox.",
+    "Only 127.0.0.1 on a parent-created ephemeral port was allowed.",
+    "No dataset, third-party Skill, regression case, GPU, Docker, cloud, or internet was used.",
+    "Dynamic evidence is INFO-only and does not affect admission decisions."
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "fixture_set_id": "aegis-safe-dynamic-fixtures-v1",
+  "fixtures_total": 3,
+  "fixtures_completed": 3,
+  "fixtures_failed": 0,
+  "expected_checks_total": 7,
+  "expected_checks_passed": 7,
+  "policy_violations": 0,
+  "timeouts": 0,
+  "event_parse_errors": 0,
+  "event_type_counts": {
+    "environment_read": 3,
+    "file_read": 1,
+    "file_write": 1,
+    "network_connect": 1,
+    "process_spawn": 1,
+    "stdin_read": 1
+  },
+  "server_receipts": 1,
+  "server_payload_matches": 1,
+  "non_info_evidence": 0,
+  "raw_token_leaks": 0,
+  "protected_samples_read": 0,
+  "protected_samples_executed": 0,
+  "internet_connections_allowed": 0,
+  "decision_changes": 0,
+  "duration_ms": {
+    "total": 658,
+    "mean": 219.33333333333334,
+    "max": 289
+  },
+  "run_id": "2026-08-18-safe-dynamic-fixture-dev-v2",
+  "status": "completed"
+}

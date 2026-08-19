@@ -1,0 +1,177 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-18-safe-dynamic-fixture-dev-v2",
+  "status": "completed",
+  "experiment_tier": "auxiliary/dev",
+  "research_type": "deterministic_engineering_mechanism_validation",
+  "research_objective": "Validate a fail-closed, redacted dynamic evidence contract on trusted self-built Python fixtures.",
+  "started_at": "2026-08-18T11:45:10.448427+00:00",
+  "completed_at": "2026-08-18T11:45:11.114296+00:00",
+  "elapsed_seconds": 0.666,
+  "command": [
+    "F:\\揭榜挂帅\\supply_chain_reproduction\\.runtime_mcp313\\Scripts\\python.exe",
+    "tools\\dynamic\\run_safe_fixture_audit.py",
+    "--run-id",
+    "2026-08-18-safe-dynamic-fixture-dev-v2",
+    "--output",
+    "artifacts\\experiment\\2026-08-18-safe-dynamic-fixture-dev-v2"
+  ],
+  "baseline": {
+    "static_run_id": "2026-08-18-aegis-command-context-dev-v2",
+    "relation": "complementary_not_numerically_comparable"
+  },
+  "dataset": {
+    "external_dataset": null,
+    "fixture_set_id": "aegis-safe-dynamic-fixtures-v1",
+    "fixtures": 3,
+    "protected_samples_read": 0,
+    "protected_samples_executed": 0,
+    "regression_cases_opened": 0
+  },
+  "config": {
+    "path": "config/safe_dynamic_fixtures.json",
+    "sha256": "5e55d920c8ab478f99136ede2aaf86c4debb5660fffca104049ba646a22a2477"
+  },
+  "sources": {
+    "backend/dynamic_audit/policy.py": {
+      "sha256": "4023e98df1f8389410cc8ae2dc0c3d695713ef905a944795d2608e4525cd8bfb",
+      "bytes": 6166
+    },
+    "backend/dynamic_audit/bootstrap.py": {
+      "sha256": "332f48bbeee1a276615dfd94130a50bb897753615c6fa7d0605f027fb03f50c9",
+      "bytes": 7629
+    },
+    "backend/dynamic_audit/runner.py": {
+      "sha256": "3c3c3937dcb312206c7d1ba97582881d6f068754a3c8263eae3b0353408a4b9f",
+      "bytes": 21153
+    },
+    "tools/dynamic/run_safe_fixture_audit.py": {
+      "sha256": "19ff212ba385a348e6ef5a5e2f95863e28fd9bee480400f1b3df336f102a3aad",
+      "bytes": 15708
+    }
+  },
+  "fixtures": {
+    "tools/dynamic/fixtures/process_stdio.py": {
+      "sha256": "bd4ecc2792d55818c67df7556f7a2f2af6e890876f0a15fa32c25a0d2c155289",
+      "bytes": 566
+    },
+    "tools/dynamic/fixtures/file_io.py": {
+      "sha256": "ae231cbbb8878e1493dbcdc00da0edbffef29531cf61285618d5f1f40131783d",
+      "bytes": 343
+    },
+    "tools/dynamic/fixtures/loopback_network.py": {
+      "sha256": "9d3ba1952cb16e5a2307f25f62eef8d198e980eb948da902f00ca728cd79ab7b",
+      "bytes": 474
+    }
+  },
+  "environment": {
+    "python": "3.13.14 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:26:41) [MSC v.1942 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "windows_python_only": true,
+    "network_allowance": "127.0.0.1 ephemeral port only",
+    "gpu_used": false,
+    "docker_used": false,
+    "cloud_used": false,
+    "internet_used": false,
+    "administrator_required": false,
+    "execution_interface": "exec_command; bash_exec/artifact/memory unavailable"
+  },
+  "safety_contract": {
+    "execution_trust": "self_built_hash_locked_only",
+    "workspace_write_only": true,
+    "loopback_only": true,
+    "allowed_child_executable": "current Python interpreter with exact argv-tail hashes",
+    "raw_values_in_evidence": false,
+    "policy_effect": "INFO-only; no admission decision change",
+    "not_an_untrusted_code_sandbox": true
+  },
+  "metrics": {
+    "schema_version": "1.0",
+    "fixture_set_id": "aegis-safe-dynamic-fixtures-v1",
+    "fixtures_total": 3,
+    "fixtures_completed": 3,
+    "fixtures_failed": 0,
+    "expected_checks_total": 7,
+    "expected_checks_passed": 7,
+    "policy_violations": 0,
+    "timeouts": 0,
+    "event_parse_errors": 0,
+    "event_type_counts": {
+      "environment_read": 3,
+      "file_read": 1,
+      "file_write": 1,
+      "network_connect": 1,
+      "process_spawn": 1,
+      "stdin_read": 1
+    },
+    "server_receipts": 1,
+    "server_payload_matches": 1,
+    "non_info_evidence": 0,
+    "raw_token_leaks": 0,
+    "protected_samples_read": 0,
+    "protected_samples_executed": 0,
+    "internet_connections_allowed": 0,
+    "decision_changes": 0,
+    "duration_ms": {
+      "total": 658,
+      "mean": 219.33333333333334,
+      "max": 289
+    },
+    "run_id": "2026-08-18-safe-dynamic-fixture-dev-v2",
+    "status": "completed"
+  },
+  "outputs": {
+    "per_fixture.jsonl": {
+      "sha256": "02ae4f785f97bb090a39035cb3f315877134ddafd7ee82459eb223de22fb6360",
+      "bytes": 2948
+    },
+    "events.jsonl": {
+      "sha256": "a0f1fd75a4ec34ca8f9fc7a99080ec3024fe3e69d7450fda88cf30eebbe25c10",
+      "bytes": 2895
+    },
+    "metrics.json": {
+      "sha256": "89b20d72a0f83af1e622c76581d0f535d96d7033ae8603b5017768f24455403f",
+      "bytes": 858
+    },
+    "metrics.md": {
+      "sha256": "d1a4efe8b50760603016bcea114deffd2eb88f04d06e54606a95e0082b1d914e",
+      "bytes": 411
+    },
+    "evaluation_summary.json": {
+      "sha256": "d03735a83eb930c951343b9628d9e8d39a1f3ee4369ea2324c8e0b883c4a3b85",
+      "bytes": 838
+    },
+    "run.log": {
+      "sha256": "fed2ba410e446037a98e765fe7ade23d16da66a6438666d063b4242e89bb8bb9",
+      "bytes": 442
+    },
+    "bash.log": {
+      "sha256": "aee0edef189a978bbb64f1f3e5b1a3fe6d049c610b3d3123c042522934dcc9f7",
+      "bytes": 418
+    },
+    "runlog.summary.md": {
+      "sha256": "18dd634c59bba75745a1e3da6b3db693e74a3d7ac358154f915d7de8f4e36066",
+      "bytes": 230
+    },
+    "summary.md": {
+      "sha256": "e0571b9d8924622c943aa82631de308c178bfb02b15fd89685195e2b82dfddc0",
+      "bytes": 446
+    },
+    "claim_validation.md": {
+      "sha256": "e871cbfc9deb18bfde338d03d51821c35a115d4f5b9aeca9c5150c0af87ee3bb",
+      "bytes": 744
+    }
+  },
+  "claim_boundary": "Trusted, hash-locked Python fixture mechanism evidence only; no untrusted Skill execution or sandbox-security claim.",
+  "next_action": "admin_only_builtin_fixture_api_integration",
+  "post_validation": {
+    "dynamic_audit_tests": "10 passed",
+    "backend_tests": "136 passed",
+    "fixture_completion": "3/3",
+    "expected_mechanisms": "7/7",
+    "negative_metrics_all_zero": true,
+    "raw_token_search_matches": 0,
+    "protected_sample_path_references": 0,
+    "report": "POST_VALIDATION.md"
+  }
+}

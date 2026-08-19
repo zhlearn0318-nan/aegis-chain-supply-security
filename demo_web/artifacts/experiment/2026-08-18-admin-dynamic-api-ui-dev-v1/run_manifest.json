@@ -1,0 +1,128 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-18-admin-dynamic-api-ui-dev-v1",
+  "status": "completed",
+  "experiment_tier": "auxiliary/dev",
+  "research_type": "authenticated_fixed_fixture_integration_validation",
+  "objective": "Expose the trusted hash-locked dynamic fixture set through an administrator-only asynchronous API and local UI without creating an arbitrary-code execution surface or changing admission decisions.",
+  "baseline": {
+    "run_id": "2026-08-18-safe-dynamic-fixture-dev-v2",
+    "relation": "api_and_ui_integration_of_accepted_mechanism"
+  },
+  "verification_started_at": "2026-08-18T14:51:02.226364+00:00",
+  "completed_at": "2026-08-18T14:53:36.8957533Z",
+  "scope": {
+    "admin_token_environment_variable": "AEGIS_ADMIN_TOKEN",
+    "admin_request_header": "X-Aegis-Admin-Token",
+    "fixture_set_id": "aegis-safe-dynamic-fixtures-v1",
+    "request_body_allowed": false,
+    "user_code_allowed": false,
+    "user_paths_allowed": false,
+    "custom_commands_allowed": false,
+    "protected_samples_read": 0,
+    "protected_samples_executed": 0,
+    "regression_cases_opened": 0,
+    "policy_effect": "none",
+    "decision_changes": 0
+  },
+  "api": {
+    "create": "POST /api/v1/admin/dynamic-audits",
+    "list": "GET /api/v1/admin/dynamic-audits",
+    "detail": "GET /api/v1/admin/dynamic-audits/{job_id}",
+    "create_status": 202,
+    "detail_status": 200,
+    "history_status": 200,
+    "custom_body_status": 400,
+    "server_token_unconfigured_status": 503,
+    "invalid_token_status": 401
+  },
+  "metrics": {
+    "fixtures_total": 3,
+    "fixtures_completed": 3,
+    "fixtures_failed": 0,
+    "expected_checks_total": 7,
+    "expected_checks_passed": 7,
+    "policy_violations": 0,
+    "timeouts": 0,
+    "event_parse_errors": 0,
+    "non_info_evidence": 0,
+    "raw_token_leaks": 0,
+    "token_in_api_responses": 0,
+    "token_in_sqlite_payload": 0,
+    "browser_persistent_storage_api_calls": 0,
+    "internet_connections_allowed": 0,
+    "protected_samples_read": 0,
+    "protected_samples_executed": 0,
+    "decision_changes": 0,
+    "fixture_duration_ms": {
+      "total": 580,
+      "mean": 193.33333333333334,
+      "max": 225
+    }
+  },
+  "tests": {
+    "targeted_backend": "19 passed",
+    "full_backend": "142 passed",
+    "frontend": "9 passed",
+    "frontend_production_build": "passed",
+    "integration_checks": "16/16 passed"
+  },
+  "environment": {
+    "platform": "Windows 11",
+    "network_allowance": "127.0.0.1 ephemeral port only",
+    "gpu_used": false,
+    "docker_used": false,
+    "cloud_used": false,
+    "internet_used": false,
+    "administrator_privileges_required": false
+  },
+  "safety_contract": {
+    "execution_trust": "self_built_hash_locked_only",
+    "workspace_write_only": true,
+    "workspace_removed_after_job": true,
+    "raw_values_retained": false,
+    "fixture_absolute_paths_exposed": false,
+    "evidence_severity": "INFO",
+    "policy_effect": "none",
+    "not_an_untrusted_code_sandbox": true
+  },
+  "sources": {
+    "backend/app.py": {"sha256": "2dfdae6b279da32f104231e9ed234a57eb9eb33a0625281ba70f9d0c5e913eeb", "bytes": 34172},
+    "backend/api_v1.py": {"sha256": "e281db68362ce6416e60e5915a1f847878f6b2437a5250a707deb9b71f4f2f10", "bytes": 9272},
+    "backend/api_contract.py": {"sha256": "5d70114b40fd85632d6fd2c3cc273a17f8bd83f071425ce0052f6ff6717e65e0", "bytes": 4117},
+    "backend/models.py": {"sha256": "66eb033be07db3f27c2d5c9f71cd4e6abdc23dd4f1ac48dd3ea2316787879d2b", "bytes": 4193},
+    "backend/tests/test_dynamic_admin_api.py": {"sha256": "a38d3f216896209a20c515af7d5c9fed60a80512a8f767939f037b8dbe259fa2", "bytes": 5646},
+    "frontend/src/api.js": {"sha256": "522ec5e09c42b985021eae2c750122415f2eabffefb867ec4f1c49303a643c6d", "bytes": 4267},
+    "frontend/src/api.test.js": {"sha256": "139f8f50780b3e143a455a1a672d31acab9a36c85dd0544be35dd4c904442605", "bytes": 4700},
+    "frontend/src/main.jsx": {"sha256": "0f9bf06845193046673e4192447f7e9b2c926dc1eb1ef92270721ec99d9bb10a", "bytes": 29893},
+    "frontend/src/styles.css": {"sha256": "bd5114e369bd143b3927901081872b54218a3368d60514bc97f8ca35b7535f09", "bytes": 24949},
+    "start_demo.ps1": {"sha256": "3fddbab9f46597a7fc0b0e51e04824e287c8dc8f02e39ecd7943df7dcdd6f5c9", "bytes": 4739},
+    "tools/evaluation/verify_admin_dynamic_api.py": {"sha256": "cfca5fcdaaf24c9cae6b74a0466e9150512b4a80930cac59f1057feec690947c", "bytes": 7809}
+  },
+  "outputs": {
+    "integration_verification.json": {"sha256": "6ee76161bc773fddf2ff3fad223d9275643c62f33bc6cff4225f379f09224e14", "bytes": 3209},
+    "backend-tests.xml": {"sha256": "e2970b4bf0fa42b761d8e9c615891cc3bd5000d8a0f1e3276747370911366d83", "bytes": 19478},
+    "PLAN.md": {"sha256": "f5e7018e812979317a2ede68ec1ce496efb1ded642698f46333d18ddeff889eb", "bytes": 2532},
+    "CHECKLIST.md": {"sha256": "91a05ffdfae20918a69ddf29e5b54b3ecff87aa0c335ea72a3f6ee2553d59acf", "bytes": 896},
+    "docs/M3_ADMIN_DYNAMIC_FIXTURE_API_UI_REPORT.md": {"sha256": "5a630e28fbedd56ef15a5e2da661abf9e4e4c837ec2206bccf428e76a0a6ccef", "bytes": 7972}
+  },
+  "unaccepted_runs": [
+    {
+      "file": "integration_verification_unaccepted_cleanup_failure.json",
+      "sha256": "28f6febb1b12cc36990a18364b1b8971fcca82d24f8af0a20e46d391da77b401",
+      "reason": "Windows SQLite file handle remained open during temporary-directory cleanup."
+    },
+    {
+      "file": "integration_verification_unaccepted_cleanup_failure_v2.json",
+      "sha256": "a5f4e0c5971376e2f6e1df2e777932d6c8742ba7bfeda85c1454b39692faeea2",
+      "reason": "Second reproduction confirmed backend database connections needed explicit close semantics."
+    },
+    {
+      "file": "integration_verification_unaccepted_persistence_search_false_positive.json",
+      "sha256": "c45569289f81afeebaab309ed5e00f9d5dc262f31be66decb6f8021223fd576d",
+      "reason": "Verifier matched explanatory UI text mentioning localStorage/sessionStorage instead of actual API calls."
+    }
+  ],
+  "claim_boundary": "Administrator-authenticated platform self-test on three trusted, self-built, hash-locked fixtures only; no third-party Skill execution and no sandbox-security claim.",
+  "next_action": "admin_dynamic_singleflight_audit_metadata_and_platform_adapter"
+}

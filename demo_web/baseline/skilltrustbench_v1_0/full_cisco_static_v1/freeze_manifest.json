@@ -1,0 +1,271 @@
+{
+  "schema_version": "1.0",
+  "baseline_id": "skilltrustbench-v1.0-full5520-cisco-static-v1",
+  "frozen_at": "2026-08-15",
+  "status": "locally_frozen_and_verified",
+  "parent_run_id": "2026-08-14-skilltrustbench-full-cisco-parallel-v1",
+  "run_verification": {
+    "status": "verified",
+    "run_id": "2026-08-14-skilltrustbench-full-cisco-parallel-v1",
+    "cases": 5520,
+    "completed": 5372,
+    "abstentions": 148,
+    "abstention_types": {
+      "EndpointProtectionBlocked": 61,
+      "PlatformPathIncompatible": 8,
+      "RuntimeError": 79
+    },
+    "endpoint_protection_blocked_case_ids": [
+      "case_05521",
+      "case_05522",
+      "case_05523",
+      "case_05524",
+      "case_05525",
+      "case_05526",
+      "case_05527",
+      "case_05528",
+      "case_05529",
+      "case_05530",
+      "case_05532",
+      "case_05533",
+      "case_05534",
+      "case_05535",
+      "case_05536",
+      "case_05541",
+      "case_05544",
+      "case_05556",
+      "case_05557",
+      "case_05558",
+      "case_05559",
+      "case_05560",
+      "case_05561",
+      "case_05562",
+      "case_05563",
+      "case_05564",
+      "case_05565",
+      "case_05566",
+      "case_05567",
+      "case_05568",
+      "case_05569",
+      "case_05570",
+      "case_05571",
+      "case_05572",
+      "case_05573",
+      "case_05574",
+      "case_05575",
+      "case_05576",
+      "case_05577",
+      "case_05578",
+      "case_05579",
+      "case_05580",
+      "case_05582",
+      "case_05583",
+      "case_05585",
+      "case_05586",
+      "case_05588",
+      "case_05589",
+      "case_05590",
+      "case_05591",
+      "case_05593",
+      "case_05594",
+      "case_05595",
+      "case_05597",
+      "case_05599",
+      "case_05600",
+      "case_05601",
+      "case_05602",
+      "case_05656",
+      "case_05707",
+      "case_05730"
+    ],
+    "scanner_ineligible_case_ids": [
+      "case_00818",
+      "case_01524",
+      "case_02237",
+      "case_02511",
+      "case_02560",
+      "case_02889",
+      "case_03391",
+      "case_05212",
+      "case_05521",
+      "case_05522",
+      "case_05523",
+      "case_05524",
+      "case_05525",
+      "case_05526",
+      "case_05527",
+      "case_05528",
+      "case_05529",
+      "case_05530",
+      "case_05532",
+      "case_05533",
+      "case_05534",
+      "case_05535",
+      "case_05536",
+      "case_05541",
+      "case_05544",
+      "case_05556",
+      "case_05557",
+      "case_05558",
+      "case_05559",
+      "case_05560",
+      "case_05561",
+      "case_05562",
+      "case_05563",
+      "case_05564",
+      "case_05565",
+      "case_05566",
+      "case_05567",
+      "case_05568",
+      "case_05569",
+      "case_05570",
+      "case_05571",
+      "case_05572",
+      "case_05573",
+      "case_05574",
+      "case_05575",
+      "case_05576",
+      "case_05577",
+      "case_05578",
+      "case_05579",
+      "case_05580",
+      "case_05582",
+      "case_05583",
+      "case_05585",
+      "case_05586",
+      "case_05588",
+      "case_05589",
+      "case_05590",
+      "case_05591",
+      "case_05593",
+      "case_05594",
+      "case_05595",
+      "case_05597",
+      "case_05599",
+      "case_05600",
+      "case_05601",
+      "case_05602",
+      "case_05656",
+      "case_05707",
+      "case_05730"
+    ],
+    "analyzers": [
+      "bytecode",
+      "pipeline",
+      "static_analyzer"
+    ],
+    "eligible_hash_mismatches": 0,
+    "output_identities_verified": 8,
+    "metrics_recomputed_equal": true,
+    "error_slices_recomputed_equal": true,
+    "raw_finding_text_retained": false
+  },
+  "source_artifacts": [
+    {
+      "path": "artifacts/analysis/2026-08-14-skilltrustbench-full-cisco-parallel-v1/run_manifest.json",
+      "bytes": 115864,
+      "sha256": "312f644997bd9b9f9c0a7099d293cf5b305720d53e709cd600427ed8975ad17f"
+    },
+    {
+      "path": "artifacts/analysis/2026-08-14-skilltrustbench-full-cisco-parallel-v1/per_case_results.jsonl",
+      "bytes": 9899989,
+      "sha256": "15a9ec0cdb3b30d7d55d4a3f67e8a31b9f324f7724c46ede83ec07d5f79cd918"
+    },
+    {
+      "path": "artifacts/analysis/2026-08-14-skilltrustbench-full-cisco-parallel-v1/metrics.json",
+      "bytes": 2478,
+      "sha256": "b79d4ceda6d28ad8c549322b8b9eb704312d8a53051f7e8e56fe8b0977eab5f1"
+    },
+    {
+      "path": "artifacts/analysis/2026-08-14-skilltrustbench-full-cisco-parallel-v1/confusion_matrix.json",
+      "bytes": 479,
+      "sha256": "ad49ce6aeb2d91b31b9d8633bef74599457ce58f778a9c618ca41a8e63e251a9"
+    },
+    {
+      "path": "artifacts/analysis/2026-08-14-skilltrustbench-full-cisco-parallel-v1/false_positive_cases.jsonl",
+      "bytes": 947707,
+      "sha256": "8513f190709f7be5646c0b5ee010470ed6a73bfb3589934aee48a5b09a38c438"
+    },
+    {
+      "path": "artifacts/analysis/2026-08-14-skilltrustbench-full-cisco-parallel-v1/false_negative_cases.jsonl",
+      "bytes": 1198976,
+      "sha256": "d65e3648d3ad7eae58c2d0259738c327cd67606dfc15365b9aa2f1dee83c581c"
+    },
+    {
+      "path": "artifacts/analysis/2026-08-14-skilltrustbench-full-cisco-parallel-v1/classification_errors.jsonl",
+      "bytes": 3677055,
+      "sha256": "288c186c4658fc98f6e838588a614125106cd9fcc10cb493b7059f12ddc7762f"
+    },
+    {
+      "path": "artifacts/analysis/2026-08-14-skilltrustbench-full-cisco-parallel-v1/evaluation_summary.json",
+      "bytes": 635,
+      "sha256": "96e373d3f0f3fc02ad0648352e72700da1eb77b03f660422d4d9fd235269ff0f"
+    },
+    {
+      "path": "artifacts/analysis/2026-08-14-skilltrustbench-full-cisco-parallel-v1/run.log",
+      "bytes": 1086610,
+      "sha256": "9f92ce2a1b7a0d8d5f3b217fe263969779a8cbc4e82297f3fd57bb7885e1f837"
+    },
+    {
+      "path": "artifacts/analysis/2026-08-14-skilltrustbench-full-cisco-parallel-v1/verification.json",
+      "bytes": 2962,
+      "sha256": "e56680d9f58aca6cefefb038c114ddd902cc194d498b7e326680a5e7d44b919c"
+    },
+    {
+      "path": "docs/M2_SKILLTRUSTBENCH_FULL_REPORT.md",
+      "bytes": 11431,
+      "sha256": "2aa72b2fb6d3f843fcf3b55954512c12e05ba30efca068a34a61e8b32c79f241"
+    },
+    {
+      "path": "F:\\揭榜挂帅\\supply_chain_reproduction\\datasets\\skilltrustbench_v1_0\\full\\full_manifest.jsonl",
+      "bytes": 2744861,
+      "sha256": "3a061cda6145151fbac0cbabfab7ee16e7ca60d50659eb45c73807dd037ba6ac"
+    },
+    {
+      "path": "F:\\揭榜挂帅\\supply_chain_reproduction\\datasets\\skilltrustbench_v1_0\\full\\full_case_ids.txt",
+      "bytes": 60720,
+      "sha256": "99ed464424ef589d76d28f5762fd88dc0b62bd96dc88dfcd9a5b867add9ab4a1"
+    },
+    {
+      "path": "F:\\揭榜挂帅\\supply_chain_reproduction\\datasets\\skilltrustbench_v1_0\\full\\intake_manifest.json",
+      "bytes": 2682,
+      "sha256": "c4429add9bfca78b9584b69c44e0f3ed1478f0fe054832a0435771fe66481e0b"
+    },
+    {
+      "path": "tools/evaluation/run_skilltrustbench.py",
+      "bytes": 44494,
+      "sha256": "f47e5357cc7d6fcfeb6a7a8fcc68295d520db960eebbb6ea6cd956109bf4bc1d"
+    },
+    {
+      "path": "tools/evaluation/verify_skilltrustbench_run.py",
+      "bytes": 7109,
+      "sha256": "0ade8746d2fb42a5b49f49237095a7c90c2c18df8045181ec346c127045c5fb2"
+    },
+    {
+      "path": "config/admission_policy.yaml",
+      "bytes": 344,
+      "sha256": "010ca27b327e5098b11d7819563b40a607cac7698ac01019740557b8eaececf5"
+    },
+    {
+      "path": "baseline/skilltrustbench_v1_0/full_cisco_static_v1/json/metric_contract.json",
+      "bytes": 6145,
+      "sha256": "d7c6fd64ffde14e50c1cd112a8923857b88dbcf4b1068600d75aa3650c4eb2ac"
+    },
+    {
+      "path": "baseline/skilltrustbench_v1_0/full_cisco_static_v1/local_acceptance.json",
+      "bytes": 1163,
+      "sha256": "032e774572513cad764691e5b1dd52fae8e0fae592490bb9bdde633b73685c60"
+    },
+    {
+      "path": "baseline/skilltrustbench_v1_0/full_cisco_static_v1/provenance.json",
+      "bytes": 1702,
+      "sha256": "64029b9b0d47acd35240f16cb6ab0f195fcea3f41c2a4b7314566e92b7374441"
+    },
+    {
+      "path": "baseline/skilltrustbench_v1_0/full_cisco_static_v1/BASELINE.md",
+      "bytes": 887,
+      "sha256": "85fbac4529c60d398b7118b27d7023115b87d83d6bca8d5b8bfa6aa793c4581f"
+    }
+  ],
+  "immutability_rule": "Any byte or SHA-256 change invalidates this frozen baseline identity."
+}

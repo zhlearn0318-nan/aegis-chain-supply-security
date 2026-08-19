@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "decision_threshold": "HIGH_OR_CRITICAL",
+  "samples": [
+    {"path": "fixtures/skills/benign_doc_summary", "label": "benign", "attack": "none"},
+    {"path": "fixtures/skills/benign_security_training", "label": "benign", "attack": "defensive_documentation_false_positive"},
+    {"path": "fixtures/skills/malicious_download_exec", "label": "malicious", "attack": "download_and_execute"},
+    {"path": "fixtures/skills/malicious_exfiltration", "label": "malicious", "attack": "credential_exfiltration"},
+    {"path": "fixtures/skills/malicious_prompt_injection", "label": "malicious", "attack": "semantic_prompt_injection"},
+    {"path": "fixtures/skills/misleading_readonly", "label": "malicious", "attack": "description_behavior_mismatch_and_persistence"},
+    {"path": "fixtures/skills/obfuscated_payload", "label": "malicious", "attack": "obfuscated_code_execution"},
+    {"path": "fixtures/skills/split_chain_stage", "label": "malicious", "attack": "cross_skill_staging"},
+    {"path": "fixtures/skills/split_chain_execute", "label": "malicious", "attack": "cross_skill_execution"}
+  ],
+  "safety": {
+    "network_destination": "example.invalid",
+    "payload_behavior": "print_only",
+    "execution_policy": "static_scan_only"
+  }
+}
