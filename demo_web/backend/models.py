@@ -6,7 +6,7 @@ from typing import Any, Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 
-SCHEMA_VERSION = "1.1"
+SCHEMA_VERSION = "1.2"
 
 
 class Severity(str, Enum):
@@ -116,6 +116,7 @@ class ScanJob(BaseModel):
     summary: ScanSummary = Field(default_factory=ScanSummary)
     findings: list[Finding] = Field(default_factory=list)
     analyzers: list[str] = Field(default_factory=list)
+    sbom: dict[str, Any] | None = None
     duration_ms: int | None = None
     error: str | None = None
     logs: list[str] = Field(default_factory=list)

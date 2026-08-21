@@ -43,10 +43,10 @@ class McpScannerAdapter:
                 "--output",
                 str(output),
             ])
-            logs = collect_logs(completed)
+            raw_logs = collect_logs(completed)
             if completed.returncode != 0 or not output.is_file():
                 raise RuntimeError(
-                    f"MCP Scanner failed with exit code {completed.returncode}: {log_tail(logs)}"
+                    f"MCP Scanner failed with exit code {completed.returncode}: {log_tail(raw_logs)}"
                 )
             try:
                 report = json.loads(output.read_text(encoding="utf-8"))
@@ -54,4 +54,11 @@ class McpScannerAdapter:
                 raise RuntimeError(f"MCP Scanner returned invalid JSON: {exc}") from exc
             if not isinstance(report, dict):
                 raise RuntimeError("MCP Scanner JSON root must be an object")
+            results = report.get("scan_results") if isinstance(report.get("scan_results"), list) else []
+            unsafe = sum(
+                not bool(item.get("is_safe", False)) for item in results if isinstance(item, dict)
+            )
+            logs = [
+                f"mcp-scanner completed: results={len(results)} unsafe={unsafe} exit_code={completed.returncode}"
+            ]
             return AdapterResult(report=report, logs=logs)

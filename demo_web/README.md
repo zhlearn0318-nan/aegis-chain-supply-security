@@ -2,7 +2,7 @@
 
 本项目是 XA-202620 赛题“供应链安全”模块的本机原型。网页会真实调用已经复现的 Cisco Skill Scanner、MCP Scanner 和依赖漏洞审计链路，不使用伪造扫描结果。
 
-当前已完成 M1.3 的可配置准入策略、`/api/v1` 和前端 v1 适配，并完成 M2 的 SkillTrustBench v1.0 全量 5,520 条评测。全量结果已冻结；另建 120 条开发集与 600 条封存回归集。M3 已实现 Aegis Static v1、三个 INFO-only Context、最小安全动态 Fixture v1，以及管理员专用异步动态验证 API/页面。动态模块只运行 3 份自建哈希锁定 fixture，不接收任意脚本、路径或命令，继续保持 INFO-only、决策变化 0，回归集仍封存。
+当前已完成 M1.3 的可配置准入策略、`/api/v1` 和前端 v1 适配，并完成 M2 的 SkillTrustBench v1.0 全量 5,520 条评测。全量结果已冻结；另建 120 条开发集与 600 条封存回归集。M3 静态审计开发现已覆盖 Skill、MCP 和 Python 依赖清单：Cisco Scanner/pip-audit 之后叠加 97 个 Aegis 规则 ID，包括攻击链、敏感流、不可信执行流、政企控制、覆盖证明、依赖完整性/SBOM、MCP 能力策略和三个 INFO-only Context。静态代码与开发证据已进入冻结候选，600 条回归集仍封存，等待一次性最终评估。动态部分仍限于自建哈希锁定 fixture，不执行第三方 Skill。
 
 ## 一键启动
 
@@ -69,6 +69,10 @@ pnpm test
 - M3 Network Context v1 报告：[`docs/M3_AEGIS_NETWORK_CONTEXT_V1_REPORT.md`](docs/M3_AEGIS_NETWORK_CONTEXT_V1_REPORT.md)
 - M3 Filesystem Context v1 报告：[`docs/M3_AEGIS_FILESYSTEM_CONTEXT_V1_REPORT.md`](docs/M3_AEGIS_FILESYSTEM_CONTEXT_V1_REPORT.md)
 - M3 Command Context v1 报告：[`docs/M3_AEGIS_COMMAND_CONTEXT_V1_REPORT.md`](docs/M3_AEGIS_COMMAND_CONTEXT_V1_REPORT.md)
+- M3 Sensitive Flow v1 报告：[`docs/M3_AEGIS_SENSITIVE_FLOW_V1_REPORT.md`](docs/M3_AEGIS_SENSITIVE_FLOW_V1_REPORT.md)
+- M3 Untrusted Execution Flow v1 报告：[`docs/M3_AEGIS_UNTRUSTED_EXEC_FLOW_V1_REPORT.md`](docs/M3_AEGIS_UNTRUSTED_EXEC_FLOW_V1_REPORT.md)
+- M3 静态审计开发完成与冻结报告：[`docs/M3_STATIC_AUDIT_COMPLETION_REPORT.md`](docs/M3_STATIC_AUDIT_COMPLETION_REPORT.md)
+- Aegis 97 条静态规则注册表：[`config/aegis_rule_registry.json`](config/aegis_rule_registry.json)
 - M3 最小安全动态 Fixture v1 报告：[`docs/M3_SAFE_DYNAMIC_FIXTURE_V1_REPORT.md`](docs/M3_SAFE_DYNAMIC_FIXTURE_V1_REPORT.md)
 - M3 管理员动态验证 API/页面报告：[`docs/M3_ADMIN_DYNAMIC_FIXTURE_API_UI_REPORT.md`](docs/M3_ADMIN_DYNAMIC_FIXTURE_API_UI_REPORT.md)
 - 90 条主实验原始证据：[`artifacts/experiment/2026-08-10-skilltrustbench-pilot90-v1/RUN.md`](artifacts/experiment/2026-08-10-skilltrustbench-pilot90-v1/RUN.md)
@@ -131,6 +135,18 @@ pnpm test
 
 当前接受结果为 `artifacts/experiment/2026-08-16-aegis-static-rules-dev-v4/`：目标漏报补出 21/36、T06 12/12、20 条正确对照零回退、50 条 normal 开发样本零决策升级，Aegis 平均耗时约 17 ms/条。v4 增加滑动窗口和命中上限，避免重复关键词导致组合爆炸，且与 v3 的逐案决策和规则集合差异为 0。该结果只用于开发诊断，600 条回归集仍保持封存。详细说明见 `docs/M3_AEGIS_STATIC_V1_IMPLEMENTATION_AND_DEV_REPORT.md`。
 
+## Aegis Sensitive Flow v1 敏感数据流门禁
+
+Skill 扫描新增独立 `aegis-sensitive-flow-v1`，用有限静态变量流证明凭据、环境集合或敏感业务文件是否真正进入 HTTP body/query、上传、消息、邮件或 socket payload。正常认证头和只有源/汇点共现但没有变量传播的场景不会触发；高置信 Finding 以 `HIGH/CRITICAL` 进入统一门禁。
+
+开发诊断位于 `artifacts/experiment/2026-08-21-aegis-sensitive-flow-dev-v1/`：120 条可见开发集命中 1 条恶意样本，使其从 `ALLOW` 变为 `BLOCK`；50 条 normal 零升级、20 条正确对照不变、Static v4 等价 120/120、样本哈希变化 0。平均耗时 16.65 ms/条，专项测试 `12 passed`、完整后端测试 `154 passed`。该结果只支持开发集机制结论，600 条回归集仍未打开。详见 `docs/M3_AEGIS_SENSITIVE_FLOW_V1_REPORT.md`。
+
+## Aegis Untrusted Execution Flow v1 不可信输入执行门禁
+
+Skill 扫描新增 `aegis-untrusted-exec-flow-v1`，关联 Tool/HTTP/CLI/模型输出与 shell、`eval/exec`、动态可执行文件和动态模块导入。固定可执行文件配合独立argv不会因为业务参数来自用户而自动阻断。
+
+首轮开发运行发现1条normal误升级并完整保留；v2通过固定可执行文件容器形状传播消除该误报。接受结果位于 `artifacts/experiment/2026-08-21-aegis-untrusted-exec-flow-dev-v2/`：专项测试`15 passed`、完整后端测试`169 passed`，120条开发集正常升级0/50、正确控制变化0/20、旧层等价120/120、样本哈希变化0，但E02命中为0。因此只能证明机制和当前零误伤，不能宣称召回提升。详见 `docs/M3_AEGIS_UNTRUSTED_EXEC_FLOW_V1_REPORT.md`。
+
 ## Aegis Network Context v1 网络上下文旁路
 
 Skill 扫描还会追加 `aegis-network-context-v1` 的 `INFO` 级旁路 Finding，把文档中的网络声明与实际网络读取、外发 sink、敏感来源和正常鉴权语境关联起来。它不会修改 Cisco Finding，也不会改变最终门禁。
@@ -191,14 +207,14 @@ Skill 扫描还会追加 `aegis-command-context-v1` 的 `INFO` 级旁路 Finding
 - `BLOCK`：发现高危或严重风险。
 - `UNKNOWN`：扫描器异常、超时、结果缺失或外部工具执行失败。
 
-默认判定阈值位于 `config/admission_policy.yaml`。新结果使用数据契约 `1.1`，`policy_trace` 会记录实际使用的策略版本、命中规则、严重度、Finding ID 和可读原因。配置无效或尝试关闭失败闭锁时，系统不会降级为 `ALLOW`。
+默认判定阈值位于 `config/admission_policy.yaml`。新结果使用数据契约 `1.2`，新增可选 `sbom`；`policy_trace` 会记录实际使用的策略版本、命中规则、严重度、Finding ID 和可读原因。配置无效或尝试关闭失败闭锁时，系统不会降级为 `ALLOW`。
 
 ## 数据策略
 
 - 上传文件只保存在系统临时目录。
 - 扫描结束后删除原始文件。
 - SQLite 只保存任务摘要、制品哈希、分析器状态和风险 Finding。
-- 支持导出 JSON 和 Markdown 技术汇报摘要。
+- 支持导出 JSON、Markdown 技术汇报摘要，以及依赖任务的 CycloneDX SBOM。
 
 ## 技术结构
 
@@ -207,10 +223,10 @@ React + Vite
       ↓ /api/v1
 FastAPI 扫描网关
       ├─ /api/v1 统一成功/错误契约
-      ├─ Skill Scanner 独立运行时 + Aegis Static/Network/Filesystem/Command Context
+      ├─ Skill Scanner 独立运行时 + Aegis Static/Flow/Enterprise/Coverage/Context
       ├─ 管理员动态 Fixture API（固定内置样本、异步、INFO-only）
-      ├─ MCP Scanner 独立运行时
-      ├─ pip-audit 依赖链路
+      ├─ MCP Scanner + Aegis MCP Capability Policy
+      ├─ pip-audit + Aegis Dependency Integrity/CycloneDX
       ├─ YAML 准入策略与 policy_trace
       └─ SQLite 结果历史
 ```

@@ -2,10 +2,10 @@
 
 > 应用版本：`1.2.0`  
 > API 版本：`v1`  
-> 扫描结果 schema：`1.1`  
+> 扫描结果 schema：`1.2`  
 > 默认策略：`aegis-chain-local-default@1.0.0`  
-> 完成日期：2026-08-10  
-> 状态：已实现、已测试、已完成真实扫描回归
+> 更新日期：2026-08-21  
+> 状态：已实现、已测试、静态审计冻结候选
 
 ## 1. 使用原则
 
@@ -52,7 +52,7 @@ http://127.0.0.1:8000
 }
 ```
 
-扫描任务位于 `data` 中，其自身包含 `schema_version: "1.1"`。
+扫描任务位于 `data` 中，其自身包含 `schema_version: "1.2"`。依赖任务以及带 `requirements` 的 MCP 任务还可包含可选 `sbom`。
 
 ### 3.2 错误响应
 
@@ -71,7 +71,7 @@ http://127.0.0.1:8000
 
 ### 3.3 导出响应例外
 
-`/api/v1/scans/{job_id}/export` 成功时直接下载 JSON 或 Markdown 文件，因此不使用成功 envelope。导出失败仍使用 v1 错误格式。
+`/api/v1/scans/{job_id}/export` 成功时直接下载 JSON、Markdown 或 CycloneDX SBOM 文件，因此不使用成功 envelope。导出失败仍使用 v1 错误格式。
 
 ## 4. 接口清单
 
@@ -85,7 +85,7 @@ http://127.0.0.1:8000
 | POST | `/api/v1/scans/dependency` | 202 | 初始 `ScanJob` |
 | GET | `/api/v1/scans?limit=20` | 200 | 最近任务列表 |
 | GET | `/api/v1/scans/{job_id}` | 200 | 单个任务状态与结果 |
-| GET | `/api/v1/scans/{job_id}/export?format=json|md` | 200 | 下载文件 |
+| GET | `/api/v1/scans/{job_id}/export?format=json|md|sbom` | 200 | 下载扫描结果、报告或 CycloneDX 清单 |
 | POST | `/api/v1/admin/dynamic-audits` | 202 | 初始 `DynamicAuditJob` |
 | GET | `/api/v1/admin/dynamic-audits?limit=20` | 200 | 最近动态验证任务 |
 | GET | `/api/v1/admin/dynamic-audits/{job_id}` | 200 | 动态验证状态与脱敏证据 |
@@ -152,7 +152,7 @@ curl.exe -X POST "http://127.0.0.1:8000/api/v1/scans/dependency" `
 {
   "api_version": "v1",
   "data": {
-    "schema_version": "1.1",
+    "schema_version": "1.2",
     "id": "b5ef8d0bb2d14d3a9144c8c0082bfbf8",
     "status": "queued",
     "target_kind": "skill",
@@ -173,6 +173,16 @@ curl.exe -X POST "http://127.0.0.1:8000/api/v1/scans/dependency" `
 ```
 
 示例省略了部分字段。创建时 `decision=UNKNOWN` 只表示任务尚未完成，不代表扫描失败。
+
+### 5.5 依赖 SBOM
+
+依赖扫描完成后，可直接下载 CycloneDX 1.5 JSON：
+
+```powershell
+curl.exe "http://127.0.0.1:8000/api/v1/scans/{job_id}/export?format=sbom" -o result.cdx.json
+```
+
+SBOM 范围是 requirements 中的声明安装集合。静态分析不运行 resolver，不推断直接/传递角色，并写明 `transitive-graph-completeness=not-proven`。对不含 requirements 的任务请求 `sbom` 返回 `400 / SBOM_UNAVAILABLE`。
 
 ## 6. 查询与轮询
 
@@ -209,7 +219,8 @@ curl.exe "http://127.0.0.1:8000/api/v1/scans/{job_id}"
 | 400 | `DYNAMIC_AUDIT_BODY_NOT_ALLOWED` | 动态创建请求包含请求体 | 删除全部自定义参数和请求体 |
 | 503 | `DYNAMIC_AUDIT_NOT_READY` | 固定 fixture 配置不可用 | 检查本地安装完整性，不要改为用户路径 |
 | 404 | `DYNAMIC_AUDIT_NOT_FOUND` | 动态验证任务不存在 | 检查任务 ID 与数据保留状态 |
-| 400 | `EXPORT_FORMAT_UNSUPPORTED` | 导出格式不是 JSON/Markdown | 改用 `json` 或 `md` |
+| 400 | `EXPORT_FORMAT_UNSUPPORTED` | 导出格式不是 JSON/Markdown/SBOM | 改用 `json`、`md` 或 `sbom` |
+| 400 | `SBOM_UNAVAILABLE` | 当前任务没有依赖清单 | 选择依赖任务或带 requirements 的 MCP 任务 |
 | 422 | `REQUEST_VALIDATION_ERROR` | 缺字段、类型或范围错误 | 按 `details` 修正请求 |
 | 500 | `INTERNAL_SERVER_ERROR` | 未捕获的网关内部错误 | 不放行，记录并通知管理员 |
 | 其他 | `HTTP_ERROR` | 其他 HTTP 错误 | 记录状态码、错误码和上下文 |
@@ -233,7 +244,7 @@ curl.exe "http://127.0.0.1:8000/api/v1/scans/{job_id}"
 2. 创建和查询响应从 `body` 改为读取 `body.data`；
 3. 接受创建状态码 202；
 4. 错误处理改为读取 `body.error.code`；
-5. 保持对 ScanJob schema `1.1` 的解析；
+5. 保持对 ScanJob schema `1.2` 的解析，并允许 `sbom=null`；
 6. 忽略未来新增的可选字段。
 
 ## 9. 当前安全边界
@@ -246,7 +257,7 @@ curl.exe "http://127.0.0.1:8000/api/v1/scans/{job_id}"
 
 ## 10. 验证证据
 
-- 自动化测试：`58 passed, 0 warnings`；
+- 当前自动化测试与真实冻结结果见 `M3_STATIC_AUDIT_COMPLETION_REPORT.md`；
 - OpenAPI：18 个业务路径，9 个旧接口、9 个 v1 接口，0 个重复 operation ID；
 - 旧 Skill 与 v1 Skill 的哈希、决策、Finding 数量和策略规则完全一致；
 - v1 Skill、MCP、依赖创建均返回 202，并完成真实扫描；

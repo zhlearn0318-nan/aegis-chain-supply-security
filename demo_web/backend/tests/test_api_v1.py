@@ -66,7 +66,7 @@ def test_v1_scan_creation_returns_202_envelope(monkeypatch) -> None:
     assert response.status_code == 202
     assert response.json()["api_version"] == "v1"
     assert response.json()["data"]["id"] == "contract-job"
-    assert response.json()["data"]["schema_version"] == "1.1"
+    assert response.json()["data"]["schema_version"] == "1.2"
 
 
 def test_v1_known_error_has_code_and_old_error_keeps_detail_shape() -> None:
@@ -174,7 +174,7 @@ def test_v1_unsupported_export_format_has_stable_code(monkeypatch) -> None:
 
     assert response.status_code == 400
     assert response.json()["error"]["code"] == "EXPORT_FORMAT_UNSUPPORTED"
-    assert response.json()["error"]["details"]["accepted_formats"] == ["json", "md"]
+    assert response.json()["error"]["details"]["accepted_formats"] == ["json", "md", "sbom"]
 
 
 def test_unknown_api_path_never_falls_through_to_spa_html() -> None:

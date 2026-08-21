@@ -83,7 +83,8 @@ def test_skill_adapter_builds_command_and_parses_json(tmp_path) -> None:
     result = SkillScannerAdapter(scanner=scanner, runner=runner).scan(skill)
 
     assert result.report["results"][0]["skill_name"] == "example"
-    assert result.logs == ["scan complete"]
+    assert result.logs == ["skill-scanner completed: results=1 findings=0 exit_code=0"]
+    assert str(skill) not in " ".join(result.logs)
     assert runner.commands[0][:3] == [str(scanner), "scan", str(skill)]
     assert "--output-json" in runner.commands[0]
 
@@ -96,6 +97,22 @@ def test_skill_adapter_fails_closed_when_output_is_missing(tmp_path) -> None:
 
     with pytest.raises(RuntimeError, match="Skill Scanner failed"):
         SkillScannerAdapter(scanner=scanner, runner=runner).scan(skill)
+
+
+def test_skill_adapter_counts_single_result_report_without_retaining_paths(tmp_path) -> None:
+    scanner = touch(tmp_path / "skill-scanner.exe")
+    skill = tmp_path / "single-result-skill"
+    touch(skill / "SKILL.md", "---\nname: single-result\n---\n")
+
+    def handler(command: list[str]) -> subprocess.CompletedProcess[str]:
+        output = Path(command[command.index("--output-json") + 1])
+        output.write_text(json.dumps({"skill_name": "single-result", "findings": [{"id": "one"}]}), encoding="utf-8")
+        return subprocess.CompletedProcess(command, 0, f"saved to {output}", "")
+
+    result = SkillScannerAdapter(scanner=scanner, runner=FakeRunner(handler)).scan(skill)
+
+    assert result.logs == ["skill-scanner completed: results=1 findings=1 exit_code=0"]
+    assert str(skill) not in " ".join(result.logs)
 
 
 def test_mcp_adapter_builds_wrapper_command_and_parses_json(tmp_path) -> None:
@@ -115,6 +132,8 @@ def test_mcp_adapter_builds_wrapper_command_and_parses_json(tmp_path) -> None:
     result = McpScannerAdapter(python, wrapper, scanner, runner).scan(tools, prompts, resources)
 
     assert result.report["scan_results"][0]["status"] == "completed"
+    assert result.logs == ["mcp-scanner completed: results=1 unsafe=1 exit_code=0"]
+    assert str(tools) not in " ".join(result.logs)
     assert runner.commands[0][:3] == [str(python), str(wrapper), "--scanner"]
     assert runner.commands[0][runner.commands[0].index("--tools") + 1] == str(tools)
 
@@ -130,6 +149,8 @@ def test_dependency_adapter_accepts_pip_audit_risk_exit_code(tmp_path) -> None:
     result = DependencyAuditAdapter(executable, tmp_path / "cache", runner).scan(requirements)
 
     assert result.report == report
+    assert result.logs[0] == "pip-audit completed: dependencies=1 vulnerabilities=0 exit_code=1"
+    assert json.dumps(report) not in " ".join(result.logs)
     assert "--disable-pip" in runner.commands[0]
     assert "--cache-dir" in runner.commands[0]
 

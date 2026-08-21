@@ -452,7 +452,7 @@ v1 普通响应的最外层为 `{"api_version":"v1","data":{...}}`。以下展�
 
 ```json
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "id": "2b32451815a74c5e8aac22c973454608",
   "created_at": "2026-08-07T10:00:00+08:00",
   "updated_at": "2026-08-07T10:00:04+08:00",
@@ -956,7 +956,7 @@ Cisco 官方样例适合作为厂商回归集，不宜单独作为证明自研�
 
 ### 16.1 一分钟表述
 
-> 我们负责智能体供应链安全模块。当前已完成 Cisco Skill、MCP 和依赖扫描的本地复现，并构建了提供 9 个 `/api/v1` 接口的独立准入网关。为避免只靠演示样例，我们在 SkillTrustBench 5,520 条完整数据上完成了可复核离线静态评测：coverage 97.32%、恶意严格召回 71.11%、策略层 loose F1 81.65%。全量结果已经按哈希冻结，并另建 120 条开发集与 600 条封存回归集。只读错误分析把下一步明确为高置信攻击链规则、声明—行为—数据流关联和结构化语义复核；当前 78 项后端测试通过。
+> 我们负责智能体供应链安全模块。当前已完成 Cisco Skill、MCP 和 pip-audit 的本地复现，并构建统一四态准入网关。在 SkillTrustBench 5,520 条全量 Cisco 基线上，我们建立了 120 条开发集与 600 条封存回归集；随后补充 97 个 Aegis 静态规则 ID，覆盖攻击链、敏感/不可信数据流、政企控制、覆盖证明、依赖完整性与 SBOM、MCP 能力策略。静态开发已进入冻结候选，开发过程没有打开 600 条回归集；最终泛化指标将在规则冻结后一次性揭盲产生。
 
 ### 16.2 需要重点强调的创新点
 
@@ -1111,3 +1111,13 @@ Skill 扫描链新增 `aegis-command-context-v1`。它区分命令能力声明�
 最终接受运行 `2026-08-18-safe-dynamic-fixture-dev-v2` 为 3/3 fixture、7/7 机制；策略违规、超时、解析错误、非 INFO、token 泄露、受保护样本读取/执行、互联网连接和决策变化均为 0；完整测试 `136 passed`。
 
 该能力是可信 fixture 的协作式观测器，不是不可信代码沙箱。下一步若接入平台，只允许管理员触发固定 fixture set，不得提供任意脚本路径、上传入口或第三方样本执行。API/UI 必须展示 `not_an_untrusted_code_sandbox=true`、INFO-only 和“后代进程内部行为未观测”等限制。详细报告见 `docs/M3_SAFE_DYNAMIC_FIXTURE_V1_REPORT.md`。
+
+## 2026-08-21 静态审计完成对接增量
+
+静态链路现已覆盖 Skill、MCP 声明和 Python requirements。新增 `aegis-enterprise-controls-v1`、`aegis-static-coverage-v1`、`aegis-dependency-integrity-v1` 与 `aegis-mcp-policy-v1`，连同既有规则共登记 97 个唯一 Aegis ID；注册表与源码由自动测试双向核对。
+
+ScanJob schema 升级到 `1.2`，新增可选 `sbom`。依赖任务或带 requirements 的 MCP 任务可用 `GET /api/v1/scans/{job_id}/export?format=sbom` 下载 CycloneDX 1.5 JSON。清单只覆盖声明安装集合，明确记录未执行 resolver、未证明传递图完整性；接入平台不得把该字段展示为“已完成全依赖图解析”。
+
+当前自动准入仍为确定性规则，不调用大模型。MCP 层不连接/调用真实 Server，Skill 层不执行样本，依赖层不安装包；无法检查的二进制、嵌套归档、未知语言或解析失败会变成覆盖缺口而不是静默安全。
+
+静态开发完成报告和最终复核命令见 `docs/M3_STATIC_AUDIT_COMPLETION_REPORT.md`。600 条封存回归集尚未打开，只有在用户明确授权后才运行一次最终评估。

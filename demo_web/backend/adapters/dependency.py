@@ -31,11 +31,11 @@ class DependencyAuditAdapter:
             "--cache-dir",
             str(self.cache_dir),
         ])
-        logs = collect_logs(completed)
+        raw_logs = collect_logs(completed)
         if completed.returncode not in {0, 1} or not completed.stdout.strip():
             raise RuntimeError(
                 "Dependency audit was incomplete and has been fail-closed: "
-                f"{log_tail(logs)}"
+                f"{log_tail(raw_logs)}"
             )
         try:
             report = json.loads(completed.stdout)
@@ -43,4 +43,13 @@ class DependencyAuditAdapter:
             raise RuntimeError(f"Dependency audit returned invalid JSON: {exc}") from exc
         if not isinstance(report, dict) or not isinstance(report.get("dependencies"), list):
             raise RuntimeError("Dependency audit JSON is missing dependencies")
+        dependencies = report["dependencies"]
+        vulnerability_count = sum(
+            len(item.get("vulns") or []) for item in dependencies if isinstance(item, dict)
+        )
+        # stdout is the full JSON report and can be very large. Findings retain the
+        # normalized evidence; persistent logs keep only bounded operational facts.
+        logs = [
+            f"pip-audit completed: dependencies={len(dependencies)} vulnerabilities={vulnerability_count} exit_code={completed.returncode}"
+        ]
         return AdapterResult(report=report, logs=logs)

@@ -26,12 +26,24 @@ from .adapters import DependencyAuditAdapter, McpScannerAdapter, ProcessRunner, 
 from .analyzers import (
     ANALYZER_ID as AEGIS_STATIC_ANALYZER_ID,
     COMMAND_CONTEXT_ANALYZER_ID,
+    DEPENDENCY_INTEGRITY_ANALYZER_ID,
+    ENTERPRISE_CONTROLS_ANALYZER_ID,
     FILESYSTEM_CONTEXT_ANALYZER_ID,
+    MCP_POLICY_ANALYZER_ID,
     NETWORK_CONTEXT_ANALYZER_ID,
+    SENSITIVE_FLOW_ANALYZER_ID,
+    STATIC_COVERAGE_ANALYZER_ID,
+    UNTRUSTED_EXEC_FLOW_ANALYZER_ID,
     analyze_command_context,
+    analyze_dependency_manifest,
+    analyze_enterprise_controls,
     analyze_filesystem_context,
+    analyze_mcp_objects,
     analyze_network_context,
+    analyze_sensitive_flows,
+    analyze_static_coverage,
     analyze_skill_tree,
+    analyze_untrusted_exec_flows,
 )
 from .api_contract import ErrorCode, GatewayHTTPException
 from .api_v1 import ApiV1Operations, install_api_v1
@@ -86,7 +98,7 @@ MCP_ADAPTER = McpScannerAdapter(
 )
 DEPENDENCY_ADAPTER = DependencyAuditAdapter(
     executable=PIP_AUDIT,
-    cache_dir=DATA_DIR / "pip-audit-cache",
+    cache_dir=DATA_DIR / "cache" / "pip-audit",
     runner=PROCESS_RUNNER,
 )
 
@@ -327,6 +339,7 @@ def complete_scan_job(
     findings: list[dict[str, Any]],
     analyzers: list[str],
     logs: list[str],
+    sbom: dict[str, Any] | None = None,
 ) -> None:
     duration_ms = round((time.perf_counter() - started) * 1000)
     try:
@@ -343,6 +356,7 @@ def complete_scan_job(
             duration_ms=duration_ms,
             error=str(exc),
             logs=logs,
+            sbom=sbom,
         )
         return
     update_job(
@@ -356,6 +370,7 @@ def complete_scan_job(
         duration_ms=duration_ms,
         error=None,
         logs=logs,
+        sbom=sbom,
     )
 
 
@@ -364,6 +379,10 @@ def scan_skill_path(job: dict[str, Any], skill_path: Path) -> None:
     execution = SKILL_ADAPTER.scan(skill_path)
     cisco_findings, cisco_analyzers = normalize_skill(execution.report)
     aegis_findings, aegis_analyzers = analyze_skill_tree(skill_path)
+    sensitive_flow_findings, sensitive_flow_analyzers = analyze_sensitive_flows(skill_path)
+    untrusted_exec_findings, untrusted_exec_analyzers = analyze_untrusted_exec_flows(skill_path)
+    enterprise_findings, enterprise_analyzers = analyze_enterprise_controls(skill_path)
+    coverage_findings, coverage_analyzers = analyze_static_coverage(skill_path)
     network_findings, network_analyzers = analyze_network_context(skill_path, cisco_findings)
     filesystem_findings, filesystem_analyzers = analyze_filesystem_context(
         skill_path, cisco_findings
@@ -372,11 +391,13 @@ def scan_skill_path(job: dict[str, Any], skill_path: Path) -> None:
         skill_path, cisco_findings
     )
     findings = (
-        cisco_findings + aegis_findings + network_findings
+        cisco_findings + aegis_findings + sensitive_flow_findings + untrusted_exec_findings
+        + enterprise_findings + coverage_findings + network_findings
         + filesystem_findings + command_findings
     )
     analyzers = sorted(set(
-        cisco_analyzers + aegis_analyzers + network_analyzers
+        cisco_analyzers + aegis_analyzers + sensitive_flow_analyzers + untrusted_exec_analyzers
+        + enterprise_analyzers + coverage_analyzers + network_analyzers
         + filesystem_analyzers + command_analyzers
     ))
     complete_scan_job(
@@ -392,11 +413,12 @@ def scan_mcp_paths(job: dict[str, Any], tools: Path, prompts: Path, resources: P
     started = time.perf_counter()
     execution = MCP_ADAPTER.scan(tools, prompts, resources)
     findings, analyzers = normalize_mcp(execution.report)
+    policy_findings, policy_analyzers = analyze_mcp_objects(tools, prompts, resources)
     complete_scan_job(
         job,
         started=started,
-        findings=findings,
-        analyzers=analyzers,
+        findings=findings + policy_findings,
+        analyzers=sorted(set(analyzers + policy_analyzers)),
         logs=execution.logs[-4:],
     )
 
@@ -405,12 +427,14 @@ def scan_dependency_path(job: dict[str, Any], requirements: Path) -> None:
     started = time.perf_counter()
     execution = DEPENDENCY_ADAPTER.scan(requirements)
     findings, analyzers = normalize_pip_audit(execution.report)
+    integrity_findings, integrity_analyzers, sbom = analyze_dependency_manifest(requirements)
     complete_scan_job(
         job,
         started=started,
-        findings=findings,
-        analyzers=analyzers,
+        findings=findings + integrity_findings,
+        analyzers=sorted(set(analyzers + integrity_analyzers)),
         logs=execution.logs[-4:],
+        sbom=sbom,
     )
 
 
@@ -420,8 +444,10 @@ def scan_mcp_bundle(job: dict[str, Any], tools: Path, prompts: Path, resources: 
     dependency_execution = DEPENDENCY_ADAPTER.scan(requirements)
     static_findings, static_analyzers = normalize_mcp(static_execution.report)
     dependency_findings, dependency_analyzers = normalize_pip_audit(dependency_execution.report)
-    findings = static_findings + dependency_findings
-    analyzers = sorted(set(static_analyzers + dependency_analyzers))
+    policy_findings, policy_analyzers = analyze_mcp_objects(tools, prompts, resources)
+    integrity_findings, integrity_analyzers, sbom = analyze_dependency_manifest(requirements)
+    findings = static_findings + policy_findings + dependency_findings + integrity_findings
+    analyzers = sorted(set(static_analyzers + policy_analyzers + dependency_analyzers + integrity_analyzers))
     logs = static_execution.logs + dependency_execution.logs
     complete_scan_job(
         job,
@@ -429,6 +455,7 @@ def scan_mcp_bundle(job: dict[str, Any], tools: Path, prompts: Path, resources: 
         findings=findings,
         analyzers=analyzers,
         logs=logs[-6:],
+        sbom=sbom,
     )
 
 
@@ -607,9 +634,9 @@ def health() -> dict[str, Any]:
         "mode": "LOCAL_STATIC_PLUS_TRUSTED_FIXTURE_DYNAMIC",
         "policy": policy_status,
         "engines": [
-            {"id": "skill", "name": "Skill Scanner + Aegis Static/Context", "ready": skill_ready, "version": skill_version, "analyzers": ["static", "bytecode", "pipeline", AEGIS_STATIC_ANALYZER_ID, NETWORK_CONTEXT_ANALYZER_ID, FILESYSTEM_CONTEXT_ANALYZER_ID, COMMAND_CONTEXT_ANALYZER_ID]},
-            {"id": "mcp", "name": "MCP Scanner", "ready": mcp_ready, "version": mcp_version, "analyzers": ["yara", "offline objects"]},
-            {"id": "dependency", "name": "Dependency Audit", "ready": dependency_ready, "version": "pip-audit", "analyzers": ["CVE", "GHSA", "PYSEC"]},
+            {"id": "skill", "name": "Skill Scanner + Aegis Static/Context", "ready": skill_ready, "version": skill_version, "analyzers": ["static", "bytecode", "pipeline", AEGIS_STATIC_ANALYZER_ID, SENSITIVE_FLOW_ANALYZER_ID, UNTRUSTED_EXEC_FLOW_ANALYZER_ID, ENTERPRISE_CONTROLS_ANALYZER_ID, STATIC_COVERAGE_ANALYZER_ID, NETWORK_CONTEXT_ANALYZER_ID, FILESYSTEM_CONTEXT_ANALYZER_ID, COMMAND_CONTEXT_ANALYZER_ID]},
+            {"id": "mcp", "name": "MCP Scanner + Capability Policy", "ready": mcp_ready, "version": mcp_version, "analyzers": ["yara", "offline objects", MCP_POLICY_ANALYZER_ID]},
+            {"id": "dependency", "name": "Dependency Audit + Integrity/SBOM", "ready": dependency_ready, "version": "pip-audit+aegis-v1", "analyzers": ["CVE", "GHSA", "PYSEC", DEPENDENCY_INTEGRITY_ANALYZER_ID]},
             {"id": "dynamic-fixture", "name": "管理员可信样本动态验证", "ready": dynamic_ready, "version": "aegis-safe-dynamic-fixtures-v1", "analyzers": ["Python audit hook", "hash lock", "loopback only", "INFO only"]},
         ],
         "privacy": "上传样本和动态验证工作区在任务结束后删除；历史仅保存脱敏结果，管理员令牌不持久化。",
@@ -780,12 +807,24 @@ def export_scan(job_id: str, format: str = "json"):
         response = JSONResponse(job)
         response.headers["Content-Disposition"] = f'attachment; filename="scan-{job_id}.json"'
         return response
+    if format in {"sbom", "cyclonedx"}:
+        sbom = job.get("sbom")
+        if not isinstance(sbom, dict):
+            raise GatewayHTTPException(
+                400,
+                ErrorCode.SBOM_UNAVAILABLE,
+                "该扫描任务没有依赖清单；仅依赖扫描或带 requirements 的 MCP 扫描可导出 SBOM。",
+                details={"target_kind": job.get("target_kind")},
+            )
+        response = JSONResponse(sbom, media_type="application/vnd.cyclonedx+json")
+        response.headers["Content-Disposition"] = f'attachment; filename="scan-{job_id}.cdx.json"'
+        return response
     if format not in {"md", "markdown"}:
         raise GatewayHTTPException(
             400,
             ErrorCode.EXPORT_FORMAT_UNSUPPORTED,
-            "仅支持 json 或 md",
-            details={"accepted_formats": ["json", "md"]},
+            "仅支持 json、md 或 sbom",
+            details={"accepted_formats": ["json", "md", "sbom"]},
         )
     policy_trace = job.get("policy_trace") or {}
     lines = [
@@ -813,6 +852,23 @@ def export_scan(job_id: str, format: str = "json"):
             f"- 分析器：{finding.get('analyzer')}",
             f"- 位置：{json.dumps(finding.get('location'), ensure_ascii=False)}",
             f"- 证据：{finding.get('evidence') or 'N/A'}", "",
+        ])
+    sbom = job.get("sbom")
+    if isinstance(sbom, dict):
+        components = sbom.get("components") if isinstance(sbom.get("components"), list) else []
+        properties = ((sbom.get("metadata") or {}).get("properties") or [])
+        property_map = {
+            item.get("name"): item.get("value")
+            for item in properties if isinstance(item, dict)
+        }
+        lines.extend([
+            "## 依赖清单（SBOM）", "",
+            f"- 格式：{sbom.get('bomFormat', 'N/A')} {sbom.get('specVersion', '')}".rstrip(),
+            f"- 已声明直接组件：{len(components)}",
+            f"- 清单范围：{property_map.get('aegis:inventory-scope', 'N/A')}",
+            f"- 是否执行传递依赖解析：{property_map.get('aegis:transitive-resolution-performed', 'false')}",
+            f"- 声明安装集合的哈希完整性是否齐全：{property_map.get('aegis:declared-component-integrity-complete', 'false')}",
+            f"- 传递依赖图完整性：{property_map.get('aegis:transitive-graph-completeness', 'not-proven')}", "",
         ])
     response = PlainTextResponse("\n".join(lines), media_type="text/markdown; charset=utf-8")
     response.headers["Content-Disposition"] = f'attachment; filename="scan-{job_id}.md"'
