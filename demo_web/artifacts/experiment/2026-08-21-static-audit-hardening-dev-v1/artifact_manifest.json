@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-21-static-audit-hardening-dev-v1",
+  "artifacts": {
+    "PLAN.md": {"sha256": "d664556dfea282f6754675032b7f87ac9d0413f067c048faad12c361630a250d", "bytes": 4901},
+    "CHECKLIST.md": {"sha256": "c233d6e5c641816d0d5a1ff7ce79e746eb3b2a82ea44c371b1377480f950d8ac", "bytes": 1035},
+    "metrics.json": {"sha256": "c07c0bc8c25a5fea55bccfdd8391c13d094821a4b17e2919bad6bcc7a5930d0e", "bytes": 607},
+    "evaluation_summary.json": {"sha256": "8be4fd2b98dea578c828182514f626dbe7168223acd11b011a0dd9a9224aa7ce", "bytes": 996},
+    "run.log": {"sha256": "b47273b6784e331b1ae225094b562f5d440b0a264cad2f67b3602a5761d0d1d5", "bytes": 2201},
+    "run_manifest.json": {"sha256": "03ea7caa39d01d625438859e25ca76b93dd1c365a896095cb46a1782467e7264", "bytes": 1835},
+    "summary.md": {"sha256": "ebda0bd849e4ed9124eb77ea8f42f4789b561df3d0a58aa6ede18f762a15943a", "bytes": 811},
+    "freeze/verification.json": {"sha256": "c00a8ffe1dc6db987ef90a3d6ab4f313597e9203818cbbc9de991e62bef66021", "bytes": 4174},
+    "freeze/source_manifest.sha256": {"sha256": "4848b3a60bfb70e998fe810c7388436bd38743c93168127c59a1d2a20dbad59c", "bytes": 6815},
+    "freeze/summary.md": {"sha256": "5920ccae021a1780db987e2796296836977cce5658be41af92c8d937c3e78eaa", "bytes": 423},
+    "docs/M3_STATIC_AUDIT_HARDENING_V1_REPORT.md": {"sha256": "d0279ebafe625e806f9f422b4acdf59b5a4b908893e7ef151f08d3c636c0844e", "bytes": 7146}
+  },
+  "claim_boundary": "Development hardening evidence only; 600-case regression content remained sealed and was not used for tuning."
+}

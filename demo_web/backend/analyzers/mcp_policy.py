@@ -26,6 +26,8 @@ FILESYSTEM_MUTATION = re.compile(r"(?i)\b(?:write|overwrite|delete|remove|rename
 FILESYSTEM_READ = re.compile(r"(?i)\b(?:read|list|search|open|access)\b.{0,60}\b(?:file|directory|folder|path)\b|\b(?:file|directory|folder|path)\b.{0,60}\b(?:read|list|search|open|access)\b")
 NETWORK_FETCH = re.compile(r"(?i)\b(?:fetch|request|download|retrieve|open|call|send)\b.{0,60}\b(?:url|uri|endpoint|web|http|network)\b|\b(?:url|uri|endpoint|web|http|network)\b.{0,60}\b(?:fetch|request|download|retrieve|open|call|send)\b")
 SCOPE_GUARD = re.compile(r"(?i)\b(?:allowlist|allow-list|approved (?:root|domain|host|directory)|within (?:the )?(?:approved )?(?:workspace|sandbox|root)|restricted to|scoped to|deny private|block private)\b")
+MACHINE_BOUNDARY_KEY = "x-aegis-boundary"
+BOUNDARY_ENFORCERS = {"mcp_server", "platform_gateway"}
 OVERRIDE = re.compile(r"(?i)(?:ignore|disregard|bypass|override).{0,80}(?:previous|prior|system|developer|security|safety|instruction|check)|system\s+override")
 SENSITIVE_INTENT = re.compile(r"(?i)\b(?:credential|secret|token|password|api[_ -]?key|private[_ -]?key|ssh|environment variable|aws_access_key)\b")
 OUTBOUND_INTENT = re.compile(r"(?i)\b(?:upload|exfiltrat|send|post|transmit|external server|webhook|base64)\b")
@@ -82,6 +84,41 @@ def _schema_fields(schema: Any) -> set[str]:
     return fields
 
 
+def _bounded_scope_values(value: Any, *, hostname: bool = False) -> tuple[str, ...] | None:
+    if not isinstance(value, list) or not value or len(value) > 32:
+        return None
+    normalized: list[str] = []
+    for item in value:
+        if not isinstance(item, str):
+            return None
+        candidate = item.strip()
+        if not candidate or len(candidate) > 253 or "*" in candidate or ".." in candidate:
+            return None
+        if any(ord(character) < 32 for character in candidate):
+            return None
+        if hostname and not re.fullmatch(r"[A-Za-z0-9.-]+", candidate):
+            return None
+        normalized.append(candidate.lower() if hostname else candidate)
+    return tuple(normalized)
+
+
+def _has_machine_boundary(boundary: Any, capability: str) -> bool:
+    """Validate a caller-owned sidecar contract, never an uploaded self-claim."""
+    if not isinstance(boundary, dict) or boundary.get("enforced_by") not in BOUNDARY_ENFORCERS:
+        return False
+    section = boundary.get(capability)
+    if not isinstance(section, dict) or section.get("deny_unlisted") is not True:
+        return False
+    if capability == "filesystem":
+        roots = _bounded_scope_values(section.get("roots"))
+        return bool(roots) and all(root.startswith("workspace://") for root in roots)
+    if capability == "network":
+        hosts = _bounded_scope_values(section.get("allowed_hosts"), hostname=True)
+        schemes = _bounded_scope_values(section.get("allowed_schemes"))
+        return bool(hosts) and bool(schemes) and set(scheme.lower() for scheme in schemes) == {"https"}
+    return False
+
+
 def _has_wildcard_scope(value: Any, parent_key: str = "") -> bool:
     if isinstance(value, dict):
         for key, child in value.items():
@@ -136,8 +173,8 @@ def _issue_finding(issue: McpIssue) -> dict[str, Any]:
     }
     descriptions = {
         "AEGIS_MCP_ARBITRARY_COMMAND_TOOL": "The declared input schema and capability description jointly expose a general command/code execution primitive.",
-        "AEGIS_MCP_UNSCOPED_FILESYSTEM_ACCESS": "A path-controlled file capability has no visible workspace root or allowlist contract.",
-        "AEGIS_MCP_UNRESTRICTED_URL_FETCH": "A caller-controlled URL can reach destinations without a visible host/network allowlist, creating SSRF and data-egress risk.",
+        "AEGIS_MCP_UNSCOPED_FILESYSTEM_ACCESS": "A path-controlled file capability lacks a bounded workspace contract supplied by a trusted platform sidecar. Uploaded fields and natural-language claims do not prove an enforceable root boundary.",
+        "AEGIS_MCP_UNRESTRICTED_URL_FETCH": "A caller-controlled URL lacks a bounded destination contract supplied by a trusted platform sidecar. Uploaded fields and natural-language claims do not prove SSRF or egress enforcement.",
         "AEGIS_MCP_WILDCARD_SCOPE": "A wildcard privilege prevents least-privilege review and may include future capabilities automatically.",
         "AEGIS_MCP_PROMPT_INSTRUCTION_OVERRIDE": "Untrusted MCP metadata or resource content contains instruction-precedence manipulation; sensitive/outbound intent raises severity.",
         "AEGIS_MCP_SENSITIVE_RESOURCE_URI": "The advertised resource points to credentials or security-sensitive operating-system state.",
@@ -199,7 +236,13 @@ def _content_override_issue(item: dict[str, Any], object_type: str, name: str) -
     )
 
 
-def analyze_mcp_objects(tools_path: Path, prompts_path: Path, resources_path: Path) -> tuple[list[dict[str, Any]], list[str]]:
+def analyze_mcp_objects(
+    tools_path: Path,
+    prompts_path: Path,
+    resources_path: Path,
+    *,
+    trusted_boundaries: dict[str, dict[str, Any]] | None = None,
+) -> tuple[list[dict[str, Any]], list[str]]:
     """Statically review MCP declarations without connecting to or invoking an MCP server."""
     tools = _read_objects(tools_path, ("tools",))
     prompts = _read_objects(prompts_path, ("prompts",))
@@ -213,14 +256,46 @@ def analyze_mcp_objects(tools_path: Path, prompts_path: Path, resources_path: Pa
         fields = _schema_fields(schema)
         if fields & COMMAND_PARAMETERS and COMMAND_ACTION.search(text):
             issues.append(McpIssue("AEGIS_MCP_ARBITRARY_COMMAND_TOOL", "CRITICAL", "tool", name, "command_parameter_and_general_execution"))
-        has_guard = bool(SCOPE_GUARD.search(text))
-        if fields & PATH_PARAMETERS and not has_guard:
+        embedded_boundary = item.get(MACHINE_BOUNDARY_KEY)
+        claimed_guard = bool(SCOPE_GUARD.search(text)) or isinstance(embedded_boundary, dict)
+        trusted_boundary = (trusted_boundaries or {}).get(name)
+        filesystem_guard = _has_machine_boundary(trusted_boundary, "filesystem")
+        network_guard = _has_machine_boundary(trusted_boundary, "network")
+        filesystem_claim_evidence = (
+            "uploaded_machine_boundary_without_trusted_sidecar"
+            if isinstance(embedded_boundary, dict)
+            else "text_scope_claim_without_machine_root"
+        )
+        network_claim_evidence = (
+            "uploaded_machine_boundary_without_trusted_sidecar"
+            if isinstance(embedded_boundary, dict)
+            else "text_allowlist_claim_without_machine_policy"
+        )
+        if fields & PATH_PARAMETERS and not filesystem_guard:
             if FILESYSTEM_MUTATION.search(text):
-                issues.append(McpIssue("AEGIS_MCP_UNSCOPED_FILESYSTEM_ACCESS", "HIGH", "tool", name, "caller_path_with_mutation_no_root"))
+                issues.append(McpIssue(
+                    "AEGIS_MCP_UNSCOPED_FILESYSTEM_ACCESS",
+                    "MEDIUM" if claimed_guard else "HIGH",
+                    "tool",
+                    name,
+                    filesystem_claim_evidence if claimed_guard else "caller_path_with_mutation_no_root",
+                ))
             elif FILESYSTEM_READ.search(text):
-                issues.append(McpIssue("AEGIS_MCP_UNSCOPED_FILESYSTEM_ACCESS", "MEDIUM", "tool", name, "caller_path_with_read_no_root"))
-        if fields & URL_PARAMETERS and NETWORK_FETCH.search(text) and not has_guard:
-            issues.append(McpIssue("AEGIS_MCP_UNRESTRICTED_URL_FETCH", "HIGH", "tool", name, "caller_url_without_destination_policy"))
+                issues.append(McpIssue(
+                    "AEGIS_MCP_UNSCOPED_FILESYSTEM_ACCESS",
+                    "MEDIUM",
+                    "tool",
+                    name,
+                    filesystem_claim_evidence if claimed_guard else "caller_path_with_read_no_root",
+                ))
+        if fields & URL_PARAMETERS and NETWORK_FETCH.search(text) and not network_guard:
+            issues.append(McpIssue(
+                "AEGIS_MCP_UNRESTRICTED_URL_FETCH",
+                "MEDIUM" if claimed_guard else "HIGH",
+                "tool",
+                name,
+                network_claim_evidence if claimed_guard else "caller_url_without_destination_policy",
+            ))
         if _has_wildcard_scope(item):
             issues.append(McpIssue("AEGIS_MCP_WILDCARD_SCOPE", "HIGH", "tool", name, "wildcard_capability_scope"))
         override = _content_override_issue(item, "tool", name)

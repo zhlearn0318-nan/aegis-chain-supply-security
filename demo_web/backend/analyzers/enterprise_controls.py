@@ -142,8 +142,6 @@ def _read_documents(skill_root: Path) -> list[TextDocument]:
             continue
         total_bytes += size
         relative = resolved.relative_to(root).as_posix()
-        if _is_test_document(relative):
-            continue
         documents.append(TextDocument(
             relative_path=relative,
             suffix=suffix,
@@ -471,8 +469,16 @@ def _document_hits(document: TextDocument) -> list[RuleHit]:
 
 
 def _finding(hit: RuleHit) -> dict:
+    test_context = _is_test_document(hit.relative_path)
+    context_note = (
+        " Test-context paths remain reviewable until packaging and runtime reachability are independently excluded."
+        if test_context else ""
+    )
+    evidence_codes = list(hit.evidence_codes)
+    if test_context:
+        evidence_codes.append("test_context_unverified_reachability")
     identity = "|".join([
-        hit.rule_id, hit.relative_path, str(hit.line), *hit.evidence_codes,
+        hit.rule_id, hit.relative_path, str(hit.line), *evidence_codes,
     ])
     finding_id = f"{hit.rule_id}_{hashlib.sha256(identity.encode('utf-8')).hexdigest()[:12]}"
     title_map = {
@@ -493,17 +499,17 @@ def _finding(hit: RuleHit) -> dict:
         id=finding_id,
         title=title_map[hit.rule_id],
         category=hit.category,
-        severity=hit.severity,
+        severity="MEDIUM" if test_context else hit.severity,
         analyzer=ANALYZER_ID,
         location={"file": hit.relative_path, "line": hit.line},
         evidence=(
-            f"verified_features={','.join(hit.evidence_codes)}; file={hit.relative_path}; "
+            f"verified_features={','.join(evidence_codes)}; file={hit.relative_path}; "
             "raw_value_retained=false"
         ),
         description=(
             "A deterministic static rule found an enterprise-control violation with explicit "
             "configuration, API, or bounded source-to-sink evidence."
-        ),
+        ) + context_note,
         remediation=(
             "Apply least privilege and an explicit allowlist; preserve audit controls, require "
             "confirmation/containment for destructive actions, enforce verified TLS, and replace "

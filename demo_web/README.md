@@ -2,7 +2,7 @@
 
 本项目是 XA-202620 赛题“供应链安全”模块的本机原型。网页会真实调用已经复现的 Cisco Skill Scanner、MCP Scanner 和依赖漏洞审计链路，不使用伪造扫描结果。
 
-当前已完成 M1.3 的可配置准入策略、`/api/v1` 和前端 v1 适配，并完成 M2 的 SkillTrustBench v1.0 全量 5,520 条评测。全量结果已冻结；另建 120 条开发集与 600 条封存回归集。M3 静态审计开发现已覆盖 Skill、MCP 和 Python 依赖清单：Cisco Scanner/pip-audit 之后叠加 97 个 Aegis 规则 ID，包括攻击链、敏感流、不可信执行流、政企控制、覆盖证明、依赖完整性/SBOM、MCP 能力策略和三个 INFO-only Context。静态代码与开发证据已进入冻结候选，600 条回归集仍封存，等待一次性最终评估。动态部分仍限于自建哈希锁定 fixture，不执行第三方 Skill。
+当前已完成 M1.3 的可配置准入策略、`/api/v1` 和前端 v1 适配，并完成 M2 的 SkillTrustBench v1.0 全量 5,520 条评测。全量结果已冻结；另建 120 条开发集与 600 条封存回归集。M3 静态审计开发现已覆盖 Skill、MCP 和 Python 依赖清单：Cisco Scanner/pip-audit 之后叠加 97 个 Aegis 规则 ID，包括攻击链、敏感流、不可信执行流、政企控制、覆盖证明、依赖完整性/SBOM、MCP 能力策略和三个 INFO-only Context。v1 高优先级加固进一步封闭 MCP 自声明边界、测试目录盲区、ZIP 资源耗尽和厂商原文留存问题；只有平台调用方独立传入的可信 sidecar 才可证明 MCP 边界。后端 `254 passed`、平台固定用例 `20/20`。600 条回归集仍封存，等待一次性最终评估。动态部分仍限于自建哈希锁定 fixture，不执行第三方 Skill。
 
 ## 一键启动
 
@@ -72,6 +72,7 @@ pnpm test
 - M3 Sensitive Flow v1 报告：[`docs/M3_AEGIS_SENSITIVE_FLOW_V1_REPORT.md`](docs/M3_AEGIS_SENSITIVE_FLOW_V1_REPORT.md)
 - M3 Untrusted Execution Flow v1 报告：[`docs/M3_AEGIS_UNTRUSTED_EXEC_FLOW_V1_REPORT.md`](docs/M3_AEGIS_UNTRUSTED_EXEC_FLOW_V1_REPORT.md)
 - M3 静态审计开发完成与冻结报告：[`docs/M3_STATIC_AUDIT_COMPLETION_REPORT.md`](docs/M3_STATIC_AUDIT_COMPLETION_REPORT.md)
+- M3 静态审计加固 v1 报告：[`docs/M3_STATIC_AUDIT_HARDENING_V1_REPORT.md`](docs/M3_STATIC_AUDIT_HARDENING_V1_REPORT.md)
 - Aegis 97 条静态规则注册表：[`config/aegis_rule_registry.json`](config/aegis_rule_registry.json)
 - M3 最小安全动态 Fixture v1 报告：[`docs/M3_SAFE_DYNAMIC_FIXTURE_V1_REPORT.md`](docs/M3_SAFE_DYNAMIC_FIXTURE_V1_REPORT.md)
 - M3 管理员动态验证 API/页面报告：[`docs/M3_ADMIN_DYNAMIC_FIXTURE_API_UI_REPORT.md`](docs/M3_ADMIN_DYNAMIC_FIXTURE_API_UI_REPORT.md)

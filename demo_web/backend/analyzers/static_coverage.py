@@ -37,6 +37,17 @@ def _inside(root: Path, candidate: Path) -> bool:
     return candidate == root or root in candidate.parents
 
 
+def _is_test_document(relative_path: str) -> bool:
+    path = Path(relative_path)
+    parts = {part.lower() for part in path.parts[:-1]}
+    name = path.name.lower()
+    return bool(
+        parts & {"test", "tests", "fixtures", "__tests__"}
+        or name.startswith("test_")
+        or name.endswith(("_test.py", ".test.js", ".test.ts", ".spec.js", ".spec.ts"))
+    )
+
+
 def _gap_finding(gap: CoverageGap) -> dict:
     identity = "|".join([gap.rule_id, gap.relative_path, gap.reason_code])
     finding_id = f"{gap.rule_id}_{hashlib.sha256(identity.encode('utf-8')).hexdigest()[:12]}"
@@ -66,7 +77,7 @@ def _gap_finding(gap: CoverageGap) -> dict:
 def _summary_finding(counts: dict[str, int]) -> dict:
     ordered = [
         "files_total", "security_text_inspected", "non_code_data_counted",
-        "coverage_gap_files", "python_parsed", "python_parse_failed",
+        "test_context_security_text", "coverage_gap_files", "python_parsed", "python_parse_failed",
     ]
     codes = ",".join(f"{key}:{counts[key]}" for key in ordered)
     identity = hashlib.sha256(codes.encode("utf-8")).hexdigest()[:12]
@@ -78,7 +89,7 @@ def _summary_finding(counts: dict[str, int]) -> dict:
         analyzer=ANALYZER_ID,
         location={"file": "SKILL.md"},
         evidence=f"coverage_counts={codes}; raw_value_retained=false",
-        description="A deterministic inventory records the source/config scope inspected and any non-code data counted.",
+        description="A deterministic inventory records source/config files that were readable and parse-eligible, including test-context files; rule-family findings state the actual security conclusions.",
         remediation="Review any accompanying coverage-gap findings before admission.",
         rule_id="AEGIS_STATIC_COVERAGE_SUMMARY",
     )
@@ -95,6 +106,7 @@ def analyze_static_coverage(skill_root: Path) -> tuple[list[dict], list[str]]:
         "files_total": 0,
         "security_text_inspected": 0,
         "non_code_data_counted": 0,
+        "test_context_security_text": 0,
         "coverage_gap_files": 0,
         "python_parsed": 0,
         "python_parse_failed": 0,
@@ -159,6 +171,8 @@ def analyze_static_coverage(skill_root: Path) -> tuple[list[dict], list[str]]:
             ))
             continue
         counts["security_text_inspected"] += 1
+        if _is_test_document(relative):
+            counts["test_context_security_text"] += 1
         if suffix == ".py":
             try:
                 ast.parse(text, filename=relative)

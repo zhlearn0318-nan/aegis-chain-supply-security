@@ -28,7 +28,7 @@ from tools.evaluation.run_skilltrustbench import (  # noqa: E402
 )
 
 
-RUN_ID = "2026-08-21-aegis-static-coverage-dev-v1"
+RUN_ID = "2026-08-22-aegis-static-coverage-dev-v2"
 SPLIT_ID = "2026-08-15-skilltrustbench-dev120-regression600-v1"
 PARENT_ID = "2026-08-14-skilltrustbench-full-cisco-parallel-v1"
 STATIC_ID = "2026-08-16-aegis-static-rules-dev-v4"

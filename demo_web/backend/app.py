@@ -7,6 +7,7 @@ import os
 import secrets
 import shutil
 import sqlite3
+import stat
 import subprocess
 import tempfile
 import time
@@ -82,6 +83,9 @@ MCP_WRAPPER = ROOT / "scripts" / "run_mcp_static.py"
 
 MAX_UPLOAD_BYTES = 15 * 1024 * 1024
 MAX_ZIP_MEMBERS = 500
+MAX_ZIP_TOTAL_UNCOMPRESSED_BYTES = 50 * 1024 * 1024
+MAX_ZIP_COMPRESSION_RATIO = 200
+ZIP_COPY_CHUNK_BYTES = 64 * 1024
 SCAN_TIMEOUT_SECONDS = 150
 
 PROCESS_RUNNER = ProcessRunner(
@@ -561,13 +565,67 @@ def safe_extract_zip(data: bytes, destination: Path) -> Path:
         if len(members) > MAX_ZIP_MEMBERS:
             raise ValueError("ZIP 文件数量超过演示环境限制")
         root = destination.resolve()
+        validated: list[tuple[zipfile.ZipInfo, Path]] = []
+        target_keys: set[str] = set()
+        file_target_keys: set[str] = set()
+        total_uncompressed = 0
         for member in members:
             target = (destination / member.filename).resolve()
             if root not in target.parents and target != root:
                 raise ValueError("ZIP 包含不安全的路径")
+            target_key = str(target).casefold()
+            if target_key in target_keys:
+                raise ValueError("ZIP 包含重复或大小写冲突的路径")
+            target_keys.add(target_key)
+            if member.flag_bits & 0x1:
+                raise ValueError("ZIP 包含加密成员，无法进行完整静态检查")
+            unix_mode = (member.external_attr >> 16) & 0xFFFF
+            file_type = stat.S_IFMT(unix_mode)
+            if file_type not in {0, stat.S_IFREG, stat.S_IFDIR}:
+                raise ValueError("ZIP 包含链接、设备或其他特殊文件")
             if member.file_size > MAX_UPLOAD_BYTES:
                 raise ValueError("ZIP 内单个文件过大")
-        archive.extractall(destination)
+            total_uncompressed += member.file_size
+            if total_uncompressed > MAX_ZIP_TOTAL_UNCOMPRESSED_BYTES:
+                raise ValueError("ZIP 累计展开大小超过演示环境限制")
+            if (
+                member.file_size > 0
+                and member.file_size / max(member.compress_size, 1) > MAX_ZIP_COMPRESSION_RATIO
+            ):
+                raise ValueError("ZIP 成员压缩比异常，疑似压缩炸弹")
+            if not member.is_dir():
+                file_target_keys.add(target_key)
+            validated.append((member, target))
+
+        for _, target in validated:
+            parent = target.parent
+            while parent != root and root in parent.parents:
+                if str(parent).casefold() in file_target_keys:
+                    raise ValueError("ZIP 文件与目录路径发生冲突")
+                parent = parent.parent
+
+        actual_total = 0
+        for member, target in validated:
+            if member.is_dir():
+                target.mkdir(parents=True, exist_ok=True)
+                continue
+            target.parent.mkdir(parents=True, exist_ok=True)
+            member_written = 0
+            try:
+                with archive.open(member, "r") as source, target.open("xb") as destination_file:
+                    while block := source.read(ZIP_COPY_CHUNK_BYTES):
+                        member_written += len(block)
+                        actual_total += len(block)
+                        if member_written > member.file_size:
+                            raise ValueError("ZIP 成员实际展开大小与目录声明不一致")
+                        if actual_total > MAX_ZIP_TOTAL_UNCOMPRESSED_BYTES:
+                            raise ValueError("ZIP 实际累计展开大小超过演示环境限制")
+                        destination_file.write(block)
+                if member_written != member.file_size:
+                    raise ValueError("ZIP 成员实际展开大小与目录声明不一致")
+            except Exception:
+                target.unlink(missing_ok=True)
+                raise
     candidates = list(destination.rglob("SKILL.md"))
     if len(candidates) != 1:
         raise ValueError("ZIP 必须且只能包含一个 SKILL.md")

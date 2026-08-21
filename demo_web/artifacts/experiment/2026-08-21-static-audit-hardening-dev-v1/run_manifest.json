@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-21-static-audit-hardening-dev-v1",
+  "status": "completed",
+  "experiment_tier": "auxiliary/dev",
+  "baseline_commit": "c8e8f960775fff46f2206d6794b874e8fea39375",
+  "branch": "static-audit-v1-hardening",
+  "commands": [
+    ".runtime_mcp313\\Scripts\\python.exe -m pytest demo_web\\backend\\tests -q --basetemp demo_web\\.test-tmp\\hardening-full-v1",
+    ".runtime_mcp313\\Scripts\\python.exe demo_web\\tools\\evaluation\\run_platform_static_controls_development.py",
+    ".runtime_mcp313\\Scripts\\python.exe demo_web\\tools\\evaluation\\run_sensitive_flow_development.py",
+    ".runtime_mcp313\\Scripts\\python.exe demo_web\\tools\\evaluation\\run_untrusted_exec_flow_development.py",
+    ".runtime_mcp313\\Scripts\\python.exe demo_web\\tools\\evaluation\\run_enterprise_controls_development.py",
+    ".runtime_mcp313\\Scripts\\python.exe demo_web\\tools\\evaluation\\run_static_coverage_development.py",
+    ".runtime_mcp313\\Scripts\\python.exe demo_web\\tools\\evaluation\\freeze_static_audit_development.py"
+  ],
+  "config": {
+    "freeze_run_id": "2026-08-22-static-audit-dev-freeze-v8",
+    "superseded_freeze_run_ids": [
+      "2026-08-22-static-audit-dev-freeze-v6",
+      "2026-08-22-static-audit-dev-freeze-v7"
+    ],
+    "development_cases": 120,
+    "sealed_regression_cases": 600,
+    "sample_execution": false,
+    "gpu_required": false
+  },
+  "seed": "not_applicable_deterministic",
+  "environment": {
+    "python": "3.13.14 | packaged by Anaconda, Inc. | MSC v.1942 64 bit",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "node": "v24.15.0",
+    "pnpm": "11.19.0"
+  },
+  "outputs": {
+    "freeze": "artifacts/freeze/2026-08-22-static-audit-dev-freeze-v8",
+    "hardening_report": "docs/M3_STATIC_AUDIT_HARDENING_V1_REPORT.md"
+  },
+  "regression_cases_opened": 0
+}

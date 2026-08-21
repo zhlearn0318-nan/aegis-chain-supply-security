@@ -199,7 +199,7 @@ def test_source_and_sink_cooccurrence_without_flow_does_not_trigger(tmp_path: Pa
     assert findings == []
 
 
-def test_security_fixture_is_not_policy_changing(tmp_path: Path) -> None:
+def test_security_fixture_requires_review_without_proven_unreachability(tmp_path: Path) -> None:
     root = write_skill(tmp_path / "skill", {
         "SKILL.md": "---\nname: security-tests\n---\n",
         "tests/test_injection.py": "\n".join([
@@ -211,7 +211,10 @@ def test_security_fixture_is_not_policy_changing(tmp_path: Path) -> None:
 
     findings, _ = analyze_untrusted_exec_flows(root)
 
-    assert findings == []
+    assert len(findings) == 1
+    assert findings[0]["severity"] == "MEDIUM"
+    assert "test_context_unverified_reachability" in findings[0]["evidence"]
+    assert evaluate_findings(findings).decision.value == "REVIEW"
 
 
 def test_javascript_request_body_to_execsync_is_detected(tmp_path: Path) -> None:

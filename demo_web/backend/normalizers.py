@@ -1,10 +1,45 @@
 from __future__ import annotations
 
-import uuid
+import hashlib
+import json
+import re
 from typing import Any
 
 from .models import Finding
 from .policy import parse_severity
+
+
+IDENTIFIER = re.compile(r"[A-Za-z0-9_.:@/-]{1,160}")
+
+
+def _digest(value: Any) -> str:
+    if isinstance(value, str):
+        encoded = value
+    else:
+        try:
+            encoded = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+        except (TypeError, ValueError):
+            encoded = repr(value)
+    return hashlib.sha256(encoded.encode("utf-8", errors="replace")).hexdigest()
+
+
+def _safe_identifier(value: Any, fallback: str) -> str:
+    candidate = str(value or "").strip()
+    return candidate if IDENTIFIER.fullmatch(candidate) else fallback
+
+
+def _safe_location(value: Any, fallback: str | None = None, limit: int = 512) -> str | None:
+    if value is None:
+        return fallback
+    candidate = "".join(character for character in str(value) if ord(character) >= 32).strip()
+    return candidate[:limit] or fallback
+
+
+def _vendor_evidence(signal: str, raw: Any) -> str:
+    return (
+        f"vendor_signal={_safe_identifier(signal, 'vendor_finding')}; "
+        f"evidence_sha256={_digest(raw)}; raw_content_retained=false"
+    )
 
 
 def finding_dict(**values: Any) -> dict[str, Any]:
@@ -21,24 +56,41 @@ def normalize_skill(report: dict[str, Any]) -> tuple[list[dict[str, Any]], list[
         raise RuntimeError("Skill Scanner returned no result objects")
     normalized: list[dict[str, Any]] = []
     analyzers: set[str] = set()
-    for result in results:
-        analyzers.update(result.get("analyzers_used") or [])
-        for finding in result.get("findings") or []:
+    for result_index, result in enumerate(results):
+        analyzers.update(
+            _safe_identifier(item, "skill-scanner")
+            for item in (result.get("analyzers_used") or [])
+        )
+        skill_reference = f"skill-{result_index + 1}-{_digest(result.get('skill_name'))[:12]}"
+        for finding_index, finding in enumerate(result.get("findings") or []):
+            rule_id = _safe_identifier(
+                finding.get("rule_id") or finding.get("id"),
+                "VENDOR_SKILL_FINDING",
+            )
+            raw_evidence = finding.get("snippet") or finding.get("description") or ""
+            finding_identity = {
+                "result": result_index,
+                "finding": finding_index,
+                "rule_id": rule_id,
+                "file": finding.get("file_path"),
+                "line": finding.get("line_number"),
+                "evidence_sha256": _digest(raw_evidence),
+            }
             normalized.append(finding_dict(
-                id=finding.get("id") or finding.get("rule_id") or uuid.uuid4().hex,
-                title=finding.get("title") or "Skill static finding",
-                category=finding.get("category") or "unknown",
+                id=f"vendor-skill-{_digest(finding_identity)[:20]}",
+                title="Skill scanner reported a static security risk",
+                category="vendor_skill_finding",
                 severity=finding.get("severity"),
-                analyzer=finding.get("analyzer") or "skill-scanner",
+                analyzer=_safe_identifier(finding.get("analyzer"), "skill-scanner"),
                 location={
-                    "file": finding.get("file_path"),
+                    "file": _safe_location(finding.get("file_path")),
                     "line": finding.get("line_number"),
-                    "object": result.get("skill_name"),
+                    "object": skill_reference,
                 },
-                evidence=finding.get("snippet") or finding.get("description") or "",
-                description=finding.get("description") or "",
-                remediation=finding.get("remediation") or "",
-                rule_id=finding.get("rule_id"),
+                evidence=_vendor_evidence(rule_id, raw_evidence),
+                description="The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+                remediation="Review the referenced source location and apply the control associated with the vendor rule before admission.",
+                rule_id=rule_id,
             ))
     return normalized, sorted(analyzers)
 
@@ -49,15 +101,18 @@ def normalize_mcp(report: dict[str, Any]) -> tuple[list[dict[str, Any]], list[st
         raise RuntimeError("MCP Scanner returned no scan results")
     normalized: list[dict[str, Any]] = []
     analyzers: set[str] = set()
-    for item in results:
+    for item_index, item in enumerate(results):
         if item.get("status") not in {None, "completed"}:
             raise RuntimeError(f"MCP item did not complete: {item.get('status')}")
-        item_name = (
+        raw_item_name = (
             item.get("tool_name") or item.get("prompt_name") or
             item.get("resource_name") or item.get("resource_uri") or "MCP object"
         )
+        item_type = _safe_identifier(item.get("item_type"), "mcp_object")
+        item_name = f"{item_type}-{item_index + 1}-{_digest(raw_item_name)[:12]}"
         for analyzer, details in (item.get("findings") or {}).items():
-            analyzers.add(analyzer)
+            analyzer_id = _safe_identifier(analyzer, "mcp-scanner")
+            analyzers.add(analyzer_id)
             if not isinstance(details, dict):
                 continue
             total = int(details.get("total_findings") or 0)
@@ -65,18 +120,26 @@ def normalize_mcp(report: dict[str, Any]) -> tuple[list[dict[str, Any]], list[st
             if total == 0 and not names:
                 continue
             for index, name in enumerate(names or ["MCP security finding"]):
+                raw_evidence = (
+                    item.get("tool_description") or item.get("prompt_description") or
+                    details.get("threat_summary") or ""
+                )
+                identity = {
+                    "item": item_index,
+                    "finding": index,
+                    "analyzer": analyzer_id,
+                    "name_sha256": _digest(name),
+                    "evidence_sha256": _digest(raw_evidence),
+                }
                 normalized.append(finding_dict(
-                    id=f"{analyzer}-{item_name}-{index}",
-                    title=str(name).title(),
-                    category=str(name).lower().replace(" ", "_"),
+                    id=f"vendor-mcp-{_digest(identity)[:20]}",
+                    title="MCP scanner reported a security risk",
+                    category="vendor_mcp_finding",
                     severity=details.get("severity"),
-                    analyzer=analyzer,
-                    location={"object": item_name, "type": item.get("item_type")},
-                    evidence=(
-                        item.get("tool_description") or item.get("prompt_description") or
-                        details.get("threat_summary") or ""
-                    ),
-                    description=details.get("threat_summary") or "",
+                    analyzer=analyzer_id,
+                    location={"object": item_name, "type": item_type},
+                    evidence=_vendor_evidence("mcp_vendor_finding", raw_evidence),
+                    description="The vendor scanner reported an MCP metadata or capability risk; raw object content is deliberately not retained.",
                     remediation="Review the MCP object description and remove untrusted instructions or excessive capabilities.",
                     rule_id=None,
                 ))
@@ -100,8 +163,11 @@ def normalize_dependencies(report: list[dict[str, Any]]) -> tuple[list[dict[str,
             severity=details.get("severity") or "HIGH",
             analyzer="vulnerable_package_analyzer",
             location={"object": item.get("package_name"), "type": "dependency"},
-            evidence=item.get("vulnerability_description") or details.get("threat_summary") or "",
-            description=details.get("threat_summary") or "Known dependency vulnerability",
+            evidence=_vendor_evidence(
+                "dependency_vulnerability",
+                item.get("vulnerability_description") or details.get("threat_summary") or "",
+            ),
+            description="The dependency scanner reported a known package vulnerability; raw scanner text is deliberately not retained.",
             remediation="Upgrade to a fixed package version and regenerate the lock file.",
             rule_id=None,
         ))

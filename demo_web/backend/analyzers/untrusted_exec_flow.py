@@ -108,8 +108,6 @@ def _read_documents(skill_root: Path) -> list[TextDocument]:
             continue
         total_bytes += size
         relative_path = resolved.relative_to(root).as_posix()
-        if _is_test_document(relative_path):
-            continue
         documents.append(TextDocument(
             relative_path=relative_path,
             suffix=suffix,
@@ -572,7 +570,14 @@ def _javascript_flow_hits(document: TextDocument) -> list[FlowHit]:
 
 
 def _finding(hit: FlowHit) -> dict:
+    test_context = _is_test_document(hit.relative_path)
+    context_note = (
+        " Test-context paths remain reviewable because a packaged Skill can import or invoke them."
+        if test_context else ""
+    )
     evidence_codes = [*hit.source_kinds, hit.sink_kind, "exact_variable_flow"]
+    if test_context:
+        evidence_codes.append("test_context_unverified_reachability")
     identity = "|".join([
         hit.rule_id, hit.relative_path, str(hit.line), *evidence_codes,
     ])
@@ -591,7 +596,7 @@ def _finding(hit: FlowHit) -> dict:
         id=finding_id,
         title=titles[hit.rule_id],
         category=categories[hit.rule_id],
-        severity=hit.severity,
+        severity="MEDIUM" if test_context else hit.severity,
         analyzer=ANALYZER_ID,
         location={"file": hit.relative_path, "line": hit.line},
         evidence=(
@@ -602,7 +607,7 @@ def _finding(hit: FlowHit) -> dict:
             "A bounded static variable-flow trace links explicit external input or model output "
             "to a shell, dynamic-code, dynamic-module, or executable-selection sink. Fixed executable "
             "argument arrays do not trigger this rule family."
-        ),
+        ) + context_note,
         remediation=(
             "Replace dynamic execution with an allowlisted operation map; keep shell disabled, use a "
             "fixed executable and typed argv, validate every parameter, and require explicit approval "

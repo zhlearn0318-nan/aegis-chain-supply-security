@@ -176,7 +176,7 @@ def test_javascript_authorization_header_only_does_not_trigger(tmp_path: Path) -
     assert findings == []
 
 
-def test_security_test_fixture_is_not_policy_changing(tmp_path: Path) -> None:
+def test_security_test_fixture_requires_review_without_proven_unreachability(tmp_path: Path) -> None:
     root = write_skill(tmp_path / "skill", {
         "SKILL.md": "---\nname: security-tests\n---\n",
         "tests/test_exfil.py": "\n".join([
@@ -188,7 +188,10 @@ def test_security_test_fixture_is_not_policy_changing(tmp_path: Path) -> None:
 
     findings, _ = analyze_sensitive_flows(root)
 
-    assert findings == []
+    assert len(findings) == 1
+    assert findings[0]["severity"] == "MEDIUM"
+    assert "test_context_unverified_reachability" in findings[0]["evidence"]
+    assert evaluate_findings(findings).decision.value == "REVIEW"
 
 
 def test_sensitive_flow_finding_ids_are_deterministic(tmp_path: Path) -> None:
@@ -248,4 +251,3 @@ def test_scan_skill_path_exposes_sensitive_flow_analyzer_and_blocks(
     assert job["decision"] == "BLOCK"
     assert ANALYZER_ID in job["analyzers"]
     assert any(item["analyzer"] == ANALYZER_ID for item in job["findings"])
-

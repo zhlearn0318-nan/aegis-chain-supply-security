@@ -21,7 +21,7 @@ from backend.app import DEPENDENCY_ADAPTER, MCP_ADAPTER
 from backend.policy import evaluate_findings
 
 
-RUN_ID = "2026-08-21-aegis-platform-static-controls-dev-v3"
+RUN_ID = "2026-08-22-aegis-platform-static-controls-dev-v5"
 ARTIFACT_DIR = DEMO_ROOT / "artifacts" / "experiment" / RUN_ID
 HASH_A = "a" * 64
 
@@ -53,7 +53,33 @@ def mcp_cases() -> list[dict[str, Any]]:
     return [
         {
             "id": "mcp_scoped_safe", "decision": "ALLOW", "rules": ["AEGIS_MCP_CAPABILITY_SUMMARY"],
+            "tools": [{
+                "name": "read_report",
+                "description": "Read a path within the approved workspace root.",
+                "inputSchema": {"properties": {"path": {"type": "string"}}},
+            }],
+            "trusted_boundaries": {
+                "read_report": {
+                    "enforced_by": "platform_gateway",
+                    "filesystem": {"roots": ["workspace://reports"], "deny_unlisted": True},
+                },
+            },
+        },
+        {
+            "id": "mcp_text_claim_only", "decision": "REVIEW", "rules": ["AEGIS_MCP_UNSCOPED_FILESYSTEM_ACCESS"],
             "tools": [{"name": "read_report", "description": "Read a path within the approved workspace root.", "inputSchema": {"properties": {"path": {"type": "string"}}}}],
+        },
+        {
+            "id": "mcp_uploaded_boundary_only", "decision": "REVIEW", "rules": ["AEGIS_MCP_UNSCOPED_FILESYSTEM_ACCESS"],
+            "tools": [{
+                "name": "read_report",
+                "description": "Read a path within the approved workspace root.",
+                "inputSchema": {"properties": {"path": {"type": "string"}}},
+                "x-aegis-boundary": {
+                    "enforced_by": "platform_gateway",
+                    "filesystem": {"roots": ["workspace://reports"], "deny_unlisted": True},
+                },
+            }],
         },
         {
             "id": "mcp_arbitrary_command", "decision": "BLOCK", "rules": ["AEGIS_MCP_ARBITRARY_COMMAND_TOOL"],
@@ -119,8 +145,9 @@ def run() -> int:
             paths[0].write_text(json.dumps({"tools": case.get("tools", [])}), encoding="utf-8")
             paths[1].write_text(json.dumps({"prompts": case.get("prompts", [])}), encoding="utf-8")
             paths[2].write_text(json.dumps({"contents": case.get("resources", [])}), encoding="utf-8")
-            first = analyze_mcp_objects(*paths)
-            second = analyze_mcp_objects(*paths)
+            trusted_boundaries = case.get("trusted_boundaries")
+            first = analyze_mcp_objects(*paths, trusted_boundaries=trusted_boundaries)
+            second = analyze_mcp_objects(*paths, trusted_boundaries=trusted_boundaries)
             findings, _ = first
             observed = evaluate_findings(findings).decision.value
             missing = sorted(set(case["rules"]) - finding_rules(findings))

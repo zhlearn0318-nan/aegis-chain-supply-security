@@ -106,8 +106,6 @@ def _read_documents(skill_root: Path) -> list[TextDocument]:
             continue
         total_bytes += size
         relative_path = resolved.relative_to(root).as_posix()
-        if _is_test_document(relative_path):
-            continue
         documents.append(TextDocument(
             relative_path=relative_path,
             suffix=suffix,
@@ -427,7 +425,14 @@ def _javascript_flow_hits(document: TextDocument) -> list[FlowHit]:
 
 
 def _finding(hit: FlowHit) -> dict:
+    test_context = _is_test_document(hit.relative_path)
+    context_note = (
+        " Test-context paths remain reviewable because a packaged Skill can import or invoke them."
+        if test_context else ""
+    )
     evidence_codes = [*hit.source_kinds, hit.sink_kind, "exact_variable_flow"]
+    if test_context:
+        evidence_codes.append("test_context_unverified_reachability")
     identity = "|".join([
         hit.rule_id, hit.relative_path, str(hit.line), *evidence_codes,
     ])
@@ -440,21 +445,21 @@ def _finding(hit: FlowHit) -> dict:
             if credential else "Sensitive data reaches an outbound payload sink"
         ),
         category="credential_exfiltration" if credential else "sensitive_data_exfiltration",
-        severity=hit.severity,
+        severity="MEDIUM" if test_context else hit.severity,
         analyzer=ANALYZER_ID,
         location={"file": hit.relative_path, "line": hit.line},
         evidence=(
             f"verified_flow={','.join(evidence_codes)}; file={hit.relative_path}; "
             "raw_value_retained=false"
         ),
-        description=(
+        description=((
             "A bounded static variable-flow trace links a credential or credential-file source "
             "to an outbound request, upload, message, or socket payload. Authentication-header-only "
             "usage is excluded from this rule."
             if credential else
             "A bounded static variable-flow trace links environment or sensitive-file data to an "
             "outbound request, upload, message, or socket payload."
-        ),
+        ) + context_note),
         remediation=(
             "Remove credential disclosure; keep credentials in approved authentication fields, "
             "apply a destination allowlist, minimize transmitted fields, and require explicit review."

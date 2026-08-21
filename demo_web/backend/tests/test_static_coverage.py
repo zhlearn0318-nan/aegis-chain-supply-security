@@ -43,6 +43,17 @@ def test_valid_source_has_info_summary_and_allows(tmp_path: Path) -> None:
     assert evaluate_findings(findings).decision.value == "ALLOW"
 
 
+def test_test_context_is_counted_separately(tmp_path: Path) -> None:
+    root = write_skill(tmp_path / "skill", {
+        "SKILL.md": "---\nname: test-context\n---\n",
+        "tests/test_security.py": "print('fixture')\n",
+    })
+
+    findings, _ = analyze_static_coverage(root)
+
+    assert "test_context_security_text:1" in findings[0]["evidence"]
+
+
 def test_large_code_file_requires_review(tmp_path: Path) -> None:
     root = write_skill(tmp_path / "skill", {
         "SKILL.md": "---\nname: large-code\n---\n",

@@ -49,14 +49,30 @@ def test_normal_scoped_objects_are_allow_with_coverage_summary(tmp_path: Path) -
         resources=[{"name": "notice", "uri": "https://intranet.invalid/public/notice"}],
     )
 
-    findings, analyzers = analyze_mcp_objects(*paths)
+    findings, analyzers = analyze_mcp_objects(
+        *paths,
+        trusted_boundaries={
+            "read_workspace_report": {
+                "enforced_by": "platform_gateway",
+                "filesystem": {"roots": ["workspace://reports"], "deny_unlisted": True},
+            },
+            "fetch_policy": {
+                "enforced_by": "mcp_server",
+                "network": {
+                    "allowed_hosts": ["intranet.invalid"],
+                    "allowed_schemes": ["https"],
+                    "deny_unlisted": True,
+                },
+            },
+        },
+    )
 
     assert analyzers == [ANALYZER_ID]
     assert set(rules(findings)) == {"AEGIS_MCP_CAPABILITY_SUMMARY"}
     assert evaluate_findings(findings).decision.value == "ALLOW"
 
 
-def test_within_approved_workspace_phrase_is_a_scope_guard(tmp_path: Path) -> None:
+def test_within_approved_workspace_phrase_alone_requires_review(tmp_path: Path) -> None:
     paths = write_objects(tmp_path, tools=[{
         "name": "read_report",
         "description": "Read a path within the approved workspace root.",
@@ -65,8 +81,51 @@ def test_within_approved_workspace_phrase_is_a_scope_guard(tmp_path: Path) -> No
 
     findings, _ = analyze_mcp_objects(*paths)
 
-    assert set(rules(findings)) == {"AEGIS_MCP_CAPABILITY_SUMMARY"}
-    assert evaluate_findings(findings).decision.value == "ALLOW"
+    observed = rules(findings)
+    assert "AEGIS_MCP_UNSCOPED_FILESYSTEM_ACCESS" in observed
+    assert observed["AEGIS_MCP_UNSCOPED_FILESYSTEM_ACCESS"][0]["severity"] == "MEDIUM"
+    assert "text_scope_claim_without_machine_root" in observed["AEGIS_MCP_UNSCOPED_FILESYSTEM_ACCESS"][0]["evidence"]
+    assert evaluate_findings(findings).decision.value == "REVIEW"
+
+
+def test_uploaded_machine_boundary_without_trusted_sidecar_requires_review(tmp_path: Path) -> None:
+    paths = write_objects(tmp_path, tools=[{
+        "name": "read_report",
+        "description": "Read a path within the approved workspace root.",
+        "inputSchema": {"properties": {"path": {"type": "string"}}},
+        "x-aegis-boundary": {
+            "enforced_by": "platform_gateway",
+            "filesystem": {"roots": ["workspace://reports"], "deny_unlisted": True},
+        },
+    }])
+
+    findings, _ = analyze_mcp_objects(*paths)
+
+    observed = rules(findings)["AEGIS_MCP_UNSCOPED_FILESYSTEM_ACCESS"][0]
+    assert observed["severity"] == "MEDIUM"
+    assert "uploaded_machine_boundary_without_trusted_sidecar" in observed["evidence"]
+    assert evaluate_findings(findings).decision.value == "REVIEW"
+
+
+def test_wildcard_machine_boundary_does_not_suppress_url_finding(tmp_path: Path) -> None:
+    paths = write_objects(tmp_path, tools=[{
+        "name": "fetch_anywhere",
+        "description": "Fetch a URL restricted to an approved allowlist.",
+        "inputSchema": {"properties": {"url": {"type": "string"}}},
+        "x-aegis-boundary": {
+            "enforced_by": "mcp_server",
+            "network": {
+                "allowed_hosts": ["*.invalid"],
+                "allowed_schemes": ["https"],
+                "deny_unlisted": True,
+            },
+        },
+    }])
+
+    findings, _ = analyze_mcp_objects(*paths)
+
+    assert "AEGIS_MCP_UNRESTRICTED_URL_FETCH" in rules(findings)
+    assert evaluate_findings(findings).decision.value == "REVIEW"
 
 
 def test_arbitrary_command_tool_is_critical(tmp_path: Path) -> None:

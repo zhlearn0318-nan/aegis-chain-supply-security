@@ -222,13 +222,16 @@ def test_yaml_safe_loader_does_not_trigger(tmp_path: Path) -> None:
     assert findings == []
 
 
-def test_test_fixture_is_excluded(tmp_path: Path) -> None:
+def test_test_fixture_requires_review_without_proven_unreachability(tmp_path: Path) -> None:
     root = write_skill(tmp_path / "skill", {
         "SKILL.md": "---\nname: controls-tests\n---\n",
         "tests/test_controls.py": "import os\nos.chmod('/tmp/example', 0o777)\n",
     })
     findings, _ = analyze_enterprise_controls(root)
-    assert findings == []
+    assert len(findings) == 1
+    assert findings[0]["severity"] == "MEDIUM"
+    assert "test_context_unverified_reachability" in findings[0]["evidence"]
+    assert evaluate_findings(findings).decision.value == "REVIEW"
 
 
 def test_findings_are_deterministic_and_do_not_retain_raw_values(tmp_path: Path) -> None:

@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-21-static-audit-hardening-dev-v1",
+  "backend_passed": 254,
+  "frontend_passed": 9,
+  "build_pass": true,
+  "hardening_gates": 7,
+  "hardening_gates_total": 7,
+  "platform_cases_passed": 20,
+  "platform_cases_total": 20,
+  "visible_development_cases": 120,
+  "normal_upgrades": 0,
+  "enterprise_correct_control_changes": 0,
+  "static_coverage_summaries": 120,
+  "source_manifest_inputs": 68,
+  "source_manifest_hash_mismatches": 0,
+  "sealed_regression_opened": 0,
+  "sealed_regression_hash_intact": true,
+  "freeze_status": "accepted_development_freeze"
+}

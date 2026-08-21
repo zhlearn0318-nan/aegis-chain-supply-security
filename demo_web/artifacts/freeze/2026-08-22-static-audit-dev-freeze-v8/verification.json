@@ -1,0 +1,142 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-22-static-audit-dev-freeze-v8",
+  "status": "accepted_development_freeze",
+  "rule_registry_count": 97,
+  "rule_source_count": 97,
+  "gates": {
+    "backend_tests_pass": true,
+    "frontend_tests_pass": true,
+    "frontend_production_build_pass": true,
+    "registry_exact": true,
+    "safe_skill_allow": true,
+    "risky_skill_block": true,
+    "mixed_mcp_block": true,
+    "risky_dependency_block": true,
+    "cyclonedx_generated": true,
+    "dependency_raw_report_not_logged": true,
+    "success_logs_contain_no_absolute_paths": true,
+    "skill_success_log_counts_are_accurate": true,
+    "mcp_prose_claim_requires_review": true,
+    "mcp_uploaded_boundary_requires_review": true,
+    "mcp_trusted_sidecar_preserves_allow": true,
+    "test_context_code_requires_review": true,
+    "zip_total_expansion_rejected": true,
+    "zip_abnormal_ratio_rejected": true,
+    "vendor_raw_content_not_retained": true,
+    "sealed_regression_untouched": true
+  },
+  "automated_validation": {
+    "backend": {
+      "exit_code": 0,
+      "passed": 254
+    },
+    "frontend_test": {
+      "exit_code": 0,
+      "passed": 9
+    },
+    "frontend_build": {
+      "exit_code": 0,
+      "completed": true
+    }
+  },
+  "hardening_checks": {
+    "mcp_prose_claim_requires_review": true,
+    "mcp_uploaded_boundary_requires_review": true,
+    "mcp_trusted_sidecar_preserves_allow": true,
+    "test_context_code_requires_review": true,
+    "zip_total_expansion_rejected": true,
+    "zip_abnormal_ratio_rejected": true,
+    "vendor_raw_content_not_retained": true
+  },
+  "real_scans": {
+    "skill_safe": {
+      "decision": "ALLOW",
+      "finding_count": 5,
+      "risk_rule_ids": [],
+      "analyzers": [
+        "aegis-command-context-v1",
+        "aegis-enterprise-controls-v1",
+        "aegis-filesystem-context-v1",
+        "aegis-network-context-v1",
+        "aegis-sensitive-flow-v1",
+        "aegis-static-coverage-v1",
+        "aegis-static-v1",
+        "aegis-untrusted-exec-flow-v1",
+        "bytecode",
+        "pipeline",
+        "static_analyzer"
+      ],
+      "logs": [
+        "skill-scanner completed: results=1 findings=1 exit_code=0"
+      ]
+    },
+    "skill_risky": {
+      "decision": "BLOCK",
+      "finding_count": 9,
+      "risk_rule_ids": [
+        "AEGIS_CREDENTIAL_IN_OUTBOUND_PAYLOAD",
+        "DATA_EXFIL_HTTP_POST",
+        "SOCIAL_ENG_MISLEADING_DESC",
+        "TOOL_ABUSE_UNDECLARED_NETWORK"
+      ],
+      "analyzers": [
+        "aegis-command-context-v1",
+        "aegis-enterprise-controls-v1",
+        "aegis-filesystem-context-v1",
+        "aegis-network-context-v1",
+        "aegis-sensitive-flow-v1",
+        "aegis-static-coverage-v1",
+        "aegis-static-v1",
+        "aegis-untrusted-exec-flow-v1",
+        "bytecode",
+        "pipeline",
+        "static_analyzer"
+      ],
+      "logs": [
+        "skill-scanner completed: results=1 findings=4 exit_code=0"
+      ]
+    },
+    "mcp_mixed": {
+      "decision": "BLOCK",
+      "finding_count": 11,
+      "object_results": 6,
+      "risk_rule_ids": [
+        "AEGIS_MCP_PROMPT_INSTRUCTION_OVERRIDE"
+      ],
+      "analyzers": [
+        "aegis-mcp-policy-v1",
+        "yara_analyzer"
+      ],
+      "logs": [
+        "mcp-scanner completed: results=6 unsafe=3 exit_code=0"
+      ]
+    },
+    "dependency_risky": {
+      "decision": "BLOCK",
+      "finding_count": 16,
+      "vulnerability_records": 14,
+      "sbom_format": "CycloneDX",
+      "sbom_components": 1,
+      "raw_report_retained_in_logs": false,
+      "analyzers": [
+        "aegis-dependency-integrity-v1",
+        "pip-audit",
+        "vulnerable_package_analyzer"
+      ],
+      "logs": [
+        "pip-audit completed: dependencies=1 vulnerabilities=14 exit_code=1"
+      ]
+    }
+  },
+  "sealed_regression_integrity": {
+    "intact": true,
+    "expected_sha256": "8ee8745594cf2d7ef643cf95e61ccd88c420b42c540780dadb7320cbe7c90492",
+    "actual_sha256": "8ee8745594cf2d7ef643cf95e61ccd88c420b42c540780dadb7320cbe7c90492",
+    "semantic_content_inspected": false,
+    "integrity_hash_only": true,
+    "cases_opened": 0
+  },
+  "sealed_regression_cases_opened": 0,
+  "duration_ms": 22289
+}

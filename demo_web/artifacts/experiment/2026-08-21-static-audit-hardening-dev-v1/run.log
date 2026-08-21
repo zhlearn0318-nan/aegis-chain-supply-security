@@ -1,0 +1,16 @@
+run_start baseline=c8e8f960775fff46f2206d6794b874e8fea39375 branch=static-audit-v1-hardening regression_opened=0
+contract_locked changes=mcp_machine_boundary,test_context_review,zip_resource_limits,vendor_evidence_minimization
+focused_tests result=95_passed command=.runtime_mcp313/Scripts/python.exe_-m_pytest_selected_hardening_modules
+full_backend_tests result=253_passed command=.runtime_mcp313/Scripts/python.exe_-m_pytest_demo_web/backend/tests_-q
+development_platform_initial result=19_of_19 run_id=2026-08-22-aegis-platform-static-controls-dev-v4 regression_opened=0
+development_sensitive result=completed normal_upgrades=0 run_id=2026-08-22-aegis-sensitive-flow-dev-v2 regression_opened=0
+development_untrusted result=mechanism_only_no_development_rescue normal_upgrades=0 run_id=2026-08-22-aegis-untrusted-exec-flow-dev-v3 regression_opened=0
+development_enterprise result=supported normal_upgrades=0 correct_control_changes=0 run_id=2026-08-22-aegis-enterprise-controls-dev-v3 regression_opened=0
+development_coverage result=120_of_120 normal_upgrades=0 run_id=2026-08-22-aegis-static-coverage-dev-v2 regression_opened=0
+freeze_initial result=accepted_but_superseded_by_design_review hardening_gates=6_of_6 backend=253 frontend=9 build=true source_hash_mismatches=0 regression_opened=0 run_id=2026-08-22-static-audit-dev-freeze-v6
+design_review finding=uploaded_machine_boundary_is_untrusted_self_attestation action=require_platform_owned_sidecar
+development_platform_final result=20_of_20 run_id=2026-08-22-aegis-platform-static-controls-dev-v5 regression_opened=0
+freeze_sidecar result=accepted_but_superseded_by_line_ending_review hardening_gates=7_of_7 backend=254 frontend=9 build=true source_hash_mismatches=0 regression_opened=0 run_id=2026-08-22-static-audit-dev-freeze-v7
+reproducibility_review finding=mixed_crlf_lf_would_change_hashes_after_git_normalization action=normalize_lf_and_generate_explicit_lf
+freeze_final result=accepted_development_freeze hardening_gates=7_of_7 backend=254 frontend=9 build=true source_hash_mismatches=0 regression_opened=0 run_id=2026-08-22-static-audit-dev-freeze-v8
+run_end claim=supported_on_development_evidence next=one_time_sealed_regression

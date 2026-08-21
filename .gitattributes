@@ -8,6 +8,7 @@
 *.jsonl text eol=lf
 *.md text eol=lf
 *.txt text eol=lf
+*.sha256 text eol=lf
 *.log text eol=lf
 *.toml text eol=lf
 *.yaml text eol=lf
