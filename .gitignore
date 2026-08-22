@@ -34,6 +34,7 @@ demo_web/artifacts/*
 demo_web/artifacts/experiment/*
 !demo_web/artifacts/experiment/2026-08-18-safe-dynamic-fixture-dev-v2/
 !demo_web/artifacts/experiment/2026-08-18-admin-dynamic-api-ui-dev-v1/
+!demo_web/artifacts/experiment/2026-08-22-static-audit-regression600-v1/
 demo_web/artifacts/**/pytest-temp*/
 demo_web/artifacts/**/fixture_workspaces/
 
