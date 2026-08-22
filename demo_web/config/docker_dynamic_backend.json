@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "backend_id": "aegis-docker-safety-v1",
+  "docker_context": "desktop-linux",
+  "pull_policy": "never",
+  "image": {
+    "reference": "public.ecr.aws/docker/library/python@sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65",
+    "id": "sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65",
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  "fixture": {
+    "id": "docker_security_probe",
+    "path": "tools/dynamic/docker/fixtures/security_probe.py",
+    "sha256": "1a2335f575e2d7270f970531c1c603155a9b8fbd4991e6c0711b4433391dbca4",
+    "container_path": "/aegis_fixture.py",
+    "timeout_seconds": 10
+  },
+  "security": {
+    "network_mode": "none",
+    "read_only_rootfs": true,
+    "user": "65532:65532",
+    "cap_drop": [
+      "ALL"
+    ],
+    "no_new_privileges": true,
+    "privileged": false,
+    "pid_mode": "",
+    "ipc_mode": "none",
+    "pids_limit": 64,
+    "memory_bytes": 268435456,
+    "nano_cpus": 500000000,
+    "init": true,
+    "log_driver": "none",
+    "tmpfs": {
+      "/tmp": "rw,noexec,nosuid,nodev,size=16777216,mode=1777",
+      "/workspace": "rw,noexec,nosuid,nodev,size=67108864,mode=1777"
+    }
+  }
+}

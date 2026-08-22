@@ -865,3 +865,15 @@
 为什么：这一闭环把“代码里可能存在敏感外传”升级为“指定假敏感源确实到达受控汇点”的可复核证据，但仍不夸大为完整污点分析或不可信代码沙箱。
 
 下一步：建立 Docker 安全执行后端。当前主机 `docker` 命令不可用，在默认断网、只读根、非 root、资源限制、无 Docker Socket 和自建越界反例全部通过前，不执行第三方样本。
+
+## 2026-08-22：D2 Docker 安全执行底座
+
+做了什么：经用户授权启动已有 Docker Desktop；固定本地 Python 镜像 digest/ID 和自建 probe 哈希；实现 create→inspect→start→cleanup 后端。配置拒绝镜像拉取、浮动 tag、网络、特权、host PID、可写根、capability 放宽、Docker Socket 和额外目录挂载。
+
+第一次结果：v1 真实通过 40/40 安全门并删除容器，但 Docker API 字段因键名兼容问题被记录为字符串 None。隔离机制未受影响，v1 保留而不作为最终接受结果。
+
+修正与最终结果：v2 兼容 ApiVersion/APIVersion，并增加成功、非法 ID 和启动超时清理测试。真实结果为镜像 4/4、inspect 24/24、运行时 12/12，总计 40/40；UID/GID 65532、CapEff=0、NNP=1、Seccomp=2；根和输入写入拒绝，tmpfs 写入成功，网络仅 lo。容器残留、第三方样本、互联网、镜像拉取和决策变化均为0。专项26 passed，完整后端296 passed。
+
+为什么：Docker 命令行包含安全参数并不足够，必须先创建容器并检查 Engine 保存的真实配置，再允许启动；同时必须证明运行时行为和失败清理符合合同。
+
+下一步：在同一安全底座上实现完全自建的 MCP initialize、tools/list、tools/call 和 Marker witness 协议闭环。strace/inotify/内部 sinkhole 仍作为 D2-B 遥测增强，不把当前底座夸大为完整恶意沙箱。

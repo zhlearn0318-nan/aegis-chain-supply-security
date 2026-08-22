@@ -2,7 +2,7 @@
 
 本项目是 XA-202620 赛题“供应链安全”模块的本机原型。网页会真实调用已经复现的 Cisco Skill Scanner、MCP Scanner 和依赖漏洞审计链路，不使用伪造扫描结果。
 
-当前已完成 M1.3 的可配置准入策略、`/api/v1` 和前端 v1 适配，并完成 M2 的 SkillTrustBench v1.0 全量 5,520 条评测。M3 静态审计已在 600 条密封工程回归上完成一次性评估并冻结，结论为 `supported_with_tradeoff`。M4 开始动态审计：已实现政企 Marker、静态 Finding 到 Trigger Plan、计划内源到汇 witness 和独立静动态关联；受控 v2 为 1/1 fixture、3/3 事件、1 条 Base64 witness、0 Marker 泄露、0 最终决策变化，后端 `270 passed`。动态部分仍限于自建哈希锁定 fixture，不执行第三方 Skill。
+当前已完成 M1.3 的可配置准入策略、`/api/v1` 和前端 v1 适配，并完成 M2 的 SkillTrustBench v1.0 全量 5,520 条评测。M3 静态审计已在 600 条密封工程回归上完成一次性评估并冻结，结论为 `supported_with_tradeoff`。M4 已实现政企 Marker、静态 Trigger Plan 和计划内源到汇 witness；D2 Docker 底座进一步完成固定镜像、create 后 inspect、非 root、默认断网、只读根、资源限制和精确清理，真实 40/40 安全门、容器残留 0，后端 `296 passed`。动态部分仍只执行自建哈希锁定 fixture，不执行第三方 Skill/MCP。
 
 ## 一键启动
 
@@ -78,6 +78,7 @@ pnpm test
 - M3 管理员动态验证 API/页面报告：[`docs/M3_ADMIN_DYNAMIC_FIXTURE_API_UI_REPORT.md`](docs/M3_ADMIN_DYNAMIC_FIXTURE_API_UI_REPORT.md)
 - M4 动态审计调研与实施计划：[`docs/M4_DYNAMIC_AUDIT_RESEARCH_AND_IMPLEMENTATION_PLAN.md`](docs/M4_DYNAMIC_AUDIT_RESEARCH_AND_IMPLEMENTATION_PLAN.md)
 - M4 Marker 源到汇证据核心报告：[`docs/M4_DYNAMIC_MARKER_FLOW_V1_REPORT.md`](docs/M4_DYNAMIC_MARKER_FLOW_V1_REPORT.md)
+- M4 Docker 安全执行底座报告：[`docs/M4_DOCKER_SAFETY_BACKEND_V1_REPORT.md`](docs/M4_DOCKER_SAFETY_BACKEND_V1_REPORT.md)
 - 90 条主实验原始证据：[`artifacts/experiment/2026-08-10-skilltrustbench-pilot90-v1/RUN.md`](artifacts/experiment/2026-08-10-skilltrustbench-pilot90-v1/RUN.md)
 - 556 条扩大样本原始证据：[`artifacts/analysis/2026-08-14-skilltrustbench-official10pct-cisco-v1/`](artifacts/analysis/2026-08-14-skilltrustbench-official10pct-cisco-v1/)
 - 5,520 条全量原始证据：[`artifacts/analysis/2026-08-14-skilltrustbench-full-cisco-parallel-v1/`](artifacts/analysis/2026-08-14-skilltrustbench-full-cisco-parallel-v1/)
@@ -184,7 +185,13 @@ Skill 扫描还会追加 `aegis-command-context-v1` 的 `INFO` 级旁路 Finding
 
 M4 在旧的良性 fixture 观测器上增加独立 Marker 证据层和 Trigger Plan。当前受控实验把假公文 Marker 放入专用工作区，哈希锁定 fixture 读取后以 Base64 发送到 `127.0.0.1`，汇点只保存 Marker ID、profile、源/汇点、变换方式和 SHA-256。只有 witness profile 属于静态计划时才标为 `confirmed`；计划外 witness 为 `observed`，运行失败为 `inconclusive`。
 
-最终接受结果位于 `artifacts/experiment/2026-08-22-dynamic-marker-flow-dev-v2/`。它不改变静态门禁，也不是第三方代码沙箱。当前 `docker` 命令不可用，因此下一步先完成 Docker 默认断网、只读根、非 root、资源限制和无宿主敏感挂载的安全门。
+最终接受结果位于 `artifacts/experiment/2026-08-22-dynamic-marker-flow-dev-v2/`。它不改变静态门禁，也不是第三方代码沙箱。其下一阶段 Docker 安全门现已由 D2 v2 完成。
+
+## D2 Docker 安全执行底座
+
+Docker 后端固定使用本机已有 Python 3.12-slim 镜像的不可变 digest，强制 `pull=never`。容器先 create 而不运行，系统读取真实 inspect 配置并检查 24 项门；全部通过后才启动哈希锁定的自建 probe。运行时再验证 UID/GID、capability、NoNewPrivs、seccomp、只读根/输入、tmpfs 和网络接口。最后只按本轮 create 返回的精确 container ID 清理并验证不存在。
+
+最终证据位于 `artifacts/experiment/2026-08-22-docker-safety-backend-dev-v2/`：镜像4/4、inspect 24/24、运行时12/12，总计40/40；容器残留、第三方样本、外网、镜像拉取和决策变化均为0。当前尚未实现strace/inotify和真实MCP协议调用，不能把该底座称为完整恶意沙箱。
 
 ## 自定义上传格式
 

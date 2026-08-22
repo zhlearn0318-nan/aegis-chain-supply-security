@@ -37,6 +37,8 @@ demo_web/artifacts/experiment/*
 !demo_web/artifacts/experiment/2026-08-22-static-audit-regression600-v1/
 !demo_web/artifacts/experiment/2026-08-22-dynamic-marker-flow-dev-v1/
 !demo_web/artifacts/experiment/2026-08-22-dynamic-marker-flow-dev-v2/
+!demo_web/artifacts/experiment/2026-08-22-docker-safety-backend-dev-v1/
+!demo_web/artifacts/experiment/2026-08-22-docker-safety-backend-dev-v2/
 demo_web/artifacts/**/pytest-temp*/
 demo_web/artifacts/**/fixture_workspaces/
 

@@ -1,0 +1,121 @@
+{
+  "alternative_hypothesis": "固定镜像和自建probe通过全部安全门，负面指标均为0。",
+  "baseline": {
+    "dynamic_run_id": "2026-08-22-dynamic-marker-flow-dev-v2",
+    "relation": "read_only_complementary_not_numerically_comparable",
+    "static_run_id": "2026-08-22-static-audit-regression600-v1"
+  },
+  "claim_boundary": "Docker configuration and self-built probe evidence only; no third-party code execution and no container-escape resistance claim.",
+  "command": [
+    "F:\\揭榜挂帅\\supply_chain_reproduction\\.runtime_mcp313\\Scripts\\python.exe",
+    "tools\\dynamic\\run_docker_safety_audit.py",
+    "--run-id",
+    "2026-08-22-docker-safety-backend-dev-v2",
+    "--output",
+    "artifacts\\experiment\\2026-08-22-docker-safety-backend-dev-v2"
+  ],
+  "completed_at": "2026-08-22T08:12:39.205323+00:00",
+  "dataset": {
+    "controlled_fixtures": 1,
+    "external_dataset": null,
+    "third_party_samples_executed": 0,
+    "third_party_samples_read": 0
+  },
+  "elapsed_seconds": 1.059,
+  "environment": {
+    "cloud_used": false,
+    "container_image": {
+      "architecture": "amd64",
+      "duration_ms": 101,
+      "id": "sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65",
+      "os": "linux",
+      "repo_digest_matched": true
+    },
+    "docker_engine": {
+      "api_version": "1.55",
+      "architecture": "amd64",
+      "duration_ms": 88,
+      "engine_version": "29.7.2",
+      "os": "linux"
+    },
+    "gpu_used": false,
+    "host_platform": "Windows-11-10.0.26200-SP0",
+    "host_python": "3.13.14 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:26:41) [MSC v.1942 64 bit (AMD64)]",
+    "image_pull_used": false,
+    "internet_used": false
+  },
+  "experiment_tier": "auxiliary/dev",
+  "metrics": {
+    "all_gates_passed": 40,
+    "all_gates_total": 40,
+    "backend_id": "aegis-docker-safety-v1",
+    "container_residuals": 0,
+    "decision_changes": 0,
+    "duration_ms": 1059,
+    "engine_ready": true,
+    "fixture_completed": 1,
+    "gpu_used": false,
+    "image_gates_passed": 4,
+    "image_gates_total": 4,
+    "image_pulls_allowed": 0,
+    "inspect_gates_passed": 24,
+    "inspect_gates_total": 24,
+    "internet_connections_allowed": 0,
+    "policy_violations": 0,
+    "run_elapsed_seconds": 1.059,
+    "run_id": "2026-08-22-docker-safety-backend-dev-v2",
+    "runtime_gates_passed": 12,
+    "runtime_gates_total": 12,
+    "schema_version": "1.0",
+    "status": "completed",
+    "third_party_samples_executed": 0,
+    "third_party_samples_read": 0,
+    "timeouts": 0
+  },
+  "next_action": "controlled_mcp_protocol_fixture",
+  "null_hypothesis": "任一镜像、配置、运行行为或清理安全门失败。",
+  "research_question": "能否在不下载镜像、不执行第三方样本和不改变静态决策的条件下，建立可复核、失败闭锁的Docker动态执行后端？",
+  "research_type": "deterministic_engineering_safety_gate_validation",
+  "run_id": "2026-08-22-docker-safety-backend-dev-v2",
+  "safety_contract": {
+    "accepts_custom_commands": false,
+    "accepts_user_code": false,
+    "accepts_user_paths": false,
+    "cap_drop_all": true,
+    "docker_socket_mounted": false,
+    "execution_trust": "self_built_hash_locked_only",
+    "image_pull_policy": "never",
+    "network_mode": "none",
+    "no_new_privileges": true,
+    "non_root": true,
+    "not_a_container_escape_proof": true,
+    "policy_effect": "none",
+    "read_only_rootfs": true,
+    "static_decision_changes": 0
+  },
+  "schema_version": "1.0",
+  "sources": {
+    "backend/dynamic_audit/docker_backend.py": {
+      "bytes": 25990,
+      "sha256": "b7f432f6d36a336a8694815b26d90f03d601378f333a7bdc341201a461eb97c4"
+    },
+    "backend/tests/test_docker_backend.py": {
+      "bytes": 12311,
+      "sha256": "37c91f0cfc8c8d0ba77e665a1dbcc4079534526f5687d07c9c6d77ac8355ac3b"
+    },
+    "config/docker_dynamic_backend.json": {
+      "bytes": 1205,
+      "sha256": "f89f4eb4fc3f01024ec166d4cce724c30320da5fd13a4898ceab8fc88117f4bd"
+    },
+    "tools/dynamic/docker/fixtures/security_probe.py": {
+      "bytes": 1627,
+      "sha256": "1a2335f575e2d7270f970531c1c603155a9b8fbd4991e6c0711b4433391dbca4"
+    },
+    "tools/dynamic/run_docker_safety_audit.py": {
+      "bytes": 10358,
+      "sha256": "5e7b89d9ac274617ddcb1f9dd9d01ff1943091c8ab9f55c074c87084fe12cfe8"
+    }
+  },
+  "started_at": "2026-08-22T08:12:38.146408+00:00",
+  "status": "completed"
+}

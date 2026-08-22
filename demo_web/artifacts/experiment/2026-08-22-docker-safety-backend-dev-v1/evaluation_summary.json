@@ -1,0 +1,17 @@
+{
+  "baseline_relation": "extends_dynamic_marker_v2_without_changing_static_baseline",
+  "claim_update": "supported_on_controlled_fixture",
+  "evaluation_summary": {
+    "all_gates": "40/40",
+    "container_residuals": 0,
+    "decision_changes": 0,
+    "engine_ready": true,
+    "fixture_completed": 1,
+    "policy_violations": 0
+  },
+  "failure_mode": null,
+  "next_action": "controlled_mcp_protocol_fixture",
+  "outcome_summary": "固定本地镜像和自建probe通过Docker配置、实际行为与清理安全门。",
+  "run_id": "2026-08-22-docker-safety-backend-dev-v1",
+  "schema_version": "1.0"
+}

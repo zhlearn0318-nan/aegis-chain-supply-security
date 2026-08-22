@@ -1,0 +1,9 @@
+run_id=2026-08-22-docker-safety-backend-dev-v1
+status=completed
+engine_ready=True
+all_gates=40/40
+fixture_completed=1
+policy_violations=0
+container_residuals=0
+decision_changes=0
+elapsed_seconds=1.153

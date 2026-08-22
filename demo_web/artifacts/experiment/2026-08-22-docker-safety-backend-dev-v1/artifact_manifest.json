@@ -1,0 +1,42 @@
+{
+  "evidence_files": {
+    "CHECKLIST.md": {
+      "bytes": 1069,
+      "sha256": "7f6fde23d91d122ec31829cde44228e8e9cfda8f90d0223505d9f69479029c23"
+    },
+    "PLAN.md": {
+      "bytes": 3425,
+      "sha256": "3526c199dfac9110c82b03fb6ca499392325ab580492b85abacde5231d97987d"
+    },
+    "bash.log": {
+      "bytes": 1388,
+      "sha256": "8c3b1a4dd24dcce7aae0a9dca4daabdb03e829fb518920be58418a3062520ab2"
+    },
+    "docker_safety_evidence.json": {
+      "bytes": 5414,
+      "sha256": "6bf8c399e67ad84d15c6f3bfe092c19723abb3fa97d1e4f92620e7c92b27830e"
+    },
+    "evaluation_summary.json": {
+      "bytes": 605,
+      "sha256": "50f4e94abd171836467dd190eb9d76236acb83d2f54fd975721b68155496ab4e"
+    },
+    "metrics.json": {
+      "bytes": 731,
+      "sha256": "91e0d9b2451df3ebf971dbdf3d3d434eabee77176958cc478d8d43c5fb109ef0"
+    },
+    "run.log": {
+      "bytes": 201,
+      "sha256": "9b56fb352e37c077d0b6f5e5bd05b9f819721fface2f9b110d59d06a64456b3f"
+    },
+    "run_manifest.json": {
+      "bytes": 4417,
+      "sha256": "5c8d53e3d06b5369e41b5d3c23dc8ccf8563b20c93eac126e742c10a085fff41"
+    },
+    "summary.md": {
+      "bytes": 355,
+      "sha256": "0540ab42c7509a1ca8b2819213fa7dc4bd6de3357757282b0db0cc05c863313d"
+    }
+  },
+  "run_id": "2026-08-22-docker-safety-backend-dev-v1",
+  "schema_version": "1.0"
+}

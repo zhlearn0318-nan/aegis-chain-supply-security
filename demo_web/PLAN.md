@@ -280,3 +280,16 @@
 - 验证：动态专项测试 `22 passed`，完整后端测试 `270 passed`，证据包包含命令、环境、源码/fixture 哈希、指标、日志和关联结果。
 - 结论：`supported_on_controlled_fixture`，只证明受控 Marker 源到汇和静态引导关联机制，不证明第三方代码沙箱、恶意检出率或真实世界泛化。
 - 下一路由：D2 Docker 安全执行后端；当前 `docker` 命令不可用，在安全门通过前不得执行第三方样本。
+
+## 17. D2 Docker 安全执行底座（2026-08-22）
+
+- 研究问题：能否在不下载镜像、不执行第三方样本和不改变静态决策的条件下，用 Docker 建立 create→inspect→start→cleanup 的失败闭锁后端？
+- 镜像：固定本机已有 `python:3.12-slim` 的 repo digest 和 image ID，`pull=never`。
+- 配置门：镜像 4 项，容器 inspect 24 项；网络 none、只读根、UID/GID 65532、cap-drop ALL、NNP、PID/内存/CPU、tmpfs、单文件只读挂载、无 Docker Socket。
+- 运行门：12 项；实际验证 CapEff=0、NoNewPrivs=1、Seccomp=2、根/输入写入拒绝、workspace/tmp 写入成功、网络仅 lo。
+- v1：40/40 和清理真实通过，但 API 字段误记为字符串 None，保留为校准父运行。
+- v2：修正 ApiVersion 字段，增加成功、非法 ID 和启动超时清理测试；真实 Engine 29.7.2 / API 1.55。
+- 最终结果：4/4 + 24/24 + 12/12 = 40/40；fixture 1/1；策略违规、超时、残留、第三方样本、互联网、镜像拉取和决策变化均为 0；运行约 1.06 秒。
+- 验证：Docker 专项 `26 passed`，后端完整 `296 passed`，独立标签查询容器残留 0。
+- 结论：`supported_on_controlled_fixture`；只支持当前固定镜像与自建 probe 的安全门，不支持容器逃逸或第三方样本安全声明。
+- 下一路由：自建 MCP 协议 fixture 与 Marker witness；D2-B 的 strace/文件差分/内部 sinkhole 继续作为后续遥测增强。

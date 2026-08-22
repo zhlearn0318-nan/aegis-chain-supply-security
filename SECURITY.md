@@ -9,8 +9,19 @@
 - `fixtures/` 中包含用于验证检测器的防御性风险样例；
 - 不要执行标记为 `must never be executed` 的文件；
 - 不要将第三方 Skill、数据集样本或未知脚本接入动态 fixture runner；
-- 动态 runner 只允许执行 `demo_web/config/safe_dynamic_fixtures.json` 锁定的自建良性程序；
+- Windows 协作式 runner 只允许执行 `demo_web/config/safe_dynamic_fixtures.json` 锁定的自建良性程序；
+- Docker D2 后端只允许执行 `demo_web/config/docker_dynamic_backend.json` 锁定的单个安全 probe；
 - `completed` 只表示机制自检通过，不代表第三方组件安全。
+
+## Docker 动态后端边界
+
+- 镜像必须用允许配置中的完整 digest 引用，必须 `pull=never`；
+- 容器必须先 create 并通过真实 inspect 安全门，再允许 start；
+- 必须保持 `network=none`、只读根、非 root、`cap-drop=ALL`、no-new-privileges 和资源限制；
+- 只允许单个哈希锁定 fixture 文件只读挂载，不得挂载项目根、用户目录、凭据、Docker Socket 或宿主根；
+- 清理只针对本轮 create 返回的精确 64 位 container ID，不得使用通配符或标签批量删除；
+- D2 当前不得执行第三方 Skill、MCP Server、数据集样本或未知镜像；
+- Docker/WSL2 仍共享宿主内核边界，本结果不证明不存在容器逃逸。
 
 ## 凭据管理
 

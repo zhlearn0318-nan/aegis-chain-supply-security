@@ -78,4 +78,18 @@
 - [x] v1 发现计划类型关联过宽，原样保留并在 v2 增加计划内 profile 约束。
 - [x] v2 完成 1/1 fixture、3/3 事件、1 条 Base64 witness、0 泄露、0 决策变化。
 - [x] 动态专项测试 22 passed，完整后端测试 270 passed。
-- [ ] Docker 安全执行后端：当前 `docker` 命令不可用，未执行第三方样本。
+- [x] Docker 安全执行后端：已启动 Docker Desktop 并完成 40/40 安全门；仍未执行第三方样本。
+
+## M4 D2 Docker 安全执行底座
+
+- [x] 通过用户授权启动已有 Docker Desktop，确认 Linux Engine 29.7.2 / API 1.55。
+- [x] 固定本地 Python 3.12-slim 镜像 digest/ID，强制 pull=never。
+- [x] 配置拒绝浮动 tag、联网、特权、host PID、可写根和 capability 放宽。
+- [x] create 后真实 inspect 24 项全部通过才允许 start。
+- [x] 自建 probe 运行时 12 项行为门通过：非 root、cap=0、NNP/seccomp、只读根/输入和有界 tmpfs。
+- [x] 镜像 4/4、inspect 24/24、runtime 12/12，合计 40/40。
+- [x] 成功、非法 ID 和启动超时清理路径有测试；真实运行容器残留 0。
+- [x] Docker 专项 26 passed，完整后端 296 passed。
+- [x] 第三方样本、互联网、镜像拉取、GPU、云和静态决策变化均为 0。
+- [ ] D2-B：strace、文件差分/inotify 和内部 sinkhole 遥测。
+- [ ] D3：自建 MCP 协议 initialize/tools/list/tools/call 与 Marker witness 闭环。
