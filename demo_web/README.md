@@ -2,7 +2,7 @@
 
 本项目是 XA-202620 赛题“供应链安全”模块的本机原型。网页会真实调用已经复现的 Cisco Skill Scanner、MCP Scanner 和依赖漏洞审计链路，不使用伪造扫描结果。
 
-当前已完成 M1.3 的可配置准入策略、`/api/v1` 和前端 v1 适配，并完成 M2 的 SkillTrustBench v1.0 全量 5,520 条评测。全量结果已冻结；另建 120 条开发集与 600 条封存回归集。M3 静态审计开发现已覆盖 Skill、MCP 和 Python 依赖清单：Cisco Scanner/pip-audit 之后叠加 97 个 Aegis 规则 ID，包括攻击链、敏感流、不可信执行流、政企控制、覆盖证明、依赖完整性/SBOM、MCP 能力策略和三个 INFO-only Context。v1 高优先级加固进一步封闭 MCP 自声明边界、测试目录盲区、ZIP 资源耗尽和厂商原文留存问题；只有平台调用方独立传入的可信 sidecar 才可证明 MCP 边界。后端 `254 passed`、平台固定用例 `20/20`。600 条回归集仍封存，等待一次性最终评估。动态部分仍限于自建哈希锁定 fixture，不执行第三方 Skill。
+当前已完成 M1.3 的可配置准入策略、`/api/v1` 和前端 v1 适配，并完成 M2 的 SkillTrustBench v1.0 全量 5,520 条评测。M3 静态审计已在 600 条密封工程回归上完成一次性评估并冻结，结论为 `supported_with_tradeoff`。M4 开始动态审计：已实现政企 Marker、静态 Finding 到 Trigger Plan、计划内源到汇 witness 和独立静动态关联；受控 v2 为 1/1 fixture、3/3 事件、1 条 Base64 witness、0 Marker 泄露、0 最终决策变化，后端 `270 passed`。动态部分仍限于自建哈希锁定 fixture，不执行第三方 Skill。
 
 ## 一键启动
 
@@ -76,6 +76,8 @@ pnpm test
 - Aegis 97 条静态规则注册表：[`config/aegis_rule_registry.json`](config/aegis_rule_registry.json)
 - M3 最小安全动态 Fixture v1 报告：[`docs/M3_SAFE_DYNAMIC_FIXTURE_V1_REPORT.md`](docs/M3_SAFE_DYNAMIC_FIXTURE_V1_REPORT.md)
 - M3 管理员动态验证 API/页面报告：[`docs/M3_ADMIN_DYNAMIC_FIXTURE_API_UI_REPORT.md`](docs/M3_ADMIN_DYNAMIC_FIXTURE_API_UI_REPORT.md)
+- M4 动态审计调研与实施计划：[`docs/M4_DYNAMIC_AUDIT_RESEARCH_AND_IMPLEMENTATION_PLAN.md`](docs/M4_DYNAMIC_AUDIT_RESEARCH_AND_IMPLEMENTATION_PLAN.md)
+- M4 Marker 源到汇证据核心报告：[`docs/M4_DYNAMIC_MARKER_FLOW_V1_REPORT.md`](docs/M4_DYNAMIC_MARKER_FLOW_V1_REPORT.md)
 - 90 条主实验原始证据：[`artifacts/experiment/2026-08-10-skilltrustbench-pilot90-v1/RUN.md`](artifacts/experiment/2026-08-10-skilltrustbench-pilot90-v1/RUN.md)
 - 556 条扩大样本原始证据：[`artifacts/analysis/2026-08-14-skilltrustbench-official10pct-cisco-v1/`](artifacts/analysis/2026-08-14-skilltrustbench-official10pct-cisco-v1/)
 - 5,520 条全量原始证据：[`artifacts/analysis/2026-08-14-skilltrustbench-full-cisco-parallel-v1/`](artifacts/analysis/2026-08-14-skilltrustbench-full-cisco-parallel-v1/)
@@ -177,6 +179,12 @@ Skill 扫描还会追加 `aegis-command-context-v1` 的 `INFO` 级旁路 Finding
 前端“管理员动态验证”区域调用三条受保护接口：创建任务、查询历史、查询详情。请求必须在 `X-Aegis-Admin-Token` 头中携带与服务端环境变量一致的令牌；创建接口拒绝任何请求体，因此无法传入代码、路径、fixture 配置或命令。任务工作区执行完即删除，SQLite 只保存脱敏事件、机制指标与逐 fixture 状态，令牌不会进入任务记录。
 
 动态任务状态为 `queued / running / completed / failed`，但没有 `ALLOW / REVIEW / BLOCK` 字段。页面显示的“机制验证通过”仅表示内置 fixture 的预期观测均成功，不代表某个第三方 Skill 安全，也不影响静态准入结果。
+
+## 动态 Marker 源到汇证据核心 v1
+
+M4 在旧的良性 fixture 观测器上增加独立 Marker 证据层和 Trigger Plan。当前受控实验把假公文 Marker 放入专用工作区，哈希锁定 fixture 读取后以 Base64 发送到 `127.0.0.1`，汇点只保存 Marker ID、profile、源/汇点、变换方式和 SHA-256。只有 witness profile 属于静态计划时才标为 `confirmed`；计划外 witness 为 `observed`，运行失败为 `inconclusive`。
+
+最终接受结果位于 `artifacts/experiment/2026-08-22-dynamic-marker-flow-dev-v2/`。它不改变静态门禁，也不是第三方代码沙箱。当前 `docker` 命令不可用，因此下一步先完成 Docker 默认断网、只读根、非 root、资源限制和无宿主敏感挂载的安全门。
 
 ## 自定义上传格式
 

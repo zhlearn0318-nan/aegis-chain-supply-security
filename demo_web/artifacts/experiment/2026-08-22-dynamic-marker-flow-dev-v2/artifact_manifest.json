@@ -1,0 +1,46 @@
+{
+  "evidence_files": {
+    "CHECKLIST.md": {
+      "bytes": 559,
+      "sha256": "1f726c73c288b4d4ac7c430b9f4fb52984ae5b978b2ebd717fa4e06f4cf2758c"
+    },
+    "PLAN.md": {
+      "bytes": 861,
+      "sha256": "2b123754c3e15f307057580d4884547b10a2d645ececc2fefeef9eb22930c5b2"
+    },
+    "POST_VALIDATION.md": {
+      "bytes": 785,
+      "sha256": "a7dfcd203961a85aefd24ba17a0eebfebd1bf48bf38590ed28c0cf4495daa6ad"
+    },
+    "bash.log": {
+      "bytes": 368,
+      "sha256": "8213f253073a22a209dd62b836bd277076b3832d1b4536039e37734e13f455a8"
+    },
+    "dynamic_evidence.json": {
+      "bytes": 8479,
+      "sha256": "c7721413587b4a7d86ba2573b8f231e70eea2772084aac5da18926b55f1ec3d1"
+    },
+    "evaluation_summary.json": {
+      "bytes": 649,
+      "sha256": "b2b5a7486ef8df3ad4b8e6a76616cdd959cd34f5495ea6a4179fbc7c6ee3b07c"
+    },
+    "metrics.json": {
+      "bytes": 884,
+      "sha256": "1595314c590f6ed78a64b7daef5a38256eb6db3deb8e3f8558577fed68b46980"
+    },
+    "run.log": {
+      "bytes": 200,
+      "sha256": "d12fa4fb909c15021f17c693721b8ab5e3c0ed856430be370ebffab0340e774a"
+    },
+    "run_manifest.json": {
+      "bytes": 4103,
+      "sha256": "6b90678c6e973be0062b27ab406fba1f0cd8a4e084b9a0f15e64d4e663a9bdbf"
+    },
+    "summary.md": {
+      "bytes": 328,
+      "sha256": "1ce711da1e82b8bb8593b4a771fbce50f181a2a022877c88a2ecdef95d441784"
+    }
+  },
+  "run_id": "2026-08-22-dynamic-marker-flow-dev-v2",
+  "schema_version": "1.0"
+}

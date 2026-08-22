@@ -1,0 +1,265 @@
+{
+  "claim_boundary": "Self-built hash-locked marker fixture mechanism evidence only; no third-party Skill execution and no untrusted-code sandbox claim.",
+  "controlled_fixture": {
+    "events": [
+      {
+        "details": {
+          "mode": "r",
+          "path": "decoys/official_document.txt"
+        },
+        "event_type": "file_read",
+        "fixture_id": "marker_file_to_loopback",
+        "policy_effect": "none",
+        "rule_id": "AEGIS_DYNAMIC_FILE_READ_OBSERVED",
+        "schema_version": "1.0",
+        "sequence": 1,
+        "severity": "INFO"
+      },
+      {
+        "details": {
+          "length": 5,
+          "name": "AEGIS_LOOPBACK_PORT",
+          "present": true,
+          "sha256": "2f2c1d560b71f8459906f92d0442bb57deba20d2fe876d16d72d672336c4f271"
+        },
+        "event_type": "environment_read",
+        "fixture_id": "marker_file_to_loopback",
+        "policy_effect": "none",
+        "rule_id": "AEGIS_DYNAMIC_ENVIRONMENT_READ_OBSERVED",
+        "schema_version": "1.0",
+        "sequence": 2,
+        "severity": "INFO"
+      },
+      {
+        "details": {
+          "host": "127.0.0.1",
+          "port": 53262,
+          "transport": "tcp"
+        },
+        "event_type": "network_connect",
+        "fixture_id": "marker_file_to_loopback",
+        "policy_effect": "none",
+        "rule_id": "AEGIS_DYNAMIC_LOOPBACK_CONNECT_OBSERVED",
+        "schema_version": "1.0",
+        "sequence": 3,
+        "severity": "INFO"
+      },
+      {
+        "details": {},
+        "event_type": "fixture_completed",
+        "fixture_id": "marker_file_to_loopback",
+        "schema_version": "1.0",
+        "sequence": 4
+      }
+    ],
+    "fixture_result": {
+      "duration_ms": 175,
+      "event_counts": {
+        "environment_read": 1,
+        "file_read": 1,
+        "fixture_completed": 1,
+        "network_connect": 1
+      },
+      "event_parse_errors": 0,
+      "expected_event_checks": {
+        "environment_read": {
+          "minimum": 1,
+          "observed": 1,
+          "passed": true
+        },
+        "file_read": {
+          "minimum": 1,
+          "observed": 1,
+          "passed": true
+        },
+        "network_connect": {
+          "minimum": 1,
+          "observed": 1,
+          "passed": true
+        }
+      },
+      "fixture_id": "marker_file_to_loopback",
+      "fixture_sha256": "706bcd68731b2e4844cedd6e04095fd1a48ea26d3832df14a1f2463bd9f968a0",
+      "loopback_server": {
+        "error_type": null,
+        "marker_witnesses": [
+          {
+            "chunk_count": 1,
+            "marker_id": "marker-official_document-231037f4113a",
+            "profile": "official_document",
+            "raw_marker_retained": false,
+            "sink_evidence_sha256": "ffcddadadaa4720babfb1e2184c47db24243c67c54a9b1a7fdde33b4bf8828de",
+            "sink_kind": "loopback_network",
+            "sink_ref": "127.0.0.1:ephemeral",
+            "source_kind": "decoy_file",
+            "source_ref": "decoys/official_document.txt",
+            "source_sha256": "88883383304ffc37a13b024700b76af9a664d92b7f40fe6a824484c143fd987d",
+            "transform": "base64"
+          }
+        ],
+        "payload_length": 76,
+        "payload_matched": true,
+        "payload_sha256": "ffcddadadaa4720babfb1e2184c47db24243c67c54a9b1a7fdde33b4bf8828de",
+        "peer_is_loopback": true,
+        "received": true
+      },
+      "policy_effect": "none",
+      "policy_violations": 0,
+      "raw_output_retained": false,
+      "return_code": 0,
+      "schema_version": "1.0",
+      "status": "completed",
+      "stderr_non_event": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 156,
+        "sha256": "9c42d7199d4d7b2f969c7ec9646acaf5b0eca4f1b3a8827f7841ff6eb7d8e4ea"
+      },
+      "timed_out": false,
+      "timeout_seconds": 5.0,
+      "workspace_files": [
+        {
+          "bytes": 55,
+          "path": "decoys/official_document.txt",
+          "sha256": "88883383304ffc37a13b024700b76af9a664d92b7f40fe6a824484c143fd987d"
+        }
+      ]
+    },
+    "fixture_sha256": "706bcd68731b2e4844cedd6e04095fd1a48ea26d3832df14a1f2463bd9f968a0",
+    "marker": {
+      "marker_id": "marker-official_document-231037f4113a",
+      "profile": "official_document",
+      "source_kind": "decoy_file",
+      "source_ref": "decoys/official_document.txt",
+      "token_sha256": "88883383304ffc37a13b024700b76af9a664d92b7f40fe6a824484c143fd987d"
+    },
+    "marker_witnesses": [
+      {
+        "chunk_count": 1,
+        "marker_id": "marker-official_document-231037f4113a",
+        "profile": "official_document",
+        "raw_marker_retained": false,
+        "sink_evidence_sha256": "ffcddadadaa4720babfb1e2184c47db24243c67c54a9b1a7fdde33b4bf8828de",
+        "sink_kind": "loopback_network",
+        "sink_ref": "127.0.0.1:ephemeral",
+        "source_kind": "decoy_file",
+        "source_ref": "decoys/official_document.txt",
+        "source_sha256": "88883383304ffc37a13b024700b76af9a664d92b7f40fe6a824484c143fd987d",
+        "transform": "base64"
+      }
+    ],
+    "metrics": {
+      "confirmed_transforms": [
+        "base64"
+      ],
+      "decision_changes": 0,
+      "duration_ms": 175,
+      "event_parse_errors": 0,
+      "event_type_counts": {
+        "environment_read": 1,
+        "file_read": 1,
+        "network_connect": 1
+      },
+      "expected_checks_passed": 3,
+      "expected_checks_total": 3,
+      "fixture_set_id": "aegis-safe-marker-flow-v1",
+      "fixtures_completed": 1,
+      "fixtures_total": 1,
+      "internet_connections_allowed": 0,
+      "marker_profiles_total": 1,
+      "marker_witnesses": 1,
+      "policy_violations": 0,
+      "protected_samples_executed": 0,
+      "protected_samples_read": 0,
+      "raw_marker_leaks": 0,
+      "schema_version": "1.0",
+      "source_to_sink_witness_rate": 1.0,
+      "timeouts": 0
+    },
+    "success": true
+  },
+  "correlation": {
+    "correlation_id": "dynamic-correlation-cfd86645fc532977",
+    "marker_witness_ids": [
+      "marker-official_document-231037f4113a"
+    ],
+    "observed_event_types": [
+      "environment_read",
+      "file_read",
+      "network_connect"
+    ],
+    "plan_id": "dynamic-plan-ca726d12eea592a3",
+    "policy_effect": "none",
+    "reason": "至少一个政企诱饵标记从指定敏感源到达受控汇点，已形成源到汇证据。",
+    "schema_version": "1.0",
+    "static_decision_changed": false,
+    "static_finding_ids": [
+      "controlled-static-sensitive-flow"
+    ],
+    "status": "confirmed"
+  },
+  "run_id": "2026-08-22-dynamic-marker-flow-dev-v2",
+  "schema_version": "1.0",
+  "static_findings": [
+    {
+      "category": "sensitive network credential flow",
+      "id": "controlled-static-sensitive-flow",
+      "rule_id": "AEGIS_SENSITIVE_DATA_TO_OUTBOUND_SINK",
+      "title": "敏感数据可能进入网络汇点"
+    }
+  ],
+  "status": "completed",
+  "trigger_plan": {
+    "marker_profiles": [
+      "database_credential",
+      "internal_endpoint",
+      "official_document"
+    ],
+    "max_attempts": 1,
+    "plan_id": "dynamic-plan-ca726d12eea592a3",
+    "policy_effect": "none",
+    "schema_version": "1.0",
+    "static_decision_changed": false,
+    "static_finding_ids": [
+      "controlled-static-sensitive-flow"
+    ],
+    "steps": [
+      {
+        "action": "inventory_skill_runtime_closure",
+        "purpose": "记录 Skill 全目录，并发现运行时新增的指令、脚本和配置。",
+        "static_finding_ids": [
+          "controlled-static-sensitive-flow"
+        ],
+        "step_id": "step-01"
+      },
+      {
+        "action": "launch_with_resource_limits",
+        "purpose": "验证目标能否在固定资源和失败闭锁边界内启动。",
+        "static_finding_ids": [
+          "controlled-static-sensitive-flow"
+        ],
+        "step_id": "step-02"
+      },
+      {
+        "action": "observe_loopback_sink",
+        "purpose": "只使用本地汇点观察数据是否到达网络输出。",
+        "static_finding_ids": [
+          "controlled-static-sensitive-flow"
+        ],
+        "step_id": "step-03"
+      },
+      {
+        "action": "observe_sensitive_file_read",
+        "purpose": "观察政企诱饵文件是否被目标读取。",
+        "static_finding_ids": [
+          "controlled-static-sensitive-flow"
+        ],
+        "step_id": "step-04"
+      }
+    ],
+    "target_id": "self-built-marker-file-to-loopback",
+    "target_kind": "skill"
+  }
+}

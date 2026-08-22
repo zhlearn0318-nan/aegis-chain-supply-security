@@ -853,3 +853,15 @@
 ## 当前下一任务
 
 完成 v8 冻结证据并停止静态规则调参。只有在用户明确授权后才揭盲一次600条回归集，形成最终泛化与回退报告。
+
+## 2026-08-22：动态 Marker 源到汇证据核心 v1
+
+做了什么：新建 `dynamic-audit-v1` 分支；写入动态审计论文与开源技术选型；实现五类政企 Marker、原文/Base64/Hex/URL/分片匹配、静态 Finding 到 Trigger Plan，以及独立的 potential/observed/confirmed/inconclusive 关联。新增一份自建哈希锁定 fixture，读取假公文 Marker 并以 Base64 发送到本机回环汇点。
+
+第一次结果：v1 真实形成 1 条 witness，安全负面指标全 0；设计复核发现关联函数没有验证 witness profile 是否属于 Trigger Plan，因此保留 v1，不作为最终接受结果。
+
+修正与最终结果：v2 只收紧计划内 profile 约束，并加入计划外 Marker 反例。最终 1/1 fixture、3/3 事件、1 条 Base64 witness、关联 confirmed；原始 Marker 泄露、策略违规、超时、外网、受保护样本读取/执行和静态决策变化均为 0。专项测试 22 passed，完整后端测试 270 passed。
+
+为什么：这一闭环把“代码里可能存在敏感外传”升级为“指定假敏感源确实到达受控汇点”的可复核证据，但仍不夸大为完整污点分析或不可信代码沙箱。
+
+下一步：建立 Docker 安全执行后端。当前主机 `docker` 命令不可用，在默认断网、只读根、非 root、资源限制、无 Docker Socket 和自建越界反例全部通过前，不执行第三方样本。

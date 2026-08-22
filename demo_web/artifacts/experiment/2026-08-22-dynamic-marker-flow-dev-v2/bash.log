@@ -1,0 +1,4 @@
+execution_interface=exec_command
+required_bash_exec_artifact_interfaces=unavailable
+command=["F:\\揭榜挂帅\\supply_chain_reproduction\\.runtime_mcp313\\Scripts\\python.exe", "tools\\dynamic\\run_marker_flow_audit.py", "--run-id", "2026-08-22-dynamic-marker-flow-dev-v2", "--output", "artifacts\\experiment\\2026-08-22-dynamic-marker-flow-dev-v2"]
+status=completed

@@ -1,0 +1,17 @@
+{
+  "baseline_relation": "complements_read_only_static_regression_baseline",
+  "claim_update": "supported_on_controlled_fixture",
+  "evaluation_summary": {
+    "correlation_status": "confirmed",
+    "fixture_completion": "1/1",
+    "marker_witnesses": 1,
+    "raw_marker_leaks": 0,
+    "source_to_sink_witness_rate": 1.0,
+    "static_decision_changes": 0
+  },
+  "failure_mode": null,
+  "next_action": "docker_safety_backend_gate",
+  "outcome_summary": "受控假公文标记经文件读取和Base64编码到达本机回环汇点，形成1条脱敏源到汇证据。",
+  "run_id": "2026-08-22-dynamic-marker-flow-dev-v2",
+  "schema_version": "1.0"
+}

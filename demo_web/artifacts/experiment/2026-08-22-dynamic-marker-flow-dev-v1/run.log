@@ -1,0 +1,8 @@
+run_id=2026-08-22-dynamic-marker-flow-dev-v1
+status=completed
+fixture_completion=1/1
+marker_witnesses=1
+correlation_status=confirmed
+raw_marker_leaks=0
+static_decision_changes=0
+elapsed_seconds=0.179

@@ -268,3 +268,15 @@
 - 平均耗时 219.33 ms、最大 289 ms；完整后端测试 `136 passed`；证据正文中三个原始测试 token 和受保护样本路径引用均为 0。
 - 结论为 `supported_on_safe_fixtures`，只支持自建哈希锁定 Python fixture 的协作式动态观测，不支持不可信代码沙箱或恶意检出率声明。
 - 最终证据：`artifacts/experiment/2026-08-18-safe-dynamic-fixture-dev-v2/`；下一路由为管理员专用内置 fixture 接口，不接受任意脚本或上传代码。
+
+## 16. 动态 Marker 源到汇证据核心 v1（2026-08-22）
+
+- 选定思路：复现论文 Marker-Based Taint/SandScope 的最小工程核心，以静态 Finding 生成 Trigger Plan，用政企假数据 Marker 证明指定敏感源是否到达受控汇点；本地模型暂不进入最终判定。
+- 基线：静态回归 `2026-08-22-static-audit-regression600-v1` 只读，本轮是互补机制实验，不做数值比较，不改变最终决策。
+- 数据与安全：只执行 1 个自建、SHA-256 锁定良性 fixture；只连接父进程 `127.0.0.1` 随机端口；第三方、回归和公开恶意样本读取/执行均为 0。
+- v1：1/1 fixture、3/3 事件、1 条 Base64 witness 和全部安全负面指标 0，但关联函数没有限制 witness profile 必须属于 Trigger Plan；保留为校准父运行。
+- v2：增加计划内 profile 约束和计划外 Marker 反例；计划内得到 confirmed，计划外只能 observed，运行失败为 inconclusive。
+- 最终结果：1/1 fixture、3/3 事件、1 条 `official_document` Base64 witness、`confirmed`；Marker 泄露、策略违规、超时、外网、受保护样本读取/执行和静态决策变化均为 0。
+- 验证：动态专项测试 `22 passed`，完整后端测试 `270 passed`，证据包包含命令、环境、源码/fixture 哈希、指标、日志和关联结果。
+- 结论：`supported_on_controlled_fixture`，只证明受控 Marker 源到汇和静态引导关联机制，不证明第三方代码沙箱、恶意检出率或真实世界泛化。
+- 下一路由：D2 Docker 安全执行后端；当前 `docker` 命令不可用，在安全门通过前不得执行第三方样本。

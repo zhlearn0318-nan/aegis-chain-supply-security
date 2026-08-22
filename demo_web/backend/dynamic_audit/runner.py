@@ -12,9 +12,10 @@ import time
 from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping
 
 from .bootstrap import EVENT_PREFIX
+from .markers import MarkerSpec, create_marker, encode_marker, find_marker_witnesses
 from .policy import canonical_argv_sha256, command_line_sha256, is_within
 
 
@@ -26,6 +27,8 @@ FIXTURE_ID_PATTERN = re.compile(r"^[a-z][a-z0-9_]{2,63}$")
 SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
 BOOTSTRAP_PATH = Path(__file__).resolve().with_name("bootstrap.py")
 DEMO_ROOT = Path(__file__).resolve().parents[2]
+MARKER_FLOW_FIXTURE_PATH = DEMO_ROOT / "tools" / "dynamic" / "fixtures" / "marker_file_to_loopback.py"
+MARKER_FLOW_FIXTURE_SHA256 = "706bcd68731b2e4844cedd6e04095fd1a48ea26d3832df14a1f2463bd9f968a0"
 
 EVENT_RULE_IDS = {
     "process_spawn": "AEGIS_DYNAMIC_SUBPROCESS_OBSERVED",
@@ -190,8 +193,13 @@ def _load_specs(config_path: Path) -> tuple[dict[str, Any], Path, list[FixtureSp
 
 
 class _LoopbackServer:
-    def __init__(self, expected_payload: str) -> None:
+    def __init__(
+        self,
+        expected_payload: str,
+        markers: tuple[MarkerSpec, ...] = (),
+    ) -> None:
         self.expected_payload = expected_payload.encode("utf-8")
+        self.markers = markers
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.socket.bind(("127.0.0.1", 0))
@@ -204,6 +212,7 @@ class _LoopbackServer:
             "payload_sha256": None,
             "payload_matched": False,
             "error_type": None,
+            "marker_witnesses": [],
         }
         self.thread = threading.Thread(target=self._serve, name="aegis-loopback-fixture", daemon=True)
 
@@ -219,6 +228,15 @@ class _LoopbackServer:
                     "payload_sha256": sha256_bytes(payload),
                     "payload_matched": payload == self.expected_payload,
                     "peer_is_loopback": address[0] == "127.0.0.1",
+                    "marker_witnesses": [
+                        witness.to_dict()
+                        for witness in find_marker_witnesses(
+                            [payload],
+                            self.markers,
+                            sink_kind="loopback_network",
+                            sink_ref="127.0.0.1:ephemeral",
+                        )
+                    ] if self.markers else [],
                 })
                 connection.sendall(b"OK")
         except BaseException as exc:
@@ -314,9 +332,27 @@ def _creation_flags() -> int:
     return int(getattr(subprocess, "CREATE_NO_WINDOW", 0))
 
 
-def _run_fixture(fixture: FixtureSpec, fixture_root: Path, workspace: Path) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+def _run_fixture(
+    fixture: FixtureSpec,
+    fixture_root: Path,
+    workspace: Path,
+    *,
+    markers: tuple[MarkerSpec, ...] = (),
+    preloaded_files: Mapping[str, str] | None = None,
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     workspace.mkdir(parents=True, exist_ok=False)
-    server = _LoopbackServer(fixture.loopback_payload) if fixture.allow_loopback else None
+    for relative_path, content in sorted((preloaded_files or {}).items()):
+        candidate = Path(relative_path)
+        target = (workspace / candidate).resolve(strict=False)
+        if candidate.is_absolute() or not is_within(target, workspace):
+            raise DynamicAuditConfigurationError("Preloaded file path escapes workspace")
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(content, encoding="utf-8")
+    server = (
+        _LoopbackServer(fixture.loopback_payload, markers)
+        if fixture.allow_loopback
+        else None
+    )
     if server:
         server.start()
 
@@ -527,4 +563,120 @@ def run_safe_fixture_set(config_path: Path, workspace_root: Path) -> dict[str, A
         "metrics": metrics,
         "fixture_paths": [str(spec.script) for spec in specs],
         "config_sha256": sha256_file(config_path),
+    }
+
+
+def run_safe_marker_flow_fixture(
+    workspace_root: Path,
+    *,
+    seed: str = "aegis-dynamic-marker-flow-v1",
+) -> dict[str, Any]:
+    """Run one controlled source-to-sink marker fixture.
+
+    This function never accepts a user-provided script, command, marker token, source
+    path, or network destination.  It is a mechanism validation surface, not an
+    untrusted-code sandbox.
+    """
+    fixture_root = (DEMO_ROOT / "tools" / "dynamic" / "fixtures").resolve(strict=True)
+    fixture_path = MARKER_FLOW_FIXTURE_PATH.resolve(strict=True)
+    if not is_within(fixture_path, fixture_root):
+        raise DynamicAuditConfigurationError("Marker fixture path escapes approved root")
+    if sha256_file(fixture_path) != MARKER_FLOW_FIXTURE_SHA256:
+        raise DynamicAuditConfigurationError("Marker fixture sha256 mismatch")
+
+    source_ref = "decoys/official_document.txt"
+    marker = create_marker(
+        "official_document",
+        seed=seed,
+        source_ref=source_ref,
+    )
+    encoded_payload = encode_marker(marker, "base64").decode("ascii")
+    fixture = FixtureSpec(
+        fixture_id="marker_file_to_loopback",
+        script=fixture_path,
+        sha256=MARKER_FLOW_FIXTURE_SHA256,
+        timeout_seconds=5.0,
+        stdin_payload="",
+        environment={},
+        allow_loopback=True,
+        loopback_payload=encoded_payload,
+        allowed_child_argv_tails=(),
+        expected_events={
+            "environment_read": 1,
+            "file_read": 1,
+            "network_connect": 1,
+        },
+    )
+    workspace_root = workspace_root.resolve(strict=False)
+    workspace_root.mkdir(parents=True, exist_ok=False)
+    fixture_result, events = _run_fixture(
+        fixture,
+        fixture_root,
+        workspace_root / fixture.fixture_id,
+        markers=(marker,),
+        preloaded_files={source_ref: marker.token},
+    )
+    loopback = fixture_result.get("loopback_server") or {}
+    witnesses = list(loopback.get("marker_witnesses") or [])
+    public_marker = marker.public_identity()
+    serialized_public_result = json.dumps(
+        {
+            "fixture_result": fixture_result,
+            "events": events,
+            "marker": public_marker,
+            "witnesses": witnesses,
+        },
+        ensure_ascii=False,
+        sort_keys=True,
+    )
+    raw_marker_leaks = serialized_public_result.count(marker.token)
+    evidence_events = [event for event in events if event.get("severity") == "INFO"]
+    metrics = {
+        "schema_version": DYNAMIC_AUDIT_SCHEMA_VERSION,
+        "fixture_set_id": "aegis-safe-marker-flow-v1",
+        "fixtures_total": 1,
+        "fixtures_completed": int(fixture_result["status"] == "completed"),
+        "expected_checks_total": len(fixture_result["expected_event_checks"]),
+        "expected_checks_passed": sum(
+            int(check["passed"])
+            for check in fixture_result["expected_event_checks"].values()
+        ),
+        "marker_profiles_total": 1,
+        "marker_witnesses": len(witnesses),
+        "source_to_sink_witness_rate": float(bool(witnesses)),
+        "confirmed_transforms": sorted({
+            str(witness.get("transform")) for witness in witnesses
+        }),
+        "event_type_counts": dict(sorted(Counter(
+            event["event_type"] for event in evidence_events
+        ).items())),
+        "policy_violations": fixture_result["policy_violations"],
+        "timeouts": int(fixture_result["timed_out"]),
+        "event_parse_errors": fixture_result["event_parse_errors"],
+        "raw_marker_leaks": raw_marker_leaks,
+        "protected_samples_read": 0,
+        "protected_samples_executed": 0,
+        "internet_connections_allowed": 0,
+        "decision_changes": 0,
+        "duration_ms": fixture_result["duration_ms"],
+    }
+    success = (
+        fixture_result["status"] == "completed"
+        and metrics["expected_checks_passed"] == metrics["expected_checks_total"]
+        and metrics["marker_witnesses"] == 1
+        and metrics["confirmed_transforms"] == ["base64"]
+        and metrics["policy_violations"] == 0
+        and metrics["timeouts"] == 0
+        and metrics["event_parse_errors"] == 0
+        and metrics["raw_marker_leaks"] == 0
+        and metrics["decision_changes"] == 0
+    )
+    return {
+        "success": success,
+        "fixture_result": fixture_result,
+        "events": events,
+        "marker": public_marker,
+        "marker_witnesses": witnesses,
+        "metrics": metrics,
+        "fixture_sha256": MARKER_FLOW_FIXTURE_SHA256,
     }

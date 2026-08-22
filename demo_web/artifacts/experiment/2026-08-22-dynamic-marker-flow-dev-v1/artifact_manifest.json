@@ -1,0 +1,42 @@
+{
+  "evidence_files": {
+    "CHECKLIST.md": {
+      "bytes": 815,
+      "sha256": "18b82a7c26943d5ef53275dea97267b3f06af4e3be65534211d90da19b1f4acf"
+    },
+    "PLAN.md": {
+      "bytes": 1962,
+      "sha256": "bc0a6bac30ff22073d1448e3042cdf3a0fc5f784c2111771b0029ee0a84d705d"
+    },
+    "bash.log": {
+      "bytes": 368,
+      "sha256": "534244478982383a519fe88e6f0fb854c74584fc770e3cbfba1ecfeb6d27955c"
+    },
+    "dynamic_evidence.json": {
+      "bytes": 8452,
+      "sha256": "484a458a038786df884f7caff57c1dc396105c5df7863d312c1d892abfaae247"
+    },
+    "evaluation_summary.json": {
+      "bytes": 649,
+      "sha256": "540dc82ded5a688b52dbae5da2af1c7b3de0a7cbe4e81e48078c4ea1396194a5"
+    },
+    "metrics.json": {
+      "bytes": 884,
+      "sha256": "5f33a29abe2cd481856931153b6b9c13ec98327d91f02decbdbde60888802aae"
+    },
+    "run.log": {
+      "bytes": 200,
+      "sha256": "55f6e02179ab7ccae2f05ec43d3d737f97427c5b262e67bf4400fbaaf5553bb8"
+    },
+    "run_manifest.json": {
+      "bytes": 4103,
+      "sha256": "abae21bcf85929dc349f8a572cb096250144c2f2e07ab4849f1cea51d051bcb8"
+    },
+    "summary.md": {
+      "bytes": 328,
+      "sha256": "1ce711da1e82b8bb8593b4a771fbce50f181a2a022877c88a2ecdef95d441784"
+    }
+  },
+  "run_id": "2026-08-22-dynamic-marker-flow-dev-v1",
+  "schema_version": "1.0"
+}

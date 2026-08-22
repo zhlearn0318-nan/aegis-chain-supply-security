@@ -1,0 +1,111 @@
+{
+  "alternative_hypothesis": "1/1受控fixture形成Base64源到汇witness，负面安全指标和决策变化均为0。",
+  "baseline": {
+    "relation": "read_only_complementary_not_numerically_comparable",
+    "run_id": "2026-08-22-static-audit-regression600-v1"
+  },
+  "claim_boundary": "Self-built hash-locked marker fixture mechanism evidence only; no third-party Skill execution and no untrusted-code sandbox claim.",
+  "command": [
+    "F:\\揭榜挂帅\\supply_chain_reproduction\\.runtime_mcp313\\Scripts\\python.exe",
+    "tools\\dynamic\\run_marker_flow_audit.py",
+    "--run-id",
+    "2026-08-22-dynamic-marker-flow-dev-v1",
+    "--output",
+    "artifacts\\experiment\\2026-08-22-dynamic-marker-flow-dev-v1"
+  ],
+  "completed_at": "2026-08-22T07:22:20.207036+00:00",
+  "dataset": {
+    "controlled_fixtures": 1,
+    "external_dataset": null,
+    "protected_samples_executed": 0,
+    "protected_samples_read": 0
+  },
+  "elapsed_seconds": 0.179,
+  "environment": {
+    "cloud_used": false,
+    "docker_used": false,
+    "gpu_used": false,
+    "internet_used": false,
+    "network_allowance": "127.0.0.1_ephemeral_only",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.14 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:26:41) [MSC v.1942 64 bit (AMD64)]"
+  },
+  "experiment_tier": "auxiliary/dev",
+  "metrics": {
+    "confirmed_transforms": [
+      "base64"
+    ],
+    "correlation_status": "confirmed",
+    "decision_changes": 0,
+    "duration_ms": 172,
+    "event_parse_errors": 0,
+    "event_type_counts": {
+      "environment_read": 1,
+      "file_read": 1,
+      "network_connect": 1
+    },
+    "expected_checks_passed": 3,
+    "expected_checks_total": 3,
+    "fixture_set_id": "aegis-safe-marker-flow-v1",
+    "fixtures_completed": 1,
+    "fixtures_total": 1,
+    "internet_connections_allowed": 0,
+    "marker_profiles_total": 1,
+    "marker_witnesses": 1,
+    "policy_violations": 0,
+    "protected_samples_executed": 0,
+    "protected_samples_read": 0,
+    "raw_marker_leaks": 0,
+    "run_elapsed_seconds": 0.179,
+    "run_id": "2026-08-22-dynamic-marker-flow-dev-v1",
+    "schema_version": "1.0",
+    "source_to_sink_witness_rate": 1.0,
+    "static_decision_changes": 0,
+    "static_finding_ids": 1,
+    "timeouts": 0,
+    "trigger_plan_steps": 4
+  },
+  "next_action": "docker_safety_backend_gate",
+  "null_hypothesis": "Marker不能形成完整证据，或发生原文泄露、越界行为或静态决策变化。",
+  "research_question": "能否在不执行第三方样本、不连接互联网且不改变静态决策的条件下，形成政企诱饵文件到受控网络汇点的脱敏源到汇证据？",
+  "run_id": "2026-08-22-dynamic-marker-flow-dev-v1",
+  "safety_contract": {
+    "accepts_custom_commands": false,
+    "accepts_user_code": false,
+    "accepts_user_paths": false,
+    "execution_trust": "self_built_hash_locked_only",
+    "not_an_untrusted_code_sandbox": true,
+    "policy_effect": "none",
+    "raw_marker_retained": false,
+    "static_decision_changes": 0
+  },
+  "schema_version": "1.0",
+  "sources": {
+    "backend/dynamic_audit/markers.py": {
+      "bytes": 6603,
+      "sha256": "026a0b16b58623eceed014ca829a74afd8b50e6af4d160093a1d32cb3cb12250"
+    },
+    "backend/dynamic_audit/planning.py": {
+      "bytes": 9152,
+      "sha256": "224b653d5b3a7da8e738a0c02f0e0c62254cee1f5c22be12ade3448b3ef3d924"
+    },
+    "backend/dynamic_audit/runner.py": {
+      "bytes": 27113,
+      "sha256": "c2bdd5e96674b5082c6306317187977058725611fb1ff843cc3258b0555d4129"
+    },
+    "backend/tests/test_dynamic_evidence.py": {
+      "bytes": 6209,
+      "sha256": "1f84cd2d71a9750f8fa4369d14824e80b47ee2c0f7231b122b0f0cb685dce99b"
+    },
+    "tools/dynamic/fixtures/marker_file_to_loopback.py": {
+      "bytes": 603,
+      "sha256": "706bcd68731b2e4844cedd6e04095fd1a48ea26d3832df14a1f2463bd9f968a0"
+    },
+    "tools/dynamic/run_marker_flow_audit.py": {
+      "bytes": 11512,
+      "sha256": "b0c0f911e8a7bba990170ceb3455229e04decc5d59ebce7a86d54b45403ecec2"
+    }
+  },
+  "started_at": "2026-08-22T07:22:20.027533+00:00",
+  "status": "completed"
+}
