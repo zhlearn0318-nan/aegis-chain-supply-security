@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-22-static-audit-regression600-v1",
+  "opened_at": "2026-08-22T03:03:48.999764+00:00",
+  "reason": "authorized one-time frozen static-audit regression evaluation",
+  "regression_cases_sha256": "8ee8745594cf2d7ef643cf95e61ccd88c420b42c540780dadb7320cbe7c90492",
+  "rules_locked": true
+}

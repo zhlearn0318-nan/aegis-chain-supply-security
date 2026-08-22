@@ -1,0 +1,151 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-22-static-audit-regression600-v1",
+  "status": "completed",
+  "experiment_tier": "sealed_engineering_regression",
+  "started_at": "2026-08-22T03:03:48.997589+00:00",
+  "completed_at": "2026-08-22T03:06:04.424694+00:00",
+  "elapsed_seconds": 135.425,
+  "command": [
+    "F:\\揭榜挂帅\\supply_chain_reproduction\\.runtime_skill\\Scripts\\python.exe",
+    "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\tools\\evaluation\\run_static_audit_regression.py"
+  ],
+  "frozen_static_commit": "f84927893a6bedcde4afa049a28c04be59316b73",
+  "frozen_inputs": {
+    "split_manifest": {
+      "path": "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\artifacts\\analysis\\2026-08-15-skilltrustbench-dev120-regression600-v1\\split_manifest.json",
+      "sha256": "618bbf96ed790304600d888076de91556ba42b316ebd525b38b01549e0c0652b",
+      "bytes": 4192
+    },
+    "split_verification": {
+      "path": "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\artifacts\\analysis\\2026-08-15-skilltrustbench-dev120-regression600-v1\\verification.json",
+      "sha256": "9177d213ac53468b47fbdd6e0778fa0d710a09dfa584cbfa705380b47e4abd2e",
+      "bytes": 1105
+    },
+    "regression_cases": {
+      "path": "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\artifacts\\analysis\\2026-08-15-skilltrustbench-dev120-regression600-v1\\regression_cases.jsonl",
+      "sha256": "8ee8745594cf2d7ef643cf95e61ccd88c420b42c540780dadb7320cbe7c90492",
+      "bytes": 286654
+    },
+    "regression_ids": {
+      "path": "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\artifacts\\analysis\\2026-08-15-skilltrustbench-dev120-regression600-v1\\regression_case_ids.txt",
+      "sha256": "cd83b4f4251b23701fdd98b6b9d3899777ca41f9d573d4fb502ce3307f0cc07d",
+      "bytes": 6600
+    },
+    "parent_results": {
+      "path": "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\artifacts\\analysis\\2026-08-14-skilltrustbench-full-cisco-parallel-v1\\per_case_results.jsonl",
+      "sha256": "15a9ec0cdb3b30d7d55d4a3f67e8a31b9f324f7724c46ede83ec07d5f79cd918",
+      "bytes": 9899989
+    },
+    "parent_freeze": {
+      "path": "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\baseline\\skilltrustbench_v1_0\\full_cisco_static_v1\\freeze_manifest.json",
+      "sha256": "e4ed096b3de5ed25a8397899906524f4f8a257ead380a07f273c661088bf17e4",
+      "bytes": 8132
+    },
+    "metric_contract": {
+      "path": "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\baseline\\skilltrustbench_v1_0\\full_cisco_static_v1\\json\\metric_contract.json",
+      "sha256": "d7c6fd64ffde14e50c1cd112a8923857b88dbcf4b1068600d75aa3650c4eb2ac",
+      "bytes": 6145
+    },
+    "policy": {
+      "path": "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\config\\admission_policy.yaml",
+      "sha256": "010ca27b327e5098b11d7819563b40a607cac7698ac01019740557b8eaececf5",
+      "bytes": 344
+    },
+    "aegis_static": {
+      "path": "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\backend\\analyzers\\aegis_static.py",
+      "sha256": "95b026050459a3aa5024d24f2e1487b9139982fb6a675959d10306dd2cb82351",
+      "bytes": 18649
+    },
+    "sensitive_flow": {
+      "path": "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\backend\\analyzers\\sensitive_flow.py",
+      "sha256": "d35cdb49691e2ebc6a2a852d5f2260d7e387e4787067c29d49bd5755e5bf427a",
+      "bytes": 18852
+    },
+    "untrusted_exec_flow": {
+      "path": "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\backend\\analyzers\\untrusted_exec_flow.py",
+      "sha256": "41d39b2d866fc24f2573f5a97fb5954507eb3ff28c0a51d4e0fb6459e5aeec18",
+      "bytes": 25541
+    },
+    "enterprise_controls": {
+      "path": "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\backend\\analyzers\\enterprise_controls.py",
+      "sha256": "1809df21cd15546e65e7d7ece8a6f2b3c79b7bd40c5eb2a833a1b72f84927e1d",
+      "bytes": 23308
+    },
+    "static_coverage": {
+      "path": "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\backend\\analyzers\\static_coverage.py",
+      "sha256": "4a6dfe70d6fe5e3dfeb8399e421b0ad13aa063dd8e6e6a7040c207be87fe704e",
+      "bytes": 8519
+    },
+    "network_context": {
+      "path": "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\backend\\analyzers\\network_context.py",
+      "sha256": "59a0ab095c415bb81c01aae0c8e4baeb9ee4e5ff8a53c24ca4c4be8573facc00",
+      "bytes": 17431
+    },
+    "filesystem_context": {
+      "path": "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\backend\\analyzers\\filesystem_context.py",
+      "sha256": "4a8313178af5231b01cb2868bc63c94f9e1baf8d61022cd3194228a624fecaaa",
+      "bytes": 25502
+    },
+    "command_context": {
+      "path": "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\backend\\analyzers\\command_context.py",
+      "sha256": "3e0673d2e25cba35fd0cfecb03fddf8d56f1cc522773dd73f71ba110915d5a61",
+      "bytes": 34604
+    }
+  },
+  "dataset": {
+    "split_id": "2026-08-15-skilltrustbench-dev120-regression600-v1",
+    "cases": 600,
+    "seal_opened_at": "2026-08-22T03:03:48.999764+00:00",
+    "selection_uses_parent_scan_outcomes": false
+  },
+  "environment": {
+    "python": "3.11.13 | packaged by Anaconda, Inc. | (main, Jun  5 2025, 13:03:15) [MSC v.1929 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "sample_execution": false,
+    "sample_import": false,
+    "sample_install": false,
+    "network_fetch": false,
+    "raw_sample_text_retained": false
+  },
+  "latency_semantics": {
+    "cisco_duration_ms": "frozen parent measurement",
+    "aegis_incremental_duration_ms": "measured in this run",
+    "estimated_total_duration_ms": "sum; estimated sequential total, not a fresh Cisco end-to-end measurement"
+  },
+  "outputs": {
+    "seal_opened.json": {
+      "sha256": "3c257ef79c448c4c64780ad8a8757a050e047293b20c506304ce78176b2445d5",
+      "bytes": 335
+    },
+    "per_case_results.jsonl": {
+      "sha256": "13af02dc2d435ef1c368dc6fffdbbce53f45361335cd473798113c40a9e3bed1",
+      "bytes": 2329861
+    },
+    "metrics.json": {
+      "sha256": "dbc6f9c0ca5e00a75b1d15d1106246187077d7e547305cfbfe1a11cbf7930ae7",
+      "bytes": 6146
+    },
+    "statistical_tests.json": {
+      "sha256": "e69a95433b807b9c6e658ff21994091f8e6515f462fa4c799d1b642a59c1c246",
+      "bytes": 524
+    },
+    "error_slices.json": {
+      "sha256": "2a4159c47a7d9608a1b319812d2d5ef751e7dbbc3282f4a352bb7253ac720152",
+      "bytes": 5233
+    },
+    "rule_summary.json": {
+      "sha256": "ad68bcc1182eb5c31d66298b949f4a58aef9ded9496e345b95a0fc3128a0d0f1",
+      "bytes": 14616
+    },
+    "evaluation_summary.json": {
+      "sha256": "03ee439e2d76e5a5747829cac7668172bd678425cf2f63a19372e056b12a92d4",
+      "bytes": 684
+    },
+    "run.log": {
+      "sha256": "a4f0b2ab70b6d368cfcc944338b6f6472838d46d5f80d0ddc7405c6a4348beb8",
+      "bytes": 2196
+    }
+  },
+  "claim_boundary": "Engineering regression comparison on a held-out split of previously used SkillTrustBench v1.0."
+}

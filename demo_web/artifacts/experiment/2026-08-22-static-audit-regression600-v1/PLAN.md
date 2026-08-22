@@ -8,4 +8,4 @@
 - Decision rule: fixed in `demo_web/docs/M3_STATIC_AUDIT_REGRESSION_PROTOCOL.md` before opening.
 - Output policy: immutable directory; compact findings only; preserve failed-run evidence.
 
-Status: protocol/evaluator locked and preflight passed; regression content not opened by this experiment.
+Status: completed and verified. Verdict: `supported_with_tradeoff`; rules remain frozen.

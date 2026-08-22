@@ -1,0 +1,249 @@
+{
+  "baseline": {
+    "schema_version": "1.0",
+    "scope": "full_dataset_evaluation",
+    "cases": 600,
+    "coverage": 0.98,
+    "failure_rate": 0.02,
+    "abstention_count": 12,
+    "strict_macro_f1": 0.4660583384346037,
+    "covered_macro_f1": 0.470977455493865,
+    "malicious_recall": 0.735,
+    "malicious_fnr": 0.265,
+    "non_normal_recall": 0.73,
+    "normal_fpr": 0.32,
+    "supplementary_accuracy": 0.505,
+    "aegis_policy_loose_non_normal": {
+      "mapping": "truth malicious/suspicious=positive; prediction BLOCK/REVIEW=positive",
+      "not_equivalent_to_official_cisco_actual_safe": true,
+      "tp": 292,
+      "fp": 64,
+      "fn": 108,
+      "tn": 132,
+      "abstention_count": 12,
+      "precision": 0.8202247191011236,
+      "recall": 0.73,
+      "loose_f1": 0.7724867724867724,
+      "fpr": 0.32
+    },
+    "per_risk_label_recall": {
+      "T01": {
+        "support": 145,
+        "detected": 106,
+        "recall": 0.7310344827586207
+      },
+      "T02": {
+        "support": 10,
+        "detected": 6,
+        "recall": 0.6
+      },
+      "T03": {
+        "support": 61,
+        "detected": 50,
+        "recall": 0.819672131147541
+      },
+      "T04": {
+        "support": 259,
+        "detected": 187,
+        "recall": 0.722007722007722
+      },
+      "T05": {
+        "support": 110,
+        "detected": 73,
+        "recall": 0.6636363636363637
+      },
+      "T06": {
+        "support": 4,
+        "detected": 2,
+        "recall": 0.5
+      },
+      "T07": {
+        "support": 9,
+        "detected": 7,
+        "recall": 0.7777777777777778
+      },
+      "T08": {
+        "support": 36,
+        "detected": 35,
+        "recall": 0.9722222222222222
+      },
+      "T09": {
+        "support": 175,
+        "detected": 112,
+        "recall": 0.64
+      }
+    },
+    "latency_median_ms": 6179.0,
+    "latency_p95_ms": 6464,
+    "latency_max_ms": 6803,
+    "confusion_matrix": {
+      "normal": {
+        "normal": 132,
+        "suspicious": 36,
+        "malicious": 28,
+        "abstain": 4
+      },
+      "suspicious": {
+        "normal": 70,
+        "suspicious": 24,
+        "malicious": 104,
+        "abstain": 2
+      },
+      "malicious": {
+        "normal": 30,
+        "suspicious": 17,
+        "malicious": 147,
+        "abstain": 6
+      }
+    },
+    "warning": null
+  },
+  "enhanced": {
+    "schema_version": "1.0",
+    "scope": "full_dataset_evaluation",
+    "cases": 600,
+    "coverage": 0.98,
+    "failure_rate": 0.02,
+    "abstention_count": 12,
+    "strict_macro_f1": 0.5629341681411913,
+    "covered_macro_f1": 0.5687909207545845,
+    "malicious_recall": 0.82,
+    "malicious_fnr": 0.18000000000000005,
+    "non_normal_recall": 0.8625,
+    "normal_fpr": 0.355,
+    "supplementary_accuracy": 0.5766666666666667,
+    "aegis_policy_loose_non_normal": {
+      "mapping": "truth malicious/suspicious=positive; prediction BLOCK/REVIEW=positive",
+      "not_equivalent_to_official_cisco_actual_safe": true,
+      "tp": 345,
+      "fp": 71,
+      "fn": 55,
+      "tn": 125,
+      "abstention_count": 12,
+      "precision": 0.8293269230769231,
+      "recall": 0.8625,
+      "loose_f1": 0.8455882352941178,
+      "fpr": 0.355
+    },
+    "per_risk_label_recall": {
+      "T01": {
+        "support": 145,
+        "detected": 119,
+        "recall": 0.8206896551724138
+      },
+      "T02": {
+        "support": 10,
+        "detected": 8,
+        "recall": 0.8
+      },
+      "T03": {
+        "support": 61,
+        "detected": 56,
+        "recall": 0.9180327868852459
+      },
+      "T04": {
+        "support": 259,
+        "detected": 232,
+        "recall": 0.8957528957528957
+      },
+      "T05": {
+        "support": 110,
+        "detected": 98,
+        "recall": 0.8909090909090909
+      },
+      "T06": {
+        "support": 4,
+        "detected": 4,
+        "recall": 1.0
+      },
+      "T07": {
+        "support": 9,
+        "detected": 8,
+        "recall": 0.8888888888888888
+      },
+      "T08": {
+        "support": 36,
+        "detected": 35,
+        "recall": 0.9722222222222222
+      },
+      "T09": {
+        "support": 175,
+        "detected": 151,
+        "recall": 0.8628571428571429
+      }
+    },
+    "latency_median_ms": 6286.0,
+    "latency_p95_ms": 6764,
+    "latency_max_ms": 7362,
+    "confusion_matrix": {
+      "normal": {
+        "normal": 125,
+        "suspicious": 40,
+        "malicious": 31,
+        "abstain": 4
+      },
+      "suspicious": {
+        "normal": 36,
+        "suspicious": 57,
+        "malicious": 105,
+        "abstain": 2
+      },
+      "malicious": {
+        "normal": 11,
+        "suspicious": 19,
+        "malicious": 164,
+        "abstain": 6
+      }
+    },
+    "warning": null
+  },
+  "deltas": {
+    "coverage": 0.0,
+    "failure_rate": 0.0,
+    "strict_macro_f1": 0.09687582970658765,
+    "covered_macro_f1": 0.09781346526071949,
+    "malicious_recall": 0.08499999999999996,
+    "malicious_fnr": -0.08499999999999996,
+    "non_normal_recall": 0.13250000000000006,
+    "normal_fpr": 0.034999999999999976,
+    "supplementary_accuracy": 0.07166666666666666,
+    "latency_median_ms": 107.0,
+    "latency_p95_ms": 300.0,
+    "latency_max_ms": 559.0
+  },
+  "integrity": {
+    "comparable": true,
+    "cases": 600,
+    "unique_case_ids": 600,
+    "ground_truth_balance": {
+      "malicious": 200,
+      "normal": 200,
+      "suspicious": 200
+    },
+    "enhancement_failures": 0,
+    "tree_hash_mismatches": 0,
+    "integrity_failures": []
+  },
+  "statistics": {
+    "mcnemar": {
+      "test": "two_sided_exact_mcnemar_binomial",
+      "both_correct": 296,
+      "baseline_only_correct": 7,
+      "enhanced_only_correct": 50,
+      "both_wrong": 247,
+      "discordant_pairs": 57,
+      "p_value": 4.236709844063213e-09
+    },
+    "paired_bootstrap": {
+      "method": "paired_percentile_bootstrap",
+      "samples": 10000,
+      "seed": 20260822,
+      "confidence_level": 0.95,
+      "delta_strict_macro_f1_mean": 0.0969951711312289,
+      "ci_lower": 0.06977773866290787,
+      "ci_upper": 0.12529548150087416
+    }
+  },
+  "claim_verdict": "supported_with_tradeoff",
+  "next_action": "保留增强结论及权衡说明；不在本回归集上继续调参。"
+}

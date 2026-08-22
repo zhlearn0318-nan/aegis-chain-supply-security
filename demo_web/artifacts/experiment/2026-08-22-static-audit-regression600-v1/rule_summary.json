@@ -1,0 +1,576 @@
+{
+  "rule_hits": {
+    "AEGIS_CONTEXT_ARGUMENT_VECTOR_PROCESS_CALL": {
+      "total": 89,
+      "by_ground_truth": {
+        "malicious": 27,
+        "normal": 7,
+        "suspicious": 55
+      }
+    },
+    "AEGIS_CONTEXT_COMMAND_BEHAVIOR_UNDECLARED": {
+      "total": 51,
+      "by_ground_truth": {
+        "malicious": 27,
+        "normal": 10,
+        "suspicious": 14
+      }
+    },
+    "AEGIS_CONTEXT_COMMAND_CAPABILITY_DECLARED": {
+      "total": 311,
+      "by_ground_truth": {
+        "malicious": 133,
+        "normal": 61,
+        "suspicious": 117
+      }
+    },
+    "AEGIS_CONTEXT_COMMAND_CAPABILITY_DECLARED_NO_DIRECT_PRIMITIVE": {
+      "total": 52,
+      "by_ground_truth": {
+        "malicious": 14,
+        "normal": 11,
+        "suspicious": 27
+      }
+    },
+    "AEGIS_CONTEXT_COMMAND_INPUT_VIA_STDIN": {
+      "total": 57,
+      "by_ground_truth": {
+        "malicious": 22,
+        "normal": 17,
+        "suspicious": 18
+      }
+    },
+    "AEGIS_CONTEXT_COMMAND_SANITIZATION_GUARD": {
+      "total": 17,
+      "by_ground_truth": {
+        "malicious": 4,
+        "normal": 12,
+        "suspicious": 1
+      }
+    },
+    "AEGIS_CONTEXT_CREDENTIAL_USED_FOR_NETWORK_AUTH": {
+      "total": 19,
+      "by_ground_truth": {
+        "malicious": 4,
+        "normal": 10,
+        "suspicious": 5
+      }
+    },
+    "AEGIS_CONTEXT_DANGEROUS_COMMAND_TEXT_IN_TEST_FIXTURE": {
+      "total": 11,
+      "by_ground_truth": {
+        "normal": 7,
+        "suspicious": 4
+      }
+    },
+    "AEGIS_CONTEXT_DESTRUCTIVE_COMMAND_PRESENT": {
+      "total": 71,
+      "by_ground_truth": {
+        "malicious": 10,
+        "normal": 8,
+        "suspicious": 53
+      }
+    },
+    "AEGIS_CONTEXT_DESTRUCTIVE_FILE_MUTATION_DECLARED": {
+      "total": 18,
+      "by_ground_truth": {
+        "malicious": 4,
+        "normal": 2,
+        "suspicious": 12
+      }
+    },
+    "AEGIS_CONTEXT_DESTRUCTIVE_FILE_MUTATION_NOT_EXPLICITLY_DECLARED": {
+      "total": 103,
+      "by_ground_truth": {
+        "malicious": 16,
+        "normal": 24,
+        "suspicious": 63
+      }
+    },
+    "AEGIS_CONTEXT_DOWNLOAD_COMMAND_PRESENT": {
+      "total": 53,
+      "by_ground_truth": {
+        "malicious": 29,
+        "normal": 12,
+        "suspicious": 12
+      }
+    },
+    "AEGIS_CONTEXT_DYNAMIC_EXECUTABLE_PROCESS_CALL": {
+      "total": 4,
+      "by_ground_truth": {
+        "malicious": 3,
+        "suspicious": 1
+      }
+    },
+    "AEGIS_CONTEXT_ENVIRONMENT_INPUT_NEAR_PROCESS_CALL": {
+      "total": 12,
+      "by_ground_truth": {
+        "malicious": 10,
+        "normal": 1,
+        "suspicious": 1
+      }
+    },
+    "AEGIS_CONTEXT_FILESYSTEM_BEHAVIOR_UNDECLARED": {
+      "total": 35,
+      "by_ground_truth": {
+        "malicious": 15,
+        "normal": 10,
+        "suspicious": 10
+      }
+    },
+    "AEGIS_CONTEXT_FILESYSTEM_CAPABILITY_DECLARED": {
+      "total": 314,
+      "by_ground_truth": {
+        "malicious": 88,
+        "normal": 88,
+        "suspicious": 138
+      }
+    },
+    "AEGIS_CONTEXT_FILE_INPUT_NEAR_PROCESS_CALL": {
+      "total": 33,
+      "by_ground_truth": {
+        "malicious": 17,
+        "normal": 10,
+        "suspicious": 6
+      }
+    },
+    "AEGIS_CONTEXT_FILE_WRITE_BEHAVIOR_DECLARED": {
+      "total": 116,
+      "by_ground_truth": {
+        "malicious": 32,
+        "normal": 35,
+        "suspicious": 49
+      }
+    },
+    "AEGIS_CONTEXT_FILE_WRITE_BEHAVIOR_NOT_EXPLICITLY_DECLARED": {
+      "total": 43,
+      "by_ground_truth": {
+        "malicious": 16,
+        "normal": 11,
+        "suspicious": 16
+      }
+    },
+    "AEGIS_CONTEXT_FIXED_EXECUTABLE_PROCESS_CALL": {
+      "total": 91,
+      "by_ground_truth": {
+        "malicious": 28,
+        "normal": 8,
+        "suspicious": 55
+      }
+    },
+    "AEGIS_CONTEXT_NAMED_BUSINESS_TOOL_COMMAND": {
+      "total": 337,
+      "by_ground_truth": {
+        "malicious": 159,
+        "normal": 43,
+        "suspicious": 135
+      }
+    },
+    "AEGIS_CONTEXT_NETWORK_BEHAVIOR_UNDECLARED": {
+      "total": 22,
+      "by_ground_truth": {
+        "malicious": 15,
+        "normal": 6,
+        "suspicious": 1
+      }
+    },
+    "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED": {
+      "total": 163,
+      "by_ground_truth": {
+        "malicious": 69,
+        "normal": 52,
+        "suspicious": 42
+      }
+    },
+    "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED_NO_DIRECT_PRIMITIVE": {
+      "total": 72,
+      "by_ground_truth": {
+        "malicious": 30,
+        "normal": 11,
+        "suspicious": 31
+      }
+    },
+    "AEGIS_CONTEXT_NETWORK_MOCK_OR_LOCAL_ONLY_DECLARED": {
+      "total": 5,
+      "by_ground_truth": {
+        "normal": 3,
+        "suspicious": 2
+      }
+    },
+    "AEGIS_CONTEXT_OUTBOUND_BEHAVIOR_DECLARED": {
+      "total": 43,
+      "by_ground_truth": {
+        "malicious": 16,
+        "normal": 17,
+        "suspicious": 10
+      }
+    },
+    "AEGIS_CONTEXT_OUTBOUND_BEHAVIOR_NOT_EXPLICITLY_DECLARED": {
+      "total": 23,
+      "by_ground_truth": {
+        "malicious": 15,
+        "normal": 4,
+        "suspicious": 4
+      }
+    },
+    "AEGIS_CONTEXT_OVERWRITE_CAPABLE_FILE_WRITE": {
+      "total": 159,
+      "by_ground_truth": {
+        "malicious": 48,
+        "normal": 46,
+        "suspicious": 65
+      }
+    },
+    "AEGIS_CONTEXT_PACKAGE_INSTALL_COMMAND_PRESENT": {
+      "total": 92,
+      "by_ground_truth": {
+        "malicious": 35,
+        "normal": 10,
+        "suspicious": 47
+      }
+    },
+    "AEGIS_CONTEXT_PATH_CONTAINMENT_GUARD": {
+      "total": 7,
+      "by_ground_truth": {
+        "malicious": 2,
+        "normal": 2,
+        "suspicious": 3
+      }
+    },
+    "AEGIS_CONTEXT_PERSISTENCE_COMMAND_PRESENT": {
+      "total": 10,
+      "by_ground_truth": {
+        "malicious": 9,
+        "suspicious": 1
+      }
+    },
+    "AEGIS_CONTEXT_PRIVILEGED_COMMAND_PRESENT": {
+      "total": 11,
+      "by_ground_truth": {
+        "malicious": 7,
+        "normal": 1,
+        "suspicious": 3
+      }
+    },
+    "AEGIS_CONTEXT_PROCESS_API_IMPORTED_WITHOUT_CALL": {
+      "total": 5,
+      "by_ground_truth": {
+        "normal": 4,
+        "suspicious": 1
+      }
+    },
+    "AEGIS_CONTEXT_QUOTED_SHELL_VARIABLE": {
+      "total": 171,
+      "by_ground_truth": {
+        "malicious": 47,
+        "normal": 63,
+        "suspicious": 61
+      }
+    },
+    "AEGIS_CONTEXT_READ_ONLY_FILESYSTEM_BEHAVIOR": {
+      "total": 88,
+      "by_ground_truth": {
+        "malicious": 34,
+        "normal": 27,
+        "suspicious": 27
+      }
+    },
+    "AEGIS_CONTEXT_READ_ONLY_NETWORK_BEHAVIOR": {
+      "total": 119,
+      "by_ground_truth": {
+        "malicious": 53,
+        "normal": 37,
+        "suspicious": 29
+      }
+    },
+    "AEGIS_CONTEXT_READ_ONLY_SYSTEM_COMMAND": {
+      "total": 86,
+      "by_ground_truth": {
+        "malicious": 37,
+        "normal": 16,
+        "suspicious": 33
+      }
+    },
+    "AEGIS_CONTEXT_RECURSIVE_FILESYSTEM_MUTATION": {
+      "total": 91,
+      "by_ground_truth": {
+        "malicious": 14,
+        "normal": 15,
+        "suspicious": 62
+      }
+    },
+    "AEGIS_CONTEXT_SECURITY_TEST_FIXTURE": {
+      "total": 39,
+      "by_ground_truth": {
+        "malicious": 13,
+        "normal": 15,
+        "suspicious": 11
+      }
+    },
+    "AEGIS_CONTEXT_SENSITIVE_PATH_ACCESS": {
+      "total": 34,
+      "by_ground_truth": {
+        "malicious": 15,
+        "normal": 10,
+        "suspicious": 9
+      }
+    },
+    "AEGIS_CONTEXT_SENSITIVE_SOURCE_WITH_OUTBOUND_SINK": {
+      "total": 27,
+      "by_ground_truth": {
+        "malicious": 12,
+        "normal": 9,
+        "suspicious": 6
+      }
+    },
+    "AEGIS_CONTEXT_SHELL_SCRIPT_WORKFLOW": {
+      "total": 207,
+      "by_ground_truth": {
+        "malicious": 59,
+        "normal": 67,
+        "suspicious": 81
+      }
+    },
+    "AEGIS_CONTEXT_SHELL_STRING_PROCESS_CALL": {
+      "total": 53,
+      "by_ground_truth": {
+        "malicious": 20,
+        "normal": 3,
+        "suspicious": 30
+      }
+    },
+    "AEGIS_CONTEXT_SYSTEM_PATH_ACCESS": {
+      "total": 258,
+      "by_ground_truth": {
+        "malicious": 74,
+        "normal": 61,
+        "suspicious": 123
+      }
+    },
+    "AEGIS_CONTEXT_USER_INPUT_NEAR_PROCESS_CALL": {
+      "total": 150,
+      "by_ground_truth": {
+        "malicious": 42,
+        "normal": 50,
+        "suspicious": 58
+      }
+    },
+    "AEGIS_CONTEXT_WORKSPACE_OR_TEMP_PATH": {
+      "total": 178,
+      "by_ground_truth": {
+        "malicious": 46,
+        "normal": 39,
+        "suspicious": 93
+      }
+    },
+    "AEGIS_CREDENTIAL_IN_OUTBOUND_PAYLOAD": {
+      "total": 6,
+      "by_ground_truth": {
+        "malicious": 2,
+        "normal": 4
+      }
+    },
+    "AEGIS_DESTRUCTIVE_OPERATION_NO_GUARD": {
+      "total": 45,
+      "by_ground_truth": {
+        "malicious": 9,
+        "normal": 6,
+        "suspicious": 30
+      }
+    },
+    "AEGIS_EMBEDDED_BLOB_DECODE_EXECUTE": {
+      "total": 48,
+      "by_ground_truth": {
+        "malicious": 48
+      }
+    },
+    "AEGIS_PARTIAL_PERSISTENCE_INDICATOR": {
+      "total": 20,
+      "by_ground_truth": {
+        "malicious": 6,
+        "normal": 4,
+        "suspicious": 10
+      }
+    },
+    "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN": {
+      "total": 71,
+      "by_ground_truth": {
+        "malicious": 66,
+        "normal": 3,
+        "suspicious": 2
+      }
+    },
+    "AEGIS_PASTE_SERVICE_PAYLOAD_EXECUTION": {
+      "total": 3,
+      "by_ground_truth": {
+        "malicious": 3
+      }
+    },
+    "AEGIS_PERSISTENCE_SCHEDULED_TASK": {
+      "total": 12,
+      "by_ground_truth": {
+        "malicious": 11,
+        "suspicious": 1
+      }
+    },
+    "AEGIS_PERSISTENCE_SERVICE_CREATE": {
+      "total": 3,
+      "by_ground_truth": {
+        "malicious": 3
+      }
+    },
+    "AEGIS_PERSISTENCE_STARTUP_PROFILE_WRITE": {
+      "total": 1,
+      "by_ground_truth": {
+        "malicious": 1
+      }
+    },
+    "AEGIS_REMOTE_FETCH_DECODE_EXECUTE": {
+      "total": 8,
+      "by_ground_truth": {
+        "malicious": 1,
+        "normal": 7
+      }
+    },
+    "AEGIS_REMOTE_FETCH_PIPE_SHELL": {
+      "total": 26,
+      "by_ground_truth": {
+        "malicious": 18,
+        "normal": 8
+      }
+    },
+    "AEGIS_SENSITIVE_DATA_TO_OUTBOUND_SINK": {
+      "total": 5,
+      "by_ground_truth": {
+        "malicious": 4,
+        "normal": 1
+      }
+    },
+    "AEGIS_STATIC_COVERAGE_SUMMARY": {
+      "total": 588,
+      "by_ground_truth": {
+        "malicious": 194,
+        "normal": 196,
+        "suspicious": 198
+      }
+    },
+    "AEGIS_STATIC_PYTHON_PARSE_FAILED": {
+      "total": 13,
+      "by_ground_truth": {
+        "malicious": 4,
+        "normal": 2,
+        "suspicious": 7
+      }
+    },
+    "AEGIS_STATIC_TEXT_DECODE_LOSS": {
+      "total": 3,
+      "by_ground_truth": {
+        "malicious": 1,
+        "normal": 1,
+        "suspicious": 1
+      }
+    },
+    "AEGIS_STATIC_UNSUPPORTED_CODE_UNINSPECTED": {
+      "total": 1,
+      "by_ground_truth": {
+        "suspicious": 1
+      }
+    },
+    "AEGIS_TLS_VERIFICATION_DISABLED": {
+      "total": 2,
+      "by_ground_truth": {
+        "suspicious": 2
+      }
+    },
+    "AEGIS_UNSAFE_DESERIALIZATION": {
+      "total": 3,
+      "by_ground_truth": {
+        "malicious": 2,
+        "normal": 1
+      }
+    },
+    "AEGIS_UNTRUSTED_URL_TO_NETWORK_REQUEST": {
+      "total": 1,
+      "by_ground_truth": {
+        "normal": 1
+      }
+    },
+    "AEGIS_WILDCARD_TOOL_PERMISSION": {
+      "total": 36,
+      "by_ground_truth": {
+        "malicious": 17,
+        "suspicious": 19
+      }
+    },
+    "AEGIS_WORLD_WRITABLE_PERMISSION": {
+      "total": 21,
+      "by_ground_truth": {
+        "malicious": 1,
+        "suspicious": 20
+      }
+    }
+  },
+  "analyzer_finding_counts": {
+    "aegis-command-context-v1": 2013,
+    "aegis-enterprise-controls-v1": 108,
+    "aegis-filesystem-context-v1": 1444,
+    "aegis-network-context-v1": 493,
+    "aegis-sensitive-flow-v1": 11,
+    "aegis-static-coverage-v1": 605,
+    "aegis-static-v1": 192
+  },
+  "decision_changed_cases_by_present_rule": {
+    "AEGIS_CONTEXT_ARGUMENT_VECTOR_PROCESS_CALL": 45,
+    "AEGIS_CONTEXT_COMMAND_BEHAVIOR_UNDECLARED": 8,
+    "AEGIS_CONTEXT_COMMAND_CAPABILITY_DECLARED": 41,
+    "AEGIS_CONTEXT_COMMAND_CAPABILITY_DECLARED_NO_DIRECT_PRIMITIVE": 3,
+    "AEGIS_CONTEXT_COMMAND_INPUT_VIA_STDIN": 11,
+    "AEGIS_CONTEXT_CREDENTIAL_USED_FOR_NETWORK_AUTH": 4,
+    "AEGIS_CONTEXT_DESTRUCTIVE_COMMAND_PRESENT": 17,
+    "AEGIS_CONTEXT_DESTRUCTIVE_FILE_MUTATION_DECLARED": 3,
+    "AEGIS_CONTEXT_DESTRUCTIVE_FILE_MUTATION_NOT_EXPLICITLY_DECLARED": 19,
+    "AEGIS_CONTEXT_DOWNLOAD_COMMAND_PRESENT": 8,
+    "AEGIS_CONTEXT_ENVIRONMENT_INPUT_NEAR_PROCESS_CALL": 2,
+    "AEGIS_CONTEXT_FILESYSTEM_BEHAVIOR_UNDECLARED": 1,
+    "AEGIS_CONTEXT_FILESYSTEM_CAPABILITY_DECLARED": 47,
+    "AEGIS_CONTEXT_FILE_WRITE_BEHAVIOR_DECLARED": 22,
+    "AEGIS_CONTEXT_FILE_WRITE_BEHAVIOR_NOT_EXPLICITLY_DECLARED": 7,
+    "AEGIS_CONTEXT_FIXED_EXECUTABLE_PROCESS_CALL": 45,
+    "AEGIS_CONTEXT_NAMED_BUSINESS_TOOL_COMMAND": 49,
+    "AEGIS_CONTEXT_NETWORK_BEHAVIOR_UNDECLARED": 4,
+    "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED": 24,
+    "AEGIS_CONTEXT_OUTBOUND_BEHAVIOR_DECLARED": 6,
+    "AEGIS_CONTEXT_OUTBOUND_BEHAVIOR_NOT_EXPLICITLY_DECLARED": 1,
+    "AEGIS_CONTEXT_OVERWRITE_CAPABLE_FILE_WRITE": 29,
+    "AEGIS_CONTEXT_PACKAGE_INSTALL_COMMAND_PRESENT": 7,
+    "AEGIS_CONTEXT_PERSISTENCE_COMMAND_PRESENT": 6,
+    "AEGIS_CONTEXT_QUOTED_SHELL_VARIABLE": 16,
+    "AEGIS_CONTEXT_READ_ONLY_FILESYSTEM_BEHAVIOR": 2,
+    "AEGIS_CONTEXT_READ_ONLY_NETWORK_BEHAVIOR": 21,
+    "AEGIS_CONTEXT_READ_ONLY_SYSTEM_COMMAND": 14,
+    "AEGIS_CONTEXT_RECURSIVE_FILESYSTEM_MUTATION": 21,
+    "AEGIS_CONTEXT_SECURITY_TEST_FIXTURE": 4,
+    "AEGIS_CONTEXT_SENSITIVE_PATH_ACCESS": 4,
+    "AEGIS_CONTEXT_SENSITIVE_SOURCE_WITH_OUTBOUND_SINK": 3,
+    "AEGIS_CONTEXT_SHELL_SCRIPT_WORKFLOW": 17,
+    "AEGIS_CONTEXT_SHELL_STRING_PROCESS_CALL": 1,
+    "AEGIS_CONTEXT_SYSTEM_PATH_ACCESS": 43,
+    "AEGIS_CONTEXT_USER_INPUT_NEAR_PROCESS_CALL": 14,
+    "AEGIS_CONTEXT_WORKSPACE_OR_TEMP_PATH": 39,
+    "AEGIS_CREDENTIAL_IN_OUTBOUND_PAYLOAD": 4,
+    "AEGIS_DESTRUCTIVE_OPERATION_NO_GUARD": 18,
+    "AEGIS_PARTIAL_PERSISTENCE_INDICATOR": 6,
+    "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN": 10,
+    "AEGIS_PASTE_SERVICE_PAYLOAD_EXECUTION": 1,
+    "AEGIS_PERSISTENCE_SCHEDULED_TASK": 11,
+    "AEGIS_PERSISTENCE_STARTUP_PROFILE_WRITE": 1,
+    "AEGIS_REMOTE_FETCH_PIPE_SHELL": 7,
+    "AEGIS_SENSITIVE_DATA_TO_OUTBOUND_SINK": 1,
+    "AEGIS_STATIC_COVERAGE_SUMMARY": 68,
+    "AEGIS_STATIC_PYTHON_PARSE_FAILED": 5,
+    "AEGIS_UNSAFE_DESERIALIZATION": 1,
+    "AEGIS_UNTRUSTED_URL_TO_NETWORK_REQUEST": 1,
+    "AEGIS_WILDCARD_TOOL_PERMISSION": 2,
+    "AEGIS_WORLD_WRITABLE_PERMISSION": 15
+  }
+}

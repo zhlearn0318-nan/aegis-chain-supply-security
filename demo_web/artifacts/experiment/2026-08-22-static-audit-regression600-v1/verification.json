@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-22-static-audit-regression600-v1",
+  "status": "verified",
+  "cases": 600,
+  "metrics_recomputed_equal": true,
+  "output_hashes_match": true,
+  "frozen_inputs_match": true,
+  "raw_sample_text_retained": false
+}

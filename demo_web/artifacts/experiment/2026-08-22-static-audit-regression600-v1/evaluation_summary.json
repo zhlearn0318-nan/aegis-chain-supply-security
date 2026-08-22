@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-22-static-audit-regression600-v1",
+  "claim_verdict": "supported_with_tradeoff",
+  "primary_metric": "strict_macro_f1",
+  "baseline_strict_macro_f1": 0.4660583384346037,
+  "enhanced_strict_macro_f1": 0.5629341681411913,
+  "delta_strict_macro_f1": 0.09687582970658765,
+  "bootstrap_95_ci": [
+    0.06977773866290787,
+    0.12529548150087416
+  ],
+  "malicious_recall_delta": 0.08499999999999996,
+  "normal_fpr_delta": 0.034999999999999976,
+  "next_action": "保留增强结论及权衡说明；不在本回归集上继续调参。",
+  "claim_boundary": "Sealed engineering regression evidence, not an independent external benchmark."
+}
