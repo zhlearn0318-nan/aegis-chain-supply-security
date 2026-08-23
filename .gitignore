@@ -42,8 +42,10 @@ demo_web/artifacts/experiment/*
 !demo_web/artifacts/experiment/2026-08-23-mcp-protocol-marker-dev-v1/
 !demo_web/artifacts/experiment/2026-08-23-mcp-kernel-telemetry-dev-v1/
 !demo_web/artifacts/experiment/2026-08-23-skill-runtime-closure-dev-v1/
+!demo_web/artifacts/experiment/2026-08-23-skill-closure-platform-dev-v1/
 demo_web/artifacts/**/pytest-temp*/
 demo_web/artifacts/**/fixture_workspaces/
+demo_web/artifacts/**/platform-acceptance-*/
 
 # Document render/QA scratch directories
 docs/_report_assets/

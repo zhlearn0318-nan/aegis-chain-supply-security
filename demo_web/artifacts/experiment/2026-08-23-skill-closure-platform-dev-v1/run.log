@@ -1,0 +1,12 @@
+run_id=2026-08-23-skill-closure-platform-dev-v1
+status=completed
+api_statuses=202/200/200
+d3c_gates=59/59
+materialized=3/3/3
+runtime_risks=2
+frontend=1/1
+raw_response_leaks=0
+raw_database_leaks=0
+admin_token_leaks=0
+job_workspace_residuals=0
+elapsed_seconds=13.114

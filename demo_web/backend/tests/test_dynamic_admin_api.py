@@ -69,6 +69,23 @@ def test_dynamic_create_rejects_any_request_body(monkeypatch, tmp_path) -> None:
     assert "whoami" not in response.text
 
 
+def test_skill_closure_create_rejects_any_request_body(monkeypatch, tmp_path) -> None:
+    configure_isolated_runtime(monkeypatch, tmp_path)
+    monkeypatch.setenv(gateway.ADMIN_TOKEN_ENV, ADMIN_TOKEN)
+
+    with TestClient(gateway.app) as client:
+        response = client.post(
+            "/api/v1/admin/dynamic-audits/skill-closure",
+            headers=ADMIN_HEADER,
+            json={"skill_path": "untrusted", "command": "python arbitrary.py"},
+        )
+
+    assert response.status_code == 400
+    assert response.json()["error"]["code"] == "DYNAMIC_AUDIT_BODY_NOT_ALLOWED"
+    assert "untrusted" not in response.text
+    assert "arbitrary.py" not in response.text
+
+
 def test_dynamic_create_list_and_detail_persist_no_token(
     monkeypatch, tmp_path
 ) -> None:
@@ -100,6 +117,110 @@ def test_dynamic_create_list_and_detail_persist_no_token(
         ).fetchone()[0]
     assert ADMIN_TOKEN not in stored
     assert json.loads(stored)["safety_boundary"]["decision_changes"] == 0
+
+
+def test_skill_closure_job_uses_fixed_identity_and_persists_only_redacted_result(
+    monkeypatch, tmp_path
+) -> None:
+    configure_isolated_runtime(monkeypatch, tmp_path)
+    monkeypatch.setenv(gateway.ADMIN_TOKEN_ENV, ADMIN_TOKEN)
+    monkeypatch.setattr(gateway, "skill_closure_is_ready", lambda: True)
+    raw_sentinel = "runtime-generated-secret-must-not-persist"
+
+    def controlled_probe(_config, _workspace):
+        return {
+            "success": True,
+            "error": None,
+            "metrics": {
+                "all_gates_passed": 59,
+                "all_gates_total": 59,
+                "materialized_files_expected": 3,
+                "materialized_files_observed": 3,
+                "materialized_files_lifted": 3,
+                "materialized_hashes_verified": 3,
+                "closure_coverage_rate": 1.0,
+                "runtime_risk_findings": 2,
+                "vendor_scans": 2,
+                "raw_content_leaks": 0,
+                "third_party_samples_executed": 0,
+                "decision_changes": 0,
+                "container_residuals": 0,
+                "duration_ms": 1200,
+            },
+            "closure": {
+                "materialized_bundle": [{"content_b64": raw_sentinel}],
+                "pre_manifest": [{
+                    "path": "SKILL.md", "bytes": 100, "sha256": "a" * 64,
+                    "category": "initial",
+                }],
+                "post_manifest": [
+                    {"path": "SKILL.md", "bytes": 100, "sha256": "a" * 64, "category": "initial"},
+                    {"path": "runtime/generated_action.py", "bytes": 180, "sha256": "b" * 64, "category": "script"},
+                ],
+                "delta": {
+                    "added": ["runtime/generated_action.py"],
+                    "modified": [],
+                    "deleted": [],
+                },
+                "static_lift": {
+                    "pre_findings_total": 2,
+                    "post_findings_total": 9,
+                    "new_findings_total": 7,
+                    "vendor_scans": 2,
+                    "policy_effect": "none",
+                    "runtime_risk_findings": [{
+                        "id": "risk-1",
+                        "rule_id": "AEGIS_REMOTE_FETCH_PIPE_SHELL",
+                        "analyzer": "aegis-static-v1",
+                        "severity": "CRITICAL",
+                        "category": "remote_payload_execution",
+                        "location": {"file": "runtime/generated_action.py", "line": 5},
+                        "evidence_sha256": "c" * 64,
+                        "raw_content_retained": False,
+                        "description": raw_sentinel,
+                    }],
+                },
+                "privacy": {
+                    "raw_content_retained": False,
+                    "raw_content_leaks": 0,
+                    "content_bundles_retained": False,
+                },
+            },
+        }
+
+    monkeypatch.setattr(gateway, "run_skill_closure_probe", controlled_probe)
+
+    with TestClient(gateway.app) as client:
+        created = client.post(
+            "/api/v1/admin/dynamic-audits/skill-closure", headers=ADMIN_HEADER
+        )
+        job_id = created.json()["data"]["id"]
+        detail = client.get(
+            f"/api/v1/admin/dynamic-audits/{job_id}", headers=ADMIN_HEADER
+        )
+
+    job = detail.json()["data"]
+    assert created.status_code == 202
+    assert job["status"] == "completed"
+    assert job["audit_type"] == "skill_runtime_closure"
+    assert job["fixture_set_id"] == "aegis-skill-runtime-closure-v1"
+    assert job["safety_boundary"]["network_allowance"] == "none"
+    assert job["safety_boundary"]["policy_effect"] == "none"
+    assert job["metrics"]["decision_changes"] == 0
+    assert job["closure"]["delta"]["added"] == ["runtime/generated_action.py"]
+    assert job["closure"]["static_lift"]["runtime_risk_findings"][0]["severity"] == "CRITICAL"
+    assert ADMIN_TOKEN not in created.text + detail.text
+    assert raw_sentinel not in created.text + detail.text
+    assert not (gateway.DYNAMIC_JOB_ROOT / job_id).exists()
+
+    with sqlite3.connect(gateway.DB_PATH) as db:
+        stored = db.execute(
+            "SELECT payload_json FROM dynamic_audits WHERE id = ?", (job_id,)
+        ).fetchone()[0]
+    assert ADMIN_TOKEN not in stored
+    assert raw_sentinel not in stored
+    stored_job = json.loads(stored)
+    assert stored_job["closure"]["static_lift"]["policy_effect"] == "none"
 
 
 def test_dynamic_real_fixture_execution_is_redacted_and_info_only(
@@ -145,3 +266,15 @@ def test_dynamic_admin_openapi_declares_header_and_error_contract() -> None:
         item for item in operation["parameters"] if item["name"] == "X-Aegis-Admin-Token"
     )
     assert header["in"] == "header"
+
+    closure_operation = schema["paths"][
+        "/api/v1/admin/dynamic-audits/skill-closure"
+    ]["post"]
+    assert "202" in closure_operation["responses"]
+    assert "400" in closure_operation["responses"]
+    assert "401" in closure_operation["responses"]
+    closure_header = next(
+        item for item in closure_operation["parameters"]
+        if item["name"] == "X-Aegis-Admin-Token"
+    )
+    assert closure_header["in"] == "header"

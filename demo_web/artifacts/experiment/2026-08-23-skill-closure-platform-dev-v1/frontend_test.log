@@ -1,0 +1,10 @@
+{
+  "command": [
+    "npm.cmd",
+    "test"
+  ],
+  "return_code": 0,
+  "duration_ms": 609,
+  "stdout_tail": "\n> agent-supply-chain-demo@1.0.0 test\n> node --test src/*.test.js\n\n✔ unwraps a valid v1 success envelope (18.6587ms)\n✔ treats HTTP 202 scan creation as accepted success (0.4003ms)\n✔ retains v1 error status, code, message and details (0.7487ms)\n✔ fails closed when a successful response lacks the v1 envelope (0.4746ms)\n✔ reports non-JSON and network failures with client-side codes (0.4589ms)\n✔ builds encoded v1 export URLs (0.127ms)\n✔ normalizes local validation messages without discarding them (0.1316ms)\n✔ sends the administrator token only in the dedicated header (0.4958ms)\n✔ uses the administrator header for dynamic history and detail requests (0.7449ms)\n✔ starts Skill closure through the fixed bodyless administrator endpoint (0.4547ms)\nℹ tests 10\nℹ suites 0\nℹ pass 10\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 100.1534\n",
+  "stderr_tail": ""
+}

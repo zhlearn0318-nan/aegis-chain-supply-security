@@ -1,0 +1,62 @@
+{
+  "evidence_files": {
+    "CHECKLIST.md": {
+      "bytes": 1683,
+      "sha256": "232dd157d339b420fa0af63ad015141b86700887cf9108c4fa690081e2e92e8f"
+    },
+    "PLAN.md": {
+      "bytes": 5187,
+      "sha256": "47690f864145fac88d0ed07bca0eec9c8d3c34078ffb47eaa25421e24c70310d"
+    },
+    "api_acceptance_evidence.json": {
+      "bytes": 6325,
+      "sha256": "e3d6bda8e40f71b1505e461941702a7923f64984ac627c0f310046f93a095733"
+    },
+    "bash.log": {
+      "bytes": 362,
+      "sha256": "b8a4695fcb487126f7234dc9958d1df3080b6ec6a2816124136ea167336917dc"
+    },
+    "claim_validation.md": {
+      "bytes": 1044,
+      "sha256": "a09a5bcfc1676952632918dfbd1cbfd67ff4600aa88c18e3b50d652041c4f8fe"
+    },
+    "evaluation_summary.json": {
+      "bytes": 332,
+      "sha256": "ccfe0433af05f1b4054abd61a87c9704bf3fcf60b716492a6bb6a58bb91341a5"
+    },
+    "frontend_build.log": {
+      "bytes": 569,
+      "sha256": "69a5b22344e9e1aeee853c45226154887b272bbba83b6858c5643cf74bc96ad8"
+    },
+    "frontend_test.log": {
+      "bytes": 1038,
+      "sha256": "2b45f22d65542f97c1a1b7a4b36767b5ce06cb53b3d49f9e8edb333f0438eab8"
+    },
+    "metrics.json": {
+      "bytes": 1032,
+      "sha256": "ae5149d7c85cef4532d44c8089aa20290eef5cf0e73501bb20a66c6b42a68b15"
+    },
+    "metrics.md": {
+      "bytes": 958,
+      "sha256": "48cf99717e44d8c0c46052590f7019148bf4fcdbb18ab0b929ced15f5938acfa"
+    },
+    "run.log": {
+      "bytes": 265,
+      "sha256": "da6f7031c1b06622a0fbb75e2262b7e3c2206bf31e7e926138ef5f25a678df58"
+    },
+    "run_manifest.json": {
+      "bytes": 6119,
+      "sha256": "4160043f01c9d3218c205e273a3a12594c1332fa7cc2d467ab30043efd7929fe"
+    },
+    "runlog.summary.md": {
+      "bytes": 798,
+      "sha256": "b6116757e94f93201da30fb1f7bc00df7df6a7dc6e737af6039ce4e8480db9e5"
+    },
+    "summary.md": {
+      "bytes": 492,
+      "sha256": "458c4ea3ead2b56c0f8e11dc2a306bef288587b9aea3bbd779360c46b0da6316"
+    }
+  },
+  "run_id": "2026-08-23-skill-closure-platform-dev-v1",
+  "schema_version": "1.0"
+}

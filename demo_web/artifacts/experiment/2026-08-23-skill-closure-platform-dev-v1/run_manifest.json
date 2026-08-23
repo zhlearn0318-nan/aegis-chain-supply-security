@@ -1,0 +1,180 @@
+{
+  "alternative_hypothesis": "真实管理员 API 保持 D3-C 指标并完成无泄漏持久化与前端交付。",
+  "baseline": {
+    "commit": "4b4e843",
+    "relation": "platform_delivery_extension_same_d3c_core",
+    "run_id": "2026-08-23-skill-runtime-closure-dev-v1"
+  },
+  "branch": "dynamic-audit-v1",
+  "command": [
+    "F:\\揭榜挂帅\\supply_chain_reproduction\\.runtime_mcp313\\Scripts\\python.exe",
+    "demo_web/tools/dynamic/run_skill_closure_platform_acceptance.py"
+  ],
+  "completed_at": "2026-08-23T11:56:50.160092+00:00",
+  "dataset": {
+    "controlled_fixtures": 1,
+    "external_dataset": null,
+    "third_party_samples_executed": 0
+  },
+  "elapsed_seconds": 13.114,
+  "environment": {
+    "cloud_used": false,
+    "gpu_used": false,
+    "host_platform": "Windows-11-10.0.26200-SP0",
+    "host_python": "3.13.14 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:26:41) [MSC v.1942 64 bit (AMD64)]",
+    "image_pull_used": false,
+    "internet_used": false
+  },
+  "evaluation_summary": {
+    "baseline_relation": "extends_d3c_without_metric_regression",
+    "claim_update": "strengthens",
+    "comparability": "high",
+    "failure_mode": "none",
+    "next_action": "add_dynamic_job_resource_queue",
+    "takeaway": "Skill 运行时闭包已通过真实管理员 API 接入统一平台，完成脱敏持久化和前端构建。"
+  },
+  "experiment_tier": "auxiliary/dev",
+  "experimental_analysis": "Skill 运行时闭包已通过真实管理员 API 接入统一平台，完成脱敏持久化和前端构建。",
+  "experimental_conclusions": "supported",
+  "experimental_results": {
+    "admin_token_leaks": 0,
+    "audit_type_correct": 1,
+    "closure_engine_ready": 1,
+    "closure_field_present": 1,
+    "container_residuals": 0,
+    "create_status": 202,
+    "d3c_all_gates_passed": 59,
+    "d3c_all_gates_total": 59,
+    "decision_changes": 0,
+    "detail_status": 200,
+    "fixture_identity_correct": 1,
+    "frontend_build_passed": 1,
+    "frontend_tests_passed": 1,
+    "health_status": 200,
+    "image_pull_used": 0,
+    "incorrect_token_status": 401,
+    "internet_used": 0,
+    "job_completed": 1,
+    "job_workspace_residuals": 0,
+    "list_status": 200,
+    "materialized_files_lifted": 3,
+    "materialized_files_observed": 3,
+    "materialized_hashes_verified": 3,
+    "missing_token_status": 401,
+    "raw_database_leaks": 0,
+    "raw_response_leaks": 0,
+    "request_body_status": 400,
+    "run_elapsed_seconds": 13.114,
+    "run_id": "2026-08-23-skill-closure-platform-dev-v1",
+    "runtime_risk_findings": 2,
+    "runtime_risk_rows_exposed": 2,
+    "schema_version": "1.0",
+    "status": "completed",
+    "third_party_samples_executed": 0,
+    "vendor_scans": 2
+  },
+  "experimental_setup": {
+    "administrator_header_required": true,
+    "docker_fixture": "self_built_hash_locked_only",
+    "endpoint": "/api/v1/admin/dynamic-audits/skill-closure",
+    "frontend_commands": [
+      [
+        "npm.cmd",
+        "test"
+      ],
+      [
+        "npm.cmd",
+        "run",
+        "build"
+      ]
+    ],
+    "request_body_allowed": false
+  },
+  "metric_contract": {
+    "negative_zero": [
+      "raw_response_leaks",
+      "raw_database_leaks",
+      "admin_token_leaks",
+      "job_workspace_residuals",
+      "decision_changes",
+      "container_residuals",
+      "third_party_samples_executed",
+      "internet_used",
+      "image_pull_used"
+    ],
+    "positive": {
+      "audit_type_correct": 1,
+      "closure_engine_ready": 1,
+      "closure_field_present": 1,
+      "create_status": 202,
+      "d3c_all_gates_passed": 59,
+      "d3c_all_gates_total": 59,
+      "detail_status": 200,
+      "fixture_identity_correct": 1,
+      "frontend_build_passed": 1,
+      "frontend_tests_passed": 1,
+      "health_status": 200,
+      "incorrect_token_status": 401,
+      "job_completed": 1,
+      "list_status": 200,
+      "materialized_files_lifted": 3,
+      "materialized_files_observed": 3,
+      "materialized_hashes_verified": 3,
+      "missing_token_status": 401,
+      "request_body_status": 400,
+      "runtime_risk_findings": 2,
+      "runtime_risk_rows_exposed": 2,
+      "vendor_scans": 2
+    }
+  },
+  "null_hypothesis": "平台接入使鉴权、脱敏、D3-C 指标、清理或页面交付任一退化。",
+  "research_objective": "验证管理员 API、后台任务、Docker、静态提升、SQLite 与前端交付的完整链路。",
+  "research_question": "D3-C 能否通过统一平台安全触发、脱敏持久化并展示？",
+  "research_type": "deterministic_platform_integration_acceptance",
+  "run_id": "2026-08-23-skill-closure-platform-dev-v1",
+  "safety_contract": {
+    "accepts_custom_commands": false,
+    "accepts_user_code": false,
+    "accepts_user_paths": false,
+    "administrator_only": true,
+    "administrator_token_retained": false,
+    "decision_changes": 0,
+    "execution_trust": "self_built_hash_locked_only",
+    "policy_effect": "none",
+    "raw_content_retained": false
+  },
+  "schema_version": "1.0",
+  "seed": null,
+  "sources": {
+    "backend/api_v1.py": {
+      "bytes": 10136,
+      "sha256": "676902329e08d52cbc36baf5ab4c2e4e485b024bab6c01db61710259df280994"
+    },
+    "backend/app.py": {
+      "bytes": 44868,
+      "sha256": "38478016d4c9dc432b8f6024d12917b8d053392e31399cdd27d028491e3b4086"
+    },
+    "backend/models.py": {
+      "bytes": 4455,
+      "sha256": "7bdb0bcbce6c3f825e33df9e31e49f1d7f271d805e8dfbe486c5106bca41109a"
+    },
+    "frontend/src/api.js": {
+      "bytes": 4396,
+      "sha256": "b1b3fefdb4047e17b15da9d7af4195d0d8ee5a7e4244e88c186d1a9fae9d5f72"
+    },
+    "frontend/src/main.jsx": {
+      "bytes": 33499,
+      "sha256": "007a5f4730449ff19704769cbcf1ba166c8318747a1861d1310878733341baae"
+    },
+    "frontend/src/styles.css": {
+      "bytes": 26965,
+      "sha256": "5f57fedfb7aa13d00d9cda9a9b9f5ee36d9b250a7fcf5d5653f5e6a3d686a4fa"
+    },
+    "tools/dynamic/run_skill_closure_platform_acceptance.py": {
+      "bytes": 20526,
+      "sha256": "e9ea9230f1b1d9b2d910eb1b53c5fdbf6867dd76920910a40219ef4b894cfa13"
+    }
+  },
+  "started_at": "2026-08-23T11:56:37.045861+00:00",
+  "status": "completed"
+}

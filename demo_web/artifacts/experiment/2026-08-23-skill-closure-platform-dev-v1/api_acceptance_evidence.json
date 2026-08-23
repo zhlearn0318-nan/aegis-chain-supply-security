@@ -1,0 +1,204 @@
+{
+  "acceptance": {
+    "negative_nonzero": {},
+    "positive_mismatches": {},
+    "success": true
+  },
+  "authentication": {
+    "admin_header_only": true,
+    "incorrect_token_status": 401,
+    "missing_token_status": 401,
+    "token_retained": false
+  },
+  "endpoint": "/api/v1/admin/dynamic-audits/skill-closure",
+  "health": {
+    "closure_engine": {
+      "analyzers": [
+        "Docker isolation",
+        "directory diff",
+        "Cisco Skill Scanner",
+        "Aegis static lift"
+      ],
+      "id": "dynamic-skill-closure",
+      "name": "Skill 运行时闭包与静态复审",
+      "ready": true,
+      "version": "aegis-skill-runtime-closure-v1"
+    },
+    "status": "ready"
+  },
+  "job": {
+    "audit_type": "skill_runtime_closure",
+    "closure": {
+      "closure_coverage_rate": 1.0,
+      "delta": {
+        "added": [
+          "runtime/generated_action.py",
+          "runtime/instructions.md",
+          "runtime/policy.json"
+        ],
+        "deleted": [],
+        "modified": []
+      },
+      "post_manifest": [
+        {
+          "bytes": 108,
+          "category": "initial",
+          "path": "README.txt",
+          "sha256": "8505e88c1751a03f29aedd3e2b432163f166f6ee96b44ca29e5756534e715223"
+        },
+        {
+          "bytes": 224,
+          "category": "initial",
+          "path": "SKILL.md",
+          "sha256": "30752ef21a86b0daf55fd7cf9f5843af0c8d10dfd7454efee7e1fb0f9a0a76d4"
+        },
+        {
+          "bytes": 183,
+          "category": "script",
+          "path": "runtime/generated_action.py",
+          "sha256": "248d30cd3f63c7a02ed00325fdb790b6d5ab1939ece8e9010c913ccf58883c20"
+        },
+        {
+          "bytes": 109,
+          "category": "instruction",
+          "path": "runtime/instructions.md",
+          "sha256": "d0754005a9808a78b8d642e25447c4a873d15cf6edd878ee7c51103cb30ef788"
+        },
+        {
+          "bytes": 63,
+          "category": "config",
+          "path": "runtime/policy.json",
+          "sha256": "a92792ca92480fe87a3cdfd7adb1e56307032d45249a4115a5b94975497a3658"
+        }
+      ],
+      "pre_manifest": [
+        {
+          "bytes": 108,
+          "category": "initial",
+          "path": "README.txt",
+          "sha256": "8505e88c1751a03f29aedd3e2b432163f166f6ee96b44ca29e5756534e715223"
+        },
+        {
+          "bytes": 224,
+          "category": "initial",
+          "path": "SKILL.md",
+          "sha256": "30752ef21a86b0daf55fd7cf9f5843af0c8d10dfd7454efee7e1fb0f9a0a76d4"
+        }
+      ],
+      "privacy": {
+        "content_bundles_retained": false,
+        "raw_content_leaks": 0,
+        "raw_content_retained": false
+      },
+      "static_lift": {
+        "new_findings_total": 7,
+        "policy_effect": "none",
+        "post_findings_total": 9,
+        "post_policy_recommendation": "BLOCK",
+        "pre_findings_total": 2,
+        "pre_policy_recommendation": "ALLOW",
+        "runtime_risk_findings": [
+          {
+            "analyzer": "pipeline",
+            "category": "vendor_skill_finding",
+            "evidence_sha256": "cfd768648de1f34c9f4f090fc33c9edd783bec91a78599e5676389381292a503",
+            "id": "f915bea1d6d4b6be7fed",
+            "location": {
+              "file": "runtime/generated_action.py",
+              "line": 1
+            },
+            "raw_content_retained": false,
+            "rule_id": "PIPELINE_TAINT_FLOW",
+            "severity": "HIGH"
+          },
+          {
+            "analyzer": "aegis-static-v1",
+            "category": "remote_payload_execution",
+            "evidence_sha256": "5072d0cbc79f8935b4b33bacf9b0d3f18370ae9e953a64e7a5a1f09322fd4dce",
+            "id": "2cae721db4a5940556d0",
+            "location": {
+              "file": "runtime/generated_action.py",
+              "line": 5
+            },
+            "raw_content_retained": false,
+            "rule_id": "AEGIS_REMOTE_FETCH_PIPE_SHELL",
+            "severity": "CRITICAL"
+          }
+        ],
+        "vendor_scans": 2
+      }
+    },
+    "fixture_set_id": "aegis-skill-runtime-closure-v1",
+    "id_sha256": "33066211ba4f5a77c767d15f72848002e8fc575fbb88f5e4f98787e8174baa78",
+    "metrics": {
+      "all_gates_passed": 59,
+      "all_gates_total": 59,
+      "backend_id": "aegis-docker-skill-closure-v1",
+      "closure_coverage_rate": 1.0,
+      "closure_gates_passed": 19,
+      "closure_gates_total": 19,
+      "config_files": 1,
+      "container_residuals": 0,
+      "decision_changes": 0,
+      "duration_ms": 11358,
+      "engine_ready": true,
+      "gpu_used": 0,
+      "image_gates_passed": 4,
+      "image_gates_total": 4,
+      "image_pull_used": 0,
+      "inspect_gates_passed": 24,
+      "inspect_gates_total": 24,
+      "instruction_files": 1,
+      "internet_used": 0,
+      "materialized_files_expected": 3,
+      "materialized_files_lifted": 3,
+      "materialized_files_observed": 3,
+      "materialized_hashes_verified": 3,
+      "new_static_findings": 7,
+      "oversized_files": 0,
+      "post_files_total": 5,
+      "post_static_findings": 9,
+      "pre_files_total": 2,
+      "pre_static_findings": 2,
+      "raw_content_leaks": 0,
+      "runtime_gates_passed": 12,
+      "runtime_gates_total": 12,
+      "runtime_only_risk_recovered": 1,
+      "runtime_risk_findings": 2,
+      "schema_version": "1.0",
+      "script_files": 1,
+      "symlinks": 0,
+      "third_party_samples_executed": 0,
+      "timeouts": 0,
+      "unsafe_paths": 0,
+      "unsupported_files": 0,
+      "vendor_scans": 2
+    },
+    "safety_boundary": {
+      "accepts_custom_commands": false,
+      "accepts_user_code": false,
+      "accepts_user_paths": false,
+      "decision_changes": 0,
+      "evidence_severity": "STATIC_FINDINGS_ONLY",
+      "execution_trust": "self_built_hash_locked_only",
+      "network_allowance": "none",
+      "policy_effect": "none",
+      "raw_values_retained": false,
+      "workspace_write_only": true
+    },
+    "status": "completed"
+  },
+  "persistence": {
+    "admin_token_retained": false,
+    "job_workspace_removed": true,
+    "raw_content_retained": false,
+    "sqlite_record_present": true,
+    "stored_payload_sha256": "b0c1e95d6a5a39970e9c2e99dc6932e7aa881cf0ef9937101cca86bf1541b176"
+  },
+  "request_contract": {
+    "accepts_custom_commands": false,
+    "accepts_user_code": false,
+    "accepts_user_paths": false,
+    "request_body_status": 400
+  }
+}

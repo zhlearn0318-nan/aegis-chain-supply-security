@@ -40,6 +40,7 @@ class ApiV1Operations:
     get_scan: Callable[..., Any]
     export_scan: Callable[..., Any]
     start_dynamic_audit: Callable[..., Any]
+    start_skill_closure_audit: Callable[..., Any]
     list_dynamic_audits: Callable[..., Any]
     get_dynamic_audit: Callable[..., Any]
 
@@ -235,6 +236,27 @@ def install_api_v1(app: FastAPI, operations: ApiV1Operations) -> None:
         admin_token: str | None = Header(None, alias="X-Aegis-Admin-Token"),
     ) -> dict[str, Any]:
         return success_payload(operations.list_dynamic_audits(admin_token, limit))
+
+    @app.post(
+        "/api/v1/admin/dynamic-audits/skill-closure",
+        status_code=202,
+        response_model=ApiResponse[DynamicAuditJob],
+        responses=v1_error_responses(400, 401, 503, 500),
+    )
+    async def start_skill_closure_audit_v1(
+        request: Request,
+        background: BackgroundTasks,
+        admin_token: str | None = Header(None, alias="X-Aegis-Admin-Token"),
+    ) -> dict[str, Any]:
+        if await request.body():
+            raise GatewayHTTPException(
+                400,
+                ErrorCode.DYNAMIC_AUDIT_BODY_NOT_ALLOWED,
+                "该接口只运行固定 Skill 闭包样本，不接受请求体或自定义执行参数。",
+            )
+        return success_payload(
+            operations.start_skill_closure_audit(admin_token, background)
+        )
 
     @app.get(
         "/api/v1/admin/dynamic-audits/{job_id}",

@@ -41,6 +41,7 @@ from .analyzers import (
 from .api_contract import ErrorCode, GatewayHTTPException
 from .api_v1 import ApiV1Operations, install_api_v1
 from .dynamic_audit.runner import run_safe_fixture_set
+from .dynamic_audit.skill_closure import run_skill_closure_probe
 from .models import SCHEMA_VERSION, DynamicAuditJob, ScanJob
 from .normalizers import normalize_mcp, normalize_pip_audit, normalize_skill
 from .policy import (
@@ -62,6 +63,7 @@ DB_PATH = DATA_DIR / "scan_history.db"
 FRONTEND_DIST = DEMO_ROOT / "frontend" / "dist"
 DYNAMIC_FIXTURE_CONFIG = DEMO_ROOT / "config" / "safe_dynamic_fixtures.json"
 DYNAMIC_FIXTURE_ROOT = DEMO_ROOT / "tools" / "dynamic" / "fixtures"
+DYNAMIC_SKILL_CLOSURE_CONFIG = DEMO_ROOT / "config" / "docker_skill_closure_backend.json"
 DYNAMIC_JOB_ROOT = DATA_DIR / "dynamic-audit-jobs"
 ADMIN_TOKEN_ENV = "AEGIS_ADMIN_TOKEN"
 MIN_ADMIN_TOKEN_LENGTH = 16
@@ -298,14 +300,33 @@ def load_dynamic_audit_job(job_id: str) -> dict[str, Any] | None:
     ).model_dump(mode="json")
 
 
-def new_dynamic_audit_job() -> dict[str, Any]:
+def new_dynamic_audit_job(
+    audit_type: str = "mechanism_fixture",
+) -> dict[str, Any]:
     now = utc_now()
+    if audit_type == "skill_runtime_closure":
+        config_path = DYNAMIC_SKILL_CLOSURE_CONFIG
+        values = {
+            "audit_type": audit_type,
+            "fixture_set_id": "aegis-skill-runtime-closure-v1",
+            "display_name": "Skill 运行时目录闭包与静态复审",
+            "safety_boundary": {
+                "network_allowance": "none",
+                "evidence_severity": "STATIC_FINDINGS_ONLY",
+            },
+        }
+    elif audit_type == "mechanism_fixture":
+        config_path = DYNAMIC_FIXTURE_CONFIG
+        values = {"audit_type": audit_type}
+    else:
+        raise ValueError("unsupported dynamic audit type")
     job = DynamicAuditJob(
         id=uuid.uuid4().hex,
         created_at=now,
         updated_at=now,
         status="queued",
-        fixture_set_sha256=sha256_bytes(DYNAMIC_FIXTURE_CONFIG.read_bytes()),
+        fixture_set_sha256=sha256_bytes(config_path.read_bytes()),
+        **values,
     ).model_dump(mode="json")
     save_dynamic_audit_job(job)
     return job
@@ -490,6 +511,83 @@ def dynamic_fixture_is_ready() -> bool:
     return DYNAMIC_FIXTURE_CONFIG.is_file() and DYNAMIC_FIXTURE_ROOT.is_dir()
 
 
+def skill_closure_is_ready() -> bool:
+    return (
+        DYNAMIC_SKILL_CLOSURE_CONFIG.is_file()
+        and SKILL_SCANNER.is_file()
+        and (DEMO_ROOT / "tools" / "dynamic" / "docker" / "fixtures" / "skill_runtime_closure.py").is_file()
+    )
+
+
+def public_skill_closure_result(result: dict[str, Any]) -> dict[str, Any]:
+    """Keep only the redacted closure fields required by the administrator UI."""
+    closure = result.get("closure")
+    if not isinstance(closure, dict):
+        return {}
+
+    def manifests(key: str) -> list[dict[str, Any]]:
+        rows = closure.get(key)
+        if not isinstance(rows, list):
+            return []
+        return [
+            {
+                field: row.get(field)
+                for field in ("path", "bytes", "sha256", "category")
+            }
+            for row in rows
+            if isinstance(row, dict)
+        ]
+
+    delta = closure.get("delta") if isinstance(closure.get("delta"), dict) else {}
+    lift = (
+        closure.get("static_lift")
+        if isinstance(closure.get("static_lift"), dict)
+        else {}
+    )
+    risks = lift.get("runtime_risk_findings")
+    public_risks: list[dict[str, Any]] = []
+    for finding in risks if isinstance(risks, list) else []:
+        if not isinstance(finding, dict):
+            continue
+        location = finding.get("location") if isinstance(finding.get("location"), dict) else {}
+        public_risks.append({
+            "id": finding.get("id"),
+            "rule_id": finding.get("rule_id"),
+            "analyzer": finding.get("analyzer"),
+            "severity": finding.get("severity"),
+            "category": finding.get("category"),
+            "location": {
+                key: location.get(key) for key in ("file", "line")
+                if location.get(key) is not None
+            },
+            "evidence_sha256": finding.get("evidence_sha256"),
+            "raw_content_retained": False,
+        })
+    privacy = closure.get("privacy") if isinstance(closure.get("privacy"), dict) else {}
+    return {
+        "pre_manifest": manifests("pre_manifest"),
+        "post_manifest": manifests("post_manifest"),
+        "delta": {
+            key: list(delta.get(key) or [])
+            for key in ("added", "modified", "deleted")
+        },
+        "static_lift": {
+            key: lift.get(key)
+            for key in (
+                "pre_findings_total", "post_findings_total", "new_findings_total",
+                "vendor_scans", "pre_policy_recommendation",
+                "post_policy_recommendation", "policy_effect",
+            )
+        } | {"runtime_risk_findings": public_risks},
+        "privacy": {
+            "raw_content_retained": False,
+            "raw_content_leaks": int(privacy.get("raw_content_leaks") or 0),
+            "content_bundles_retained": False,
+        },
+        "closure_coverage_rate": closure.get("closure_coverage_rate"),
+    }
+
+
 def guarded_dynamic_audit_worker(job_id: str) -> None:
     job = load_dynamic_audit_job(job_id)
     if not job:
@@ -498,24 +596,50 @@ def guarded_dynamic_audit_worker(job_id: str) -> None:
     started = time.perf_counter()
     job_root = DYNAMIC_JOB_ROOT / job_id
     try:
-        result = run_safe_fixture_set(
-            DYNAMIC_FIXTURE_CONFIG,
-            job_root / "workspaces",
-        )
-        info_events = [
-            event for event in result["events"] if event.get("severity") == "INFO"
-        ]
-        completed = bool(result["success"])
-        update_dynamic_audit_job(
-            job,
-            status="completed" if completed else "failed",
-            metrics=result["metrics"],
-            fixture_results=result["fixture_results"],
-            events=info_events,
-            duration_ms=round((time.perf_counter() - started) * 1000),
-            error_code=None if completed else "DYNAMIC_FIXTURE_VALIDATION_FAILED",
-            error=None if completed else "内置动态验证未满足全部预期机制，请检查任务指标。",
-        )
+        if job["audit_type"] == "skill_runtime_closure":
+            result = run_skill_closure_probe(
+                DYNAMIC_SKILL_CLOSURE_CONFIG,
+                job_root / "workspaces",
+            )
+            completed = bool(result["success"])
+            update_dynamic_audit_job(
+                job,
+                status="completed" if completed else "failed",
+                metrics=result["metrics"],
+                fixture_results=[{
+                    "fixture_id": "skill_runtime_closure",
+                    "status": "passed" if completed else "failed",
+                    "duration_ms": result["metrics"].get("duration_ms"),
+                }],
+                events=[],
+                closure=public_skill_closure_result(result),
+                duration_ms=round((time.perf_counter() - started) * 1000),
+                error_code=None if completed else (
+                    (result.get("error") or {}).get("code")
+                    or "SKILL_CLOSURE_VALIDATION_FAILED"
+                ),
+                error=None if completed else "Skill 运行时闭包未满足全部安全与提升门。",
+            )
+        else:
+            result = run_safe_fixture_set(
+                DYNAMIC_FIXTURE_CONFIG,
+                job_root / "workspaces",
+            )
+            info_events = [
+                event for event in result["events"] if event.get("severity") == "INFO"
+            ]
+            completed = bool(result["success"])
+            update_dynamic_audit_job(
+                job,
+                status="completed" if completed else "failed",
+                metrics=result["metrics"],
+                fixture_results=result["fixture_results"],
+                events=info_events,
+                closure=None,
+                duration_ms=round((time.perf_counter() - started) * 1000),
+                error_code=None if completed else "DYNAMIC_FIXTURE_VALIDATION_FAILED",
+                error=None if completed else "内置动态验证未满足全部预期机制，请检查任务指标。",
+            )
     except Exception:
         update_dynamic_audit_job(
             job,
@@ -637,6 +761,7 @@ def health() -> dict[str, Any]:
     mcp_ready = MCP_SCANNER.exists() and MCP_PYTHON.exists() and MCP_WRAPPER.exists()
     dependency_ready = mcp_ready and PIP_AUDIT.exists()
     dynamic_ready = dynamic_fixture_is_ready() and admin_token_is_configured()
+    skill_closure_ready = skill_closure_is_ready() and admin_token_is_configured()
     try:
         selected_policy = load_policy()
         policy_status = {
@@ -658,7 +783,7 @@ def health() -> dict[str, Any]:
         str(MCP_PYTHON), "-c", "import importlib.metadata as m; print(m.version('cisco-ai-mcp-scanner'))"
     ], "unavailable") if mcp_ready else "missing"
     return {
-        "status": "ready" if skill_ready and mcp_ready and dependency_ready and dynamic_ready and policy_status["ready"] else "degraded",
+        "status": "ready" if skill_ready and mcp_ready and dependency_ready and dynamic_ready and skill_closure_ready and policy_status["ready"] else "degraded",
         "mode": "LOCAL_STATIC_PLUS_TRUSTED_FIXTURE_DYNAMIC",
         "policy": policy_status,
         "engines": [
@@ -666,6 +791,7 @@ def health() -> dict[str, Any]:
             {"id": "mcp", "name": "MCP Scanner + Capability Policy", "ready": mcp_ready, "version": mcp_version, "analyzers": ["yara", "offline objects", MCP_POLICY_ANALYZER_ID]},
             {"id": "dependency", "name": "Dependency Audit + Integrity/SBOM", "ready": dependency_ready, "version": "pip-audit+aegis-v1", "analyzers": ["CVE", "GHSA", "PYSEC", DEPENDENCY_INTEGRITY_ANALYZER_ID]},
             {"id": "dynamic-fixture", "name": "管理员可信样本动态验证", "ready": dynamic_ready, "version": "aegis-safe-dynamic-fixtures-v1", "analyzers": ["Python audit hook", "hash lock", "loopback only", "INFO only"]},
+            {"id": "dynamic-skill-closure", "name": "Skill 运行时闭包与静态复审", "ready": skill_closure_ready, "version": "aegis-skill-runtime-closure-v1", "analyzers": ["Docker isolation", "directory diff", "Cisco Skill Scanner", "Aegis static lift"]},
         ],
         "privacy": "上传样本和动态验证工作区在任务结束后删除；历史仅保存脱敏结果，管理员令牌不持久化。",
     }
@@ -918,6 +1044,21 @@ def start_dynamic_audit(
     return job
 
 
+def start_skill_closure_audit(
+    admin_token: str | None, background: BackgroundTasks
+) -> dict[str, Any]:
+    verify_admin_token(admin_token)
+    if not skill_closure_is_ready():
+        raise GatewayHTTPException(
+            503,
+            ErrorCode.DYNAMIC_AUDIT_NOT_READY,
+            "Skill 运行时闭包能力不可用。",
+        )
+    job = new_dynamic_audit_job("skill_runtime_closure")
+    background.add_task(guarded_dynamic_audit_worker, job["id"])
+    return job
+
+
 def list_dynamic_audits(
     admin_token: str | None, limit: int = 20
 ) -> list[dict[str, Any]]:
@@ -965,6 +1106,9 @@ API_V1_OPERATIONS = ApiV1Operations(
     get_scan=lambda job_id: get_scan(job_id),
     export_scan=lambda job_id, format: export_scan(job_id, format),
     start_dynamic_audit=lambda admin_token, background: start_dynamic_audit(
+        admin_token, background
+    ),
+    start_skill_closure_audit=lambda admin_token, background: start_skill_closure_audit(
         admin_token, background
     ),
     list_dynamic_audits=lambda admin_token, limit: list_dynamic_audits(

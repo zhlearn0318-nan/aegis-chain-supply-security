@@ -1,0 +1,6 @@
+execution_interface=exec_command
+required_bash_exec_artifact_memory_interfaces=unavailable
+command=["F:\\揭榜挂帅\\supply_chain_reproduction\\.runtime_mcp313\\Scripts\\python.exe", "demo_web/tools/dynamic/run_skill_closure_platform_acceptance.py"]
+frontend_test_command=["npm.cmd", "test"]
+frontend_build_command=["npm.cmd", "run", "build"]
+status=completed

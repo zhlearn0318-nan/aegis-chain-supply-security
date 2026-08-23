@@ -139,3 +139,26 @@ test('uses the administrator header for dynamic history and detail requests', as
     assert.equal(call.options.headers.get('X-Aegis-Admin-Token'), 'memory-token')
   }
 })
+
+test('starts Skill closure through the fixed bodyless administrator endpoint', async () => {
+  const calls = []
+  const client = createGatewayClient({
+    fetchImpl: async (url, options) => {
+      calls.push({ url, options })
+      return jsonResponse({
+        api_version: 'v1',
+        data: { id: 'closure-1', status: 'queued', audit_type: 'skill_runtime_closure' },
+      }, 202)
+    },
+  })
+
+  const job = await client.startSkillClosureAudit('closure-admin-token')
+  assert.equal(job.audit_type, 'skill_runtime_closure')
+  assert.equal(calls[0].url, '/api/v1/admin/dynamic-audits/skill-closure')
+  assert.equal(calls[0].options.method, 'POST')
+  assert.equal(calls[0].options.body, undefined)
+  assert.equal(
+    calls[0].options.headers.get('X-Aegis-Admin-Token'),
+    'closure-admin-token',
+  )
+})

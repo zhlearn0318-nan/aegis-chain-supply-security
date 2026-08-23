@@ -265,7 +265,7 @@ function UploadPanel({ busy, onStarted }) {
   )
 }
 
-function DynamicAuditPanel({ engine }) {
+function DynamicAuditPanel({ engine, closureEngine }) {
   const [adminToken, setAdminToken] = useState('')
   const [connected, setConnected] = useState(false)
   const [history, setHistory] = useState([])
@@ -295,13 +295,15 @@ function DynamicAuditPanel({ engine }) {
     } catch (err) { rememberError(err) }
   }
 
-  async function startAudit() {
+  async function startAudit(auditType) {
     if (!adminToken) {
       setError(new GatewayApiError({ code: 'INPUT_REQUIRED', message: '请输入管理员令牌。' }))
       return
     }
     try {
-      const job = await gatewayApi.startDynamicAudit(adminToken)
+      const job = auditType === 'skill_runtime_closure'
+        ? await gatewayApi.startSkillClosureAudit(adminToken)
+        : await gatewayApi.startDynamicAudit(adminToken)
       setCurrent(job)
       setConnected(true)
       setError(null)
@@ -343,8 +345,12 @@ function DynamicAuditPanel({ engine }) {
   }
 
   const metrics = current?.metrics
+  const isClosure = current?.audit_type === 'skill_runtime_closure'
+  const addedPaths = new Set(current?.closure?.delta?.added || [])
+  const addedFiles = (current?.closure?.post_manifest || []).filter((item) => addedPaths.has(item.path))
+  const runtimeRisks = current?.closure?.static_lift?.runtime_risk_findings || []
   const statusLabel = current?.status === 'completed'
-    ? '机制验证通过'
+    ? isClosure ? '闭包验证通过' : '机制验证通过'
     : current?.status === 'failed'
       ? '机制验证异常'
       : current
@@ -354,14 +360,14 @@ function DynamicAuditPanel({ engine }) {
   return (
     <section className="dynamic-admin section-frame" id="dynamic">
       <div className="section-heading">
-        <div><span className="eyebrow">ADMIN · TRUSTED FIXTURE DYNAMIC AUDIT</span><h2>管理员动态验证</h2></div>
-        <p>只运行平台内置、SHA-256 锁定的三个可信样本，验证进程、文件与回环网络观测机制。它不是任意 Skill 沙箱，也不改变准入结论。</p>
+        <div><span className="eyebrow">ADMIN · CONTROLLED DYNAMIC AUDIT</span><h2>管理员动态验证</h2></div>
+        <p>提供基础观测机制和 Skill 运行时闭包两类固定验证。两者都只运行平台内置、SHA-256 锁定样本，不接收用户代码，也不改变准入结论。</p>
       </div>
 
       <div className="dynamic-safety-strip">
-        <span className={`status-dot ${engine?.ready ? 'online' : 'offline'}`} />
-        <strong>{engine?.ready ? '服务端已安全配置' : '等待服务端配置 AEGIS_ADMIN_TOKEN'}</strong>
-        <code>INFO ONLY</code><code>DECISION Δ = 0</code><code>NO USER CODE</code>
+        <span className={`status-dot ${engine?.ready && closureEngine?.ready ? 'online' : 'offline'}`} />
+        <strong>{engine?.ready && closureEngine?.ready ? '两类受控验证均已就绪' : '动态能力未完全就绪'}</strong>
+        <code>HASH LOCKED</code><code>DECISION Δ = 0</code><code>NO USER CODE</code>
       </div>
 
       <div className="dynamic-grid">
@@ -389,15 +395,18 @@ function DynamicAuditPanel({ engine }) {
 
         <div className="dynamic-run-card">
           <div className="dynamic-run-head">
-            <div><span className="eyebrow">02 · FIXED EXECUTION</span><h3>内置可信样本集 v1</h3></div>
+            <div><span className="eyebrow">02 · FIXED EXECUTION</span><h3>选择固定验证类型</h3></div>
             <span className={`dynamic-state state-${current?.status || 'idle'}`}>{statusLabel}</span>
           </div>
-          <div className="fixture-boundary">
-            <span>process_stdio</span><span>file_io</span><span>loopback_network</span>
+          <div className="audit-option-grid">
+            <button type="button" onClick={() => startAudit('mechanism_fixture')} disabled={!adminToken || running || !engine?.ready}>
+              <span>基础机制</span><strong>进程 · 文件 · 回环网络</strong><small>3 个可信样本 / INFO 观测</small>
+            </button>
+            <button type="button" onClick={() => startAudit('skill_runtime_closure')} disabled={!adminToken || running || !closureEngine?.ready}>
+              <span>Skill 闭包</span><strong>运行前后目录 · 静态复审</strong><small>Docker 隔离 / Cisco + Aegis</small>
+            </button>
           </div>
-          <button className="primary-button dynamic-start" type="button" onClick={startAudit} disabled={!adminToken || running}>
-            {running ? '动态验证运行中…' : `${icons.scan} 启动固定样本动态验证`}
-          </button>
+          {running && <div className="dynamic-running-note">{icons.scan} 固定验证正在后台运行…</div>}
           <small>接口不接收请求体，不允许上传脚本、指定路径或传入命令。</small>
         </div>
       </div>
@@ -410,31 +419,69 @@ function DynamicAuditPanel({ engine }) {
         {running && <div className="scan-progress" role="status"><i /><span>后台正在按固定清单执行，页面将自动刷新脱敏证据。</span></div>}
         {current?.error && <div className="error-box"><strong>{current.error_code}</strong><span>{current.error}</span></div>}
         <div className="dynamic-metrics">
-          <Metric label="完成样本" value={metrics ? `${metrics.fixtures_completed}/${metrics.fixtures_total}` : '—'} />
-          <Metric label="预期机制" value={metrics ? `${metrics.expected_checks_passed}/${metrics.expected_checks_total}` : '—'} />
-          <Metric label="策略违规" value={metrics?.policy_violations ?? '—'} tone={metrics?.policy_violations ? 'risk' : ''} />
+          {isClosure
+            ? <>
+                <Metric label="新增文件" value={metrics ? `${metrics.materialized_files_observed}/${metrics.materialized_files_expected}` : '—'} />
+                <Metric label="闭包覆盖率" value={metrics ? `${Math.round((metrics.closure_coverage_rate || 0) * 100)}%` : '—'} />
+                <Metric label="运行时风险" value={metrics?.runtime_risk_findings ?? '—'} tone={metrics?.runtime_risk_findings ? 'risk' : ''} />
+              </>
+            : <>
+                <Metric label="完成样本" value={metrics ? `${metrics.fixtures_completed}/${metrics.fixtures_total}` : '—'} />
+                <Metric label="预期机制" value={metrics ? `${metrics.expected_checks_passed}/${metrics.expected_checks_total}` : '—'} />
+                <Metric label="策略违规" value={metrics?.policy_violations ?? '—'} tone={metrics?.policy_violations ? 'risk' : ''} />
+              </>}
           <Metric label="决策改变" value={metrics?.decision_changes ?? 0} />
         </div>
-        <div className="dynamic-evidence-grid">
-          <div>
-            <h4>样本执行</h4>
-            {!current?.fixture_results?.length && <p className="dynamic-empty">完成验证后显示逐样本状态。</p>}
-            {current?.fixture_results?.map((fixture) => (
-              <div className="fixture-result-row" key={fixture.fixture_id}>
-                <strong>{fixture.fixture_id}</strong><span>{fixture.status}</span><code>{fixture.duration_ms} ms</code>
-              </div>
-            ))}
+        {isClosure ? (
+          <div className="dynamic-evidence-grid closure-evidence-grid">
+            <div>
+              <h4>运行时新增文件</h4>
+              {!addedFiles.length && <p className="dynamic-empty">完成闭包验证后显示新增文件的路径、类型与哈希摘要。</p>}
+              {addedFiles.map((file) => (
+                <div className="closure-file-row" key={file.path}>
+                  <span>{file.category}</span><strong>{file.path}</strong><code>{shortHash(file.sha256)}</code>
+                </div>
+              ))}
+            </div>
+            <div>
+              <h4>静态复审新增风险</h4>
+              {!runtimeRisks.length && <p className="dynamic-empty">只展示定位到运行时新增文件的脱敏规则结果。</p>}
+              {runtimeRisks.map((finding) => (
+                <div className="closure-risk-row" key={finding.id}>
+                  <span className={`severity severity-${String(finding.severity || 'UNKNOWN').toLowerCase()}`}>{finding.severity}</span>
+                  <strong>{finding.rule_id}</strong>
+                  <code>{finding.location?.file}{finding.location?.line ? `:${finding.location.line}` : ''}</code>
+                </div>
+              ))}
+            </div>
+            <div className="closure-scan-summary">
+              <h4>静态提升摘要</h4>
+              <p>发现数量 <strong>{current?.closure?.static_lift?.pre_findings_total ?? '—'}</strong> → <strong>{current?.closure?.static_lift?.post_findings_total ?? '—'}</strong>，新增 <strong>{current?.closure?.static_lift?.new_findings_total ?? '—'}</strong> 条；Cisco 前后扫描 <strong>{current?.closure?.static_lift?.vendor_scans ?? '—'}</strong> 次。</p>
+              <code>POLICY EFFECT = NONE · RAW CONTENT RETAINED = FALSE</code>
+            </div>
           </div>
-          <div>
-            <h4>INFO 观测事件</h4>
-            {!current?.events?.length && <p className="dynamic-empty">只展示脱敏后的机制事件，不保留原始值。</p>}
-            {current?.events?.slice(0, 12).map((event) => (
-              <div className="event-row" key={`${event.fixture_id}-${event.sequence}`}>
-                <span>INFO</span><strong>{event.event_type}</strong><code>{event.fixture_id}</code>
-              </div>
-            ))}
+        ) : (
+          <div className="dynamic-evidence-grid">
+            <div>
+              <h4>样本执行</h4>
+              {!current?.fixture_results?.length && <p className="dynamic-empty">完成验证后显示逐样本状态。</p>}
+              {current?.fixture_results?.map((fixture) => (
+                <div className="fixture-result-row" key={fixture.fixture_id}>
+                  <strong>{fixture.fixture_id}</strong><span>{fixture.status}</span><code>{fixture.duration_ms} ms</code>
+                </div>
+              ))}
+            </div>
+            <div>
+              <h4>INFO 观测事件</h4>
+              {!current?.events?.length && <p className="dynamic-empty">只展示脱敏后的机制事件，不保留原始值。</p>}
+              {current?.events?.slice(0, 12).map((event) => (
+                <div className="event-row" key={`${event.fixture_id}-${event.sequence}`}>
+                  <span>INFO</span><strong>{event.event_type}</strong><code>{event.fixture_id}</code>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       <div className="dynamic-history">
@@ -442,7 +489,7 @@ function DynamicAuditPanel({ engine }) {
         {!history.length && <p className="dynamic-empty">验证管理员身份后显示历史；记录不包含管理员令牌。</p>}
         {history.map((job) => (
           <button className="dynamic-history-row" type="button" key={job.id} onClick={() => setCurrent(job)}>
-            <span>{formatTime(job.created_at)}</span><strong>{job.display_name}</strong><code>{job.status}</code><em>查看证据 →</em>
+            <span>{formatTime(job.created_at)}</span><strong>{job.display_name}</strong><code>{job.audit_type === 'skill_runtime_closure' ? 'Skill 闭包' : '基础机制'} · {job.status}</code><em>查看证据 →</em>
           </button>
         ))}
       </div>
@@ -534,7 +581,7 @@ function App() {
           <div className="hero-copy">
             <span className="eyebrow">LIVE TECHNICAL DEMONSTRATION · STATIC + TRUSTED FIXTURES</span>
             <h1>面向 Agent 生态的<br/><em>供应链静态检测与动态验证</em></h1>
-            <p>统一接入 Cisco Skill Scanner 与 MCP Scanner，并加入管理员专用可信样本动态验证。静态扫描负责准入证据，动态模块当前只验证观测机制，不改变最终决策。</p>
+            <p>统一接入 Cisco Skill Scanner 与 MCP Scanner，并加入管理员专用可信样本动态验证和 Skill 运行时目录闭包。动态结果可找回运行后新增风险，但当前不改变最终准入决策。</p>
             <div className="hero-actions"><a className="primary-button" href="#demo">{icons.scan} 进入实时扫描</a><a className="ghost-button" href="#architecture">查看检测链路 →</a></div>
           </div>
           <div className="hero-console">
@@ -586,7 +633,10 @@ function App() {
           <ResultPanel job={current} />
         </section>
 
-        <DynamicAuditPanel engine={health?.engines?.find((engine) => engine.id === 'dynamic-fixture')} />
+        <DynamicAuditPanel
+          engine={health?.engines?.find((engine) => engine.id === 'dynamic-fixture')}
+          closureEngine={health?.engines?.find((engine) => engine.id === 'dynamic-skill-closure')}
+        />
 
         <section className="history section-frame" id="history">
           <div className="section-heading compact"><div><span className="eyebrow">LOCAL AUDIT TRAIL</span><h2>扫描历史</h2></div><div className="history-stat"><strong>{completedCount}</strong><span>已完成任务</span></div></div>

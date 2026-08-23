@@ -109,6 +109,7 @@ export function createGatewayClient({
     uploadDependency: (requirements) => upload('/scans/dependency', { requirements }),
     exportUrl: (jobId, format) => `${apiUrl(baseUrl, `/scans/${encodeURIComponent(jobId)}/export`)}?format=${encodeURIComponent(format)}`,
     startDynamicAudit: (adminToken) => adminRequest('/admin/dynamic-audits', adminToken, { method: 'POST' }),
+    startSkillClosureAudit: (adminToken) => adminRequest('/admin/dynamic-audits/skill-closure', adminToken, { method: 'POST' }),
     listDynamicAudits: (adminToken, limit = 12) => adminRequest(`/admin/dynamic-audits?limit=${encodeURIComponent(limit)}`, adminToken),
     getDynamicAudit: (adminToken, jobId) => adminRequest(`/admin/dynamic-audits/${encodeURIComponent(jobId)}`, adminToken),
   })

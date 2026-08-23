@@ -130,9 +130,9 @@ class DynamicAuditSafetyBoundary(BaseModel):
     accepts_user_paths: Literal[False] = False
     accepts_custom_commands: Literal[False] = False
     workspace_write_only: Literal[True] = True
-    network_allowance: Literal["127.0.0.1_ephemeral_only"] = "127.0.0.1_ephemeral_only"
+    network_allowance: Literal["127.0.0.1_ephemeral_only", "none"] = "127.0.0.1_ephemeral_only"
     raw_values_retained: Literal[False] = False
-    evidence_severity: Literal["INFO"] = "INFO"
+    evidence_severity: Literal["INFO", "STATIC_FINDINGS_ONLY"] = "INFO"
     policy_effect: Literal["none"] = "none"
     decision_changes: Literal[0] = 0
 
@@ -145,13 +145,18 @@ class DynamicAuditJob(BaseModel):
     created_at: str
     updated_at: str
     status: DynamicAuditStatus
-    fixture_set_id: Literal["aegis-safe-dynamic-fixtures-v1"] = "aegis-safe-dynamic-fixtures-v1"
+    audit_type: Literal["mechanism_fixture", "skill_runtime_closure"] = "mechanism_fixture"
+    fixture_set_id: Literal[
+        "aegis-safe-dynamic-fixtures-v1",
+        "aegis-skill-runtime-closure-v1",
+    ] = "aegis-safe-dynamic-fixtures-v1"
     display_name: str = "内置可信动态验证样本集"
     fixture_set_sha256: str | None = None
     safety_boundary: DynamicAuditSafetyBoundary = Field(default_factory=DynamicAuditSafetyBoundary)
     metrics: dict[str, Any] | None = None
     fixture_results: list[dict[str, Any]] = Field(default_factory=list)
     events: list[dict[str, Any]] = Field(default_factory=list)
+    closure: dict[str, Any] | None = None
     duration_ms: int | None = None
     error_code: str | None = None
     error: str | None = None
