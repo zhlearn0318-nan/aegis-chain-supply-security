@@ -114,6 +114,26 @@ def protocol_exchange(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
         "temp_write": {"succeeded": True, "content_matched": True},
         "network_interfaces": ["lo"],
         "cwd": "/workspace",
+        "kernel_telemetry": {
+            "telemetry_id": "aegis-linux-kernel-telemetry-v1",
+            "observer_role": "mcp_client_parent_process",
+            "started_before_tool_call": True,
+            "inotify_supported": True,
+            "inotify_event_names": ["ACCESS", "CLOSE_NOWRITE", "OPEN"],
+            "inotify_event_count": 3,
+            "observed_source_ref": fixture.MARKER_SOURCE_REF,
+            "proc_fd_source_observed": True,
+            "proc_fd_observation_count": 2,
+            "strace_available": False,
+            "errors": [],
+            "server_pid_sha256": "a" * 64,
+            "parent_relation_confirmed": True,
+            "cmdline_sha256": "b" * 64,
+            "cmdline_arg_count": 4,
+            "executable_basename": "python3.12",
+            "raw_pid_retained": False,
+            "raw_cmdline_retained": False,
+        },
     }
     return payload, token, rows, stdout.getvalue()
 
@@ -213,6 +233,7 @@ def test_protocol_evaluator_forms_redacted_confirmed_witness(
     assert internal_token == token
     assert all(evaluated["protocol_gates"].values())
     assert all(evaluated["runtime_gates"].values())
+    assert all(evaluated["telemetry_gates"].values())
     assert evaluated["protocol_steps"]["passed"] == 4
     assert evaluated["pre_call_marker_witnesses"] == []
     assert len(evaluated["post_call_marker_witnesses"]) == 1
@@ -220,6 +241,19 @@ def test_protocol_evaluator_forms_redacted_confirmed_witness(
     assert evaluated["correlation"]["status"] == "confirmed"
     assert evaluated["correlation"]["static_decision_changed"] is False
     assert token not in json.dumps(evaluated, ensure_ascii=False)
+
+
+def test_protocol_evaluator_fails_closed_when_kernel_access_event_is_missing(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    payload, _token, _rows, _stdout = protocol_exchange(tmp_path, monkeypatch)
+    payload["kernel_telemetry"]["inotify_event_names"] = ["OPEN", "CLOSE_NOWRITE"]
+    evaluated = evaluate_mcp_protocol_payload(payload, load_mcp_protocol_config(CONFIG_PATH))
+
+    assert evaluated["telemetry_gates"]["inotify_access_observed"] is False
+    assert evaluated["telemetry_gates"]["inotify_open_observed"] is True
+    assert evaluated["telemetry_gates"]["proc_fd_source_observed"] is True
 
 
 def test_protocol_evaluator_detects_marker_on_pre_call_surface(

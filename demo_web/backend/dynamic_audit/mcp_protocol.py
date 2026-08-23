@@ -48,7 +48,7 @@ MCP_PROTOCOL_VERSION = "2025-06-18"
 MCP_FIXTURE_ID = "mcp_protocol_marker"
 MCP_FIXTURE_RUNTIME_ID = "aegis-mcp-protocol-marker-v1"
 MCP_FIXTURE_RELATIVE_PATH = "tools/dynamic/docker/fixtures/mcp_protocol_marker.py"
-MCP_FIXTURE_SHA256 = "d571747d91ad926fe79106aa3a7bf9a4677fec109654a7e52b18d40f63274c7a"
+MCP_FIXTURE_SHA256 = "7ad3190e5838096351b4874736b29d63b5ac8579fb5b967b0014ed8e35498d11"
 MCP_TOOL_NAME = "read_official_document"
 MAX_CAPTURE_BYTES = 128 * 1024
 EXPECTED_MARKER = {
@@ -308,6 +308,53 @@ def evaluate_mcp_protocol_payload(
         "static_dynamic_correlation_confirmed": correlation.status == "confirmed",
     }
     runtime_gates = validate_runtime_probe(payload)
+    kernel_telemetry = payload.get("kernel_telemetry")
+    if not isinstance(kernel_telemetry, dict):
+        kernel_telemetry = {}
+    event_names = {
+        str(value) for value in kernel_telemetry.get("inotify_event_names") or []
+    }
+    pid_digest = kernel_telemetry.get("server_pid_sha256")
+    cmdline_digest = kernel_telemetry.get("cmdline_sha256")
+    def digest_is_safe(value: Any) -> bool:
+        return (
+            isinstance(value, str)
+            and len(value) == 64
+            and all(character in "0123456789abcdef" for character in value)
+        )
+    telemetry_gates = {
+        "telemetry_identity": kernel_telemetry.get("telemetry_id")
+        == "aegis-linux-kernel-telemetry-v1",
+        "observer_role_independent": kernel_telemetry.get("observer_role")
+        == "mcp_client_parent_process",
+        "observer_started_before_call": kernel_telemetry.get("started_before_tool_call")
+        is True,
+        "inotify_supported": kernel_telemetry.get("inotify_supported") is True,
+        "observed_source_exact": kernel_telemetry.get("observed_source_ref")
+        == config.marker["source_ref"],
+        "inotify_open_observed": "OPEN" in event_names,
+        "inotify_access_observed": "ACCESS" in event_names,
+        "inotify_close_observed": "CLOSE_NOWRITE" in event_names,
+        "proc_fd_source_observed": kernel_telemetry.get("proc_fd_source_observed") is True,
+        "proc_fd_observation_positive": int(
+            kernel_telemetry.get("proc_fd_observation_count") or 0
+        ) > 0,
+        "proc_parent_relation_confirmed": kernel_telemetry.get(
+            "parent_relation_confirmed"
+        ) is True,
+        "process_pid_hashed": digest_is_safe(pid_digest),
+        "process_cmdline_hashed": digest_is_safe(cmdline_digest),
+        "process_identity_bounded": (
+            isinstance(kernel_telemetry.get("executable_basename"), str)
+            and str(kernel_telemetry.get("executable_basename")).startswith("python")
+            and 1 <= int(kernel_telemetry.get("cmdline_arg_count") or 0) <= 8
+        ),
+        "raw_process_values_not_retained": (
+            kernel_telemetry.get("raw_pid_retained") is False
+            and kernel_telemetry.get("raw_cmdline_retained") is False
+        ),
+        "telemetry_errors_zero": kernel_telemetry.get("errors") == [],
+    }
     public_runtime = {
         "probe_id": payload.get("probe_id"),
         "uid": payload.get("uid"),
@@ -325,6 +372,7 @@ def evaluate_mcp_protocol_payload(
     return {
         "protocol_gates": protocol_gates,
         "runtime_gates": runtime_gates,
+        "telemetry_gates": telemetry_gates,
         "protocol_steps": {
             "expected": list(EXPECTED_CLIENT_METHODS),
             "observed": list(client_methods),
@@ -348,6 +396,7 @@ def evaluate_mcp_protocol_payload(
         "trigger_plan": plan.to_dict(),
         "correlation": correlation.to_dict(),
         "runtime_probe": public_runtime,
+        "kernel_telemetry": kernel_telemetry,
         "marker_token": marker.token,
     }
 
@@ -365,6 +414,7 @@ def run_mcp_protocol_probe(config_path: Path) -> dict[str, Any]:
     inspect_gates: dict[str, bool] = {}
     runtime_gates: dict[str, bool] = {}
     protocol_gates: dict[str, bool] = {}
+    telemetry_gates: dict[str, bool] = {}
     evaluated: dict[str, Any] = {}
     raw_marker_leaks = 0
     start_result: DockerCommandResult | None = None
@@ -414,6 +464,7 @@ def run_mcp_protocol_probe(config_path: Path) -> dict[str, Any]:
         evaluated = evaluate_mcp_protocol_payload(runtime_payload, config)
         runtime_gates = evaluated["runtime_gates"]
         protocol_gates = evaluated["protocol_gates"]
+        telemetry_gates = evaluated["telemetry_gates"]
         marker_token = str(evaluated.pop("marker_token"))
         raw_marker_leaks = int(marker_token in start_result.stdout)
         protocol_gates["raw_marker_absent_from_container_stdout"] = raw_marker_leaks == 0
@@ -427,6 +478,8 @@ def run_mcp_protocol_probe(config_path: Path) -> dict[str, Any]:
             raise DockerBackendError("MCP_RUNTIME_SECURITY_GATE_FAILED", "container_start")
         if not all(protocol_gates.values()):
             raise DockerBackendError("MCP_PROTOCOL_GATE_FAILED", "protocol_evaluation")
+        if not all(telemetry_gates.values()):
+            raise DockerBackendError("MCP_TELEMETRY_GATE_FAILED", "telemetry_evaluation")
     except DockerBackendError as exc:
         error = {"code": exc.code, "operation": exc.operation}
     finally:
@@ -441,7 +494,13 @@ def run_mcp_protocol_probe(config_path: Path) -> dict[str, Any]:
                     "error_code": exc.code,
                 }
 
-    all_gates = {**image_gates, **inspect_gates, **runtime_gates, **protocol_gates}
+    all_gates = {
+        **image_gates,
+        **inspect_gates,
+        **runtime_gates,
+        **protocol_gates,
+        **telemetry_gates,
+    }
     success = (
         error is None
         and bool(all_gates)
@@ -453,6 +512,7 @@ def run_mcp_protocol_probe(config_path: Path) -> dict[str, Any]:
     post_witnesses = evaluated.get("post_call_marker_witnesses") or []
     pre_witnesses = evaluated.get("pre_call_marker_witnesses") or []
     correlation = evaluated.get("correlation") or {}
+    kernel_telemetry = evaluated.get("kernel_telemetry") or {}
     metrics = {
         "schema_version": MCP_BACKEND_SCHEMA_VERSION,
         "backend_id": MCP_BACKEND_ID,
@@ -465,6 +525,8 @@ def run_mcp_protocol_probe(config_path: Path) -> dict[str, Any]:
         "runtime_gates_passed": sum(runtime_gates.values()),
         "protocol_gates_total": len(protocol_gates),
         "protocol_gates_passed": sum(protocol_gates.values()),
+        "telemetry_gates_total": len(telemetry_gates),
+        "telemetry_gates_passed": sum(telemetry_gates.values()),
         "all_gates_total": len(all_gates),
         "all_gates_passed": sum(all_gates.values()),
         "protocol_steps_total": int(steps.get("total") or 0),
@@ -476,6 +538,39 @@ def run_mcp_protocol_probe(config_path: Path) -> dict[str, Any]:
         "post_call_marker_witnesses": len(post_witnesses),
         "source_to_sink_witness_rate": 1.0 if len(post_witnesses) == 1 else 0.0,
         "correlation_confirmed": int(correlation.get("status") == "confirmed"),
+        "inotify_open_observed": int(
+            telemetry_gates.get("inotify_open_observed") is True
+        ),
+        "inotify_access_observed": int(
+            telemetry_gates.get("inotify_access_observed") is True
+        ),
+        "inotify_close_observed": int(
+            telemetry_gates.get("inotify_close_observed") is True
+        ),
+        "proc_parent_relation_confirmed": int(
+            telemetry_gates.get("proc_parent_relation_confirmed") is True
+        ),
+        "proc_fd_source_observed": int(
+            telemetry_gates.get("proc_fd_source_observed") is True
+        ),
+        "independent_file_read_confirmed": int(
+            all(
+                telemetry_gates.get(key) is True
+                for key in (
+                    "inotify_open_observed",
+                    "inotify_access_observed",
+                    "inotify_close_observed",
+                    "proc_fd_source_observed",
+                    "proc_parent_relation_confirmed",
+                )
+            )
+        ),
+        "strace_available": int(kernel_telemetry.get("strace_available") is True),
+        "telemetry_errors": len(kernel_telemetry.get("errors") or []),
+        "raw_pid_leaks": int(kernel_telemetry.get("raw_pid_retained") is not False),
+        "raw_cmdline_leaks": int(
+            kernel_telemetry.get("raw_cmdline_retained") is not False
+        ),
         "protocol_errors": 0 if protocol_gates.get("protocol_errors_zero") is True else 1,
         "policy_violations": int(bool(error) or any(not value for value in all_gates.values())),
         "timeouts": int(bool(error and error.get("code") == "DOCKER_COMMAND_TIMEOUT")),
@@ -509,6 +604,7 @@ def run_mcp_protocol_probe(config_path: Path) -> dict[str, Any]:
         "inspect_gates": inspect_gates,
         "runtime_gates": runtime_gates,
         "protocol_gates": protocol_gates,
+        "telemetry_gates": telemetry_gates,
         "runtime_probe": evaluated.get("runtime_probe") or {},
         "protocol": {
             "version": MCP_PROTOCOL_VERSION,
@@ -522,6 +618,7 @@ def run_mcp_protocol_probe(config_path: Path) -> dict[str, Any]:
         "post_call_marker_witnesses": post_witnesses,
         "trigger_plan": evaluated.get("trigger_plan") or {},
         "correlation": correlation,
+        "kernel_telemetry": kernel_telemetry,
         "container_identity_sha256": sha256_bytes(container_id.encode("ascii"))
         if container_id
         else None,
@@ -540,8 +637,8 @@ def run_mcp_protocol_probe(config_path: Path) -> dict[str, Any]:
         "cleanup": cleanup,
         "metrics": metrics,
         "claim_boundary": (
-            "Controlled self-built MCP stdio fixture only; protocol and marker-flow mechanism "
-            "evidence, not a claim that arbitrary MCP servers or container escapes are safe."
+            "Controlled self-built MCP stdio fixture with Linux inotify/procfs telemetry only; "
+            "not a claim that arbitrary MCP servers or container escapes are safe."
         ),
         "policy_effect": "none",
         "static_decision_changed": False,

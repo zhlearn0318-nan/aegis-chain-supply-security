@@ -12,7 +12,7 @@
   "fixture": {
     "id": "mcp_protocol_marker",
     "path": "tools/dynamic/docker/fixtures/mcp_protocol_marker.py",
-    "sha256": "d571747d91ad926fe79106aa3a7bf9a4677fec109654a7e52b18d40f63274c7a",
+    "sha256": "7ad3190e5838096351b4874736b29d63b5ac8579fb5b967b0014ed8e35498d11",
     "container_path": "/aegis_fixture.py",
     "timeout_seconds": 10
   },

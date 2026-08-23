@@ -22,7 +22,7 @@ from backend.dynamic_audit.mcp_protocol import (  # noqa: E402
 )
 
 
-DEFAULT_RUN_ID = "2026-08-23-mcp-protocol-marker-dev-v1"
+DEFAULT_RUN_ID = "2026-08-23-mcp-kernel-telemetry-dev-v1"
 DEFAULT_OUTPUT = DEMO_ROOT / "artifacts" / "experiment" / DEFAULT_RUN_ID
 DEFAULT_CONFIG = DEMO_ROOT / "config" / "docker_mcp_protocol_backend.json"
 
@@ -95,16 +95,16 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     success = evidence["success"] is True
     evaluation_summary = {
         "takeaway": (
-            "受控 MCP stdio 服务在 Docker 安全边界内完成真实工具调用，并仅在调用后形成公文 Marker 证据。"
+            "受控 MCP 调用形成公文 Marker 证据，Linux inotify 与 procfs 从客户端侧独立确认文件读取。"
             if success else "MCP 协议、Marker 或 Docker 接受门至少一项未通过。"
         ),
         "claim_update": "strengthens" if success else "neutral",
-        "baseline_relation": "extends_marker_v2_and_docker_v2_without_decision_change",
+        "baseline_relation": "extends_mcp_protocol_v1_with_kernel_telemetry",
         "comparability": "high",
         "failure_mode": "none" if success else (
             (evidence.get("error") or {}).get("code") or "evaluation"
         ),
-        "next_action": "add_syscall_and_filesystem_telemetry" if success else "repair_mcp_gate",
+        "next_action": "add_skill_runtime_closure" if success else "repair_telemetry_gate",
     }
     _write_json(output / "evaluation_summary.json", evaluation_summary)
 
@@ -122,11 +122,11 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "status": metrics["status"],
         "experiment_tier": "auxiliary/dev",
         "research_question": (
-            "静态 Trigger Plan 能否引导受控 MCP 目标完成真实 stdio 协议调用，"
-            "并仅在 tools/call 后形成政企公文 Marker 源到汇证据？"
+            "在 MCP 协议与 Marker 结果不退化的前提下，Linux inotify 与 procfs 能否"
+            "从客户端侧独立确认 MCP Server 实际打开并读取模拟政企公文？"
         ),
-        "research_type": "deterministic_protocol_and_evidence_mechanism_validation",
-        "research_objective": "验证 MCP 协议、工具调用、Marker 与静动态关联的最小闭环。",
+        "research_type": "deterministic_kernel_assisted_telemetry_validation",
+        "research_objective": "为 MCP 工具调用增加被测服务之外的文件和进程证据。",
         "experimental_setup": {
             "protocol_version": "2025-06-18",
             "transport": "stdio_newline_delimited_jsonrpc",
@@ -138,6 +138,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             ],
             "tool": "read_official_document",
             "marker_profile": "official_document",
+            "kernel_telemetry": ["inotify", "procfs_process", "procfs_fd"],
+            "strace_available": metrics["strace_available"],
             "container_network": "none",
         },
         "experimental_results": metrics,
@@ -145,8 +147,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "experimental_conclusions": (
             "supported_on_controlled_fixture" if success else "inconclusive"
         ),
-        "null_hypothesis": "任一协议、Marker、Docker、脱敏或清理接受门失败。",
-        "alternative_hypothesis": "调用前无 Marker，合法工具调用后形成一个脱敏 witness，且全部安全门通过。",
+        "null_hypothesis": "任一父实验门退化，或 inotify/procfs 未独立确认目标文件读取。",
+        "alternative_hypothesis": "父实验保持通过，且 inotify 与 procfs 同时确认目标文件读取。",
         "started_at": started_at.isoformat(),
         "completed_at": completed_at.isoformat(),
         "elapsed_seconds": elapsed_seconds,
@@ -181,6 +183,12 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 "post_call_marker_witnesses": 1,
                 "source_to_sink_witness_rate": 1.0,
                 "correlation_confirmed": 1,
+                "inotify_open_observed": 1,
+                "inotify_access_observed": 1,
+                "inotify_close_observed": 1,
+                "proc_parent_relation_confirmed": 1,
+                "proc_fd_source_observed": 1,
+                "independent_file_read_confirmed": 1,
             },
             "negative_zero": [
                 "pre_call_marker_witnesses",
@@ -190,6 +198,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 "container_residuals",
                 "third_party_samples_executed",
                 "decision_changes",
+                "telemetry_errors",
+                "raw_pid_leaks",
+                "raw_cmdline_leaks",
             ],
         },
         "safety_contract": {
@@ -205,6 +216,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "no_new_privileges": True,
             "docker_socket_mounted": False,
             "raw_marker_retained": False,
+            "raw_pid_retained": False,
+            "raw_cmdline_retained": False,
             "policy_effect": "none",
             "static_decision_changes": 0,
             "not_a_container_escape_proof": True,
@@ -225,9 +238,11 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             f"status={metrics['status']}",
             f"protocol_steps={metrics['protocol_steps_passed']}/{metrics['protocol_steps_total']}",
             f"all_gates={metrics['all_gates_passed']}/{metrics['all_gates_total']}",
+            f"telemetry_gates={metrics['telemetry_gates_passed']}/{metrics['telemetry_gates_total']}",
             f"pre_call_marker_witnesses={metrics['pre_call_marker_witnesses']}",
             f"post_call_marker_witnesses={metrics['post_call_marker_witnesses']}",
             f"correlation_confirmed={metrics['correlation_confirmed']}",
+            f"independent_file_read_confirmed={metrics['independent_file_read_confirmed']}",
             f"raw_marker_leaks={metrics['raw_marker_leaks']}",
             f"container_residuals={metrics['container_residuals']}",
             f"decision_changes={metrics['decision_changes']}",
@@ -247,19 +262,24 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     _write_text(
         output / "summary.md",
         "\n".join([
-            "# D3 MCP 协议调用与 Marker 证据闭环结果",
+            "# D3-B MCP 内核辅助遥测结果",
             "",
             f"- 状态：`{metrics['status']}`",
             f"- MCP 协议步骤：{metrics['protocol_steps_passed']}/{metrics['protocol_steps_total']}",
             f"- 全部接受门：{metrics['all_gates_passed']}/{metrics['all_gates_total']}",
+            f"- 内核遥测门：{metrics['telemetry_gates_passed']}/{metrics['telemetry_gates_total']}",
             f"- 调用前 Marker witness：{metrics['pre_call_marker_witnesses']}",
             f"- 调用后 Marker witness：{metrics['post_call_marker_witnesses']}",
             f"- 静动态关联确认：{metrics['correlation_confirmed']}",
+            f"- inotify OPEN/ACCESS/CLOSE：{metrics['inotify_open_observed']}/{metrics['inotify_access_observed']}/{metrics['inotify_close_observed']}",
+            f"- procfs 父子关系/fd 命中：{metrics['proc_parent_relation_confirmed']}/{metrics['proc_fd_source_observed']}",
+            f"- 独立文件读取确认：{metrics['independent_file_read_confirmed']}",
+            f"- strace 可用：{metrics['strace_available']}（仅记录，不作为失败门）",
             f"- 原始 Marker 泄漏：{metrics['raw_marker_leaks']}",
             f"- 容器残留：{metrics['container_residuals']}",
             f"- 第三方样本执行：{metrics['third_party_samples_executed']}",
             f"- 静态最终决策变化：{metrics['decision_changes']}",
-            "- 边界：仅证明受控自建 MCP fixture 的协议与 Marker 机制，不证明任意 MCP Server 安全。",
+            "- 边界：仅证明受控 fixture 中 inotify/procfs 遥测机制，不等同于完整 syscall 追踪或通用沙箱。",
         ]),
     )
     output_names = [

@@ -220,7 +220,8 @@ D1 开发时 `docker` 命令不可用，因此当时只执行仓库内自建、�
 - [x] 安装/发现 Docker Desktop；
 - [x] 固定基础镜像与依赖；
 - [x] 实现只读输入、临时输出、默认断网、资源限制和清理；
-- [ ] 加入 `strace`、文件差分/inotify 和本地 sinkhole；
+- [x] 加入 inotify 文件事件和 procfs 进程/fd 独立遥测；
+- [ ] 加入固定离线 `strace`、完整文件差分和本地 sinkhole；
 - [x] 只运行自建反例验证越界动作被阻断。
 
 D2-A 安全底座已由 `2026-08-22-docker-safety-backend-dev-v2` 通过：固定镜像 4/4、真实 inspect 24/24、运行时行为 12/12，总计 40/40；容器残留、第三方样本、互联网、镜像拉取和决策变化均为 0，完整后端测试 `296 passed`。D2-B 系统调用/文件/内部 sinkhole 遥测仍待完成。
@@ -235,6 +236,8 @@ D2-A 安全底座已由 `2026-08-22-docker-safety-backend-dev-v2` 通过：固�
 - [ ] 统一动态报告和管理员页面。
 
 D3-A 已由 `2026-08-23-mcp-protocol-marker-dev-v1` 完成：MCP 协议步骤 4/4，镜像 4/4、inspect 24/24、运行时 12/12、协议与证据 26/26，总计 66/66；调用前 witness 0、调用后 witness 1、静动态关联 `confirmed`，原始 Marker 泄漏、容器残留和决策变化均为 0，完整后端回归 `308 passed`。该结论仅覆盖自建受控 MCP fixture，D3 的 Skill 闭包、多目标重试、第三方目标和平台页面仍未完成。
+
+D3-B 由 `2026-08-23-mcp-kernel-telemetry-dev-v1` 增加客户端侧 Linux inotify/procfs 独立证据：遥测 16/16，总计 82/82；OPEN/ACCESS/CLOSE、父子关系和目标 fd 全部观察到，原始 PID/命令行泄漏与遥测错误均为 0，完整后端 `309 passed`。固定镜像实测无 strace，因此未联网安装或放宽 capability；当前不宣称系统调用参数级追踪。
 
 ### 阶段 D4：本地模型和公开基准评测
 
@@ -271,4 +274,4 @@ D3-A 已由 `2026-08-23-mcp-protocol-marker-dev-v1` 完成：MCP 协议步骤 4/
 
 ## 13. 当前立即行动
 
-D1 已由 `2026-08-22-dynamic-marker-flow-dev-v2` 完成 Marker 机制验证，D2-A 已由 `2026-08-22-docker-safety-backend-dev-v2` 完成 Docker 安全底座，D3-A 已由 `2026-08-23-mcp-protocol-marker-dev-v1` 完成自建 MCP 协议调用和公文 Marker witness。下一步优先补充 D2-B 的 syscall、文件系统和进程级独立遥测，再做 Skill 运行闭包；在独立遥测和第三方来源审计完成前仍不执行第三方样本。
+D1 已完成 Marker 机制，D2-A 已完成 Docker 安全底座，D3-A 已完成自建 MCP 协议与公文 witness，D3-B 已完成 inotify/procfs 内核辅助遥测。下一步转向 Skill 运行时全目录闭包与新内容提升；第三方样本、固定 strace 镜像和动态决策接入仍需单独评审。

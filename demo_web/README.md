@@ -2,7 +2,7 @@
 
 本项目是 XA-202620 赛题“供应链安全”模块的本机原型。网页会真实调用已经复现的 Cisco Skill Scanner、MCP Scanner 和依赖漏洞审计链路，不使用伪造扫描结果。
 
-当前已完成 M1.3 的可配置准入策略、`/api/v1` 和前端 v1 适配，并完成 M2 的 SkillTrustBench v1.0 全量 5,520 条评测。M3 静态审计已在 600 条密封工程回归上完成一次性评估并冻结，结论为 `supported_with_tradeoff`。M4 已实现政企 Marker、静态 Trigger Plan、Docker 安全底座和受控 MCP 2025-06-18 stdio 调用闭环；最新真实运行 66/66 接受门通过、调用前 witness 0、调用后 witness 1、容器残留 0，后端 `308 passed`。动态部分仍只执行自建哈希锁定 fixture，不执行第三方 Skill/MCP。
+当前已完成 M1.3 的可配置准入策略、`/api/v1` 和前端 v1 适配，并完成 M2 的 SkillTrustBench v1.0 全量 5,520 条评测。M3 静态审计已在 600 条密封工程回归上完成一次性评估并冻结，结论为 `supported_with_tradeoff`。M4 已实现政企 Marker、静态 Trigger Plan、Docker 安全底座、受控 MCP 2025-06-18 stdio 调用，以及客户端侧 Linux inotify/procfs 独立遥测；最新真实运行 82/82 接受门通过、独立文件读取确认 1、容器残留 0，后端 `309 passed`。动态部分仍只执行自建哈希锁定 fixture，不执行第三方 Skill/MCP。
 
 ## 一键启动
 
@@ -80,6 +80,7 @@ pnpm test
 - M4 Marker 源到汇证据核心报告：[`docs/M4_DYNAMIC_MARKER_FLOW_V1_REPORT.md`](docs/M4_DYNAMIC_MARKER_FLOW_V1_REPORT.md)
 - M4 Docker 安全执行底座报告：[`docs/M4_DOCKER_SAFETY_BACKEND_V1_REPORT.md`](docs/M4_DOCKER_SAFETY_BACKEND_V1_REPORT.md)
 - M4 MCP 协议调用与 Marker 证据闭环报告：[`docs/M4_MCP_PROTOCOL_MARKER_V1_REPORT.md`](docs/M4_MCP_PROTOCOL_MARKER_V1_REPORT.md)
+- M4 MCP 内核辅助遥测报告：[`docs/M4_MCP_KERNEL_TELEMETRY_V1_REPORT.md`](docs/M4_MCP_KERNEL_TELEMETRY_V1_REPORT.md)
 - 90 条主实验原始证据：[`artifacts/experiment/2026-08-10-skilltrustbench-pilot90-v1/RUN.md`](artifacts/experiment/2026-08-10-skilltrustbench-pilot90-v1/RUN.md)
 - 556 条扩大样本原始证据：[`artifacts/analysis/2026-08-14-skilltrustbench-official10pct-cisco-v1/`](artifacts/analysis/2026-08-14-skilltrustbench-official10pct-cisco-v1/)
 - 5,520 条全量原始证据：[`artifacts/analysis/2026-08-14-skilltrustbench-full-cisco-parallel-v1/`](artifacts/analysis/2026-08-14-skilltrustbench-full-cisco-parallel-v1/)
@@ -199,6 +200,12 @@ Docker 后端固定使用本机已有 Python 3.12-slim 镜像的不可变 digest
 受控容器内的客户端启动独立 MCP Server 子进程，按 MCP 2025-06-18 依次执行 `initialize`、`notifications/initialized`、`tools/list` 和 Schema 合法 `tools/call`。模拟政企公文 Marker 在工具调用前不进入初始化或工具清单，只有 `read_official_document(action=summarize)` 实际读取诱饵文件后，才以 Base64 出现在工具结果并形成脱敏 witness。
 
 最终证据位于 `artifacts/experiment/2026-08-23-mcp-protocol-marker-dev-v1/`：协议步骤4/4、镜像4/4、inspect 24/24、运行时12/12、协议与证据26/26，总计66/66；调用前 witness 0、调用后 witness 1、关联状态 `confirmed`，协议错误、原始 Marker 泄漏、容器残留、第三方执行和决策变化均为0。该结论只覆盖自建受控 fixture；下一步是 syscall/文件/进程级独立遥测，不执行第三方样本。
+
+## D3-B MCP 内核辅助遥测
+
+固定 Python 镜像实测没有 strace，系统没有联网安装或增加 ptrace capability，而是由 MCP 客户端侧通过 Linux inotify 观察诱饵文件 OPEN/ACCESS/CLOSE，通过 procfs 验证服务端父子关系和目标 fd。PID、完整命令行、原始 Marker 和原始协议捕获均不进入证据。
+
+最终证据位于 `artifacts/experiment/2026-08-23-mcp-kernel-telemetry-dev-v1/`：遥测16/16，总计82/82；inotify三类事件、procfs父子/fd和独立文件读取确认均为1；遥测错误、原始PID/命令行泄漏、容器残留和决策变化均为0。该机制不是strace/eBPF级系统调用追踪，下一步转向Skill运行时闭包。
 
 ## 自定义上传格式
 

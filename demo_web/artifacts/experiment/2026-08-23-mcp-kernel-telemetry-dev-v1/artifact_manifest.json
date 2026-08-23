@@ -1,0 +1,50 @@
+{
+  "evidence_files": {
+    "CHECKLIST.md": {
+      "bytes": 1247,
+      "sha256": "ab7d0b41fd17925db0156e16e38503c4340433ab485d77cdf32842f0a718c391"
+    },
+    "PLAN.md": {
+      "bytes": 3548,
+      "sha256": "ca722de79dc47ec7a6bace4c801d6f542b9d10960cd65ebf9d7a55af0a9ccffd"
+    },
+    "SMOKE_LOG.md": {
+      "bytes": 424,
+      "sha256": "5d2b039e85e9b006422892821d7f4d5f5e7a38d0040e41daaeac829d0352f4d5"
+    },
+    "VALIDATION_LOG.md": {
+      "bytes": 1129,
+      "sha256": "996735c15feff8d520f25ad9b4b9c6e19ecfe6680de7fdacf40a9f2cf92fe47f"
+    },
+    "bash.log": {
+      "bytes": 1329,
+      "sha256": "296d49a7c482c1d441b4f57f1ad8e5198866dd2c2ba218479e0d6b8788e32984"
+    },
+    "evaluation_summary.json": {
+      "bytes": 338,
+      "sha256": "936d86d32b1d19cdeaa07c7dc0480df08b684a451e6fba1a9ee738c23960ef6a"
+    },
+    "mcp_protocol_evidence.json": {
+      "bytes": 14035,
+      "sha256": "cff205fd4d516c828452a1c54685f84b8684d5cbea9c80130c029b9494e004ff"
+    },
+    "metrics.json": {
+      "bytes": 1474,
+      "sha256": "b1e44d0bd894b3a6e282a4e17977ddc7b9363099b68637b6f4a041e9fab8e7ad"
+    },
+    "run.log": {
+      "bytes": 317,
+      "sha256": "1ce7c30609a3440c7019db20e04924c5cb16bbd0bf41b64d09e6ba13dc85afb7"
+    },
+    "run_manifest.json": {
+      "bytes": 9094,
+      "sha256": "ddbd0e7b224e8b75190642653626ab8796355d2467425cbee645bdc5db5063c7"
+    },
+    "summary.md": {
+      "bytes": 614,
+      "sha256": "e0a6e77a8500d8126d2bfc2c70f5517a1b87352f42f860045dba31f8361eafd0"
+    }
+  },
+  "run_id": "2026-08-23-mcp-kernel-telemetry-dev-v1",
+  "schema_version": "1.0"
+}

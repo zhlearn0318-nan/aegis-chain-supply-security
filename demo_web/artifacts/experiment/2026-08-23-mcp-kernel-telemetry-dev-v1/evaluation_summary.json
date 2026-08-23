@@ -1,0 +1,8 @@
+{
+  "baseline_relation": "extends_mcp_protocol_v1_with_kernel_telemetry",
+  "claim_update": "strengthens",
+  "comparability": "high",
+  "failure_mode": "none",
+  "next_action": "add_skill_runtime_closure",
+  "takeaway": "受控 MCP 调用形成公文 Marker 证据，Linux inotify 与 procfs 从客户端侧独立确认文件读取。"
+}

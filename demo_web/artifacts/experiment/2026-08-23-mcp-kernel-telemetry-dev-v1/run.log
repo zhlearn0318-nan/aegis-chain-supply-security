@@ -1,0 +1,13 @@
+run_id=2026-08-23-mcp-kernel-telemetry-dev-v1
+status=completed
+protocol_steps=4/4
+all_gates=82/82
+telemetry_gates=16/16
+pre_call_marker_witnesses=0
+post_call_marker_witnesses=1
+correlation_confirmed=1
+independent_file_read_confirmed=1
+raw_marker_leaks=0
+container_residuals=0
+decision_changes=0
+elapsed_seconds=1.905

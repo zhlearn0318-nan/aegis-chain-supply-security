@@ -13,14 +13,14 @@ Aegis Chain 是 XA-202620 赛题“供应链安全”方向的本地工程原型
 - 准入策略：`ALLOW / REVIEW / BLOCK / UNKNOWN` 四态门禁，失败闭锁；
 - 上下文证据：网络、文件系统和命令行为 INFO 解释；
 - 管理员动态验证：固定 3 份自建 fixture，验证 7 类预期机制，不接受用户代码、路径或命令；
-- 受控 MCP 动态闭环：MCP 2025-06-18 stdio 真实调用、政企 Marker 源到汇证据和 Docker 失败闭锁。
+- 受控 MCP 动态闭环：MCP 2025-06-18 stdio 真实调用、政企 Marker 源到汇证据、Linux inotify/procfs 独立遥测和 Docker 失败闭锁。
 
 最近冻结结果：
 
 - SkillTrustBench v1.0：已完成 5,520 条全量 Cisco 静态基线，另建 120 条开发集和 600 条封存回归集；
 - 管理员动态接口：3/3 fixture、7/7 机制，负面安全指标全部为 0；
-- MCP Docker 受控实验：66/66 接受门，调用前 witness 0、调用后 witness 1、容器残留 0；
-- 后端完整测试：308 passed；
+- MCP Docker 受控遥测实验：82/82 接受门，独立文件读取确认 1、容器残留 0；
+- 后端完整测试：309 passed；
 - 前端 API 测试：9 passed；
 - 前端生产构建：通过。
 
@@ -89,6 +89,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\run_tests.ps1"
 - [管理员动态验证 API/UI 报告](demo_web/docs/M3_ADMIN_DYNAMIC_FIXTURE_API_UI_REPORT.md)
 - [M4 动态审计调研与实施计划](demo_web/docs/M4_DYNAMIC_AUDIT_RESEARCH_AND_IMPLEMENTATION_PLAN.md)
 - [M4 MCP 协议调用与 Marker 证据闭环报告](demo_web/docs/M4_MCP_PROTOCOL_MARKER_V1_REPORT.md)
+- [M4 MCP 内核辅助遥测报告](demo_web/docs/M4_MCP_KERNEL_TELEMETRY_V1_REPORT.md)
 - [持续开发日志](demo_web/docs/WORK_LOG.md)
 
 ## 安全边界

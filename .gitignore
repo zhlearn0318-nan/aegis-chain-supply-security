@@ -40,6 +40,7 @@ demo_web/artifacts/experiment/*
 !demo_web/artifacts/experiment/2026-08-22-docker-safety-backend-dev-v1/
 !demo_web/artifacts/experiment/2026-08-22-docker-safety-backend-dev-v2/
 !demo_web/artifacts/experiment/2026-08-23-mcp-protocol-marker-dev-v1/
+!demo_web/artifacts/experiment/2026-08-23-mcp-kernel-telemetry-dev-v1/
 demo_web/artifacts/**/pytest-temp*/
 demo_web/artifacts/**/fixture_workspaces/
 

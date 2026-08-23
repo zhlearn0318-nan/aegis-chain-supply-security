@@ -2,12 +2,17 @@ from __future__ import annotations
 
 import argparse
 import base64
+import ctypes
 import hashlib
 import json
 import os
+import shutil
 import socket
+import struct
 import subprocess
 import sys
+import threading
+import time
 from pathlib import Path
 from typing import Any, TextIO
 
@@ -134,7 +139,10 @@ def handle_request(
             return error_response(request_id, -32602, "Unknown tool")
         if params.get("arguments") != {"action": "summarize"}:
             return error_response(request_id, -32602, "Invalid tool arguments")
-        payload = MARKER_SOURCE_PATH.read_bytes()
+        with MARKER_SOURCE_PATH.open("rb") as source:
+            time.sleep(0.2)
+            payload = source.read()
+            time.sleep(0.05)
         encoded = base64.b64encode(payload).decode("ascii")
         structured = {
             "encoding": "base64",
@@ -227,6 +235,159 @@ def security_probe() -> dict[str, Any]:
     }
 
 
+class KernelTelemetryObserver:
+    IN_ACCESS = 0x00000001
+    IN_CLOSE_NOWRITE = 0x00000010
+    IN_OPEN = 0x00000020
+    WATCH_MASK = IN_ACCESS | IN_CLOSE_NOWRITE | IN_OPEN
+    EVENT_HEADER = struct.Struct("iIII")
+
+    def __init__(self, server_pid: int, target_path: Path) -> None:
+        self.server_pid = server_pid
+        self.target_path = target_path.resolve(strict=True)
+        self.errors: list[str] = []
+        self.fd_observation_count = 0
+        self._stop = threading.Event()
+        self._inotify_fd = -1
+        self._watch_descriptor = -1
+        self._process_evidence = self._read_process_evidence()
+        self._start_inotify()
+        self._thread = threading.Thread(target=self._watch_file_descriptors, daemon=True)
+        self._thread.start()
+
+    def _record_error(self, label: str, exc: BaseException) -> None:
+        value = f"{label}:{type(exc).__name__}"
+        if value not in self.errors:
+            self.errors.append(value)
+
+    def _read_process_evidence(self) -> dict[str, Any]:
+        evidence: dict[str, Any] = {
+            "server_pid_sha256": hashlib.sha256(
+                str(self.server_pid).encode("ascii")
+            ).hexdigest(),
+            "parent_relation_confirmed": False,
+            "cmdline_sha256": None,
+            "cmdline_arg_count": 0,
+            "executable_basename": None,
+            "raw_pid_retained": False,
+            "raw_cmdline_retained": False,
+        }
+        try:
+            status = Path(f"/proc/{self.server_pid}/status").read_text(encoding="utf-8")
+            parent_line = next(
+                line for line in status.splitlines() if line.startswith("PPid:")
+            )
+            evidence["parent_relation_confirmed"] = int(parent_line.split()[1]) == os.getpid()
+            cmdline = Path(f"/proc/{self.server_pid}/cmdline").read_bytes()
+            args = [value for value in cmdline.split(b"\0") if value]
+            evidence["cmdline_sha256"] = hashlib.sha256(cmdline).hexdigest()
+            evidence["cmdline_arg_count"] = len(args)
+            evidence["executable_basename"] = Path(
+                os.readlink(f"/proc/{self.server_pid}/exe")
+            ).name
+        except (OSError, StopIteration, ValueError) as exc:
+            self._record_error("proc_identity", exc)
+        return evidence
+
+    def _start_inotify(self) -> None:
+        try:
+            libc = ctypes.CDLL(None, use_errno=True)
+            init = libc.inotify_init1
+            init.argtypes = [ctypes.c_int]
+            init.restype = ctypes.c_int
+            add_watch = libc.inotify_add_watch
+            add_watch.argtypes = [ctypes.c_int, ctypes.c_char_p, ctypes.c_uint32]
+            add_watch.restype = ctypes.c_int
+            flags = os.O_NONBLOCK | getattr(os, "O_CLOEXEC", 0)
+            self._inotify_fd = init(flags)
+            if self._inotify_fd < 0:
+                raise OSError(ctypes.get_errno(), "inotify_init1 failed")
+            self._watch_descriptor = add_watch(
+                self._inotify_fd,
+                os.fsencode(self.target_path.parent),
+                self.WATCH_MASK,
+            )
+            if self._watch_descriptor < 0:
+                raise OSError(ctypes.get_errno(), "inotify_add_watch failed")
+        except (AttributeError, OSError) as exc:
+            self._record_error("inotify", exc)
+            if self._inotify_fd >= 0:
+                os.close(self._inotify_fd)
+                self._inotify_fd = -1
+
+    def _watch_file_descriptors(self) -> None:
+        fd_root = Path(f"/proc/{self.server_pid}/fd")
+        target = os.path.normcase(str(self.target_path))
+        while not self._stop.is_set():
+            try:
+                for entry in fd_root.iterdir():
+                    try:
+                        linked = os.readlink(entry)
+                    except OSError:
+                        continue
+                    if os.path.normcase(linked.removesuffix(" (deleted)")) == target:
+                        self.fd_observation_count += 1
+                        break
+            except OSError as exc:
+                self._record_error("proc_fd", exc)
+                return
+            self._stop.wait(0.005)
+
+    def _read_inotify_events(self) -> list[str]:
+        names: set[str] = set()
+        if self._inotify_fd < 0:
+            return []
+        while True:
+            try:
+                payload = os.read(self._inotify_fd, 4096)
+            except BlockingIOError:
+                break
+            except OSError as exc:
+                self._record_error("inotify_read", exc)
+                break
+            if not payload:
+                break
+            offset = 0
+            while offset + self.EVENT_HEADER.size <= len(payload):
+                _wd, mask, _cookie, name_length = self.EVENT_HEADER.unpack_from(payload, offset)
+                offset += self.EVENT_HEADER.size
+                raw_name = payload[offset:offset + name_length]
+                offset += name_length
+                event_name = os.fsdecode(raw_name.split(b"\0", 1)[0])
+                if event_name != self.target_path.name:
+                    continue
+                if mask & self.IN_OPEN:
+                    names.add("OPEN")
+                if mask & self.IN_ACCESS:
+                    names.add("ACCESS")
+                if mask & self.IN_CLOSE_NOWRITE:
+                    names.add("CLOSE_NOWRITE")
+        return sorted(names)
+
+    def finish(self) -> dict[str, Any]:
+        time.sleep(0.03)
+        self._stop.set()
+        self._thread.join(timeout=1)
+        event_names = self._read_inotify_events()
+        if self._inotify_fd >= 0:
+            os.close(self._inotify_fd)
+            self._inotify_fd = -1
+        return {
+            "telemetry_id": "aegis-linux-kernel-telemetry-v1",
+            "observer_role": "mcp_client_parent_process",
+            "started_before_tool_call": True,
+            "inotify_supported": self._watch_descriptor >= 0,
+            "inotify_event_names": event_names,
+            "inotify_event_count": len(event_names),
+            "observed_source_ref": MARKER_SOURCE_REF,
+            "proc_fd_source_observed": self.fd_observation_count > 0,
+            "proc_fd_observation_count": self.fd_observation_count,
+            "strace_available": bool(shutil.which("strace")),
+            "errors": sorted(self.errors),
+            **self._process_evidence,
+        }
+
+
 def transcript_entry(
     direction: str,
     kind: str,
@@ -307,12 +468,16 @@ def run_harness(*, include_security: bool) -> dict[str, Any]:
         "method": "tools/list",
         "params": {},
     }, expect_response=True)
-    called, call_raw = send({
-        "jsonrpc": "2.0",
-        "id": 3,
-        "method": "tools/call",
-        "params": {"name": TOOL_NAME, "arguments": {"action": "summarize"}},
-    }, expect_response=True)
+    observer = KernelTelemetryObserver(server.pid, MARKER_SOURCE_PATH)
+    try:
+        called, call_raw = send({
+            "jsonrpc": "2.0",
+            "id": 3,
+            "method": "tools/call",
+            "params": {"name": TOOL_NAME, "arguments": {"action": "summarize"}},
+        }, expect_response=True)
+    finally:
+        kernel_telemetry = observer.finish()
     server.stdin.close()
     exit_code = server.wait(timeout=3)
     stderr = server.stderr.read()
@@ -352,6 +517,7 @@ def run_harness(*, include_security: bool) -> dict[str, Any]:
             "source_sha256": source_sha256,
         },
         "transcript": transcript,
+        "kernel_telemetry": kernel_telemetry,
         "pre_call_capture_b64": base64.b64encode(
             (initialize_raw + "\n" + list_raw).encode("utf-8")
         ).decode("ascii"),
