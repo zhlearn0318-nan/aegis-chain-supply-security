@@ -1,0 +1,50 @@
+{
+  "evidence_files": {
+    "CHECKLIST.md": {
+      "bytes": 1666,
+      "sha256": "0be2a687abfec04019f4da1a13dc331eaf9b857d5640d7014038cc33f9064dcb"
+    },
+    "PLAN.md": {
+      "bytes": 6784,
+      "sha256": "e665e4194973cff90d52839fc6d4bdb2f564de6f380950419ee2c384ec3bd09e"
+    },
+    "SMOKE_LOG.md": {
+      "bytes": 872,
+      "sha256": "4a6128d465912a46dccc23dd95c2d9a40d4ba2fbaaaf7ad192d908fd42d97737"
+    },
+    "VALIDATION_LOG.md": {
+      "bytes": 1087,
+      "sha256": "e7d6d20476a2bdcc48246af12608030456411540d581bf4d7e575f1acf179f54"
+    },
+    "bash.log": {
+      "bytes": 1327,
+      "sha256": "e9218a5b69abd2c2f63a682befa03d08850e7df14b02d3d30ad1f552e03ce659"
+    },
+    "evaluation_summary.json": {
+      "bytes": 369,
+      "sha256": "1498af67d8f53b777eb86af71aec0134e215c4d11ee5c0478637f31904c12480"
+    },
+    "mcp_protocol_evidence.json": {
+      "bytes": 12169,
+      "sha256": "6b5e5dc49ddd8715b9ef2eff207059e5ff2271b6aa97fec18a66488850c40b40"
+    },
+    "metrics.json": {
+      "bytes": 1108,
+      "sha256": "2f6a75d15d3c5a0c79837000634d1c2651ff65a510c8e682f7ff1ba060b8c339"
+    },
+    "run.log": {
+      "bytes": 260,
+      "sha256": "3ad2ee21214733f855ef2cd81269ed6e34b31b92a935ff53c038e1c8cad2fda2"
+    },
+    "run_manifest.json": {
+      "bytes": 7871,
+      "sha256": "7e68b92db695f2b8d6729b855b98fe35b4888e46ffe78c1e8fe18b1f99558638"
+    },
+    "summary.md": {
+      "bytes": 432,
+      "sha256": "9034748e5388ccd005ec9fa28e6f3672cd9422d1a5c84fc5d9f06a473538a4dc"
+    }
+  },
+  "run_id": "2026-08-23-mcp-protocol-marker-dev-v1",
+  "schema_version": "1.0"
+}

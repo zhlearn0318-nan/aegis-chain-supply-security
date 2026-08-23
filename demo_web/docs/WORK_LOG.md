@@ -877,3 +877,17 @@
 为什么：Docker 命令行包含安全参数并不足够，必须先创建容器并检查 Engine 保存的真实配置，再允许启动；同时必须证明运行时行为和失败清理符合合同。
 
 下一步：在同一安全底座上实现完全自建的 MCP initialize、tools/list、tools/call 和 Marker witness 协议闭环。strace/inotify/内部 sinkhole 仍作为 D2-B 遥测增强，不把当前底座夸大为完整恶意沙箱。
+
+## 2026-08-23：D3-A MCP 协议调用与 Marker 证据闭环
+
+做了什么：依据 MCP 2025-06-18 生命周期、stdio 和 Tools 规范，预登记研究问题、零假设和接受指标；实现一个无第三方依赖的 MCP Server/Client fixture，在 Docker 内通过独立进程完成 initialize、initialized notification、tools/list 和 Schema 合法 tools/call。模拟政企公文 Marker 只在合法调用时读取并以 Base64 返回，主机侧仅保留脱敏 witness、转录元数据和哈希。
+
+安全设计：复用 D2 的固定镜像、pull never、network none、只读根、非 root、cap-drop ALL、no-new-privileges、资源限制、单文件只读挂载和精确 container ID 清理；配置不接受用户代码、路径、镜像或命令。动态结论保持 policy_effect=none，不改变冻结静态决策。
+
+测试过程：首次 MCP 专项测试因系统 pytest 默认临时目录拒绝访问出现2 passed/10 setup errors，把 basetemp 调整到实验目录后12 passed；三组动态专项50 passed。完整后端首次用系统 Python 因缺少FastAPI在收集阶段失败，切换到仓库既有 `.runtime_mcp313` 后308 passed，未安装或升级依赖。
+
+正式结果：接受运行 `2026-08-23-mcp-protocol-marker-dev-v1` 为协议4/4、镜像4/4、inspect24/24、运行时12/12、协议与证据26/26，总计66/66；调用前 witness 0、调用后 witness 1、静动态关联 confirmed。协议错误、策略违规、超时、原始 Marker 泄漏、容器残留、第三方执行和决策变化均为0。证据与源文件哈希不一致0，独立容器残留查询0。
+
+为什么：这一步把“计划中存在 MCP 风险”推进到“真实协议工具调用后，指定模拟敏感源确实到达工具输出”的可复核证据，同时用调用前对照排除工具说明预先泄漏 Marker 的混淆因素。
+
+下一步：增加 syscall、文件系统和进程级独立遥测，证明文件读取行为不只来自 fixture 自报；完成前不执行第三方 MCP/Skill 样本。

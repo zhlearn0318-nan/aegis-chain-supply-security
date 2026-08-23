@@ -2,7 +2,7 @@
 
 Aegis Chain 是 XA-202620 赛题“供应链安全”方向的本地工程原型，面向通用政企智能体平台，对 Agent Skill、MCP 对象和 Python 依赖提供统一静态审查、证据归一化、准入策略和管理员可信样本动态验证。
 
-当前系统已接入 Cisco AI Skill Scanner、Cisco AI MCP Scanner 和 `pip-audit`，并实现自研 Aegis Static、Network/Filesystem/Command Context，以及仅运行自建哈希锁定 fixture 的 INFO-only 动态机制自检。
+当前系统已接入 Cisco AI Skill Scanner、Cisco AI MCP Scanner 和 `pip-audit`，并实现自研 Aegis Static、Network/Filesystem/Command Context，以及只运行自建哈希锁定 fixture 的 Docker/MCP 动态机制验证。
 
 ## 当前能力
 
@@ -12,13 +12,15 @@ Aegis Chain 是 XA-202620 赛题“供应链安全”方向的本地工程原型
 - 统一结果：Finding IR、SHA-256、任务历史、JSON/Markdown 导出；
 - 准入策略：`ALLOW / REVIEW / BLOCK / UNKNOWN` 四态门禁，失败闭锁；
 - 上下文证据：网络、文件系统和命令行为 INFO 解释；
-- 管理员动态验证：固定 3 份自建 fixture，验证 7 类预期机制，不接受用户代码、路径或命令。
+- 管理员动态验证：固定 3 份自建 fixture，验证 7 类预期机制，不接受用户代码、路径或命令；
+- 受控 MCP 动态闭环：MCP 2025-06-18 stdio 真实调用、政企 Marker 源到汇证据和 Docker 失败闭锁。
 
 最近冻结结果：
 
 - SkillTrustBench v1.0：已完成 5,520 条全量 Cisco 静态基线，另建 120 条开发集和 600 条封存回归集；
 - 管理员动态接口：3/3 fixture、7/7 机制，负面安全指标全部为 0；
-- 后端完整测试：254 passed；
+- MCP Docker 受控实验：66/66 接受门，调用前 witness 0、调用后 witness 1、容器残留 0；
+- 后端完整测试：308 passed；
 - 前端 API 测试：9 passed；
 - 前端生产构建：通过。
 
@@ -85,6 +87,8 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\run_tests.ps1"
 - [通用政企平台规则补强必要性](demo_web/docs/M3_通用政企智能体平台规则补强必要性说明.md)
 - [最小安全动态 Fixture 报告](demo_web/docs/M3_SAFE_DYNAMIC_FIXTURE_V1_REPORT.md)
 - [管理员动态验证 API/UI 报告](demo_web/docs/M3_ADMIN_DYNAMIC_FIXTURE_API_UI_REPORT.md)
+- [M4 动态审计调研与实施计划](demo_web/docs/M4_DYNAMIC_AUDIT_RESEARCH_AND_IMPLEMENTATION_PLAN.md)
+- [M4 MCP 协议调用与 Marker 证据闭环报告](demo_web/docs/M4_MCP_PROTOCOL_MARKER_V1_REPORT.md)
 - [持续开发日志](demo_web/docs/WORK_LOG.md)
 
 ## 安全边界

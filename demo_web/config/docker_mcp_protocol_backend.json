@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "backend_id": "aegis-docker-mcp-protocol-v1",
+  "docker_context": "desktop-linux",
+  "pull_policy": "never",
+  "image": {
+    "reference": "public.ecr.aws/docker/library/python@sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65",
+    "id": "sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65",
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  "fixture": {
+    "id": "mcp_protocol_marker",
+    "path": "tools/dynamic/docker/fixtures/mcp_protocol_marker.py",
+    "sha256": "d571747d91ad926fe79106aa3a7bf9a4677fec109654a7e52b18d40f63274c7a",
+    "container_path": "/aegis_fixture.py",
+    "timeout_seconds": 10
+  },
+  "marker": {
+    "profile": "official_document",
+    "seed": "2026-08-23-mcp-protocol-marker-dev-v1",
+    "source_kind": "decoy_file",
+    "source_ref": "decoys/official_document.txt"
+  },
+  "security": {
+    "network_mode": "none",
+    "read_only_rootfs": true,
+    "user": "65532:65532",
+    "cap_drop": ["ALL"],
+    "no_new_privileges": true,
+    "privileged": false,
+    "pid_mode": "",
+    "ipc_mode": "none",
+    "pids_limit": 64,
+    "memory_bytes": 268435456,
+    "nano_cpus": 500000000,
+    "init": true,
+    "log_driver": "none",
+    "tmpfs": {
+      "/tmp": "rw,noexec,nosuid,nodev,size=16777216,mode=1777",
+      "/workspace": "rw,noexec,nosuid,nodev,size=67108864,mode=1777"
+    }
+  }
+}

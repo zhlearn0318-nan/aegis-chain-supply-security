@@ -1,0 +1,400 @@
+{
+  "claim_boundary": "Controlled self-built MCP stdio fixture only; protocol and marker-flow mechanism evidence, not a claim that arbitrary MCP servers or container escapes are safe.",
+  "cleanup": {
+    "attempted": true,
+    "remove_duration_ms": 99,
+    "removed": true,
+    "residual": false
+  },
+  "config": {
+    "backend_id": "aegis-docker-mcp-protocol-v1",
+    "config_sha256": "c5931e8eb3803e8d575f847e587fda5039d0871f23c2dacecd5c36979bc344a3",
+    "fixture_id": "mcp_protocol_marker",
+    "fixture_sha256": "d571747d91ad926fe79106aa3a7bf9a4677fec109654a7e52b18d40f63274c7a",
+    "image_id": "sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65",
+    "image_reference": "public.ecr.aws/docker/library/python@sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65",
+    "pull_policy": "never",
+    "schema_version": "1.0"
+  },
+  "container_identity_sha256": "7b1fb539c47118eb8e4b3f158e3468dc97a4e31ef40f9e6b74f356f1cec10b6b",
+  "correlation": {
+    "correlation_id": "dynamic-correlation-942cb6ce1bb46786",
+    "marker_witness_ids": [
+      "marker-official_document-28ecd82e00f2"
+    ],
+    "observed_event_types": [
+      "file_read",
+      "mcp_initialize",
+      "mcp_tools_call",
+      "mcp_tools_list"
+    ],
+    "plan_id": "dynamic-plan-c954e56e5564460d",
+    "policy_effect": "none",
+    "reason": "至少一个政企诱饵标记从指定敏感源到达受控汇点，已形成源到汇证据。",
+    "schema_version": "1.0",
+    "static_decision_changed": false,
+    "static_finding_ids": [
+      "finding-controlled-mcp-official-document"
+    ],
+    "status": "confirmed"
+  },
+  "create_command": [
+    "<DOCKER_CLI>",
+    "--context",
+    "desktop-linux",
+    "create",
+    "--name",
+    "aegis-dyn-20bd5e6d12d21349",
+    "--label",
+    "aegis.dynamic.backend=aegis-docker-safety-v1",
+    "--label",
+    "aegis.dynamic.run=aegis-dyn-20bd5e6d12d21349",
+    "--pull",
+    "never",
+    "--network",
+    "none",
+    "--read-only",
+    "--user",
+    "65532:65532",
+    "--cap-drop",
+    "ALL",
+    "--security-opt",
+    "no-new-privileges=true",
+    "--pids-limit",
+    "64",
+    "--memory",
+    "268435456",
+    "--cpus",
+    "0.5",
+    "--init",
+    "--ipc",
+    "none",
+    "--log-driver",
+    "none",
+    "--stop-timeout",
+    "1",
+    "--hostname",
+    "aegis-sandbox",
+    "--workdir",
+    "/workspace",
+    "--env",
+    "PYTHONUNBUFFERED=1",
+    "--entrypoint",
+    "/usr/local/bin/python",
+    "--tmpfs",
+    "/tmp:rw,noexec,nosuid,nodev,size=16777216,mode=1777",
+    "--tmpfs",
+    "/workspace:rw,noexec,nosuid,nodev,size=67108864,mode=1777",
+    "--mount",
+    "type=bind,source=<HASH_LOCKED_FIXTURE>,target=/aegis_fixture.py,readonly",
+    "public.ecr.aws/docker/library/python@sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65",
+    "-B",
+    "/aegis_fixture.py"
+  ],
+  "engine": {
+    "api_version": "1.55",
+    "architecture": "amd64",
+    "duration_ms": 80,
+    "engine_version": "29.7.2",
+    "os": "linux"
+  },
+  "error": null,
+  "image": {
+    "architecture": "amd64",
+    "duration_ms": 99,
+    "id": "sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65",
+    "os": "linux",
+    "repo_digest_matched": true
+  },
+  "image_gates": {
+    "image_arch_amd64": true,
+    "image_id_matches": true,
+    "image_os_linux": true,
+    "repo_digest_matches": true
+  },
+  "inspect_gates": {
+    "cap_drop_all": true,
+    "command_fixed": true,
+    "container_env_allowlisted": true,
+    "cpu_limited": true,
+    "entrypoint_fixed": true,
+    "image_reference_immutable": true,
+    "init_enabled": true,
+    "ipc_none": true,
+    "label_backend_exact": true,
+    "label_run_exact": true,
+    "log_driver_none": true,
+    "memory_limited": true,
+    "network_none": true,
+    "no_docker_socket_or_host_root_mount": true,
+    "no_new_privileges": true,
+    "non_root_user": true,
+    "pid_mode_private": true,
+    "pids_limited": true,
+    "privileged_false": true,
+    "read_only_rootfs": true,
+    "restart_disabled": true,
+    "single_read_only_fixture_bind": true,
+    "tmpfs_exact": true,
+    "workdir_fixed": true
+  },
+  "marker_public_identity": {
+    "marker_id": "marker-official_document-28ecd82e00f2",
+    "profile": "official_document",
+    "source_kind": "decoy_file",
+    "source_ref": "decoys/official_document.txt",
+    "token_sha256": "ebca5da84614ddae688fc41997ac8be732fd0bff0f00039138f09e15b3582be7"
+  },
+  "metrics": {
+    "all_gates_passed": 66,
+    "all_gates_total": 66,
+    "backend_id": "aegis-docker-mcp-protocol-v1",
+    "container_residuals": 0,
+    "correlation_confirmed": 1,
+    "decision_changes": 0,
+    "duration_ms": 1463,
+    "engine_ready": true,
+    "gpu_used": false,
+    "image_gates_passed": 4,
+    "image_gates_total": 4,
+    "image_pulls_allowed": 0,
+    "inspect_gates_passed": 24,
+    "inspect_gates_total": 24,
+    "internet_connections_allowed": 0,
+    "mcp_initialize_success": 1,
+    "mcp_schema_valid_calls": 1,
+    "mcp_tools_list_success": 1,
+    "policy_violations": 0,
+    "post_call_marker_witnesses": 1,
+    "pre_call_marker_witnesses": 0,
+    "protocol_errors": 0,
+    "protocol_gates_passed": 26,
+    "protocol_gates_total": 26,
+    "protocol_steps_passed": 4,
+    "protocol_steps_total": 4,
+    "raw_marker_leaks": 0,
+    "runtime_gates_passed": 12,
+    "runtime_gates_total": 12,
+    "schema_version": "1.0",
+    "source_to_sink_witness_rate": 1.0,
+    "third_party_samples_executed": 0,
+    "third_party_samples_read": 0,
+    "timeouts": 0
+  },
+  "policy_effect": "none",
+  "post_call_marker_witnesses": [
+    {
+      "chunk_count": 1,
+      "marker_id": "marker-official_document-28ecd82e00f2",
+      "profile": "official_document",
+      "raw_marker_retained": false,
+      "sink_evidence_sha256": "8419121906065d06740bedc8ffa12c66f554a4f937f4616bb0115752b62dc87d",
+      "sink_kind": "mcp_tool_output",
+      "sink_ref": "tools/call:read_official_document",
+      "source_kind": "decoy_file",
+      "source_ref": "decoys/official_document.txt",
+      "source_sha256": "ebca5da84614ddae688fc41997ac8be732fd0bff0f00039138f09e15b3582be7",
+      "transform": "base64"
+    }
+  ],
+  "pre_call_marker_witnesses": [],
+  "protocol": {
+    "capture_evidence": {
+      "post_call_bytes": 506,
+      "post_call_sha256": "8419121906065d06740bedc8ffa12c66f554a4f937f4616bb0115752b62dc87d",
+      "pre_call_bytes": 897,
+      "pre_call_sha256": "50dc2640fa5024ca3f17de6aa1bc25e130c4d1864788aa83a4cb346c0fd35094",
+      "raw_capture_retained": false
+    },
+    "steps": {
+      "expected": [
+        "initialize",
+        "notifications/initialized",
+        "tools/list",
+        "tools/call"
+      ],
+      "observed": [
+        "initialize",
+        "notifications/initialized",
+        "tools/list",
+        "tools/call"
+      ],
+      "passed": 4,
+      "total": 4
+    },
+    "transcript": [
+      {
+        "direction": "client_to_server",
+        "id": 1,
+        "kind": "request",
+        "method": "initialize"
+      },
+      {
+        "direction": "server_to_client",
+        "error_code": null,
+        "has_result": true,
+        "id": 1,
+        "kind": "response",
+        "response_bytes": 190,
+        "response_sha256": "14517ed56fb428fa6d13298acc378a46ed15d04a8c2aa8fc3405f5ef600ca400"
+      },
+      {
+        "direction": "client_to_server",
+        "kind": "notification",
+        "method": "notifications/initialized"
+      },
+      {
+        "direction": "client_to_server",
+        "id": 2,
+        "kind": "request",
+        "method": "tools/list"
+      },
+      {
+        "direction": "server_to_client",
+        "error_code": null,
+        "has_result": true,
+        "id": 2,
+        "kind": "response",
+        "response_bytes": 706,
+        "response_sha256": "a352b91729efb7b21e0966e975006843db447705961db868eb7232ce82fd8fa1"
+      },
+      {
+        "direction": "client_to_server",
+        "id": 3,
+        "kind": "request",
+        "method": "tools/call"
+      },
+      {
+        "direction": "server_to_client",
+        "error_code": null,
+        "has_result": true,
+        "id": 3,
+        "kind": "response",
+        "response_bytes": 506,
+        "response_sha256": "8419121906065d06740bedc8ffa12c66f554a4f937f4616bb0115752b62dc87d"
+      }
+    ],
+    "transport": "stdio_newline_delimited_jsonrpc",
+    "version": "2025-06-18"
+  },
+  "protocol_gates": {
+    "fixture_identity": true,
+    "initialize_first_and_sequence_exact": true,
+    "initialize_response_id_exact": true,
+    "initialize_success": true,
+    "initialized_notification_sent": true,
+    "input_schema_exact": true,
+    "listed_tool_exact": true,
+    "marker_identity_exact": true,
+    "post_call_single_marker": true,
+    "post_call_transform_base64": true,
+    "pre_call_marker_absent": true,
+    "protocol_errors_zero": true,
+    "protocol_version_exact": true,
+    "raw_marker_absent_from_container_stdout": true,
+    "raw_marker_absent_from_public_evidence": true,
+    "schema_valid_call_once": true,
+    "server_exit_zero": true,
+    "server_stderr_empty": true,
+    "server_subprocess_started": true,
+    "static_dynamic_correlation_confirmed": true,
+    "static_plan_has_mcp_actions": true,
+    "stdio_transport_exact": true,
+    "tool_call_success": true,
+    "tools_capability_declared": true,
+    "tools_list_response_id_exact": true,
+    "tools_list_success": true
+  },
+  "run_id": "2026-08-23-mcp-protocol-marker-dev-v1",
+  "runtime_gates": {
+    "effective_capabilities_zero": true,
+    "gid_non_root_exact": true,
+    "input_mount_write_denied": true,
+    "network_namespace_loopback_only": true,
+    "no_new_privileges_active": true,
+    "probe_identity": true,
+    "rootfs_write_denied": true,
+    "seccomp_filter_active": true,
+    "temp_tmpfs_write_allowed": true,
+    "uid_non_root_exact": true,
+    "working_directory_bounded": true,
+    "workspace_tmpfs_write_allowed": true
+  },
+  "runtime_probe": {
+    "cap_eff": "0000000000000000",
+    "cwd": "/workspace",
+    "gid": 65532,
+    "input_write_succeeded": false,
+    "network_interfaces": [
+      "lo"
+    ],
+    "no_new_privs": "1",
+    "probe_id": "aegis-docker-security-probe-v1",
+    "rootfs_write_succeeded": false,
+    "seccomp": "2",
+    "temp_write_succeeded": true,
+    "uid": 65532,
+    "workspace_write_succeeded": true
+  },
+  "schema_version": "1.0",
+  "start_output": {
+    "duration_ms": 835,
+    "raw_output_retained": false,
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 4309,
+    "stdout_sha256": "9a25a032ffb81df75812e36503c8a78d1a092dc2a615c660e0edbf8f51db1505"
+  },
+  "static_decision_changed": false,
+  "status": "completed",
+  "success": true,
+  "trigger_plan": {
+    "marker_profiles": [
+      "official_document"
+    ],
+    "max_attempts": 1,
+    "plan_id": "dynamic-plan-c954e56e5564460d",
+    "policy_effect": "none",
+    "schema_version": "1.0",
+    "static_decision_changed": false,
+    "static_finding_ids": [
+      "finding-controlled-mcp-official-document"
+    ],
+    "steps": [
+      {
+        "action": "enumerate_mcp_tools",
+        "purpose": "通过 MCP 协议枚举工具及输入 Schema。",
+        "static_finding_ids": [
+          "finding-controlled-mcp-official-document"
+        ],
+        "step_id": "step-01"
+      },
+      {
+        "action": "invoke_schema_valid_tools",
+        "purpose": "生成结构合法输入并执行有界工具调用。",
+        "static_finding_ids": [
+          "finding-controlled-mcp-official-document"
+        ],
+        "step_id": "step-02"
+      },
+      {
+        "action": "launch_with_resource_limits",
+        "purpose": "验证目标能否在固定资源和失败闭锁边界内启动。",
+        "static_finding_ids": [
+          "finding-controlled-mcp-official-document"
+        ],
+        "step_id": "step-03"
+      },
+      {
+        "action": "observe_sensitive_file_read",
+        "purpose": "观察政企诱饵文件是否被目标读取。",
+        "static_finding_ids": [
+          "finding-controlled-mcp-official-document"
+        ],
+        "step_id": "step-04"
+      }
+    ],
+    "target_id": "controlled-government-mcp",
+    "target_kind": "mcp"
+  }
+}

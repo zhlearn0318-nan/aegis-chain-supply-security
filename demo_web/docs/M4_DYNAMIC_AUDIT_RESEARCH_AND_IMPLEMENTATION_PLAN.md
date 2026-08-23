@@ -228,10 +228,13 @@ D2-A 安全底座已由 `2026-08-22-docker-safety-backend-dev-v2` 通过：固�
 ### 阶段 D3：Skill 与 MCP 真实触发
 
 - [ ] Skill 全目录闭包监控和新指令提升；
-- [ ] MCP 初始化、工具枚举和 Schema 合法调用；
-- [ ] 静态规则指导工具/参数/诱饵选择；
-- [ ] 失败分类与有界重试；
+- [x] 自建 MCP 初始化、工具枚举和 Schema 合法调用；
+- [x] 静态规则指导受控 MCP 工具/参数/政企诱饵选择；
+- [x] MCP 协议错误、超时和调用前 Marker 泄漏的失败闭锁测试；
+- [ ] 多目标失败分类与有界重试；
 - [ ] 统一动态报告和管理员页面。
+
+D3-A 已由 `2026-08-23-mcp-protocol-marker-dev-v1` 完成：MCP 协议步骤 4/4，镜像 4/4、inspect 24/24、运行时 12/12、协议与证据 26/26，总计 66/66；调用前 witness 0、调用后 witness 1、静动态关联 `confirmed`，原始 Marker 泄漏、容器残留和决策变化均为 0，完整后端回归 `308 passed`。该结论仅覆盖自建受控 MCP fixture，D3 的 Skill 闭包、多目标重试、第三方目标和平台页面仍未完成。
 
 ### 阶段 D4：本地模型和公开基准评测
 
@@ -268,4 +271,4 @@ D2-A 安全底座已由 `2026-08-22-docker-safety-backend-dev-v2` 通过：固�
 
 ## 13. 当前立即行动
 
-D1 已由 `2026-08-22-dynamic-marker-flow-dev-v2` 完成受控机制验证。D2-A 已由 `2026-08-22-docker-safety-backend-dev-v2` 完成 Docker 安全底座：40/40 门、容器残留 0、完整后端 `296 passed`。下一步是在该底座上完成自建 MCP 协议与 Marker witness，并补充 D2-B 的系统调用/文件/内部 sinkhole 遥测；在这些受控验证完成前仍不执行第三方样本。
+D1 已由 `2026-08-22-dynamic-marker-flow-dev-v2` 完成 Marker 机制验证，D2-A 已由 `2026-08-22-docker-safety-backend-dev-v2` 完成 Docker 安全底座，D3-A 已由 `2026-08-23-mcp-protocol-marker-dev-v1` 完成自建 MCP 协议调用和公文 Marker witness。下一步优先补充 D2-B 的 syscall、文件系统和进程级独立遥测，再做 Skill 运行闭包；在独立遥测和第三方来源审计完成前仍不执行第三方样本。

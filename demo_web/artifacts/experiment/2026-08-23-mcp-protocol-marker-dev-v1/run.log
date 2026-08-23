@@ -1,0 +1,11 @@
+run_id=2026-08-23-mcp-protocol-marker-dev-v1
+status=completed
+protocol_steps=4/4
+all_gates=66/66
+pre_call_marker_witnesses=0
+post_call_marker_witnesses=1
+correlation_confirmed=1
+raw_marker_leaks=0
+container_residuals=0
+decision_changes=0
+elapsed_seconds=1.463

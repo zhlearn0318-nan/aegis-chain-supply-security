@@ -1,0 +1,219 @@
+{
+  "alternative_hypothesis": "调用前无 Marker，合法工具调用后形成一个脱敏 witness，且全部安全门通过。",
+  "baseline": {
+    "docker_run_id": "2026-08-22-docker-safety-backend-dev-v2",
+    "marker_run_id": "2026-08-22-dynamic-marker-flow-dev-v2",
+    "relation": "read_only_complementary_not_numerically_superior",
+    "static_run_id": "2026-08-22-static-audit-regression600-v1"
+  },
+  "claim_boundary": "Controlled self-built MCP stdio fixture only; protocol and marker-flow mechanism evidence, not a claim that arbitrary MCP servers or container escapes are safe.",
+  "command": [
+    "E:\\Anaconda3\\python.exe",
+    "tools\\dynamic\\run_mcp_protocol_audit.py",
+    "--run-id",
+    "2026-08-23-mcp-protocol-marker-dev-v1",
+    "--output",
+    "artifacts\\experiment\\2026-08-23-mcp-protocol-marker-dev-v1"
+  ],
+  "completed_at": "2026-08-23T07:17:05.264047+00:00",
+  "dataset": {
+    "controlled_fixtures": 1,
+    "external_dataset": null,
+    "third_party_samples_executed": 0,
+    "third_party_samples_read": 0
+  },
+  "elapsed_seconds": 1.463,
+  "environment": {
+    "cloud_used": false,
+    "container_image": {
+      "architecture": "amd64",
+      "duration_ms": 99,
+      "id": "sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65",
+      "os": "linux",
+      "repo_digest_matched": true
+    },
+    "docker_engine": {
+      "api_version": "1.55",
+      "architecture": "amd64",
+      "duration_ms": 80,
+      "engine_version": "29.7.2",
+      "os": "linux"
+    },
+    "gpu_used": false,
+    "host_platform": "Windows-11-10.0.26200-SP0",
+    "host_python": "3.12.4 | packaged by Anaconda, Inc. | (main, Jun 18 2024, 15:03:56) [MSC v.1929 64 bit (AMD64)]",
+    "image_pull_used": false,
+    "internet_used": false
+  },
+  "evaluation_summary": {
+    "baseline_relation": "extends_marker_v2_and_docker_v2_without_decision_change",
+    "claim_update": "strengthens",
+    "comparability": "high",
+    "failure_mode": "none",
+    "next_action": "add_syscall_and_filesystem_telemetry",
+    "takeaway": "受控 MCP stdio 服务在 Docker 安全边界内完成真实工具调用，并仅在调用后形成公文 Marker 证据。"
+  },
+  "experiment_tier": "auxiliary/dev",
+  "experimental_analysis": "受控 MCP stdio 服务在 Docker 安全边界内完成真实工具调用，并仅在调用后形成公文 Marker 证据。",
+  "experimental_conclusions": "supported_on_controlled_fixture",
+  "experimental_results": {
+    "all_gates_passed": 66,
+    "all_gates_total": 66,
+    "backend_id": "aegis-docker-mcp-protocol-v1",
+    "container_residuals": 0,
+    "correlation_confirmed": 1,
+    "decision_changes": 0,
+    "duration_ms": 1463,
+    "engine_ready": true,
+    "gpu_used": false,
+    "image_gates_passed": 4,
+    "image_gates_total": 4,
+    "image_pulls_allowed": 0,
+    "inspect_gates_passed": 24,
+    "inspect_gates_total": 24,
+    "internet_connections_allowed": 0,
+    "mcp_initialize_success": 1,
+    "mcp_schema_valid_calls": 1,
+    "mcp_tools_list_success": 1,
+    "policy_violations": 0,
+    "post_call_marker_witnesses": 1,
+    "pre_call_marker_witnesses": 0,
+    "protocol_errors": 0,
+    "protocol_gates_passed": 26,
+    "protocol_gates_total": 26,
+    "protocol_steps_passed": 4,
+    "protocol_steps_total": 4,
+    "raw_marker_leaks": 0,
+    "run_elapsed_seconds": 1.463,
+    "run_id": "2026-08-23-mcp-protocol-marker-dev-v1",
+    "runtime_gates_passed": 12,
+    "runtime_gates_total": 12,
+    "schema_version": "1.0",
+    "source_to_sink_witness_rate": 1.0,
+    "status": "completed",
+    "third_party_samples_executed": 0,
+    "third_party_samples_read": 0,
+    "timeouts": 0
+  },
+  "experimental_setup": {
+    "container_network": "none",
+    "marker_profile": "official_document",
+    "protocol_version": "2025-06-18",
+    "sequence": [
+      "initialize",
+      "notifications/initialized",
+      "tools/list",
+      "tools/call"
+    ],
+    "tool": "read_official_document",
+    "transport": "stdio_newline_delimited_jsonrpc"
+  },
+  "metric_contract": {
+    "negative_zero": [
+      "pre_call_marker_witnesses",
+      "protocol_errors",
+      "timeouts",
+      "raw_marker_leaks",
+      "container_residuals",
+      "third_party_samples_executed",
+      "decision_changes"
+    ],
+    "positive": {
+      "correlation_confirmed": 1,
+      "post_call_marker_witnesses": 1,
+      "protocol_steps_passed": 4,
+      "source_to_sink_witness_rate": 1.0
+    }
+  },
+  "metrics": {
+    "all_gates_passed": 66,
+    "all_gates_total": 66,
+    "backend_id": "aegis-docker-mcp-protocol-v1",
+    "container_residuals": 0,
+    "correlation_confirmed": 1,
+    "decision_changes": 0,
+    "duration_ms": 1463,
+    "engine_ready": true,
+    "gpu_used": false,
+    "image_gates_passed": 4,
+    "image_gates_total": 4,
+    "image_pulls_allowed": 0,
+    "inspect_gates_passed": 24,
+    "inspect_gates_total": 24,
+    "internet_connections_allowed": 0,
+    "mcp_initialize_success": 1,
+    "mcp_schema_valid_calls": 1,
+    "mcp_tools_list_success": 1,
+    "policy_violations": 0,
+    "post_call_marker_witnesses": 1,
+    "pre_call_marker_witnesses": 0,
+    "protocol_errors": 0,
+    "protocol_gates_passed": 26,
+    "protocol_gates_total": 26,
+    "protocol_steps_passed": 4,
+    "protocol_steps_total": 4,
+    "raw_marker_leaks": 0,
+    "run_elapsed_seconds": 1.463,
+    "run_id": "2026-08-23-mcp-protocol-marker-dev-v1",
+    "runtime_gates_passed": 12,
+    "runtime_gates_total": 12,
+    "schema_version": "1.0",
+    "source_to_sink_witness_rate": 1.0,
+    "status": "completed",
+    "third_party_samples_executed": 0,
+    "third_party_samples_read": 0,
+    "timeouts": 0
+  },
+  "null_hypothesis": "任一协议、Marker、Docker、脱敏或清理接受门失败。",
+  "official_spec_references": [
+    "https://modelcontextprotocol.io/specification/2025-06-18/basic/lifecycle",
+    "https://modelcontextprotocol.io/specification/2025-06-18/basic/transports",
+    "https://modelcontextprotocol.io/specification/2025-06-18/server/tools"
+  ],
+  "research_objective": "验证 MCP 协议、工具调用、Marker 与静动态关联的最小闭环。",
+  "research_question": "静态 Trigger Plan 能否引导受控 MCP 目标完成真实 stdio 协议调用，并仅在 tools/call 后形成政企公文 Marker 源到汇证据？",
+  "research_type": "deterministic_protocol_and_evidence_mechanism_validation",
+  "run_id": "2026-08-23-mcp-protocol-marker-dev-v1",
+  "safety_contract": {
+    "accepts_custom_commands": false,
+    "accepts_user_code": false,
+    "accepts_user_paths": false,
+    "cap_drop_all": true,
+    "docker_socket_mounted": false,
+    "execution_trust": "self_built_hash_locked_only",
+    "image_pull_policy": "never",
+    "network_mode": "none",
+    "no_new_privileges": true,
+    "non_root": true,
+    "not_a_container_escape_proof": true,
+    "policy_effect": "none",
+    "raw_marker_retained": false,
+    "read_only_rootfs": true,
+    "static_decision_changes": 0
+  },
+  "schema_version": "1.0",
+  "sources": {
+    "backend/dynamic_audit/mcp_protocol.py": {
+      "bytes": 23262,
+      "sha256": "687fd196920ec7cf2da665b93f6fc5a1cc2136bc24a83d6b046a7f3934d8d54e"
+    },
+    "backend/tests/test_mcp_protocol.py": {
+      "bytes": 10787,
+      "sha256": "8402eead8e7c237256a5649c95ac247952f6cd2cf906b790dc5f3ed776b96709"
+    },
+    "config/docker_mcp_protocol_backend.json": {
+      "bytes": 1392,
+      "sha256": "c5931e8eb3803e8d575f847e587fda5039d0871f23c2dacecd5c36979bc344a3"
+    },
+    "tools/dynamic/docker/fixtures/mcp_protocol_marker.py": {
+      "bytes": 13914,
+      "sha256": "d571747d91ad926fe79106aa3a7bf9a4677fec109654a7e52b18d40f63274c7a"
+    },
+    "tools/dynamic/run_mcp_protocol_audit.py": {
+      "bytes": 12216,
+      "sha256": "f77acb95044aca8891bb7f2e2f897c16851b7429645758dc3879a8f94cc9d112"
+    }
+  },
+  "started_at": "2026-08-23T07:17:03.800041+00:00",
+  "status": "completed"
+}
