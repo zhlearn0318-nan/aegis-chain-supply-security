@@ -18,7 +18,7 @@
 - [x] 核验指标、日志、文件哈希与容器零残留。
 - [x] 执行完整后端回归：308 passed。
 - [x] 形成 MCP 协议与 Marker v1 实现报告。
-- [ ] 提交本地 `dynamic-audit-v1` 分支。
+- [x] 提交本地 `dynamic-audit-v1` 分支。
 
 ## 延后
 

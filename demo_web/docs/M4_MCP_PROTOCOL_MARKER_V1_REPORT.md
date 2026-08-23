@@ -1,10 +1,10 @@
 # M4 D3 MCP 协议调用与 Marker 证据闭环 v1 实现报告
 
-> 日期：2026-08-23  
-> 分支：`dynamic-audit-v1`  
-> 接受运行：`2026-08-23-mcp-protocol-marker-dev-v1`  
-> Docker 基线：`2026-08-22-docker-safety-backend-dev-v2`  
-> Marker 基线：`2026-08-22-dynamic-marker-flow-dev-v2`  
+> 日期：2026-08-23
+> 分支：`dynamic-audit-v1`
+> 接受运行：`2026-08-23-mcp-protocol-marker-dev-v1`
+> Docker 基线：`2026-08-22-docker-safety-backend-dev-v2`
+> Marker 基线：`2026-08-22-dynamic-marker-flow-dev-v2`
 > 静态基线：`2026-08-22-static-audit-regression600-v1`（只读）
 
 ## 1. 本轮结论
