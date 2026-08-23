@@ -1,0 +1,383 @@
+{
+  "claim_boundary": "仅证明自建哈希锁定 Skill fixture 的运行时目录闭包与静态再扫描机制；不证明任意第三方 Skill 可安全执行，也不替代系统调用级沙箱。",
+  "cleanup": {
+    "attempted": true,
+    "remove_duration_ms": 106,
+    "removed": true,
+    "residual": false
+  },
+  "closure": {
+    "closure_coverage_rate": 1.0,
+    "closure_gates": {
+      "aegis_pipeline_ran_pre_and_post": true,
+      "all_materialized_files_lifted": true,
+      "config_classified": true,
+      "deleted_files_absent": true,
+      "fixture_identity_confirmed": true,
+      "generated_content_not_executed": true,
+      "initial_files_unchanged": true,
+      "instruction_classified": true,
+      "materialized_count_exact": true,
+      "materialized_hashes_verified": true,
+      "policy_effect_none": true,
+      "post_manifest_complete": true,
+      "pre_manifest_complete": true,
+      "raw_content_absent_from_container_stdout": true,
+      "raw_generated_content_not_retained": true,
+      "runtime_identity_confirmed": true,
+      "runtime_only_risk_recovered": true,
+      "script_classified": true,
+      "vendor_scanned_pre_and_post": true
+    },
+    "delta": {
+      "added": [
+        "runtime/generated_action.py",
+        "runtime/instructions.md",
+        "runtime/policy.json"
+      ],
+      "deleted": [],
+      "modified": []
+    },
+    "post_manifest": [
+      {
+        "bytes": 108,
+        "category": "initial",
+        "path": "README.txt",
+        "sha256": "8505e88c1751a03f29aedd3e2b432163f166f6ee96b44ca29e5756534e715223"
+      },
+      {
+        "bytes": 224,
+        "category": "initial",
+        "path": "SKILL.md",
+        "sha256": "30752ef21a86b0daf55fd7cf9f5843af0c8d10dfd7454efee7e1fb0f9a0a76d4"
+      },
+      {
+        "bytes": 183,
+        "category": "script",
+        "path": "runtime/generated_action.py",
+        "sha256": "248d30cd3f63c7a02ed00325fdb790b6d5ab1939ece8e9010c913ccf58883c20"
+      },
+      {
+        "bytes": 109,
+        "category": "instruction",
+        "path": "runtime/instructions.md",
+        "sha256": "d0754005a9808a78b8d642e25447c4a873d15cf6edd878ee7c51103cb30ef788"
+      },
+      {
+        "bytes": 63,
+        "category": "config",
+        "path": "runtime/policy.json",
+        "sha256": "a92792ca92480fe87a3cdfd7adb1e56307032d45249a4115a5b94975497a3658"
+      }
+    ],
+    "pre_manifest": [
+      {
+        "bytes": 108,
+        "category": "initial",
+        "path": "README.txt",
+        "sha256": "8505e88c1751a03f29aedd3e2b432163f166f6ee96b44ca29e5756534e715223"
+      },
+      {
+        "bytes": 224,
+        "category": "initial",
+        "path": "SKILL.md",
+        "sha256": "30752ef21a86b0daf55fd7cf9f5843af0c8d10dfd7454efee7e1fb0f9a0a76d4"
+      }
+    ],
+    "privacy": {
+      "content_bundles_retained": false,
+      "raw_content_leaks": 0,
+      "raw_content_retained": false
+    },
+    "runtime_gates": {
+      "effective_capabilities_zero": true,
+      "gid_non_root_exact": true,
+      "input_mount_write_denied": true,
+      "network_namespace_loopback_only": true,
+      "no_new_privileges_active": true,
+      "probe_identity": true,
+      "rootfs_write_denied": true,
+      "seccomp_filter_active": true,
+      "temp_tmpfs_write_allowed": true,
+      "uid_non_root_exact": true,
+      "working_directory_bounded": true,
+      "workspace_tmpfs_write_allowed": true
+    },
+    "runtime_probe": {
+      "cap_eff": "0000000000000000",
+      "cwd": "/workspace",
+      "gid": 65532,
+      "input_write": {
+        "error_type": "OSError",
+        "succeeded": false
+      },
+      "network_interfaces": [
+        "lo"
+      ],
+      "no_new_privs": "1",
+      "probe_id": "aegis-docker-security-probe-v1",
+      "rootfs_write": {
+        "error_type": "OSError",
+        "succeeded": false
+      },
+      "seccomp": "2",
+      "temp_write": {
+        "bytes": 7,
+        "content_matched": true,
+        "succeeded": true
+      },
+      "uid": 65532,
+      "workspace_write": {
+        "bytes": 12,
+        "content_matched": true,
+        "succeeded": true
+      }
+    },
+    "static_lift": {
+      "new_findings_total": 7,
+      "policy_effect": "none",
+      "post_analyzers": [
+        "aegis-command-context-v1",
+        "aegis-enterprise-controls-v1",
+        "aegis-filesystem-context-v1",
+        "aegis-network-context-v1",
+        "aegis-sensitive-flow-v1",
+        "aegis-static-coverage-v1",
+        "aegis-static-v1",
+        "aegis-untrusted-exec-flow-v1",
+        "bytecode",
+        "pipeline",
+        "static_analyzer"
+      ],
+      "post_findings_total": 9,
+      "post_policy_recommendation": "BLOCK",
+      "pre_analyzers": [
+        "aegis-command-context-v1",
+        "aegis-enterprise-controls-v1",
+        "aegis-filesystem-context-v1",
+        "aegis-network-context-v1",
+        "aegis-sensitive-flow-v1",
+        "aegis-static-coverage-v1",
+        "aegis-static-v1",
+        "aegis-untrusted-exec-flow-v1",
+        "bytecode",
+        "pipeline",
+        "static_analyzer"
+      ],
+      "pre_findings_total": 2,
+      "pre_policy_recommendation": "ALLOW",
+      "runtime_risk_findings": [
+        {
+          "analyzer": "pipeline",
+          "category": "vendor_skill_finding",
+          "evidence_sha256": "cfd768648de1f34c9f4f090fc33c9edd783bec91a78599e5676389381292a503",
+          "id": "f915bea1d6d4b6be7fed",
+          "location": {
+            "file": "runtime/generated_action.py",
+            "line": 1
+          },
+          "raw_content_retained": false,
+          "rule_id": "PIPELINE_TAINT_FLOW",
+          "severity": "HIGH"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "remote_payload_execution",
+          "evidence_sha256": "5072d0cbc79f8935b4b33bacf9b0d3f18370ae9e953a64e7a5a1f09322fd4dce",
+          "id": "2cae721db4a5940556d0",
+          "location": {
+            "file": "runtime/generated_action.py",
+            "line": 5
+          },
+          "raw_content_retained": false,
+          "rule_id": "AEGIS_REMOTE_FETCH_PIPE_SHELL",
+          "severity": "CRITICAL"
+        }
+      ],
+      "vendor_scans": 2
+    }
+  },
+  "closure_gates": {
+    "aegis_pipeline_ran_pre_and_post": true,
+    "all_materialized_files_lifted": true,
+    "config_classified": true,
+    "deleted_files_absent": true,
+    "fixture_identity_confirmed": true,
+    "generated_content_not_executed": true,
+    "initial_files_unchanged": true,
+    "instruction_classified": true,
+    "materialized_count_exact": true,
+    "materialized_hashes_verified": true,
+    "policy_effect_none": true,
+    "post_manifest_complete": true,
+    "pre_manifest_complete": true,
+    "raw_content_absent_from_container_stdout": true,
+    "raw_generated_content_not_retained": true,
+    "runtime_identity_confirmed": true,
+    "runtime_only_risk_recovered": true,
+    "script_classified": true,
+    "vendor_scanned_pre_and_post": true
+  },
+  "create_command": [
+    "<DOCKER_CLI>",
+    "--context",
+    "desktop-linux",
+    "create",
+    "--name",
+    "aegis-dyn-5ea54093d2bee0be",
+    "--label",
+    "aegis.dynamic.backend=aegis-docker-safety-v1",
+    "--label",
+    "aegis.dynamic.run=aegis-dyn-5ea54093d2bee0be",
+    "--pull",
+    "never",
+    "--network",
+    "none",
+    "--read-only",
+    "--user",
+    "65532:65532",
+    "--cap-drop",
+    "ALL",
+    "--security-opt",
+    "no-new-privileges=true",
+    "--pids-limit",
+    "64",
+    "--memory",
+    "268435456",
+    "--cpus",
+    "0.5",
+    "--init",
+    "--ipc",
+    "none",
+    "--log-driver",
+    "none",
+    "--stop-timeout",
+    "1",
+    "--hostname",
+    "aegis-sandbox",
+    "--workdir",
+    "/workspace",
+    "--env",
+    "PYTHONUNBUFFERED=1",
+    "--entrypoint",
+    "/usr/local/bin/python",
+    "--tmpfs",
+    "/tmp:rw,noexec,nosuid,nodev,size=16777216,mode=1777",
+    "--tmpfs",
+    "/workspace:rw,noexec,nosuid,nodev,size=67108864,mode=1777",
+    "--mount",
+    "type=bind,source=<HASH_LOCKED_FIXTURE>,target=/aegis_fixture.py,readonly",
+    "public.ecr.aws/docker/library/python@sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65",
+    "-B",
+    "/aegis_fixture.py"
+  ],
+  "engine": {
+    "api_version": "1.55",
+    "architecture": "amd64",
+    "duration_ms": 87,
+    "engine_version": "29.7.2",
+    "os": "linux"
+  },
+  "error": null,
+  "image": {
+    "architecture": "amd64",
+    "duration_ms": 106,
+    "id": "sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65",
+    "os": "linux",
+    "repo_digest_matched": true
+  },
+  "image_gates": {
+    "image_arch_amd64": true,
+    "image_id_matches": true,
+    "image_os_linux": true,
+    "repo_digest_matches": true
+  },
+  "inspect_gates": {
+    "cap_drop_all": true,
+    "command_fixed": true,
+    "container_env_allowlisted": true,
+    "cpu_limited": true,
+    "entrypoint_fixed": true,
+    "image_reference_immutable": true,
+    "init_enabled": true,
+    "ipc_none": true,
+    "label_backend_exact": true,
+    "label_run_exact": true,
+    "log_driver_none": true,
+    "memory_limited": true,
+    "network_none": true,
+    "no_docker_socket_or_host_root_mount": true,
+    "no_new_privileges": true,
+    "non_root_user": true,
+    "pid_mode_private": true,
+    "pids_limited": true,
+    "privileged_false": true,
+    "read_only_rootfs": true,
+    "restart_disabled": true,
+    "single_read_only_fixture_bind": true,
+    "tmpfs_exact": true,
+    "workdir_fixed": true
+  },
+  "metrics": {
+    "all_gates_passed": 59,
+    "all_gates_total": 59,
+    "backend_id": "aegis-docker-skill-closure-v1",
+    "closure_coverage_rate": 1.0,
+    "closure_gates_passed": 19,
+    "closure_gates_total": 19,
+    "config_files": 1,
+    "container_residuals": 0,
+    "decision_changes": 0,
+    "duration_ms": 15504,
+    "engine_ready": true,
+    "gpu_used": 0,
+    "image_gates_passed": 4,
+    "image_gates_total": 4,
+    "image_pull_used": 0,
+    "inspect_gates_passed": 24,
+    "inspect_gates_total": 24,
+    "instruction_files": 1,
+    "internet_used": 0,
+    "materialized_files_expected": 3,
+    "materialized_files_lifted": 3,
+    "materialized_files_observed": 3,
+    "materialized_hashes_verified": 3,
+    "new_static_findings": 7,
+    "oversized_files": 0,
+    "post_files_total": 5,
+    "post_static_findings": 9,
+    "pre_files_total": 2,
+    "pre_static_findings": 2,
+    "raw_content_leaks": 0,
+    "runtime_gates_passed": 12,
+    "runtime_gates_total": 12,
+    "runtime_only_risk_recovered": 1,
+    "runtime_risk_findings": 2,
+    "schema_version": "1.0",
+    "script_files": 1,
+    "symlinks": 0,
+    "third_party_samples_executed": 0,
+    "timeouts": 0,
+    "unsafe_paths": 0,
+    "unsupported_files": 0,
+    "vendor_scans": 2
+  },
+  "run_id": "2026-08-23-skill-runtime-closure-dev-v1",
+  "runtime_gates": {
+    "effective_capabilities_zero": true,
+    "gid_non_root_exact": true,
+    "input_mount_write_denied": true,
+    "network_namespace_loopback_only": true,
+    "no_new_privileges_active": true,
+    "probe_identity": true,
+    "rootfs_write_denied": true,
+    "seccomp_filter_active": true,
+    "temp_tmpfs_write_allowed": true,
+    "uid_non_root_exact": true,
+    "working_directory_bounded": true,
+    "workspace_tmpfs_write_allowed": true
+  },
+  "schema_version": "1.0",
+  "status": "completed",
+  "success": true
+}

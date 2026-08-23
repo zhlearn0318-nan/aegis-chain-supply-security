@@ -1,0 +1,42 @@
+{
+  "evidence_files": {
+    "CHECKLIST.md": {
+      "bytes": 1533,
+      "sha256": "8ca80ed32096d0fb86192cab7c82302412d5e730ba7685b7c7114c3b8fc06c52"
+    },
+    "PLAN.md": {
+      "bytes": 4547,
+      "sha256": "d64b2fd931057da32167ca5cc228704504e430733e4345204367e8fec2812711"
+    },
+    "bash.log": {
+      "bytes": 1262,
+      "sha256": "b8accbc621f40ff16acb081aa5da8a9100665972bd6c1f7dc8220ebe66274749"
+    },
+    "evaluation_summary.json": {
+      "bytes": 380,
+      "sha256": "df17f1221db8920c673c57ab2611a381954961f8e1b3e496897687a72eed8494"
+    },
+    "metrics.json": {
+      "bytes": 1269,
+      "sha256": "219fa87278ed0576826b002f192e7b048e36d1abae8d2c1def0c93104ec156e3"
+    },
+    "run.log": {
+      "bytes": 247,
+      "sha256": "2edf27751ff2f74b399560467c09d457faa38ee9b79b0d6c749a2e31ff79ef98"
+    },
+    "run_manifest.json": {
+      "bytes": 8369,
+      "sha256": "b018296b778d7f4f349aaf1b097043d3d2b561bb709f0e129f41057dfcb26f37"
+    },
+    "skill_closure_evidence.json": {
+      "bytes": 11241,
+      "sha256": "3976ea7ede21e44b6044fa9046e51c3c37de5a4eb8e5e9cc23faacbb9ad8fb87"
+    },
+    "summary.md": {
+      "bytes": 557,
+      "sha256": "d225c94a0174158a01d9dfba729ac170d467297db381aecba82096f4c6bbc944"
+    }
+  },
+  "run_id": "2026-08-23-skill-runtime-closure-dev-v1",
+  "schema_version": "1.0"
+}

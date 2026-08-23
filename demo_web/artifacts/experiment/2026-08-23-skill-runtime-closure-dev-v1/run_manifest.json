@@ -1,0 +1,241 @@
+{
+  "alternative_hypothesis": "3 个新增文件被完整提升且找回至少 1 条运行时独有风险。",
+  "baseline": {
+    "docker_run_id": "2026-08-22-docker-safety-backend-dev-v2",
+    "relation": "read_only_complementary_not_numerically_superior",
+    "static_run_id": "2026-08-22-static-audit-regression600-v1",
+    "telemetry_run_id": "2026-08-23-mcp-kernel-telemetry-dev-v1"
+  },
+  "claim_boundary": "仅证明自建哈希锁定 Skill fixture 的运行时目录闭包与静态再扫描机制；不证明任意第三方 Skill 可安全执行，也不替代系统调用级沙箱。",
+  "command": [
+    "F:\\揭榜挂帅\\supply_chain_reproduction\\.runtime_mcp313\\Scripts\\python.exe",
+    "demo_web/tools/dynamic/run_skill_closure_audit.py"
+  ],
+  "completed_at": "2026-08-23T08:23:20.151730+00:00",
+  "dataset": {
+    "controlled_fixtures": 1,
+    "external_dataset": null,
+    "third_party_samples_executed": 0,
+    "third_party_samples_read": 0
+  },
+  "elapsed_seconds": 15.504,
+  "environment": {
+    "cloud_used": false,
+    "container_image": {
+      "architecture": "amd64",
+      "duration_ms": 106,
+      "id": "sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65",
+      "os": "linux",
+      "repo_digest_matched": true
+    },
+    "docker_engine": {
+      "api_version": "1.55",
+      "architecture": "amd64",
+      "duration_ms": 87,
+      "engine_version": "29.7.2",
+      "os": "linux"
+    },
+    "gpu_used": false,
+    "host_platform": "Windows-11-10.0.26200-SP0",
+    "host_python": "3.13.14 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:26:41) [MSC v.1942 64 bit (AMD64)]",
+    "image_pull_used": false,
+    "internet_used": false
+  },
+  "evaluation_summary": {
+    "baseline_relation": "extends_static_audit_with_controlled_runtime_content_lift",
+    "claim_update": "strengthens",
+    "comparability": "complementary",
+    "failure_mode": "none",
+    "next_action": "freeze_skill_closure_v1",
+    "takeaway": "受控 Skill 运行后新增的指令、脚本和配置被完整盘点，并由现有 Cisco + Aegis 静态链路找回运行时风险。"
+  },
+  "experiment_tier": "auxiliary/dev",
+  "experimental_analysis": "受控 Skill 运行后新增的指令、脚本和配置被完整盘点，并由现有 Cisco + Aegis 静态链路找回运行时风险。",
+  "experimental_conclusions": "supported_on_controlled_fixture",
+  "experimental_results": {
+    "all_gates_passed": 59,
+    "all_gates_total": 59,
+    "backend_id": "aegis-docker-skill-closure-v1",
+    "closure_coverage_rate": 1.0,
+    "closure_gates_passed": 19,
+    "closure_gates_total": 19,
+    "config_files": 1,
+    "container_residuals": 0,
+    "decision_changes": 0,
+    "duration_ms": 15504,
+    "engine_ready": true,
+    "gpu_used": 0,
+    "image_gates_passed": 4,
+    "image_gates_total": 4,
+    "image_pull_used": 0,
+    "inspect_gates_passed": 24,
+    "inspect_gates_total": 24,
+    "instruction_files": 1,
+    "internet_used": 0,
+    "materialized_files_expected": 3,
+    "materialized_files_lifted": 3,
+    "materialized_files_observed": 3,
+    "materialized_hashes_verified": 3,
+    "new_static_findings": 7,
+    "oversized_files": 0,
+    "post_files_total": 5,
+    "post_static_findings": 9,
+    "pre_files_total": 2,
+    "pre_static_findings": 2,
+    "raw_content_leaks": 0,
+    "run_elapsed_seconds": 15.504,
+    "run_id": "2026-08-23-skill-runtime-closure-dev-v1",
+    "runtime_gates_passed": 12,
+    "runtime_gates_total": 12,
+    "runtime_only_risk_recovered": 1,
+    "runtime_risk_findings": 2,
+    "schema_version": "1.0",
+    "script_files": 1,
+    "status": "completed",
+    "symlinks": 0,
+    "third_party_samples_executed": 0,
+    "timeouts": 0,
+    "unsafe_paths": 0,
+    "unsupported_files": 0,
+    "vendor_scans": 2
+  },
+  "experimental_setup": {
+    "container_network": "none",
+    "generated_content_executed": false,
+    "initial_files": 2,
+    "materialized_categories": [
+      "instruction",
+      "script",
+      "config"
+    ],
+    "materialized_files": 3,
+    "static_pipeline": "existing_cisco_plus_aegis_pipeline",
+    "vendor_scanner": "Cisco Skill Scanner"
+  },
+  "metric_contract": {
+    "negative_zero": [
+      "unsafe_paths",
+      "symlinks",
+      "oversized_files",
+      "unsupported_files",
+      "raw_content_leaks",
+      "third_party_samples_executed",
+      "internet_used",
+      "image_pull_used",
+      "gpu_used",
+      "decision_changes",
+      "container_residuals",
+      "timeouts"
+    ],
+    "positive": {
+      "closure_coverage_rate": 1.0,
+      "config_files": 1,
+      "instruction_files": 1,
+      "materialized_files_lifted": 3,
+      "materialized_files_observed": 3,
+      "materialized_hashes_verified": 3,
+      "runtime_only_risk_recovered": 1,
+      "script_files": 1,
+      "vendor_scans": 2
+    }
+  },
+  "metrics": {
+    "all_gates_passed": 59,
+    "all_gates_total": 59,
+    "backend_id": "aegis-docker-skill-closure-v1",
+    "closure_coverage_rate": 1.0,
+    "closure_gates_passed": 19,
+    "closure_gates_total": 19,
+    "config_files": 1,
+    "container_residuals": 0,
+    "decision_changes": 0,
+    "duration_ms": 15504,
+    "engine_ready": true,
+    "gpu_used": 0,
+    "image_gates_passed": 4,
+    "image_gates_total": 4,
+    "image_pull_used": 0,
+    "inspect_gates_passed": 24,
+    "inspect_gates_total": 24,
+    "instruction_files": 1,
+    "internet_used": 0,
+    "materialized_files_expected": 3,
+    "materialized_files_lifted": 3,
+    "materialized_files_observed": 3,
+    "materialized_hashes_verified": 3,
+    "new_static_findings": 7,
+    "oversized_files": 0,
+    "post_files_total": 5,
+    "post_static_findings": 9,
+    "pre_files_total": 2,
+    "pre_static_findings": 2,
+    "raw_content_leaks": 0,
+    "run_elapsed_seconds": 15.504,
+    "run_id": "2026-08-23-skill-runtime-closure-dev-v1",
+    "runtime_gates_passed": 12,
+    "runtime_gates_total": 12,
+    "runtime_only_risk_recovered": 1,
+    "runtime_risk_findings": 2,
+    "schema_version": "1.0",
+    "script_files": 1,
+    "status": "completed",
+    "symlinks": 0,
+    "third_party_samples_executed": 0,
+    "timeouts": 0,
+    "unsafe_paths": 0,
+    "unsupported_files": 0,
+    "vendor_scans": 2
+  },
+  "null_hypothesis": "目录差分、哈希验证或静态提升任一失败，或新增负面指标非零。",
+  "research_objective": "将运行时生成的指令、脚本和配置提升回既有静态审计。",
+  "research_question": "受控 Skill 运行时新增内容能否被完整盘点，并由现有 Cisco + Aegis 静态链路找回初始目录中不可见的风险？",
+  "research_type": "deterministic_runtime_directory_closure_validation",
+  "run_id": "2026-08-23-skill-runtime-closure-dev-v1",
+  "safety_contract": {
+    "accepts_custom_commands": false,
+    "accepts_user_code": false,
+    "accepts_user_paths": false,
+    "cap_drop_all": true,
+    "docker_socket_mounted": false,
+    "execution_trust": "self_built_hash_locked_only",
+    "generated_content_executed": false,
+    "image_pull_policy": "never",
+    "network_mode": "none",
+    "no_new_privileges": true,
+    "non_root": true,
+    "not_a_third_party_skill_sandbox_proof": true,
+    "policy_effect": "none",
+    "raw_generated_content_retained": false,
+    "read_only_rootfs": true,
+    "static_decision_changes": 0
+  },
+  "schema_version": "1.0",
+  "sources": {
+    "backend/dynamic_audit/skill_closure.py": {
+      "bytes": 28550,
+      "sha256": "1c12907025acb37557a58d5626270721ca2885644c2fe64b1276e59d02a50c8d"
+    },
+    "backend/skill_static_pipeline.py": {
+      "bytes": 2157,
+      "sha256": "772ff8270c9eef39367128a4a57cbf11d1eff9ed94eda4c3a274525edfa580e8"
+    },
+    "backend/tests/test_skill_closure.py": {
+      "bytes": 6227,
+      "sha256": "50c755a8423062d2a8523e0685f833e6bc4f18be9120867730afd27bd2ade145"
+    },
+    "config/docker_skill_closure_backend.json": {
+      "bytes": 1699,
+      "sha256": "45a2c41f1f81e18f9ca3df77c573b56f151b81abf0d292dc29c900fe7617bfea"
+    },
+    "tools/dynamic/docker/fixtures/skill_runtime_closure.py": {
+      "bytes": 5488,
+      "sha256": "6a2a52ee893884b1e124b180cd979be3fb8821952fc0feac27829b165c937bff"
+    },
+    "tools/dynamic/run_skill_closure_audit.py": {
+      "bytes": 12636,
+      "sha256": "94017e479150ebf30a7ae581601ded77e33c9f2375acc2a49898effa09260c1f"
+    }
+  },
+  "started_at": "2026-08-23T08:23:04.647837+00:00",
+  "status": "completed"
+}

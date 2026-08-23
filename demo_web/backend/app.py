@@ -35,16 +35,8 @@ from .analyzers import (
     SENSITIVE_FLOW_ANALYZER_ID,
     STATIC_COVERAGE_ANALYZER_ID,
     UNTRUSTED_EXEC_FLOW_ANALYZER_ID,
-    analyze_command_context,
     analyze_dependency_manifest,
-    analyze_enterprise_controls,
-    analyze_filesystem_context,
     analyze_mcp_objects,
-    analyze_network_context,
-    analyze_sensitive_flows,
-    analyze_static_coverage,
-    analyze_skill_tree,
-    analyze_untrusted_exec_flows,
 )
 from .api_contract import ErrorCode, GatewayHTTPException
 from .api_v1 import ApiV1Operations, install_api_v1
@@ -60,6 +52,7 @@ from .policy import (
     pending_policy_trace,
     summarize,
 )
+from .skill_static_pipeline import run_skill_static_pipeline
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -380,36 +373,13 @@ def complete_scan_job(
 
 def scan_skill_path(job: dict[str, Any], skill_path: Path) -> None:
     started = time.perf_counter()
-    execution = SKILL_ADAPTER.scan(skill_path)
-    cisco_findings, cisco_analyzers = normalize_skill(execution.report)
-    aegis_findings, aegis_analyzers = analyze_skill_tree(skill_path)
-    sensitive_flow_findings, sensitive_flow_analyzers = analyze_sensitive_flows(skill_path)
-    untrusted_exec_findings, untrusted_exec_analyzers = analyze_untrusted_exec_flows(skill_path)
-    enterprise_findings, enterprise_analyzers = analyze_enterprise_controls(skill_path)
-    coverage_findings, coverage_analyzers = analyze_static_coverage(skill_path)
-    network_findings, network_analyzers = analyze_network_context(skill_path, cisco_findings)
-    filesystem_findings, filesystem_analyzers = analyze_filesystem_context(
-        skill_path, cisco_findings
-    )
-    command_findings, command_analyzers = analyze_command_context(
-        skill_path, cisco_findings
-    )
-    findings = (
-        cisco_findings + aegis_findings + sensitive_flow_findings + untrusted_exec_findings
-        + enterprise_findings + coverage_findings + network_findings
-        + filesystem_findings + command_findings
-    )
-    analyzers = sorted(set(
-        cisco_analyzers + aegis_analyzers + sensitive_flow_analyzers + untrusted_exec_analyzers
-        + enterprise_analyzers + coverage_analyzers + network_analyzers
-        + filesystem_analyzers + command_analyzers
-    ))
+    result = run_skill_static_pipeline(skill_path, SKILL_ADAPTER)
     complete_scan_job(
         job,
         started=started,
-        findings=findings,
-        analyzers=analyzers,
-        logs=execution.logs[-4:],
+        findings=result["findings"],
+        analyzers=result["analyzers"],
+        logs=result["logs"],
     )
 
 
@@ -1016,4 +986,3 @@ if FRONTEND_DIST.exists():
         if path and FRONTEND_DIST.resolve() in candidate.parents and candidate.is_file():
             return FileResponse(candidate)
         return FileResponse(FRONTEND_DIST / "index.html")
-

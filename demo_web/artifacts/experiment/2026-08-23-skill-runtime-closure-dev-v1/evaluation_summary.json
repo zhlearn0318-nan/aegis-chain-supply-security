@@ -1,0 +1,8 @@
+{
+  "baseline_relation": "extends_static_audit_with_controlled_runtime_content_lift",
+  "claim_update": "strengthens",
+  "comparability": "complementary",
+  "failure_mode": "none",
+  "next_action": "freeze_skill_closure_v1",
+  "takeaway": "受控 Skill 运行后新增的指令、脚本和配置被完整盘点，并由现有 Cisco + Aegis 静态链路找回运行时风险。"
+}

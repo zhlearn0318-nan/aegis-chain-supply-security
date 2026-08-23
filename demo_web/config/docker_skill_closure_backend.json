@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "backend_id": "aegis-docker-skill-closure-v1",
+  "docker_context": "desktop-linux",
+  "pull_policy": "never",
+  "image": {
+    "reference": "public.ecr.aws/docker/library/python@sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65",
+    "id": "sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65",
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  "fixture": {
+    "id": "skill_runtime_closure",
+    "path": "tools/dynamic/docker/fixtures/skill_runtime_closure.py",
+    "sha256": "6a2a52ee893884b1e124b180cd979be3fb8821952fc0feac27829b165c937bff",
+    "container_path": "/aegis_fixture.py",
+    "timeout_seconds": 10
+  },
+  "closure": {
+    "runtime_id": "aegis-skill-runtime-closure-v1",
+    "initial_paths": ["README.txt", "SKILL.md"],
+    "materialized_paths": [
+      "runtime/generated_action.py",
+      "runtime/instructions.md",
+      "runtime/policy.json"
+    ],
+    "categories": {
+      "runtime/generated_action.py": "script",
+      "runtime/instructions.md": "instruction",
+      "runtime/policy.json": "config"
+    },
+    "max_files": 8,
+    "max_file_bytes": 16384,
+    "max_total_bytes": 65536
+  },
+  "security": {
+    "network_mode": "none",
+    "read_only_rootfs": true,
+    "user": "65532:65532",
+    "cap_drop": ["ALL"],
+    "no_new_privileges": true,
+    "privileged": false,
+    "pid_mode": "",
+    "ipc_mode": "none",
+    "pids_limit": 64,
+    "memory_bytes": 268435456,
+    "nano_cpus": 500000000,
+    "init": true,
+    "log_driver": "none",
+    "tmpfs": {
+      "/tmp": "rw,noexec,nosuid,nodev,size=16777216,mode=1777",
+      "/workspace": "rw,noexec,nosuid,nodev,size=67108864,mode=1777"
+    }
+  }
+}

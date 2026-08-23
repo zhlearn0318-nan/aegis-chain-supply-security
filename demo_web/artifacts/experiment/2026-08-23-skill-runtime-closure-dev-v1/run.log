@@ -1,0 +1,12 @@
+run_id=2026-08-23-skill-runtime-closure-dev-v1
+status=completed
+all_gates=59/59
+materialized=3/3
+lifted=3
+hashes_verified=3
+runtime_risk_findings=2
+vendor_scans=2
+raw_content_leaks=0
+container_residuals=0
+decision_changes=0
+elapsed_seconds=15.504
