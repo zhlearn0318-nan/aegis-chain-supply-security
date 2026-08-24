@@ -7,6 +7,7 @@ param(
     [string]$ExpectedRef = "refs/heads/dynamic-audit-v1",
     [string]$WorkspaceRoot = "C:\AegisAcceptance",
     [string]$GitHubTokenEnvironment = "AEGIS_GITHUB_READ_TOKEN",
+    [string]$ProxyUrl = "",
     [switch]$PrepareOnly
 )
 
@@ -15,6 +16,27 @@ $ControllerRoot = $PSScriptRoot
 $ToolchainManifest = Join-Path $ControllerRoot "toolchain.windows-x64.json"
 $ControllerPath = $MyInvocation.MyCommand.Path
 $ExpectedCommit = $ExpectedCommit.ToLowerInvariant()
+$DownloadProxyUrl = $null
+if (-not [string]::IsNullOrWhiteSpace($ProxyUrl)) {
+    try { $proxy = [Uri]$ProxyUrl } catch { throw "ProxyUrl is not a valid absolute URI." }
+    if (
+        -not $proxy.IsAbsoluteUri -or
+        $proxy.Scheme -notin @("http", "https") -or
+        [string]::IsNullOrWhiteSpace($proxy.Host) -or
+        $proxy.IsDefaultPort -or
+        -not [string]::IsNullOrWhiteSpace($proxy.UserInfo) -or
+        $proxy.AbsolutePath -ne "/" -or
+        $proxy.Query -or
+        $proxy.Fragment
+    ) {
+        throw "ProxyUrl must be an explicit HTTP(S) host and port without credentials, path, query, or fragment."
+    }
+    $DownloadProxyUrl = $proxy.AbsoluteUri.TrimEnd("/")
+    $env:HTTP_PROXY = $DownloadProxyUrl
+    $env:HTTPS_PROXY = $DownloadProxyUrl
+    $env:ALL_PROXY = $DownloadProxyUrl
+    $env:NO_PROXY = "127.0.0.1,localhost,::1"
+}
 
 function Write-Utf8Json {
     param([string]$Path, $Value)
@@ -50,7 +72,13 @@ function Get-VerifiedDownload {
     $target = Join-Path $DownloadRoot ([string]$Artifact.file)
     if (-not (Test-Path -LiteralPath $target -PathType Leaf)) {
         Write-Host "Downloading locked $($Artifact.id) $($Artifact.version)..."
-        Invoke-WebRequest -UseBasicParsing -Uri ([string]$Artifact.url) -OutFile $target
+        $download = @{
+            UseBasicParsing = $true
+            Uri = [string]$Artifact.url
+            OutFile = $target
+        }
+        if ($DownloadProxyUrl) { $download.Proxy = $DownloadProxyUrl }
+        Invoke-WebRequest @download
     }
     $actual = (Get-FileHash -LiteralPath $target -Algorithm SHA256).Hash.ToLowerInvariant()
     if ($actual -ne ([string]$Artifact.sha256).ToLowerInvariant()) {
@@ -74,7 +102,13 @@ function Get-VerifiedIntegrityDownload {
     $target = Join-Path $DownloadRoot ([string]$Package.file)
     if (-not (Test-Path -LiteralPath $target -PathType Leaf)) {
         Write-Host "Downloading locked $($Package.id) $($Package.version)..."
-        Invoke-WebRequest -UseBasicParsing -Uri ([string]$Package.tarball) -OutFile $target
+        $download = @{
+            UseBasicParsing = $true
+            Uri = [string]$Package.tarball
+            OutFile = $target
+        }
+        if ($DownloadProxyUrl) { $download.Proxy = $DownloadProxyUrl }
+        Invoke-WebRequest @download
     }
     $expected = [string]$Package.integrity
     $parts = $expected -split '-', 2
@@ -353,7 +387,9 @@ $attestation = [ordered]@{
     sensitive_values = [ordered]@{
         github_token_environment = $GitHubTokenEnvironment
         github_token_retained = $false
+        proxy_credentials_allowed = $false
     }
+    network = [ordered]@{ proxy_configured = [bool]$DownloadProxyUrl }
 }
 Write-Utf8Json $attestationPath $attestation
 

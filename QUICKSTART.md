@@ -136,6 +136,8 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\Initialize-AegisAccep
 $env:AEGIS_GITHUB_READ_TOKEN = $null
 ```
 
+若 guest 不能直连 GitHub，而 VirtualBox NAT 已启用 `nat-localhostreachable1`，可额外传入无凭据代理，例如 `-ProxyUrl "http://10.0.2.2:7897"`。初始化器拒绝在代理 URL 中携带用户名、密码、路径或查询参数；正式断网负面控制结束后会恢复原代理环境。
+
 控制器会校验真实 VM 身份，按 SHA-256 下载固定 MinGit、Node.js、Miniforge 和 pnpm，核对私有远端 ref，从不存在的目标目录执行新克隆，并先证明引导前扫描器确实缺失。随后发布门自动完成运行时重建、完整测试、自身供应链扫描、真实 HTTP 四链、查询/导出、漏洞库断网失败闭锁、Docker 可用/降级分支、停止和残留检查。令牌只从当前进程环境读取，不进入命令参数、报告或 Git 配置。
 
 成功证据默认写入 VM 的 `C:\AegisAcceptance\evidence`，位于克隆仓库之外。只有 `artifact_manifest.json` 全部哈希复核通过后，才可将证据复制回仓库冻结。当前主机为家庭版 Windows，不提供 Windows Sandbox，因此仍需安装 VirtualBox 等真实虚拟机软件并执行此流程；本机烟雾结果不能替代 P0-5。

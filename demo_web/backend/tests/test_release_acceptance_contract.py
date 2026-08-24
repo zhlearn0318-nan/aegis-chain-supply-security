@@ -338,6 +338,9 @@ def test_guest_controller_and_gate_encode_non_simulation_contract() -> None:
     assert "SHA512" in controller
     assert "SRI mismatch" in controller
     assert 'corepack @("prepare"' not in controller
+    assert '[string]$ProxyUrl = ""' in controller
+    assert "proxy.UserInfo" in controller
+    assert "$env:HTTPS_PROXY = $DownloadProxyUrl" in controller
     assert "dependency-offline" in gate
     assert "--porcelain=v1" in gate
     assert all("latest" not in item["url"] for item in manifest["artifacts"])

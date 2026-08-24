@@ -110,6 +110,8 @@ Remove-Item Env:AEGIS_GITHUB_READ_TOKEN
 
 控制器使用临时 askpass 读取环境变量，不把 token 写入命令行、仓库、attestation 或日志；临时脚本在克隆后删除。正式 evidence 默认应放在 `C:\AegisAcceptance\evidence`，即仓库目录之外。
 
+若 guest 必须通过宿主本地代理联网，可传入无凭据的 `-ProxyUrl "http://10.0.2.2:<port>"`，并在 VirtualBox NAT 上启用 localhost reachable。控制器拒绝含用户名、密码、路径、查询或片段的代理 URL，只在 attestation 中记录“是否配置代理”，不保留代理地址。
+
 ## 9. 当前阻塞与下一判定
 
 - P0-4 与 P0-5 验收程序已推送至私有远端；正式运行前必须用 `git ls-remote` 取得 `dynamic-audit-v1` 当前完整 40 位 HEAD，并将同一值传给初始化器，禁止使用只存在于本机的提交。
