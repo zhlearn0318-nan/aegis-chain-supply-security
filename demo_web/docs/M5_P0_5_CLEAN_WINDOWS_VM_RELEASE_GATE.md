@@ -115,6 +115,6 @@ Remove-Item Env:AEGIS_GITHUB_READ_TOKEN
 ## 9. 当前阻塞与下一判定
 
 - P0-4 与 P0-5 验收程序已推送至私有远端；正式运行前必须用 `git ls-remote` 取得 `dynamic-audit-v1` 当前完整 40 位 HEAD，并将同一值传给初始化器，禁止使用只存在于本机的提交。
-- 当前宿主没有可用的 VM 管理器和 Windows 安装 ISO；需要建立真实 Windows guest 后运行上述控制器。
+- 当前宿主已安装 Oracle 签名且哈希匹配的 VirtualBox 7.2.16 核心组件，并取得 Microsoft Windows 11 Enterprise 25H2 ZH-CN x64 官方评估 ISO（7,371,034,624 字节，SHA-256 `7b4ac87391b659f7724229682b642256289a1c00504056249f0f12029157d3d2`）；仍须完成 guest 安装和正式 run。
 
 只有远端提交可取、真实 VM run 全部通过、证据清单逐项验真后，才能把决策改为 `clean_windows_vm_release_gate_passed`。在此之前保持 `implementation_ready_vm_evidence_pending` 和生产 `NO-GO`。

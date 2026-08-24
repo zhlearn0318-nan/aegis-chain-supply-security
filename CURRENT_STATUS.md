@@ -1,7 +1,7 @@
 # Aegis Chain 当前状态（唯一状态真值）
 
 > 状态日期：2026-08-25
-> 最近冻结功能基线：`0bc1b36`（`dynamic-audit-v1`）；P0-5 验收程序状态由包含本文件的提交承载。
+> 最近冻结功能基线：`96df143`（`dynamic-audit-v1`）；P0-5 验收程序状态由包含本文件的提交承载。
 > 当前工程阶段：M5 工程收敛；P0-1 至 P0-4 已完成，P0-5 自动化已实现但真实 VM 尚未执行通过。
 > 状态优先级：本文件高于 README 中的摘要和全部日期化阶段报告；发生冲突时以本文件及对应冻结证据为准。
 
@@ -28,6 +28,7 @@ Aegis Chain 已是可在当前 Windows 主机运行和演示的供应链安全�
 - P0-4 自身供应链门：12/12 gate 通过；共享环境 126 个 Python 包、Windows x64 已安装 26 个 Node 包和 pnpm 锁内 50 个组件完成核对；已知漏洞 0、已验证凭据泄露 0、许可未知/越界 0、锁不匹配 0。
 - Cisco 兼容冒烟：Skill 固定集完成；MCP 内容 6 项中 safe 3/unsafe 3；已知漏洞 fixture 检出 24 项 HIGH，安全 fixture 0 项；内部 pip-audit 失败会被复现脚本拒绝。
 - P0-5 验收程序本机非正式烟雾：Skill、MCP、依赖和受控动态 4/4 链完成，导出 7/7；Docker 缺失返回明确 503；漏洞服务断网形成 `failed / UNKNOWN / SCAN_EXECUTION_FAILED`。
+- P0-5 guest 前置：Oracle 签名的 VirtualBox 7.2.16 核心组件已安装；Microsoft Windows 11 Enterprise 25H2 ZH-CN x64 评估 ISO 的 7,371,034,624 字节与官方 SHA-256 已核对一致；尚未计作 guest 验收通过。
 - 后端完整回归：`357 passed`。
 - 前端 API 测试：`10 passed`。
 - 前端生产构建：通过。
