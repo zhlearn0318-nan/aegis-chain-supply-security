@@ -7,6 +7,8 @@ param(
     [string]$ExpectedRef = "refs/heads/dynamic-audit-v1",
     [string]$WorkspaceRoot = "C:\AegisAcceptance",
     [string]$GitHubTokenEnvironment = "AEGIS_GITHUB_READ_TOKEN",
+    [string]$GitSshPrivateKeyPath = "",
+    [string]$GitSshKnownHostsPath = "",
     [string]$ProxyUrl = "",
     [switch]$PrepareOnly
 )
@@ -16,6 +18,64 @@ $ControllerRoot = $PSScriptRoot
 $ToolchainManifest = Join-Path $ControllerRoot "toolchain.windows-x64.json"
 $ControllerPath = $MyInvocation.MyCommand.Path
 $ExpectedCommit = $ExpectedCommit.ToLowerInvariant()
+$sshPrivateKey = $null
+$sshKnownHosts = $null
+$sshPathArguments = @($GitSshPrivateKeyPath, $GitSshKnownHostsPath)
+$sshAuthRequested = @($sshPathArguments | Where-Object { -not [string]::IsNullOrWhiteSpace($_) }).Count -gt 0
+if ($sshAuthRequested) {
+    if ([string]::IsNullOrWhiteSpace($GitSshPrivateKeyPath) -or [string]::IsNullOrWhiteSpace($GitSshKnownHostsPath)) {
+        throw "GitSshPrivateKeyPath and GitSshKnownHostsPath must be provided together."
+    }
+    if ($RepositoryUrl -notmatch '^(ssh://|git@)') {
+        throw "Deploy-key authentication requires an SSH RepositoryUrl."
+    }
+    if ($RepositoryUrl -match '^ssh://git@ssh\.github\.com:443/') {
+        $expectedKnownHost = '[ssh.github.com]:443'
+    } elseif ($RepositoryUrl -match '^git@github\.com:') {
+        $expectedKnownHost = 'github.com'
+    } else {
+        throw "Deploy-key authentication is restricted to the official GitHub SSH endpoints."
+    }
+    $sshPrivateKey = [IO.Path]::GetFullPath($GitSshPrivateKeyPath)
+    $sshKnownHosts = [IO.Path]::GetFullPath($GitSshKnownHostsPath)
+    $controllerFull = [IO.Path]::GetFullPath($ControllerRoot).TrimEnd('\')
+    if (
+        -not [string]::Equals([IO.Path]::GetDirectoryName($sshPrivateKey), $controllerFull, [StringComparison]::OrdinalIgnoreCase) -or
+        -not [string]::Equals([IO.Path]::GetFileName($sshPrivateKey), 'aegis-readonly-deploy-key', [StringComparison]::OrdinalIgnoreCase)
+    ) {
+        throw "Git SSH private key must be the fixed aegis-readonly-deploy-key file directly under the controller directory."
+    }
+    if (
+        -not [string]::Equals([IO.Path]::GetDirectoryName($sshKnownHosts), $controllerFull, [StringComparison]::OrdinalIgnoreCase) -or
+        -not [string]::Equals([IO.Path]::GetFileName($sshKnownHosts), 'github-known-hosts', [StringComparison]::OrdinalIgnoreCase)
+    ) {
+        throw "Git SSH known_hosts must be the fixed github-known-hosts file directly under the controller directory."
+    }
+    if (-not (Test-Path -LiteralPath $sshPrivateKey -PathType Leaf)) {
+        throw "Git SSH private key does not exist: $sshPrivateKey"
+    }
+    if (-not (Test-Path -LiteralPath $sshKnownHosts -PathType Leaf)) {
+        throw "Git SSH known_hosts file does not exist: $sshKnownHosts"
+    }
+    $keyHeader = Get-Content -LiteralPath $sshPrivateKey -Encoding ASCII -TotalCount 1
+    $expectedKeyHeader = @('-----BEGIN', 'OPENSSH PRIVATE', 'KEY-----') -join ' '
+    if ($keyHeader -ne $expectedKeyHeader) {
+        throw "Git SSH private key is not an OpenSSH private key."
+    }
+    $knownHostLines = @(Get-Content -LiteralPath $sshKnownHosts -Encoding UTF8 | Where-Object {
+        -not [string]::IsNullOrWhiteSpace($_) -and -not $_.TrimStart().StartsWith('#')
+    })
+    if (@($knownHostLines | Where-Object { $_.StartsWith($expectedKnownHost + ' ') }).Count -lt 1) {
+        throw "Git SSH known_hosts file must contain a key for $expectedKnownHost."
+    }
+}
+$token = [Environment]::GetEnvironmentVariable($GitHubTokenEnvironment, "Process")
+if ($sshAuthRequested -and -not [string]::IsNullOrWhiteSpace($token)) {
+    throw "GitHub token and deploy-key authentication cannot be enabled together."
+}
+if (-not [string]::IsNullOrWhiteSpace($token) -and $RepositoryUrl -notmatch '^https://') {
+    throw "GitHub token authentication requires an HTTPS RepositoryUrl."
+}
 $DownloadProxyUrl = $null
 if (-not [string]::IsNullOrWhiteSpace($ProxyUrl)) {
     try { $proxy = [Uri]$ProxyUrl } catch { throw "ProxyUrl is not a valid absolute URI." }
@@ -290,10 +350,11 @@ if (
     throw "Toolchain version verification failed: $actualGit / Node $actualNode / $actualConda / pnpm $actualPnpm."
 }
 
-$token = [Environment]::GetEnvironmentVariable($GitHubTokenEnvironment, "Process")
 $askPass = $null
 $oldAskPass = $env:GIT_ASKPASS
 $oldTerminalPrompt = $env:GIT_TERMINAL_PROMPT
+$oldSshCommand = $env:GIT_SSH_COMMAND
+$authenticationMode = "none"
 if (-not [string]::IsNullOrWhiteSpace($token)) {
     $askPass = Join-Path $workspace "git-askpass.cmd"
     $askPassBody = @"
@@ -304,6 +365,18 @@ if %errorlevel%==0 (echo x-access-token) else (echo %$GitHubTokenEnvironment%)
     [IO.File]::WriteAllText($askPass, $askPassBody, [Text.Encoding]::ASCII)
     $env:GIT_ASKPASS = $askPass
     $env:GIT_TERMINAL_PROMPT = "0"
+    $authenticationMode = "github_token_environment"
+} elseif ($sshAuthRequested) {
+    $ssh = Join-Path $mingitRoot "usr\bin\ssh.exe"
+    if (-not (Test-Path -LiteralPath $ssh -PathType Leaf)) {
+        throw "The locked MinGit toolchain does not contain ssh.exe: $ssh"
+    }
+    $sshShellPath = $ssh.Replace('\', '/')
+    $keyShellPath = $sshPrivateKey.Replace('\', '/')
+    $knownHostsShellPath = $sshKnownHosts.Replace('\', '/')
+    $env:GIT_SSH_COMMAND = ('"{0}" -F /dev/null -i "{1}" -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile="{2}" -o GlobalKnownHostsFile=/dev/null' -f $sshShellPath, $keyShellPath, $knownHostsShellPath)
+    $env:GIT_TERMINAL_PROMPT = "0"
+    $authenticationMode = "read_only_deploy_key"
 }
 
 $cloneStarted = [DateTimeOffset]::UtcNow
@@ -320,8 +393,12 @@ try {
     if ($askPass -and (Test-Path -LiteralPath $askPass)) {
         Remove-Item -LiteralPath $askPass -Force
     }
+    if ($sshPrivateKey -and (Test-Path -LiteralPath $sshPrivateKey)) {
+        Remove-Item -LiteralPath $sshPrivateKey -Force
+    }
     $env:GIT_ASKPASS = $oldAskPass
     $env:GIT_TERMINAL_PROMPT = $oldTerminalPrompt
+    $env:GIT_SSH_COMMAND = $oldSshCommand
 }
 $cloneCompleted = [DateTimeOffset]::UtcNow
 $actualCommit = (& $git -C $repository rev-parse HEAD 2>&1 | Out-String).Trim().ToLowerInvariant()
@@ -385,8 +462,10 @@ $attestation = [ordered]@{
         output = $preflight
     }
     sensitive_values = [ordered]@{
+        git_authentication_mode = $authenticationMode
         github_token_environment = $GitHubTokenEnvironment
         github_token_retained = $false
+        git_ssh_private_key_retained = [bool]($sshPrivateKey -and (Test-Path -LiteralPath $sshPrivateKey))
         proxy_credentials_allowed = $false
     }
     network = [ordered]@{ proxy_configured = [bool]$DownloadProxyUrl }

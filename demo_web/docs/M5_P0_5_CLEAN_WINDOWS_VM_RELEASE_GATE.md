@@ -1,6 +1,6 @@
 # M5 P0-5 真实 Windows VM 发布门
 
-> 状态：`implementation_ready_vm_evidence_pending`
+> 状态：`guest_ready_main_run_pending`
 > 日期：2026-08-25
 > 分支：`dynamic-audit-v1`
 > 结论边界：验收程序已经实现并在宿主机完成非正式烟雾测试，但尚未取得真实 Windows VM 的正式通过证据，因此 P0-5 尚未完成，系统仍为生产 `NO-GO`。
@@ -99,22 +99,25 @@ P0-5 要回答的不是“当前开发目录能否再次运行”，而是“一
 
 ## 8. 真实 VM 执行方法
 
-在新建 Windows VM 中，将 `demo_web/release_vm` 三个文件作为只读引导材料复制到 guest 外部目录；然后在管理员 PowerShell 中设置一次性私有仓库只读 token，并运行：
+在新建 Windows VM 中，将 `demo_web/release_vm` 三个文件作为只读引导材料复制到 guest 外部目录。正式验收优先使用临时、单仓库只读 GitHub Deploy Key，而不是把宿主机的高权限 GitHub CLI token 注入 guest。私钥和从 GitHub 官方元数据固定的 `known_hosts` 必须成对提供：
 
 ```powershell
-$env:AEGIS_GITHUB_READ_TOKEN = '<placeholder>' # 替换为仅本进程使用的私有仓库只读 token
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Initialize-AegisAcceptanceGuest.ps1 `
-  -ExpectedCommit '<dynamic-audit-v1 的完整 40 位提交>'
-Remove-Item Env:AEGIS_GITHUB_READ_TOKEN
+  -ExpectedCommit '<dynamic-audit-v1 的完整 40 位提交>' `
+  -RepositoryUrl 'ssh://git@ssh.github.com:443/zhlearn0318-nan/aegis-chain-supply-security.git' `
+  -GitSshPrivateKeyPath 'C:\AegisBootstrap\aegis-readonly-deploy-key' `
+  -GitSshKnownHostsPath 'C:\AegisBootstrap\github-known-hosts' `
+  -ProxyUrl 'http://10.0.2.2:7897'
 ```
 
-控制器使用临时 askpass 读取环境变量，不把 token 写入命令行、仓库、attestation 或日志；临时脚本在克隆后删除。正式 evidence 默认应放在 `C:\AegisAcceptance\evidence`，即仓库目录之外。
+控制器使用锁定 MinGit 自带的 SSH 客户端，禁用交互和用户/全局 SSH 配置，强制 `IdentitiesOnly`、`BatchMode` 和 `StrictHostKeyChecking=yes`；Deploy Key 私钥在 clone 尝试结束后删除。Deploy Key 必须在证据回收后从 GitHub 仓库吊销。原有进程环境变量 token 模式仅保留兼容性，禁止与 SSH 模式同时启用。正式 evidence 默认位于 `C:\AegisAcceptance\evidence`，即仓库目录之外。
 
 若 guest 必须通过宿主本地代理联网，可传入无凭据的 `-ProxyUrl "http://10.0.2.2:<port>"`，并在 VirtualBox NAT 上启用 localhost reachable。控制器拒绝含用户名、密码、路径、查询或片段的代理 URL，只在 attestation 中记录“是否配置代理”，不保留代理地址。
 
 ## 9. 当前阻塞与下一判定
 
 - P0-4 与 P0-5 验收程序已推送至私有远端；正式运行前必须用 `git ls-remote` 取得 `dynamic-audit-v1` 当前完整 40 位 HEAD，并将同一值传给初始化器，禁止使用只存在于本机的提交。
-- 当前宿主已安装 Oracle 签名且哈希匹配的 VirtualBox 7.2.16 核心组件，并取得 Microsoft Windows 11 Enterprise 25H2 ZH-CN x64 官方评估 ISO（7,371,034,624 字节，SHA-256 `7b4ac87391b659f7724229682b642256289a1c00504056249f0f12029157d3d2`）；仍须完成 guest 安装和正式 run。
+- 当前已完成真实 VirtualBox guest 安装：Windows 11 Enterprise Eval 25H2 ZH-CN x64 Build `26200.6584`，Guest Additions `7.2.16 r174877` 达到桌面运行级别 3；受保护密码文件驱动的 `guestcontrol` 和经宿主无凭据代理访问 GitHub 均已通过。
+- 三份引导文件已复制到 guest 外部目录，宿主/guest SHA-256 完全一致。正式 run 尚未启动，当前等待创建临时、单仓库只读 Deploy Key 的明确授权；不能把“VM 已安装”解释为 P0-5 已通过。
 
-只有远端提交可取、真实 VM run 全部通过、证据清单逐项验真后，才能把决策改为 `clean_windows_vm_release_gate_passed`。在此之前保持 `implementation_ready_vm_evidence_pending` 和生产 `NO-GO`。
+只有远端提交可取、真实 VM run 全部通过、证据清单逐项验真后，才能把决策改为 `clean_windows_vm_release_gate_passed`。在此之前保持 `guest_ready_main_run_pending` 和生产 `NO-GO`。

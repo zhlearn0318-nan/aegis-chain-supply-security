@@ -20,7 +20,7 @@ Aegis Chain 已是可在当前 Windows 主机运行和演示的供应链安全�
 | 受控动态机制 | 可用；固定良性 fixture、MCP 协议/Marker/遥测和 Skill 运行时闭包 | 不接受用户代码、路径、命令，不执行第三方数据集样本 |
 | 动态任务控制 | 单主机 SQLite 持久队列、全局单执行、FIFO、去重冷却、429 和重启恢复 | 不等价于多实例消息队列或高可用 worker |
 | 项目自身供应链 | 共享运行时/前端精确锁定，自身 SBOM、许可、漏洞、Secret 与仓库卫生门可复现 | 漏洞结论是 2026-08-25 的时间截面 |
-| 可移植启动 | 当前主机和模拟异用户环境通过；真实 VM 门已具备固定工具链、远端提交和四链 E2E 验证程序 | 当前家庭版 Windows 不提供 Sandbox；仍须在 VirtualBox/VMware/QEMU/Hyper-V/Sandbox 真实 VM 执行 P0-5 |
+| 可移植启动 | 当前主机和模拟异用户环境通过；真实 VirtualBox Windows guest 已安装并建立受保护控制通道，VM 门具备固定工具链、远端提交和四链 E2E 验证程序 | 正式私有远端新克隆与完整发布门尚未执行通过；VM 安装完成不等于 P0-5 通过 |
 
 ## 3. 最新冻结验证
 
@@ -28,7 +28,7 @@ Aegis Chain 已是可在当前 Windows 主机运行和演示的供应链安全�
 - P0-4 自身供应链门：12/12 gate 通过；共享环境 126 个 Python 包、Windows x64 已安装 26 个 Node 包和 pnpm 锁内 50 个组件完成核对；已知漏洞 0、已验证凭据泄露 0、许可未知/越界 0、锁不匹配 0。
 - Cisco 兼容冒烟：Skill 固定集完成；MCP 内容 6 项中 safe 3/unsafe 3；已知漏洞 fixture 检出 24 项 HIGH，安全 fixture 0 项；内部 pip-audit 失败会被复现脚本拒绝。
 - P0-5 验收程序本机非正式烟雾：Skill、MCP、依赖和受控动态 4/4 链完成，导出 7/7；Docker 缺失返回明确 503；漏洞服务断网形成 `failed / UNKNOWN / SCAN_EXECUTION_FAILED`。
-- P0-5 guest 前置：Oracle 签名的 VirtualBox 7.2.16 核心组件已安装；Microsoft Windows 11 Enterprise 25H2 ZH-CN x64 评估 ISO 的 7,371,034,624 字节与官方 SHA-256 已核对一致；尚未计作 guest 验收通过。
+- P0-5 guest 前置：真实 VirtualBox guest 已安装 Windows 11 Enterprise Eval 25H2 ZH-CN x64 Build 26200.6584；Guest Additions 7.2.16 达到桌面运行级别 3，受保护密码文件驱动的 guestcontrol、无凭据代理联网和三份引导文件宿主/guest SHA-256 对比均通过。私有远端全新克隆与正式 gate 尚未运行，因此仍不计作 P0-5 通过。
 - 后端完整回归：`357 passed`。
 - 前端 API 测试：`10 passed`。
 - 前端生产构建：通过。
@@ -45,7 +45,7 @@ Aegis Chain 已是可在当前 Windows 主机运行和演示的供应链安全�
 | P0-2 | 动态互斥、队列、去重、恢复 | 已完成 | P2-2 再做外部 worker/DB |
 | P0-3 | 当前状态单一真值 | 已完成 | 文档契约测试持续防漂移 |
 | P0-4 | 项目自身供应链卫生 | 已完成 | 依赖/运行时/许可/SBOM/Secret 门持续执行 |
-| P0-5 | 真实 Windows VM 发布门 | **程序完成、实机待验收** | 以固定工具哈希从私有远端新克隆，完成四链、降级和残留证据；本机烟雾不得替代 VM |
+| P0-5 | 真实 Windows VM 发布门 | **guest 与控制通道就绪、正式 run 待验收** | 使用临时单仓库只读 Deploy Key，以固定工具哈希从私有远端新克隆，完成四链、降级和残留证据；环境准备不得替代正式 run |
 | P1 | 受控试点工程能力 | 未完成 | 隔离、独立评测、任务体验、CI、能力健康 |
 | P2 | 生产化控制面 | 未完成 | 身份租户、持久平台、强沙箱、治理、准入、SLO |
 

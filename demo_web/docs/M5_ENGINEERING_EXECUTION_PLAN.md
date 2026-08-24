@@ -102,4 +102,6 @@
 - 本机非正式烟雾：四链 4/4、导出 7/7、断网失败闭锁通过，Docker 未启动时 503 降级通过；该结果只证明验收器可运行，不是 P0-5 真实 VM 证据。
 - 工具链负面与完整性检查：官方 pnpm 11.19.0 tarball 的现场 SHA-512/SRI 一致且可执行；当前物理宿主被 VM 身份门拒绝，未发生下载或克隆。
 - 回归：后端 `357 passed`，前端 `10 passed`，生产构建通过。
-- 当前决策：`implementation_ready_vm_evidence_pending`。只有真实 VM 的完整 run 和制品哈希清单通过后，P0-5 才能标记完成。
+- 真实 guest 已安装 Windows 11 Enterprise Eval 25H2 ZH-CN x64 Build 26200.6584；Guest Additions、受保护 guestcontrol、无凭据代理和引导文件跨边界哈希核对均通过。
+- 私有仓库认证已实现临时单仓库只读 Deploy Key 模式，强制严格主机密钥校验、禁交互、与 token 互斥，并在 clone 尝试结束后删除 guest 私钥；外部 Deploy Key 创建仍等待明确授权。
+- 当前决策：`guest_ready_main_run_pending`。只有真实 VM 的完整 run 和制品哈希清单通过后，P0-5 才能标记完成。

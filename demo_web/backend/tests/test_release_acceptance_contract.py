@@ -341,6 +341,20 @@ def test_guest_controller_and_gate_encode_non_simulation_contract() -> None:
     assert '[string]$ProxyUrl = ""' in controller
     assert "proxy.UserInfo" in controller
     assert "$env:HTTPS_PROXY = $DownloadProxyUrl" in controller
+    assert '[string]$GitSshPrivateKeyPath = ""' in controller
+    assert '[string]$GitSshKnownHostsPath = ""' in controller
+    assert "must be provided together" in controller
+    assert "cannot be enabled together" in controller
+    assert "restricted to the official GitHub SSH endpoints" in controller
+    assert "aegis-readonly-deploy-key" in controller
+    assert "$expectedKeyHeader" in controller
+    assert "@('-----BEGIN', 'OPENSSH PRIVATE', 'KEY-----')" in controller
+    assert "expectedKnownHost" in controller
+    assert "StrictHostKeyChecking=yes" in controller
+    assert "BatchMode=yes" in controller
+    assert "read_only_deploy_key" in controller
+    assert "git_ssh_private_key_retained" in controller
+    assert "Remove-Item -LiteralPath $sshPrivateKey -Force" in controller
     assert "dependency-offline" in gate
     assert "--porcelain=v1" in gate
     assert all("latest" not in item["url"] for item in manifest["artifacts"])
