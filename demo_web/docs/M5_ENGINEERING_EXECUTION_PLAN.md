@@ -16,7 +16,7 @@
 | --- | --- | --- | --- |
 | P0-1 可移植启动 | 已完成 | preflight、固定来源重建、换用户验证 | `3f02072`，后端 329/前端 10 |
 | P0-2 动态任务控制 | 已完成 | 全局互斥、FIFO、有界队列、去重/冷却、重启恢复 | 335 后端 + 10 前端；全部专项门通过 |
-| P0-3 状态真值 | 部分完成 | `CURRENT_STATUS.md`与历史文档替代标记 | README/API/UI/报告口径一致 |
+| P0-3 状态真值 | 已完成 | `CURRENT_STATUS.md`、历史快照标记、文档契约测试 | 341 后端 + 10 前端；活动入口口径一致 |
 | P0-4 自身供应链卫生 | 部分完成 | 精确依赖、LICENSE/NOTICE、自身 SBOM、依赖/Secret/许可扫描 | 来源和当日扫描可复核 |
 | P0-5 发布门 | 未完成 | Windows Sandbox 从新克隆到四链 E2E | 真实洁净 VM 通过才允许候选版 |
 | P1 受控试点能力 | 部分/未完成 | 静态 worker 隔离、MCP/动态独立集、生命周期、CI、能力健康 | 独立效果与运维证据齐全 |
@@ -59,3 +59,14 @@
 - UI 展示后端返回的队列位置、运行状态和去重说明；按钮不再把单个页面的 current 状态误当成全局执行真值。
 - 专项 `14 passed`，后端完整 `335 passed`，前端 `10 passed` 且生产构建通过；规则、策略和动态 fixture 未改动。
 - 结论：`supported_on_single_host_sqlite_scheduler`。该结论不外推到多实例、高可用消息队列；后者保留为 P2-2。
+
+## 6. P0-3 实际结果与决策
+
+- 新增仓库根 `CURRENT_STATUS.md`，集中记录当前能力、最新验证、M5 完成度、生产 NO-GO 与不主张范围。
+- 根 README、主系统 README、QUICKSTART 和 SECURITY 只保留摘要并显式委托给唯一状态真值。
+- `START_HERE.md`、`REPRODUCTION_REPORT.md`、旧开发计划、对接说明和评委审查均标记为历史/审查快照；原实验结论不覆盖。
+- 新增根 `docs/README.md` 与 `demo_web/docs/README.md`，规定当前契约和 M1–M4 历史证据的阅读优先级。
+- API 文档同步动态队列、Skill closure 接口、429、去重/恢复字段和失败闭锁语义。
+- 新增 6 项文档契约测试，防止活动入口重新出现旧总数、个人路径或缺失状态链接。
+- 验收：文档专项 `6 passed`，后端完整 `341 passed`，前端 `10 passed`，生产构建通过。
+- 结论：`single_current_status_truth_enforced`；下一节点为 P0-4 项目自身供应链卫生。

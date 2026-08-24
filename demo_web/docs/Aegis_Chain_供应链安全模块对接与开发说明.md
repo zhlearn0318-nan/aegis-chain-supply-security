@@ -1,5 +1,7 @@
 # Aegis Chain 供应链安全模块对接与开发说明
 
+> 本文保留架构和对接背景；当前完成度、测试数和发布判断以 [`../../CURRENT_STATUS.md`](../../CURRENT_STATUS.md) 为准，API 字段以 [`API_V1_CONTRACT.md`](API_V1_CONTRACT.md) 为准。
+
 > 适用赛题：XA-202620 面向政企场景的大模型智能体安全关键技术研究  
 > 模块范围：第三部分——智能体供应链安全  
 > 文档版本：v0.9  

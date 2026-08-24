@@ -1,5 +1,7 @@
 # Cisco Skill Scanner 与 MCP Scanner 复现及可用性报告
 
+> **历史报告：** 本文冻结于 2026-07-31，只证明当时的 Cisco 工具复现。当前系统能力、测试数、发布判断和下一步以 [`CURRENT_STATUS.md`](CURRENT_STATUS.md) 为准。
+
 复现日期：2026-07-31  
 平台：Windows 10 中文版，x64  
 结论：两者均已安装并能运行；适合作为赛题代码底座，但不能直接作为最终检测方案。

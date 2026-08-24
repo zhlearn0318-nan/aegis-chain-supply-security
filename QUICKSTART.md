@@ -1,5 +1,7 @@
 # Aegis Chain 快速启动与运行时重建
 
+> 本文只定义当前操作步骤；系统完成度与生产发布判断见 [`CURRENT_STATUS.md`](CURRENT_STATUS.md)。
+
 本文面向首次拿到仓库的 Windows 使用者。仓库可以放在任意目录，不依赖开发者用户名、盘符或 Codex 私有路径。
 
 ## 1. 准备软件

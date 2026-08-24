@@ -1,5 +1,7 @@
 # Aegis Chain 开发排期（2026-08-07 至 2026-08-31）
 
+> **历史计划：** 当前 M5 进度与下一工程节点以 [`../../CURRENT_STATUS.md`](../../CURRENT_STATUS.md) 和 [`M5_ENGINEERING_EXECUTION_PLAN.md`](M5_ENGINEERING_EXECUTION_PLAN.md) 为准。
+
 ## 最终目标
 
 在 8 月 31 日前冻结一个可独立运行、也可通过 HTTP 接入统一平台的“智能体组件安全准入网关”。它接收 Skill ZIP、MCP JSON 和依赖清单，输出统一风险证据、`ALLOW/REVIEW/BLOCK/UNKNOWN` 决策及可导出报告。

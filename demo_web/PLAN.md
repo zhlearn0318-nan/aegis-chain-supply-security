@@ -358,3 +358,11 @@
 - 验收：专项 14 passed、后端 335 passed、前端 10 passed、生产构建通过；规则、政策和 fixture 哈希未修改。
 - 证据：`artifacts/experiment/2026-08-24-dynamic-queue-recovery-dev-v1/`。
 - 结论边界：只证明单主机 SQLite 调度，不等价于多实例生产队列；下一节点为 P0-3 当前状态真值。
+
+### 19.2 P0-3 实际结果
+
+- 建立根 `CURRENT_STATUS.md` 作为能力、测试数、发布判断和下一项的唯一状态真值。
+- 活动 README/启动/安全/API 入口全部指向该文件；7 月复现和旧评委/开发计划明确标为历史快照。
+- 新增两级文档索引和 6 项防漂移测试；API 契约补齐 P0-2 队列字段、429 与恢复失败码。
+- 验收：文档专项 6 passed、后端 341 passed、前端 10 passed、生产构建通过。
+- 证据：`artifacts/experiment/2026-08-24-current-status-truth-dev-v1/`；下一节点为 P0-4 项目自身供应链卫生。

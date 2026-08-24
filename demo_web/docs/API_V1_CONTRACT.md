@@ -87,6 +87,7 @@ http://127.0.0.1:8000
 | GET | `/api/v1/scans/{job_id}` | 200 | 单个任务状态与结果 |
 | GET | `/api/v1/scans/{job_id}/export?format=json|md|sbom` | 200 | 下载扫描结果、报告或 CycloneDX 清单 |
 | POST | `/api/v1/admin/dynamic-audits` | 202 | 初始 `DynamicAuditJob` |
+| POST | `/api/v1/admin/dynamic-audits/skill-closure` | 202 | 初始 Skill 闭包 `DynamicAuditJob` |
 | GET | `/api/v1/admin/dynamic-audits?limit=20` | 200 | 最近动态验证任务 |
 | GET | `/api/v1/admin/dynamic-audits/{job_id}` | 200 | 动态验证状态与脱敏证据 |
 
@@ -110,6 +111,21 @@ curl.exe -X POST "http://127.0.0.1:8000/api/v1/admin/dynamic-audits" `
 该 POST 必须为空请求体。任何 JSON、表单或自定义参数都会返回 `400 / DYNAMIC_AUDIT_BODY_NOT_ALLOWED`。调用方不能指定 fixture、文件路径、脚本、命令、环境变量或网络地址；服务端只运行 `aegis-safe-dynamic-fixtures-v1`。
 
 查询时使用相同请求头。令牌不应写入 URL、请求体、日志、SQLite、浏览器持久化存储或汇报材料。
+
+动态任务由 SQLite 持久 FIFO 统一调度，同一主机最多一个任务处于 `running`。默认允许 4 个等待任务，可用 `AEGIS_DYNAMIC_QUEUE_MAX_PENDING` 调整为 0–32；队列满时返回 `429 / DYNAMIC_AUDIT_QUEUE_FULL`。活动同类任务及完成后默认 5 秒冷却窗口内的同类请求返回原任务 ID，不创建新记录。
+
+P0-2 新增字段：
+
+| 字段 | 含义 |
+| --- | --- |
+| `submission_key` | 固定审计类型与 fixture 哈希形成的去重键 |
+| `queue_position` | queued 时的实时 FIFO 位置；其他状态为 `null` |
+| `queue_reason` | queued 的机器可读等待原因 |
+| `deduplicated` / `dedupe_reason` | 本次创建响应是否合并到活动任务或冷却任务；该响应事实不写回原任务 |
+| `attempt` / `started_at` / `finished_at` | 执行次数和最近一次起止时间 |
+| `recovered_after_restart` / `recovery_count` / `recovery_note` | 服务重启恢复事实 |
+
+启动恢复时，遗留 `running` 会以 `DYNAMIC_AUDIT_INTERRUPTED_BY_RESTART` 失败闭锁；queued 保持顺序继续等待。执行器返回但没有写入终态时，调度器写入 `DYNAMIC_AUDIT_WORKER_DID_NOT_FINALIZE`，调用方不得把这两种失败解释为安全。
 
 ## 5. 创建扫描任务
 
@@ -217,6 +233,7 @@ curl.exe "http://127.0.0.1:8000/api/v1/scans/{job_id}"
 | 503 | `ADMIN_TOKEN_NOT_CONFIGURED` | 服务端未安全配置管理员令牌 | 设置环境变量后重启服务 |
 | 401 | `ADMIN_TOKEN_INVALID` | 管理员令牌缺失或不匹配 | 重新输入本次会话令牌 |
 | 400 | `DYNAMIC_AUDIT_BODY_NOT_ALLOWED` | 动态创建请求包含请求体 | 删除全部自定义参数和请求体 |
+| 429 | `DYNAMIC_AUDIT_QUEUE_FULL` | 动态等待队列达到配置上限 | 等待当前任务结束后重试；不要绕过队列并发执行 |
 | 503 | `DYNAMIC_AUDIT_NOT_READY` | 固定 fixture 配置不可用 | 检查本地安装完整性，不要改为用户路径 |
 | 404 | `DYNAMIC_AUDIT_NOT_FOUND` | 动态验证任务不存在 | 检查任务 ID 与数据保留状态 |
 | 400 | `EXPORT_FORMAT_UNSUPPORTED` | 导出格式不是 JSON/Markdown/SBOM | 改用 `json`、`md` 或 `sbom` |

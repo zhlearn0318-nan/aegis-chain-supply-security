@@ -1,5 +1,7 @@
 # Aegis Chain：面向智能体生态的供应链安全原型
 
+> 当前状态、发布判断和下一工程节点以 [`CURRENT_STATUS.md`](CURRENT_STATUS.md) 为唯一真值；阶段报告中的旧测试数和“下一步”仅代表当时快照。
+
 Aegis Chain 是 XA-202620 赛题“供应链安全”方向的本地工程原型，面向通用政企智能体平台，对 Agent Skill、MCP 对象和 Python 依赖提供统一静态审查、证据归一化、准入策略和管理员可信样本动态验证。
 
 当前系统已接入 Cisco AI Skill Scanner、Cisco AI MCP Scanner 和 `pip-audit`，并实现自研 Aegis Static、Network/Filesystem/Command Context，以及只运行自建哈希锁定 fixture 的 Docker/MCP 动态机制验证。
@@ -14,13 +16,14 @@ Aegis Chain 是 XA-202620 赛题“供应链安全”方向的本地工程原型
 - 上下文证据：网络、文件系统和命令行为 INFO 解释；
 - 管理员动态验证：固定 3 份自建 fixture，验证 7 类预期机制，不接受用户代码、路径或命令；
 - 受控 MCP 动态闭环：MCP 2025-06-18 stdio 真实调用、政企 Marker 源到汇证据、Linux inotify/procfs 独立遥测和 Docker 失败闭锁。
+- 动态任务控制：SQLite 持久 FIFO、全局单执行、活动/冷却去重、有界等待队列、429 和重启恢复。
 
 最近冻结结果：
 
 - SkillTrustBench v1.0：已完成 5,520 条全量 Cisco 静态基线，另建 120 条开发集和 600 条封存回归集；
 - 管理员动态接口：3/3 fixture、7/7 机制，负面安全指标全部为 0；
 - MCP Docker 受控遥测实验：82/82 接受门，独立文件读取确认 1、容器残留 0；
-- 后端完整测试：329 passed；
+- 后端完整测试：341 passed；
 - 前端 API 测试：10 passed；
 - 前端生产构建：通过。
 
@@ -90,6 +93,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\run_tests.ps1"
 
 ## 关键文档
 
+- [当前状态（唯一真值）](CURRENT_STATUS.md)
 - [系统开发与使用说明](demo_web/README.md)
 - [供应链模块对接与开发说明](demo_web/docs/Aegis_Chain_供应链安全模块对接与开发说明.md)
 - [API v1 对接契约](demo_web/docs/API_V1_CONTRACT.md)
@@ -114,4 +118,4 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\run_tests.ps1"
 
 ## 项目状态
 
-该仓库用于挑战杯“揭榜挂帅”赛道原型开发和队内协作，目前处于作品完善与最终材料准备阶段。生产化仍需补充统一身份认证、租户隔离、限流、操作审计、容器/虚拟机隔离和安全发布流程。
+该仓库用于挑战杯“揭榜挂帅”赛道原型开发和队内协作，目前处于 M5 工程收敛阶段。P0-1/P0-2/P0-3 已完成，下一项为项目自身供应链卫生；生产发布仍为 NO-GO，完整差距见 `CURRENT_STATUS.md`。

@@ -1,4 +1,6 @@
-# 最终复现入口
+# 历史 Cisco 复现入口（2026-07-31 快照）
+
+> 本文件不再是系统最终入口。项目当前状态与阅读顺序见 [`CURRENT_STATUS.md`](CURRENT_STATUS.md)，当前启动与换机流程见 [`QUICKSTART.md`](QUICKSTART.md)。以下命令仅用于复核 2026-07-31 的 Cisco 工具可运行性基线。
 
 请以本文件和 `run_verified.ps1` 为准。
 

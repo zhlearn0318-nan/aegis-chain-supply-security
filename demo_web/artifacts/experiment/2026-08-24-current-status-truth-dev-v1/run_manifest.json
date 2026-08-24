@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-24-current-status-truth-dev-v1",
+  "date": "2026-08-24",
+  "evidence_level": "auxiliary/dev",
+  "branch": "dynamic-audit-v1",
+  "baseline_commit": "c6427b6",
+  "objective": "建立唯一当前状态真值并将活动契约与历史阶段报告分层。",
+  "canonical_status_file": "CURRENT_STATUS.md",
+  "verification": [
+    {"name": "documentation truth contract", "result": "6 passed", "status": "passed"},
+    {"name": "backend full regression", "result": "341 passed", "status": "passed"},
+    {"name": "frontend API tests", "result": "10 passed", "status": "passed"},
+    {"name": "frontend production build", "result": "vite build passed", "status": "passed"}
+  ],
+  "scope": "documentation truth and contract synchronization only",
+  "rules_or_policy_changed": false
+}

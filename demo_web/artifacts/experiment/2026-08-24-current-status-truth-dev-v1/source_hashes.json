@@ -1,0 +1,16 @@
+{
+  "algorithm": "sha256",
+  "files": {
+    "CURRENT_STATUS.md": "ac7ee47cbd81a8ecf1377c91a0964afb508a6920d6117211b4c197b40d30924c",
+    "README.md": "fea5b0a46fd5ab4f29b299104f3eda4e46e8394e0932ee56e66d75873a0d7b7e",
+    "demo_web/README.md": "55670df6d72bb06e3a07683510327d1bea10602d6bfeda6420b122c24028249c",
+    "START_HERE.md": "6d4eb217663b8003d11039f1c69961ad7f11f31feadcfe47ec2f46ba0a5ff8f4",
+    "REPRODUCTION_REPORT.md": "ae309b0da52547192eec8729e7a83a2302667479691b2820e0c1ce4394e9f078",
+    "QUICKSTART.md": "131e31ab28a3f4fae01d238211e3059d5592866dbb6ade1e9cb3136503af43a6",
+    "SECURITY.md": "a656de5476f17367a2cc2dc7fa3a438b9df5006805771460defcfc318be7b3d9",
+    "docs/README.md": "7b895b8db2ba155c25172f517faa4b50132f6141c6221916edae38fe38a9b99e",
+    "demo_web/docs/README.md": "06785334eb33d89bd87045fae49bfebf5abff662d3020a234f4d2e3c3180a9de",
+    "demo_web/docs/API_V1_CONTRACT.md": "cb5b99d6f9ae573746abdb08aa2cda2bdf999e0399b48d6719393a8508038528",
+    "demo_web/backend/tests/test_current_status_docs.py": "d2411e046bfa5ced84853079fafcb9935b6d84b3ae1b77038c34227098ac7813"
+  }
+}

@@ -1,8 +1,10 @@
 # Aegis Chain：智能体供应链安全准入网关原型
 
+> 项目当前状态以仓库根目录 [`CURRENT_STATUS.md`](../CURRENT_STATUS.md) 为唯一真值。本文件中的阶段细节若与其冲突，以该状态文件为准。
+
 本项目是 XA-202620 赛题“供应链安全”模块的本机原型。网页会真实调用已经复现的 Cisco Skill Scanner、MCP Scanner 和依赖漏洞审计链路，不使用伪造扫描结果。
 
-当前已完成 M1.3 的可配置准入策略、`/api/v1` 和前端 v1 适配，并完成 M2 的 SkillTrustBench v1.0 全量 5,520 条评测。M3 静态审计已在 600 条密封工程回归上完成一次性评估并冻结，结论为 `supported_with_tradeoff`。M4 已实现政企 Marker、静态 Trigger Plan、Docker 安全底座、受控 MCP 2025-06-18 stdio 调用，以及客户端侧 Linux inotify/procfs 独立遥测；最新真实运行 82/82 接受门通过、独立文件读取确认 1、容器残留 0。P0-1 可移植启动完成后，后端完整测试为 `329 passed`。动态部分仍只执行自建哈希锁定 fixture，不执行第三方 Skill/MCP。
+当前已完成 M1.3 的可配置准入策略、`/api/v1` 和前端 v1 适配，并完成 M2 的 SkillTrustBench v1.0 全量 5,520 条评测。M3 静态审计已在 600 条密封工程回归上完成一次性评估并冻结，结论为 `supported_with_tradeoff`。M4 已实现政企 Marker、静态 Trigger Plan、Docker 安全底座、受控 MCP 2025-06-18 stdio 调用，以及客户端侧 Linux inotify/procfs 独立遥测；最新真实运行 82/82 接受门通过、独立文件读取确认 1、容器残留 0。P0-1 可移植启动、P0-2 动态持久队列和 P0-3 状态真值完成后，后端完整测试为 `341 passed`。动态部分仍只执行自建哈希锁定 fixture，不执行第三方 Skill/MCP。
 
 ## 一键启动
 
@@ -60,6 +62,7 @@ pnpm test
 
 ## 现在从哪里开始
 
+- 当前状态与下一项：[`../CURRENT_STATUS.md`](../CURRENT_STATUS.md)
 - 开发排期：[`docs/DEVELOPMENT_PLAN.md`](docs/DEVELOPMENT_PLAN.md)
 - 每步做了什么：[`docs/WORK_LOG.md`](docs/WORK_LOG.md)
 - M1.3 策略配置说明：[`docs/M1_3_POLICY_CONFIG.md`](docs/M1_3_POLICY_CONFIG.md)
@@ -190,6 +193,8 @@ Skill 扫描还会追加 `aegis-command-context-v1` 的 `INFO` 级旁路 Finding
 前端“管理员动态验证”区域调用三条受保护接口：创建任务、查询历史、查询详情。请求必须在 `X-Aegis-Admin-Token` 头中携带与服务端环境变量一致的令牌；创建接口拒绝任何请求体，因此无法传入代码、路径、fixture 配置或命令。任务工作区执行完即删除，SQLite 只保存脱敏事件、机制指标与逐 fixture 状态，令牌不会进入任务记录。
 
 动态任务状态为 `queued / running / completed / failed`，但没有 `ALLOW / REVIEW / BLOCK` 字段。页面显示的“机制验证通过”仅表示内置 fixture 的预期观测均成功，不代表某个第三方 Skill 安全，也不影响静态准入结果。
+
+任务由 SQLite 持久队列统一调度：同一主机任意时刻最多一个动态任务处于 `running`，queued 按 FIFO 消费并返回 `queue_position`。活动同类任务以及完成后默认 5 秒冷却窗口内的同类请求会返回原任务 ID；等待队列默认最多 4 个，超限返回 `429 / DYNAMIC_AUDIT_QUEUE_FULL`。服务重启时遗留 running 会失败闭锁，queued 会保留顺序恢复。
 
 ## 动态 Marker 源到汇证据核心 v1
 

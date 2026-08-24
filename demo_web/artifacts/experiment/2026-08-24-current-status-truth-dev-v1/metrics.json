@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-24-current-status-truth-dev-v1",
+  "canonical_current_status_files": 1,
+  "active_entrypoints_linking_canonical_status": 4,
+  "documentation_indexes_added": 2,
+  "historical_or_snapshot_banners_added": 5,
+  "active_readmes_with_stale_329_count": 0,
+  "active_readmes_with_stale_335_count": 0,
+  "dynamic_queue_contract_terms_verified": 5,
+  "developer_profile_path_hits_in_active_truth_docs": 0,
+  "documentation_contract_tests_passed": 6,
+  "backend_tests_passed": 341,
+  "frontend_tests_passed": 10,
+  "frontend_build_passed": true,
+  "decision_changes": 0
+}
