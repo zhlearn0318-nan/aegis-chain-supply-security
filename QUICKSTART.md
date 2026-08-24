@@ -123,7 +123,26 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\run_all.ps1"
 
 依赖漏洞查询需要网络；Skill/MCP 的 YARA 与静态样例扫描不需要 API Key。
 
-## 固定版本
+## 6. 真实 Windows VM 发布验收
+
+P0-5 只接受真实 Windows 虚拟机，不接受新目录、Docker/WSL 容器或修改 `USERPROFILE` 的模拟。Windows Sandbox、VirtualBox、VMware、QEMU 和 Hyper-V guest 均可，但验收程序必须识别到虚拟硬件厂商/型号。
+
+将 `demo_web/release_vm/` 中的控制器和工具链清单以只读共享目录或复制方式放入全新 VM；然后从控制器目录运行：
+
+```powershell
+$env:AEGIS_GITHUB_READ_TOKEN = "<placeholder>" # 替换为仅授予该私有仓库读取权限的临时 token
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\Initialize-AegisAcceptanceGuest.ps1" `
+  -ExpectedCommit "<远端 dynamic-audit-v1 的完整 40 位提交>"
+$env:AEGIS_GITHUB_READ_TOKEN = $null
+```
+
+控制器会校验真实 VM 身份，按 SHA-256 下载固定 MinGit、Node.js、Miniforge 和 pnpm，核对私有远端 ref，从不存在的目标目录执行新克隆，并先证明引导前扫描器确实缺失。随后发布门自动完成运行时重建、完整测试、自身供应链扫描、真实 HTTP 四链、查询/导出、漏洞库断网失败闭锁、Docker 可用/降级分支、停止和残留检查。令牌只从当前进程环境读取，不进入命令参数、报告或 Git 配置。
+
+成功证据默认写入 VM 的 `C:\AegisAcceptance\evidence`，位于克隆仓库之外。只有 `artifact_manifest.json` 全部哈希复核通过后，才可将证据复制回仓库冻结。当前主机为家庭版 Windows，不提供 Windows Sandbox，因此仍需安装 VirtualBox 等真实虚拟机软件并执行此流程；本机烟雾结果不能替代 P0-5。
+
+完整合同见 [`demo_web/docs/M5_P0_5_CLEAN_WINDOWS_VM_RELEASE_GATE.md`](demo_web/docs/M5_P0_5_CLEAN_WINDOWS_VM_RELEASE_GATE.md)。
+
+## 7. 固定版本
 
 - Cisco Skill Scanner：官方提交 `4dee90371890ff23e1b21ea974e02847eacaa464`，包版本 `2.0.13.dev3+g4dee90371`；
 - Cisco MCP Scanner：官方提交 `51966cce214ae057e69c3a672307911f5026e255`，包版本 `4.8.2`；
@@ -132,9 +151,9 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\run_all.ps1"
 
 两个 Cisco 上游项目当前均使用 Apache-2.0 许可证。本脚本默认在用户本机从官方固定提交构建，GitHub 仓库不重新分发大体积第三方 wheel。若最终作品包需要离线携带 wheel，应同时保留上游 LICENSE/NOTICE 与第三方组件清单。
 
-当前 P0-1 已通过本机真实启动、路径无关检查和模拟不同 Windows 用户环境验证；真正的全新虚拟机从零复现仍属于后续 P0-5 发布验收，文档不会把模拟验证表述为已完成的洁净机验证。
+当前 P0-1 已通过本机真实启动、路径无关检查和模拟不同 Windows 用户环境验证；P0-5 自动化已实现并通过本机非正式烟雾，但真正的全新虚拟机从零复现尚未通过，文档不会把本机结果表述为洁净 VM 验收。
 
-## 7. 提交前自身供应链检查
+## 8. 提交前自身供应链检查
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\demo_web\audit_project_supply_chain.ps1" -WriteRepositoryArtifacts

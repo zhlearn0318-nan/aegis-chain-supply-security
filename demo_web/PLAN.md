@@ -346,9 +346,9 @@
 - 用户明确要求完成 M5 全部 P0/P1/P2 工程项，不包含 PPT、视频和答辩材料。
 - 每个通过验收的里程碑可直接提交并推送到 `origin/dynamic-audit-v1`。
 - 可引入必要开源依赖，但必须固定版本、核验来源/许可/哈希，不执行第三方不可信样本。
-- P0-5 必须使用 Windows Sandbox 作为真实洁净 Windows VM；本机模拟不作为最终通过证据。
+- P0-5 必须使用可证明虚拟硬件身份的真实洁净 Windows VM；Windows Sandbox 优先，但当前家庭版宿主不支持，允许 VirtualBox/VMware/QEMU/Hyper-V guest；本机目录、Docker/WSL 和异用户模拟均不作为最终证据。
 - 详细顺序、退出门和 P0-2 验收合同见 `docs/M5_ENGINEERING_EXECUTION_PLAN.md`。
-- 当前执行节点：P0-5 Windows Sandbox 真实洁净环境发布门；P0-4 已通过并冻结。
+- 当前执行节点：P0-5 真实洁净 Windows VM 发布门；自动验收程序与本机非正式烟雾已通过，真实 VM 执行和证据冻结未完成；P0-4 已通过并冻结。
 
 ### 19.1 P0-2 实际结果
 
@@ -374,4 +374,4 @@
 - 新增私有比赛许可、第三方声明和 152 组件 CycloneDX 1.6 项目 SBOM；许可越界、锁不匹配、已验证 Secret 和仓库卫生违规均为 0。
 - Cisco 固定样本复现脚本新增失败闭锁 oracle，避免内部 pip-audit 无输出时被上游错误显示为 SAFE。
 - 验收：自身供应链 gate 12/12、后端 348 passed、前端 10 passed、生产构建及 Cisco 固定样本冒烟通过。
-- 证据：`artifacts/experiment/2026-08-24-project-supply-chain-hygiene-dev-v1/`；下一节点为 P0-5 Windows Sandbox 发布门。
+- 证据：`artifacts/experiment/2026-08-24-project-supply-chain-hygiene-dev-v1/`；下一节点为 P0-5 真实 Windows VM 发布门。

@@ -67,6 +67,8 @@ class EngineHealth(BaseModel):
     ready: bool
     version: str
     analyzers: list[str] = Field(default_factory=list)
+    reason_code: str | None = None
+    message: str | None = None
 
 
 class PolicyHealth(BaseModel):

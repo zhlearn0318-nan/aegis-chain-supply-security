@@ -25,6 +25,10 @@
 - D2 当前不得执行第三方 Skill、MCP Server、数据集样本或未知镜像；
 - Docker/WSL2 仍共享宿主内核边界，本结果不证明不存在容器逃逸。
 
+健康接口不会仅凭 Docker 配置文件存在就声明 Skill 闭包可用。服务会在短 TTL 缓存内核对 Docker CLI、`desktop-linux` 引擎和固定镜像 identity；缺少 CLI、引擎未启动、镜像缺失或 digest/平台不符时，`/api/v1/health` 返回对应 `reason_code`，管理员闭包接口返回结构化 503。基础哈希锁定动态 fixture 不依赖 Docker，可独立保持可用。
+
+P0-5 发布门只接受可识别虚拟硬件身份的真实 Windows VM 和远端新克隆证明；目录、容器、WSL 或环境变量模拟会被拒绝。私有仓库读取令牌只允许通过当前进程环境传入，不得写入脚本、命令参数、证据或 Git 配置。
+
 ## 凭据管理
 
 - 不要提交 `.env`、API Key、访问令牌、证书、私钥、数据库或浏览器会话；

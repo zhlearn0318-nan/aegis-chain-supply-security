@@ -65,6 +65,12 @@ function EngineCard({ engine }) {
       <div className="chip-row">
         {engine.analyzers.map((name) => <span className="chip" key={name}>{name}</span>)}
       </div>
+      {!engine.ready && engine.message && (
+        <p className="engine-health-reason">
+          <code>{engine.reason_code || 'CAPABILITY_UNAVAILABLE'}</code>
+          {engine.message}
+        </p>
+      )}
     </article>
   )
 }
@@ -376,6 +382,12 @@ function DynamicAuditPanel({ engine, closureEngine }) {
         <strong>{engine?.ready && closureEngine?.ready ? '两类受控验证均已就绪' : '动态能力未完全就绪'}</strong>
         <code>HASH LOCKED</code><code>DECISION Δ = 0</code><code>NO USER CODE</code>
       </div>
+      {(!engine?.ready || !closureEngine?.ready) && (
+        <div className="dynamic-degradation" role="status">
+          {!engine?.ready && <p><code>{engine?.reason_code || 'DYNAMIC_FIXTURE_UNAVAILABLE'}</code>{engine?.message || '基础动态验证尚未就绪。'}</p>}
+          {!closureEngine?.ready && <p><code>{closureEngine?.reason_code || 'SKILL_CLOSURE_UNAVAILABLE'}</code>{closureEngine?.message || 'Docker Skill 闭包尚未就绪。'}</p>}
+        </div>
+      )}
 
       <div className="dynamic-grid">
         <div className="admin-access-card">

@@ -10,6 +10,7 @@ import sqlite3
 import stat
 import subprocess
 import tempfile
+import threading
 import time
 import uuid
 import zipfile
@@ -41,7 +42,16 @@ from .analyzers import (
 from .api_contract import ErrorCode, GatewayHTTPException
 from .api_v1 import ApiV1Operations, install_api_v1
 from .dynamic_audit.runner import run_safe_fixture_set
-from .dynamic_audit.skill_closure import run_skill_closure_probe
+from .dynamic_audit.docker_backend import (
+    DockerBackendError,
+    discover_docker_cli,
+    inspect_image_identity,
+    probe_docker_engine,
+)
+from .dynamic_audit.skill_closure import (
+    load_skill_closure_config,
+    run_skill_closure_probe,
+)
 from .dynamic_queue import DynamicAuditScheduler
 from .models import SCHEMA_VERSION, DynamicAuditJob, ScanJob
 from .normalizers import normalize_mcp, normalize_pip_audit, normalize_skill
@@ -74,6 +84,12 @@ DYNAMIC_QUEUE_MAX_PENDING = max(
 DYNAMIC_QUEUE_DEDUPE_COOLDOWN_SECONDS = max(
     0, min(int(os.getenv("AEGIS_DYNAMIC_DEDUPE_COOLDOWN_SECONDS", "5")), 300)
 )
+SKILL_CLOSURE_READINESS_TTL_SECONDS = 5.0
+_SKILL_CLOSURE_READINESS_LOCK = threading.Lock()
+_SKILL_CLOSURE_READINESS_CACHE: dict[str, Any] = {
+    "checked_at": 0.0,
+    "value": None,
+}
 
 SKILL_SCANNER = ROOT / ".runtime_skill" / "Scripts" / "skill-scanner.exe"
 SKILL_PYTHON = ROOT / ".runtime_skill" / "Scripts" / "python.exe"
@@ -110,7 +126,12 @@ MCP_ADAPTER = McpScannerAdapter(
 )
 DEPENDENCY_ADAPTER = DependencyAuditAdapter(
     executable=PIP_AUDIT,
-    cache_dir=DATA_DIR / "cache" / "pip-audit",
+    cache_dir=Path(
+        os.getenv(
+            "AEGIS_PIP_AUDIT_CACHE_DIR",
+            str(DATA_DIR / "cache" / "pip-audit"),
+        )
+    ).resolve(strict=False),
     runner=PROCESS_RUNNER,
 )
 
@@ -730,12 +751,72 @@ def dynamic_fixture_is_ready() -> bool:
     return DYNAMIC_FIXTURE_CONFIG.is_file() and DYNAMIC_FIXTURE_ROOT.is_dir()
 
 
-def skill_closure_is_ready() -> bool:
-    return (
-        DYNAMIC_SKILL_CLOSURE_CONFIG.is_file()
-        and SKILL_SCANNER.is_file()
-        and (DEMO_ROOT / "tools" / "dynamic" / "docker" / "fixtures" / "skill_runtime_closure.py").is_file()
+def skill_closure_readiness() -> dict[str, Any]:
+    now = time.monotonic()
+    with _SKILL_CLOSURE_READINESS_LOCK:
+        cached = _SKILL_CLOSURE_READINESS_CACHE.get("value")
+        checked_at = float(_SKILL_CLOSURE_READINESS_CACHE.get("checked_at") or 0.0)
+        if isinstance(cached, dict) and now - checked_at < SKILL_CLOSURE_READINESS_TTL_SECONDS:
+            return dict(cached)
+
+    fixture_path = (
+        DEMO_ROOT / "tools" / "dynamic" / "docker" / "fixtures" / "skill_runtime_closure.py"
     )
+    if not DYNAMIC_SKILL_CLOSURE_CONFIG.is_file():
+        value = {
+            "ready": False,
+            "reason_code": "SKILL_CLOSURE_CONFIG_MISSING",
+            "message": "Skill closure configuration is missing.",
+        }
+    elif not SKILL_SCANNER.is_file():
+        value = {
+            "ready": False,
+            "reason_code": "SKILL_SCANNER_MISSING",
+            "message": "Cisco Skill Scanner runtime is missing.",
+        }
+    elif not fixture_path.is_file():
+        value = {
+            "ready": False,
+            "reason_code": "SKILL_CLOSURE_FIXTURE_MISSING",
+            "message": "Hash-locked Skill closure fixture is missing.",
+        }
+    else:
+        try:
+            config = load_skill_closure_config(DYNAMIC_SKILL_CLOSURE_CONFIG)
+            docker_cli = discover_docker_cli()
+            engine = probe_docker_engine(docker_cli)
+            image, image_gates = inspect_image_identity(docker_cli, config.docker)
+            if not all(image_gates.values()):
+                raise DockerBackendError("DOCKER_IMAGE_GATE_FAILED", "image_inspect")
+            value = {
+                "ready": True,
+                "reason_code": None,
+                "message": "Docker engine and hash-locked image are ready.",
+                "engine_version": engine.get("engine_version"),
+                "api_version": engine.get("api_version"),
+                "image_id": image.get("id"),
+            }
+        except DockerBackendError as exc:
+            value = {
+                "ready": False,
+                "reason_code": exc.code,
+                "message": f"Docker Skill closure is unavailable at {exc.operation}.",
+                "operation": exc.operation,
+            }
+        except (OSError, ValueError) as exc:
+            value = {
+                "ready": False,
+                "reason_code": "SKILL_CLOSURE_READINESS_FAILED",
+                "message": f"Docker Skill closure readiness failed: {type(exc).__name__}.",
+            }
+    with _SKILL_CLOSURE_READINESS_LOCK:
+        _SKILL_CLOSURE_READINESS_CACHE["checked_at"] = time.monotonic()
+        _SKILL_CLOSURE_READINESS_CACHE["value"] = dict(value)
+    return value
+
+
+def skill_closure_is_ready() -> bool:
+    return skill_closure_readiness()["ready"] is True
 
 
 def public_skill_closure_result(result: dict[str, Any]) -> dict[str, Any]:
@@ -983,8 +1064,26 @@ def health() -> dict[str, Any]:
     skill_ready = SKILL_SCANNER.exists() and SKILL_PYTHON.exists()
     mcp_ready = MCP_SCANNER.exists() and MCP_PYTHON.exists() and MCP_WRAPPER.exists()
     dependency_ready = mcp_ready and PIP_AUDIT.exists()
-    dynamic_ready = dynamic_fixture_is_ready() and admin_token_is_configured()
-    skill_closure_ready = skill_closure_is_ready() and admin_token_is_configured()
+    admin_ready = admin_token_is_configured()
+    dynamic_ready = dynamic_fixture_is_ready() and admin_ready
+    closure_capability = skill_closure_readiness()
+    skill_closure_ready = closure_capability["ready"] is True and admin_ready
+    dynamic_reason = None
+    dynamic_message = None
+    if not admin_ready:
+        dynamic_reason = "ADMIN_TOKEN_NOT_CONFIGURED"
+        dynamic_message = "Set AEGIS_ADMIN_TOKEN to at least 16 characters."
+    elif not dynamic_fixture_is_ready():
+        dynamic_reason = "DYNAMIC_FIXTURE_MISSING"
+        dynamic_message = "Hash-locked dynamic fixture set is missing."
+    closure_reason = None
+    closure_message = None
+    if not admin_ready:
+        closure_reason = "ADMIN_TOKEN_NOT_CONFIGURED"
+        closure_message = "Set AEGIS_ADMIN_TOKEN to at least 16 characters."
+    elif not skill_closure_ready:
+        closure_reason = closure_capability.get("reason_code")
+        closure_message = closure_capability.get("message")
     try:
         selected_policy = load_policy()
         policy_status = {
@@ -1013,8 +1112,8 @@ def health() -> dict[str, Any]:
             {"id": "skill", "name": "Skill Scanner + Aegis Static/Context", "ready": skill_ready, "version": skill_version, "analyzers": ["static", "bytecode", "pipeline", AEGIS_STATIC_ANALYZER_ID, SENSITIVE_FLOW_ANALYZER_ID, UNTRUSTED_EXEC_FLOW_ANALYZER_ID, ENTERPRISE_CONTROLS_ANALYZER_ID, STATIC_COVERAGE_ANALYZER_ID, NETWORK_CONTEXT_ANALYZER_ID, FILESYSTEM_CONTEXT_ANALYZER_ID, COMMAND_CONTEXT_ANALYZER_ID]},
             {"id": "mcp", "name": "MCP Scanner + Capability Policy", "ready": mcp_ready, "version": mcp_version, "analyzers": ["yara", "offline objects", MCP_POLICY_ANALYZER_ID]},
             {"id": "dependency", "name": "Dependency Audit + Integrity/SBOM", "ready": dependency_ready, "version": "pip-audit+aegis-v1", "analyzers": ["CVE", "GHSA", "PYSEC", DEPENDENCY_INTEGRITY_ANALYZER_ID]},
-            {"id": "dynamic-fixture", "name": "管理员可信样本动态验证", "ready": dynamic_ready, "version": "aegis-safe-dynamic-fixtures-v1", "analyzers": ["Python audit hook", "hash lock", "loopback only", "INFO only"]},
-            {"id": "dynamic-skill-closure", "name": "Skill 运行时闭包与静态复审", "ready": skill_closure_ready, "version": "aegis-skill-runtime-closure-v1", "analyzers": ["Docker isolation", "directory diff", "Cisco Skill Scanner", "Aegis static lift"]},
+            {"id": "dynamic-fixture", "name": "管理员可信样本动态验证", "ready": dynamic_ready, "version": "aegis-safe-dynamic-fixtures-v1", "analyzers": ["Python audit hook", "hash lock", "loopback only", "INFO only"], "reason_code": dynamic_reason, "message": dynamic_message},
+            {"id": "dynamic-skill-closure", "name": "Skill 运行时闭包与静态复审", "ready": skill_closure_ready, "version": "aegis-skill-runtime-closure-v1", "analyzers": ["Docker isolation", "directory diff", "Cisco Skill Scanner", "Aegis static lift"], "reason_code": closure_reason, "message": closure_message},
         ],
         "privacy": "上传样本和动态验证工作区在任务结束后删除；历史仅保存脱敏结果，管理员令牌不持久化。",
     }
@@ -1272,10 +1371,16 @@ def start_skill_closure_audit(
 ) -> dict[str, Any]:
     verify_admin_token(admin_token)
     if not skill_closure_is_ready():
+        readiness = skill_closure_readiness()
         raise GatewayHTTPException(
             503,
             ErrorCode.DYNAMIC_AUDIT_NOT_READY,
             "Skill 运行时闭包能力不可用。",
+            details={
+                "reason_code": readiness.get("reason_code"),
+                "operation": readiness.get("operation"),
+                "message": readiness.get("message"),
+            },
         )
     job = new_dynamic_audit_job("skill_runtime_closure")
     DYNAMIC_AUDIT_SCHEDULER.notify()

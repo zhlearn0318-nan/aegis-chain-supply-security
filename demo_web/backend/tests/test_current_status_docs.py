@@ -13,8 +13,8 @@ def read(relative: str) -> str:
 def test_active_entrypoints_delegate_status_to_one_canonical_file() -> None:
     current = read("CURRENT_STATUS.md")
     assert "唯一状态真值" in current
-    assert "348 passed" in current
-    assert "P0-5" in current and "下一项" in current
+    assert "357 passed" in current
+    assert "P0-5" in current and "真实 VM" in current
     assert "NO-GO" in current
 
     for relative in (
@@ -29,7 +29,8 @@ def test_active_entrypoints_delegate_status_to_one_canonical_file() -> None:
 def test_active_summaries_do_not_keep_the_previous_backend_count() -> None:
     for relative in ("README.md", "demo_web/README.md"):
         content = read(relative)
-        assert "348 passed" in content
+        assert "357 passed" in content
+        assert "348 passed" not in content
         assert "341 passed" not in content
         assert "329 passed" not in content
         assert "335 passed" not in content

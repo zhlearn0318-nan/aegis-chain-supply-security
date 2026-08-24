@@ -10,6 +10,7 @@
 - 启动：[`../../QUICKSTART.md`](../../QUICKSTART.md)
 - 安全：[`../../SECURITY.md`](../../SECURITY.md)
 - 项目自身供应链：[`M5_P0_4_PROJECT_SUPPLY_CHAIN_REPORT.md`](M5_P0_4_PROJECT_SUPPLY_CHAIN_REPORT.md)
+- 真实 Windows VM 发布门：[`M5_P0_5_CLEAN_WINDOWS_VM_RELEASE_GATE.md`](M5_P0_5_CLEAN_WINDOWS_VM_RELEASE_GATE.md)
 
 ## 历史证据
 

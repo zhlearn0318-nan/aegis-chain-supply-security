@@ -91,6 +91,12 @@ http://127.0.0.1:8000
 | GET | `/api/v1/admin/dynamic-audits?limit=20` | 200 | 最近动态验证任务 |
 | GET | `/api/v1/admin/dynamic-audits/{job_id}` | 200 | 动态验证状态与脱敏证据 |
 
+### 4.1 能力级健康状态
+
+`GET /api/v1/health` 的 `engines` 是能力状态，不是单一进程存活标志。每项至少包含 `ready`；不可用时还可包含 `reason_code` 和 `message`，供平台展示真实降级原因。客户端不得仅依据 HTTP 200 推断所有扫描能力可用。
+
+Skill 闭包动态审计的 ready 会实际检查 Docker CLI、Linux 容器引擎、固定镜像身份、runner 配置和哈希锁定 fixture。任一条件不满足时，健康接口将该能力标为不可用；调用 `/api/v1/admin/dynamic-audits/skill-closure` 返回 `503 / DYNAMIC_AUDIT_NOT_READY` 及相同原因。机制动态 fixture 是独立能力，允许在 Docker 闭包降级时继续运行，二者不可互相代替。
+
 `limit` 的最小值为 1，最大值为 100，默认值为 20。超出范围返回 `422 / REQUEST_VALIDATION_ERROR`，不再静默截断。
 
 ### 管理员动态验证边界

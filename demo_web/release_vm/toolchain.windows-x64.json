@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "platform": "windows-x64",
+  "artifacts": [
+    {
+      "id": "mingit",
+      "version": "2.53.0.windows.3",
+      "file": "MinGit-2.53.0.3-64-bit.zip",
+      "url": "https://github.com/git-for-windows/git/releases/download/v2.53.0.windows.3/MinGit-2.53.0.3-64-bit.zip",
+      "sha256": "0d7c85a26e45668b35d0d0aeb763289376cfc039e55e0938a617ed0dfa32e433",
+      "license": "GPL-2.0-only and bundled component licenses",
+      "source": "https://github.com/git-for-windows/git/releases/tag/v2.53.0.windows.3"
+    },
+    {
+      "id": "node",
+      "version": "24.15.0",
+      "file": "node-v24.15.0-win-x64.zip",
+      "url": "https://nodejs.org/download/release/v24.15.0/node-v24.15.0-win-x64.zip",
+      "sha256": "cc5149eabd53779ce1e7bdc5401643622d0c7e6800ade18928a767e940bb0e62",
+      "license": "MIT and bundled component licenses",
+      "source": "https://nodejs.org/download/release/v24.15.0/SHASUMS256.txt"
+    },
+    {
+      "id": "miniforge",
+      "version": "25.11.0-1",
+      "runtime_version": "25.11.0",
+      "file": "Miniforge3-25.11.0-1-Windows-x86_64.exe",
+      "url": "https://github.com/conda-forge/miniforge/releases/download/25.11.0-1/Miniforge3-25.11.0-1-Windows-x86_64.exe",
+      "sha256": "c09c1185040d7a085e954be226c9a9c8dfaad43286d89de6b73455a7d848365c",
+      "license": "BSD-3-Clause and installed package licenses",
+      "source": "https://conda-forge.org/miniforge/"
+    }
+  ],
+  "package_managers": [
+    {
+      "id": "pnpm",
+      "version": "11.19.0",
+      "file": "pnpm-11.19.0.tgz",
+      "integrity": "sha512-eIHz7VkNRyxKlV4riLISF5ERYGbcyIy8o4SeybYPG7qm0syyIfqR2k4cZb7yvL43k2Wup6xTnHv4be3DobItzg==",
+      "tarball": "https://registry.npmjs.org/pnpm/-/pnpm-11.19.0.tgz",
+      "license": "MIT"
+    }
+  ]
+}
