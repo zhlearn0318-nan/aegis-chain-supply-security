@@ -2,11 +2,13 @@
 
 本项目是 XA-202620 赛题“供应链安全”模块的本机原型。网页会真实调用已经复现的 Cisco Skill Scanner、MCP Scanner 和依赖漏洞审计链路，不使用伪造扫描结果。
 
-当前已完成 M1.3 的可配置准入策略、`/api/v1` 和前端 v1 适配，并完成 M2 的 SkillTrustBench v1.0 全量 5,520 条评测。M3 静态审计已在 600 条密封工程回归上完成一次性评估并冻结，结论为 `supported_with_tradeoff`。M4 已实现政企 Marker、静态 Trigger Plan、Docker 安全底座、受控 MCP 2025-06-18 stdio 调用，以及客户端侧 Linux inotify/procfs 独立遥测；最新真实运行 82/82 接受门通过、独立文件读取确认 1、容器残留 0，后端 `309 passed`。动态部分仍只执行自建哈希锁定 fixture，不执行第三方 Skill/MCP。
+当前已完成 M1.3 的可配置准入策略、`/api/v1` 和前端 v1 适配，并完成 M2 的 SkillTrustBench v1.0 全量 5,520 条评测。M3 静态审计已在 600 条密封工程回归上完成一次性评估并冻结，结论为 `supported_with_tradeoff`。M4 已实现政企 Marker、静态 Trigger Plan、Docker 安全底座、受控 MCP 2025-06-18 stdio 调用，以及客户端侧 Linux inotify/procfs 独立遥测；最新真实运行 82/82 接受门通过、独立文件读取确认 1、容器残留 0。P0-1 可移植启动完成后，后端完整测试为 `329 passed`。动态部分仍只执行自建哈希锁定 fixture，不执行第三方 Skill/MCP。
 
 ## 一键启动
 
-在 PowerShell 中进入本目录后运行。显式传入执行策略，可以避开部分 Windows 电脑默认禁止执行 `.ps1` 的问题：
+首次使用先在仓库根目录执行 `bootstrap_runtimes.ps1`，再进入本目录启动。完整的换机步骤见仓库根目录 [`QUICKSTART.md`](../QUICKSTART.md)。启动脚本会先校验 Cisco 精确版本、策略、前端锁文件和可写目录，并自动发现 `pnpm` 或 Corepack，不依赖开发者个人路径。
+
+在 PowerShell 中进入本目录后运行：
 
 ```powershell
 $env:AEGIS_ADMIN_TOKEN = "请替换为至少16位且仅本次会话使用的随机令牌"
@@ -14,6 +16,12 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\start_demo.ps1"
 ```
 
 `AEGIS_ADMIN_TOKEN` 只由后端进程从环境变量读取。网页中的令牌只保存在当前 React 内存，刷新页面即消失；不要把真实值写进源码、Markdown、截图或汇报材料。未配置令牌时，静态扫描仍可使用，管理员动态接口会按安全策略返回 `503`。
+
+要求 Docker、固定镜像和管理员令牌全部就绪才允许启动：
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\start_demo.ps1" -RequireDynamic
+```
 
 停止服务：
 

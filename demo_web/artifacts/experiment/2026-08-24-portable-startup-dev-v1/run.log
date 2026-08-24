@@ -1,0 +1,17 @@
+2026-08-24 P0-1 portable startup validation
+
+1. Pushed baseline review documents as commit 3d98c85 to origin/dynamic-audit-v1.
+2. Added script-relative command discovery and preflight. First smoke found an invalid compound Test-Path expression; fixed it before integration.
+3. Static-only preflight: exit 0, ready=true, required_failures=0, warnings=0.
+4. Runtime verification: Skill 2.0.13.dev3+g4dee90371 PASS; MCP 4.8.2 PASS.
+5. First user-profile simulation hit the host sandbox's denial of the original LocalAppData Corepack cache. This failed result was used to make the simulation faithful.
+6. Repeated with USERPROFILE, LOCALAPPDATA and APPDATA all redirected to a writable simulated clean-user tree, PATH limited to Windows and Node.js, and no Codex pnpm path. Real Corepack pnpm 11.23.0 passed; required_failures=0.
+7. Required-dynamic negative test without AEGIS_ADMIN_TOKEN returned exit 1 and FAIL for the required token check.
+8. Port 8000 was occupied by Docker Desktop. No existing process was changed. Added the explicit -Port parameter and used port 8765.
+9. start_demo.ps1 -NoBrowser -Port 8765 completed preflight and Vite production build, then started the server.
+10. /api/v1/health returned api_version=v1, status=degraded and policy_ready=true. Degraded was expected because dynamic administrator prerequisites were not supplied.
+11. stop_demo.ps1 stopped the exact PID recorded by this run.
+12. Portable startup tests: 5 passed. Full backend: 329 passed.
+13. Frontend: pnpm 11.23.0 frozen offline install passed, 10 tests passed, production build passed.
+14. No Cisco/Aegis detection rule or admission policy was changed. No third-party sample, GPU, cloud service or Docker image pull was used.
+15. Final supply-chain review removed online reuse of same-name Cisco wheels. Online rebuild now creates a new wheel from the verified source commit; offline installation requires an independently supplied SHA-256 and rejects mismatches before creating a runtime.

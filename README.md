@@ -20,8 +20,8 @@ Aegis Chain 是 XA-202620 赛题“供应链安全”方向的本地工程原型
 - SkillTrustBench v1.0：已完成 5,520 条全量 Cisco 静态基线，另建 120 条开发集和 600 条封存回归集；
 - 管理员动态接口：3/3 fixture、7/7 机制，负面安全指标全部为 0；
 - MCP Docker 受控遥测实验：82/82 接受门，独立文件读取确认 1、容器残留 0；
-- 后端完整测试：309 passed；
-- 前端 API 测试：9 passed；
+- 后端完整测试：329 passed；
+- 前端 API 测试：10 passed；
 - 前端生产构建：通过。
 
 ## 仓库结构
@@ -53,7 +53,14 @@ Aegis Chain 是 XA-202620 赛题“供应链安全”方向的本地工程原型
 - `.runtime_skill`：Python 3.11 + Cisco AI Skill Scanner；
 - `.runtime_mcp313`：Python 3.13 + Cisco AI MCP Scanner + `pip-audit`。
 
-运行时和 Cisco 第三方源码不纳入仓库。版本、提交和本机重建说明见 [QUICKSTART.md](QUICKSTART.md)；锁定依赖清单位于 `results/*_locked_requirements.txt`。
+运行时和 Cisco 第三方源码不纳入仓库。首次使用可在任意仓库路径执行下列命令，脚本会从 Cisco 官方固定提交重建环境，并按哈希锁定依赖：
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\bootstrap_runtimes.ps1"
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\demo_web\preflight.ps1" -SkipDynamic
+```
+
+完整说明见 [QUICKSTART.md](QUICKSTART.md)；锁定依赖清单位于 `results/*_locked_requirements.txt`。
 
 ### 2. 启动演示平台
 
@@ -62,6 +69,8 @@ Set-Location .\demo_web
 $env:AEGIS_ADMIN_TOKEN = "请替换为至少16位且仅本次会话使用的随机令牌"
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\start_demo.ps1"
 ```
+
+启动会先执行可移植预检并使用冻结的前端锁文件，不再依赖开发者个人目录。若只使用静态审计，可以不配置 Docker；若要求动态能力必须就绪，使用 `-RequireDynamic`。
 
 访问：
 

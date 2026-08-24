@@ -1,0 +1,15 @@
+{
+  "command": "bootstrap_runtimes.ps1 -VerifyOnly",
+  "exit_code": 0,
+  "selected": 2,
+  "passed": 2,
+  "skill": {
+    "version": "2.0.13.dev3+g4dee90371",
+    "status": "PASS"
+  },
+  "mcp": {
+    "version": "4.8.2",
+    "status": "PASS"
+  },
+  "runtime_rebuilt_in_this_run": false
+}

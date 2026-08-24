@@ -1,0 +1,34 @@
+{
+  "algorithm": "sha256",
+  "content_basis": "git index blobs with repository-normalized line endings",
+  "files": [
+    {
+      "path": "bootstrap_runtimes.ps1",
+      "sha256": "21696a8f09e42dfccd52a94605c2dcd38eb2b642b1da1c891503ba9c3f285ece"
+    },
+    {
+      "path": "demo_web/scripts/portable_runtime.ps1",
+      "sha256": "b98106450f2c86324bf514d2b5c9f07a5e71d5437c8e2968be49382256790843"
+    },
+    {
+      "path": "demo_web/preflight.ps1",
+      "sha256": "6f12cd066592db5cfd1c75131ac020896a635dbd364fb19ecda40dac89d04ad8"
+    },
+    {
+      "path": "demo_web/start_demo.ps1",
+      "sha256": "8cb76b83ea92155d3205d048f5911d43d47ec4010e25de39495fa0b7a6cdf7da"
+    },
+    {
+      "path": "demo_web/backend/tests/test_portable_startup.py",
+      "sha256": "5e8b5ee6e55d59590b7a826c6d657e9a9e2ba7663a5bb745648e6cb1efbf359c"
+    },
+    {
+      "path": "demo_web/frontend/package.json",
+      "sha256": "93e51ebcf1decb69ee3a73de629a9f6092abbadd8a4fbd385d7ba62d8fe9f05a"
+    },
+    {
+      "path": "QUICKSTART.md",
+      "sha256": "6d6786caf1fe38298a35265b359cc6271f34a971fc00768e472ad05a73fdd4ca"
+    }
+  ]
+}

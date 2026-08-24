@@ -93,3 +93,28 @@
 - [x] 第三方样本、互联网、镜像拉取、GPU、云和静态决策变化均为 0。
 - [ ] D2-B：strace、文件差分/inotify 和内部 sinkhole 遥测。
 - [ ] D3：自建 MCP 协议 initialize/tools/list/tools/call 与 Marker witness 闭环。
+
+## P0-1 可移植启动与换机复现
+
+### 计划与边界
+
+- [x] 两份评委审查文档提交并推送到 `origin/dynamic-audit-v1`。
+- [x] 冻结基线提交 `3d98c85`，不修改检测规则、策略和动态安全边界。
+- [x] 记录可移植启动的研究问题、最小代码图、停止条件和验收指标。
+
+### 实现
+
+- [x] 移除 `start_demo.ps1` 中的个人绝对 pnpm 路径。
+- [x] 新增 pnpm/Corepack 与 Docker CLI 的共享可移植发现逻辑。
+- [x] 新增人可读和 JSON preflight，区分必需能力、动态警告和 `-RequireDynamic`。
+- [x] 新增固定 Cisco 官方仓库/提交、哈希锁依赖的运行时重建脚本。
+- [x] 更新 QUICKSTART，明确在线重建、离线 wheel 和许可证边界。
+- [x] 增加防止个人路径回归和模拟异用户环境的自动测试。
+
+### 验证与封口
+
+- [x] 默认 preflight 必需失败数为 0。
+- [x] 模拟不同 USERPROFILE 且不依赖 Codex pnpm 路径时 preflight 通过。
+- [x] 改造后的启动、v1 health 和停止流程通过。
+- [x] 后端完整测试、前端测试和生产构建通过。
+- [x] 固定运行证据、源码哈希、claim validation 和下一步决策。

@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-24-portable-startup-dev-v1",
+  "kind": "auxiliary/dev",
+  "date": "2026-08-24",
+  "branch": "dynamic-audit-v1",
+  "baseline_commit": "3d98c8543bb5a323817566237d5f17b4b729dfc5",
+  "objective": "Remove developer-specific startup dependencies and verify portable discovery, preflight, startup and recovery contracts.",
+  "platform": "Windows",
+  "network_use": "Corepack first-use download during the simulated clean-user check; no scanner dependency or Docker image was downloaded during validation.",
+  "hardware": {
+    "gpu_required": false,
+    "cloud_required": false
+  },
+  "locked_components": {
+    "skill_scanner_commit": "4dee90371890ff23e1b21ea974e02847eacaa464",
+    "skill_scanner_version": "2.0.13.dev3+g4dee90371",
+    "mcp_scanner_commit": "51966cce214ae057e69c3a672307911f5026e255",
+    "mcp_scanner_version": "4.8.2",
+    "pnpm": "11.23.0"
+  },
+  "result": "supported_on_current_machine_and_simulated_user",
+  "next_route": "P0-2 dynamic task concurrency, deduplication and restart recovery",
+  "deferred_gate": "P0-5 clean Windows VM from-zero rebuild"
+}

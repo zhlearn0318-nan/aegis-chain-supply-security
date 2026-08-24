@@ -1,0 +1,17 @@
+{
+  "algorithm": "sha256",
+  "manifest_excludes_itself": true,
+  "files": [
+    {"file": "bootstrap_verify.json", "sha256": "5daee33627717cb4f0eb69ac9b18faad5cc481070316bbfbbe8576989ad2b1dd", "bytes": 285},
+    {"file": "CHECKLIST.md", "sha256": "f922c8a384a75b5a229beb1ed34268a70cc0eb36be804ff3cecb5d9889706a57", "bytes": 948},
+    {"file": "claim_validation.md", "sha256": "dc316ae765470642c2c75b1f4928f65f31226626591f20518dc70db3aa376e95", "bytes": 1118},
+    {"file": "metrics.json", "sha256": "3be6b8b428bc5062d91ac323a58c265a438dee21008ecdb1accd9fb3a259a432", "bytes": 798},
+    {"file": "preflight.json", "sha256": "882eeb4df77cb41e6d8544296d787a6c54ffafa030fbdf400e70b729c77122d8", "bytes": 584},
+    {"file": "run_manifest.json", "sha256": "636f9a7f82ffddcc736a53b6fee8448041e3f8e4dd2e59e7a4e2bdf2ff1ae020", "bytes": 1122},
+    {"file": "run.log", "sha256": "6be0ba8e3642eb6160d284bb83f45227886e4c172d99a769f863d3448fd8741f", "bytes": 1984},
+    {"file": "simulated_user_preflight.json", "sha256": "c09742fe649625161cfca40c87c232153e8c0cf9a08ed3e33cba42b155cc27d3", "bytes": 667},
+    {"file": "source_hashes.json", "sha256": "9814c71ea29c15c97a212754410f774ffa5a7c2a55fe3b2f23e10e70bc5bb6a3", "bytes": 1115},
+    {"file": "startup_health.json", "sha256": "84b4e332f9837a869d2d0743688b01737e45c98e9e4939c3e54bd5eeae256da4", "bytes": 352},
+    {"file": "summary.md", "sha256": "0e68e86a6f9aa543e0eda734111b9c8b54cb5c669635f499dcaa2de8fe2f56ae", "bytes": 1140}
+  ]
+}

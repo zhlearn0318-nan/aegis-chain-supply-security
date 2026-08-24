@@ -293,3 +293,50 @@
 - 验证：Docker 专项 `26 passed`，后端完整 `296 passed`，独立标签查询容器残留 0。
 - 结论：`supported_on_controlled_fixture`；只支持当前固定镜像与自建 probe 的安全门，不支持容器逃逸或第三方样本安全声明。
 - 下一路由：自建 MCP 协议 fixture 与 Marker witness；D2-B 的 strace/文件差分/内部 sinkhole 继续作为后续遥测增强。
+
+## 18. P0-1 可移植启动与换机复现（2026-08-24）
+
+- run id：`2026-08-24-portable-startup-dev-v1`；实验等级为 `auxiliary/dev`。
+- 选定思路：保留现有项目内两个 Cisco 隔离运行时目录约定，移除启动脚本中的个人绝对路径；新增共享命令发现、分层 preflight 和固定提交的在线/离线运行时重建入口。
+- 用户要求：先推送两份评委审查文档，再按 M5 计划优先完成 P0-1；每一步说明实际动作。
+- 研究问题：仓库能否在不依赖 `C:\Users\23684` 或 Codex 内置运行时路径的条件下，发现项目运行时和 Node 包管理器，并在缺失组件时给出可执行的重建指引？
+- 零假设：移除硬编码后当前机器无法启动，或 preflight 不能稳定区分必需静态能力与可选/强制动态能力，或重建流程不能固定 Cisco 来源与版本。
+- 备择假设：启动脚本个人路径命中为 0；默认 preflight 必需项全部通过；修改 `USERPROFILE` 且从 PATH 移除 Codex pnpm 后仍能通过 Corepack 发现前端工具；完整后端/前端验证保持通过。
+- 基线：提交 `3d98c85`，固定本机启动、后端 324 passed、前端 10 passed、生产构建通过；静态/动态检测规则、策略和评测结果保持只读。
+- 主指标：个人绝对路径命中数、preflight 必需项失败数、模拟异用户 preflight 结果、启动健康状态、后端/前端测试与构建结果。
+- 停止条件：必须修改 Cisco/Aegis 检测逻辑、放宽 Docker/动态安全边界、覆盖现有运行时或向仓库提交第三方二进制。
+- 放弃条件：固定 Cisco 提交无法从官方仓库构建，且许可证或依赖约束不允许形成可说明的在线/离线恢复路径。
+- 最强替代解释：当前机器成功仍不等于全新 Windows 已验收；本轮先达到可移植代码与模拟异用户 solid 证据，真正干净虚拟机验收保留为 P0-5 发布门。
+
+### 18.1 最小代码变更图
+
+| 路径 | 计划变更 | 目的 | 风险 |
+| --- | --- | --- | --- |
+| `scripts/portable_runtime.ps1` | 统一发现 pnpm/Corepack 与 Docker CLI | 消除个人路径并避免脚本间发现逻辑漂移 | PowerShell 版本和参数拼接差异 |
+| `preflight.ps1` | 检查 Cisco 版本、策略、前端、写权限、令牌、Docker 和固定镜像 | 启动前给出机器可读/人可读结论 | 把可选动态能力误设为静态阻断 |
+| `start_demo.ps1` | 使用共享发现和冻结 lockfile 安装 | 换用户路径仍可构建和启动 | Corepack 首次使用可能需要联网 |
+| `bootstrap_runtimes.ps1` | 固定官方仓库、提交、Python 版本、哈希锁和 wheel 安装 | 从空仓库重建两个 Cisco 运行时 | Python 3.13/Rust 首装耗时较长 |
+| `backend/tests/test_portable_startup.py` | 静态契约和模拟异用户 preflight | 防止个人路径回归 | 仍不是独立干净机器 |
+| `QUICKSTART.md` | 区分在线重建、离线 wheel 和最终验收 | 让本科生可按步骤恢复 | 文档与脚本后续漂移 |
+
+### 18.2 执行与验收
+
+- smoke：运行脚本静态契约测试和默认 preflight；确认当前运行时不会被修改。
+- main：把 `USERPROFILE` 指向项目内临时目录，从 PATH 删除 Codex pnpm 路径，仅保留系统 Node/Corepack，再运行 JSON preflight。
+- integration：使用改造后的 `start_demo.ps1 -NoBrowser` 启动，核验 `/api/v1/health` 后安全停止。
+- regression：后端完整测试、前端 API 测试与 frozen-lockfile 生产构建。
+- 持久证据：`artifacts/experiment/2026-08-24-portable-startup-dev-v1/`，包含 preflight、模拟异用户结果、测试/构建摘要、manifest 和结论。
+- 工具限制：当前没有 experiment 技能指定的 `bash_exec`、artifact 和 memory 接口，因此继续使用可用终端、不可覆盖证据目录、命令日志、manifest 和 SHA-256 等价留痕。
+- 成功后：进入 P0-2 动态任务互斥、排队、重复提交保护和重启恢复；失败则保留当前可用启动状态，只修复具体的可移植性阻断。
+
+### 18.3 实际结果与决策
+
+- 活动启动文件的个人绝对路径命中为 0；使用脚本相对路径定位两套项目运行时。
+- 静态 preflight 必需失败 0；Cisco Skill `2.0.13.dev3+g4dee90371`、MCP `4.8.2`、FastAPI、策略哈希、前端锁文件和写入探针全部通过。
+- 完整重定向 `USERPROFILE/LOCALAPPDATA/APPDATA`，并从 PATH 移除 Codex pnpm 后，真实 Corepack pnpm 11.23.0 预检仍通过。
+- 新增运行时重建脚本，固定官方来源、提交、Python 版本、哈希锁和 wheel 安装；现有运行时精确验证 2/2，不自动覆盖异常目录。
+- 8000 端口被 Docker Desktop 占用时没有改动现有进程；启动脚本增加 `-Port`，在 8765 完成预检、构建、启动、v1 health 和停止。
+- 无管理员令牌时 `-RequireDynamic` 失败闭锁；默认启动返回 `degraded`，不冒充动态就绪，静态功能可用。
+- 验证为可移植专项 `5 passed`、后端完整 `329 passed`、前端 `10 passed`、冻结离线安装和生产构建通过。
+- 结论为 `supported_on_current_machine_and_simulated_user`；真正洁净 Windows VM 从零复现未完成，保留为 P0-5。
+- 固定证据：`artifacts/experiment/2026-08-24-portable-startup-dev-v1/`；下一路由为 P0-2 动态任务并发与重启恢复。

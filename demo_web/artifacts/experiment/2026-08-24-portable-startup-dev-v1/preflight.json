@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "profile": "static-only",
+  "ready": true,
+  "dynamic_ready": false,
+  "required_failures": 0,
+  "warnings": 0,
+  "project_root_resolution": "script-relative",
+  "checks": {
+    "required_files": "PASS",
+    "skill_version": "2.0.13.dev3+g4dee90371",
+    "mcp_version": "4.8.2",
+    "backend_runtime": "PASS",
+    "policy_load": "aegis-chain-local-default@1.0.0",
+    "policy_sha256": "010ca27b327e5098b11d7819563b40a607cac7698ac01019740557b8eaececf5",
+    "package_manager": "pnpm 11.19.0",
+    "data_write": "PASS",
+    "dynamic_checks": "SKIP"
+  }
+}

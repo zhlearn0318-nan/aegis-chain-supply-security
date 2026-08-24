@@ -1,0 +1,12 @@
+{
+  "port": 8765,
+  "start_exit_code": 0,
+  "health_endpoint": "/api/v1/health",
+  "api_version": "v1",
+  "status": "degraded",
+  "mode": "LOCAL_STATIC_PLUS_TRUSTED_FIXTURE_DYNAMIC",
+  "policy_ready": true,
+  "policy_version": "1.0.0",
+  "degraded_reason": "administrator dynamic prerequisites were intentionally not supplied",
+  "stop_exit_code": 0
+}
