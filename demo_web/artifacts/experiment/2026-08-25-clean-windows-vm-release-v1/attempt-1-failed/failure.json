@@ -1,0 +1,11 @@
+{
+    "schema_version":  "1.0",
+    "run_id":  "2026-08-25-clean-windows-vm-release-v1",
+    "status":  "failed",
+    "failed_at":  "2026-08-24T20:37:15.5093692+00:00",
+    "elapsed_seconds":  118.041,
+    "error_type":  "RuntimeException",
+    "error":  "01-bootstrap-runtimes failed with exit code 1. See C:\\AegisAcceptance\\evidence\\01-bootstrap-runtimes.log",
+    "expected_commit":  "35953be33c120caa316831aa42476029059cb1d7",
+    "evidence_is_release_acceptance":  false
+}

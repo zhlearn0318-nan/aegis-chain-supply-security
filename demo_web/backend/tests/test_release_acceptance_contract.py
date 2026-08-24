@@ -357,5 +357,9 @@ def test_guest_controller_and_gate_encode_non_simulation_contract() -> None:
     assert "Remove-Item -LiteralPath $sshPrivateKey -Force" in controller
     assert "dependency-offline" in gate
     assert "--porcelain=v1" in gate
+    assert '$priorErrorActionPreference = $ErrorActionPreference' in gate
+    assert '$ErrorActionPreference = "Continue"' in gate
+    assert '$ErrorActionPreference = $priorErrorActionPreference' in gate
+    assert '($Id + ".step.json")' in gate
     assert all("latest" not in item["url"] for item in manifest["artifacts"])
     assert all(len(item["sha256"]) == 64 for item in manifest["artifacts"])

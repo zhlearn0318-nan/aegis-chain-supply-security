@@ -1,0 +1,269 @@
+{
+    "schema_version":  "1.0",
+    "status":  "completed",
+    "virtual_machine":  {
+                            "proof_accepted":  true,
+                            "provider":  "virtualbox",
+                            "manufacturer":  "innotek GmbH",
+                            "model":  "VirtualBox",
+                            "bios_manufacturer":  "innotek GmbH",
+                            "bios_version":  "VirtualBox",
+                            "baseboard_manufacturer":  "Oracle Corporation",
+                            "baseboard_product":  "VirtualBox",
+                            "hypervisor_present":  true,
+                            "logical_processors":  4,
+                            "memory_bytes":  6422401024,
+                            "machine_guid_sha256":  "58a704f75a5ddf8f4ecd9926f6cd5f6d70b12a5711c90763d11d339fe4b70429"
+                        },
+    "toolchain_manifest_sha256":  "ca01337af7b523fed79fc2d6b88197c96a9ca4d69642bd9216931569f92fc1f5",
+    "controller_sha256":  "548cbb0b523914e4696c3aef4434b2d5c4d4eeeae7e36fe207ca15cf130a6e00",
+    "toolchain":  {
+                      "downloads":  [
+                                        {
+                                            "id":  "mingit",
+                                            "version":  "2.53.0.windows.3",
+                                            "file":  "MinGit-2.53.0.3-64-bit.zip",
+                                            "path":  "C:\\AegisAcceptance\\downloads\\MinGit-2.53.0.3-64-bit.zip",
+                                            "url":  "https://github.com/git-for-windows/git/releases/download/v2.53.0.windows.3/MinGit-2.53.0.3-64-bit.zip",
+                                            "sha256":  "0d7c85a26e45668b35d0d0aeb763289376cfc039e55e0938a617ed0dfa32e433",
+                                            "runtime_version":  "",
+                                            "license":  "GPL-2.0-only and bundled component licenses",
+                                            "verified":  true
+                                        },
+                                        {
+                                            "id":  "miniforge",
+                                            "version":  "25.11.0-1",
+                                            "file":  "Miniforge3-25.11.0-1-Windows-x86_64.exe",
+                                            "path":  "C:\\AegisAcceptance\\downloads\\Miniforge3-25.11.0-1-Windows-x86_64.exe",
+                                            "url":  "https://github.com/conda-forge/miniforge/releases/download/25.11.0-1/Miniforge3-25.11.0-1-Windows-x86_64.exe",
+                                            "sha256":  "c09c1185040d7a085e954be226c9a9c8dfaad43286d89de6b73455a7d848365c",
+                                            "runtime_version":  "25.11.0",
+                                            "license":  "BSD-3-Clause and installed package licenses",
+                                            "verified":  true
+                                        },
+                                        {
+                                            "id":  "node",
+                                            "version":  "24.15.0",
+                                            "file":  "node-v24.15.0-win-x64.zip",
+                                            "path":  "C:\\AegisAcceptance\\downloads\\node-v24.15.0-win-x64.zip",
+                                            "url":  "https://nodejs.org/download/release/v24.15.0/node-v24.15.0-win-x64.zip",
+                                            "sha256":  "cc5149eabd53779ce1e7bdc5401643622d0c7e6800ade18928a767e940bb0e62",
+                                            "runtime_version":  "",
+                                            "license":  "MIT and bundled component licenses",
+                                            "verified":  true
+                                        },
+                                        {
+                                            "id":  "pnpm",
+                                            "version":  "11.19.0",
+                                            "file":  "pnpm-11.19.0.tgz",
+                                            "path":  "C:\\AegisAcceptance\\downloads\\pnpm-11.19.0.tgz",
+                                            "url":  "https://registry.npmjs.org/pnpm/-/pnpm-11.19.0.tgz",
+                                            "integrity":  "sha512-eIHz7VkNRyxKlV4riLISF5ERYGbcyIy8o4SeybYPG7qm0syyIfqR2k4cZb7yvL43k2Wup6xTnHv4be3DobItzg==",
+                                            "license":  "MIT",
+                                            "verified":  true
+                                        }
+                                    ],
+                      "git":  {
+                                  "version":  "git version 2.53.0.windows.3",
+                                  "path":  "C:\\AegisAcceptance\\tools\\mingit-2.53.0.3\\cmd\\git.exe"
+                              },
+                      "node":  {
+                                   "version":  "24.15.0",
+                                   "path":  "C:\\AegisAcceptance\\tools\\node-v24.15.0-win-x64\\node.exe"
+                               },
+                      "conda":  {
+                                    "version":  "conda 25.11.0",
+                                    "path":  "C:\\AegisAcceptance\\tools\\miniforge3-25.11.0-1\\Scripts\\conda.exe"
+                                },
+                      "pnpm":  {
+                                   "version":  "11.19.0",
+                                   "path":  "C:\\AegisAcceptance\\tools\\pnpm-11.19.0\\pnpm.cmd",
+                                   "integrity":  "sha512-eIHz7VkNRyxKlV4riLISF5ERYGbcyIy8o4SeybYPG7qm0syyIfqR2k4cZb7yvL43k2Wup6xTnHv4be3DobItzg=="
+                               }
+                  },
+    "repository":  {
+                       "fresh_clone":  true,
+                       "target_preexisted":  false,
+                       "url":  "ssh://git@ssh.github.com:443/zhlearn0318-nan/aegis-chain-supply-security.git",
+                       "ref":  "refs/heads/dynamic-audit-v1",
+                       "remote_commit":  "35953be33c120caa316831aa42476029059cb1d7",
+                       "checkout_commit":  "35953be33c120caa316831aa42476029059cb1d7",
+                       "initial_status":  "",
+                       "preexisting_generated_paths":  [
+
+                                                       ],
+                       "clone_started_at":  "2026-08-24T20:34:15.0949979+00:00",
+                       "clone_completed_at":  "2026-08-24T20:34:25.2858500+00:00",
+                       "path":  "C:\\AegisAcceptance\\repository"
+                   },
+    "negative_control":  {
+                             "prebootstrap_preflight_exit":  1,
+                             "prebootstrap_required_failures":  5,
+                             "prebootstrap_ready":  false,
+                             "output":  {
+                                            "schema_version":  "1.0",
+                                            "profile":  "static-only",
+                                            "ready":  false,
+                                            "dynamic_ready":  false,
+                                            "required_failures":  5,
+                                            "warnings":  0,
+                                            "project_root":  "C:\\AegisAcceptance\\repository",
+                                            "checks":  [
+                                                           {
+                                                               "id":  "project_root",
+                                                               "label":  "Project root",
+                                                               "status":  "PASS",
+                                                               "required":  true,
+                                                               "message":  "Resolved from script location",
+                                                               "detail":  "C:\\AegisAcceptance\\repository"
+                                                           },
+                                                           {
+                                                               "id":  "skill_python",
+                                                               "label":  "Skill Python",
+                                                               "status":  "FAIL",
+                                                               "required":  true,
+                                                               "message":  "Missing; run bootstrap_runtimes.ps1 or follow QUICKSTART.md",
+                                                               "detail":  "C:\\AegisAcceptance\\repository\\.runtime_skill\\Scripts\\python.exe"
+                                                           },
+                                                           {
+                                                               "id":  "skill_scanner",
+                                                               "label":  "Cisco Skill Scanner",
+                                                               "status":  "FAIL",
+                                                               "required":  true,
+                                                               "message":  "Missing; run bootstrap_runtimes.ps1 or follow QUICKSTART.md",
+                                                               "detail":  "C:\\AegisAcceptance\\repository\\.runtime_skill\\Scripts\\skill-scanner.exe"
+                                                           },
+                                                           {
+                                                               "id":  "mcp_python",
+                                                               "label":  "MCP Python",
+                                                               "status":  "FAIL",
+                                                               "required":  true,
+                                                               "message":  "Missing; run bootstrap_runtimes.ps1 or follow QUICKSTART.md",
+                                                               "detail":  "C:\\AegisAcceptance\\repository\\.runtime_mcp313\\Scripts\\python.exe"
+                                                           },
+                                                           {
+                                                               "id":  "mcp_scanner",
+                                                               "label":  "Cisco MCP Scanner",
+                                                               "status":  "FAIL",
+                                                               "required":  true,
+                                                               "message":  "Missing; run bootstrap_runtimes.ps1 or follow QUICKSTART.md",
+                                                               "detail":  "C:\\AegisAcceptance\\repository\\.runtime_mcp313\\Scripts\\mcp-scanner.exe"
+                                                           },
+                                                           {
+                                                               "id":  "pip_audit",
+                                                               "label":  "pip-audit",
+                                                               "status":  "FAIL",
+                                                               "required":  true,
+                                                               "message":  "Missing; run bootstrap_runtimes.ps1 or follow QUICKSTART.md",
+                                                               "detail":  "C:\\AegisAcceptance\\repository\\.runtime_mcp313\\Scripts\\pip-audit.exe"
+                                                           },
+                                                           {
+                                                               "id":  "policy",
+                                                               "label":  "Admission policy",
+                                                               "status":  "PASS",
+                                                               "required":  true,
+                                                               "message":  "Available",
+                                                               "detail":  "C:\\AegisAcceptance\\repository\\demo_web\\config\\admission_policy.yaml"
+                                                           },
+                                                           {
+                                                               "id":  "frontend_manifest",
+                                                               "label":  "Frontend package manifest",
+                                                               "status":  "PASS",
+                                                               "required":  true,
+                                                               "message":  "Available",
+                                                               "detail":  "C:\\AegisAcceptance\\repository\\demo_web\\frontend\\package.json"
+                                                           },
+                                                           {
+                                                               "id":  "frontend_lock",
+                                                               "label":  "Frontend frozen lockfile",
+                                                               "status":  "PASS",
+                                                               "required":  true,
+                                                               "message":  "Available",
+                                                               "detail":  "C:\\AegisAcceptance\\repository\\demo_web\\frontend\\pnpm-lock.yaml"
+                                                           },
+                                                           {
+                                                               "id":  "backend_lock",
+                                                               "label":  "Backend hash lockfile",
+                                                               "status":  "PASS",
+                                                               "required":  true,
+                                                               "message":  "Available",
+                                                               "detail":  "C:\\AegisAcceptance\\repository\\demo_web\\backend\\requirements.lock"
+                                                           },
+                                                           {
+                                                               "id":  "runtime_security_lock",
+                                                               "label":  "Shared runtime security lock",
+                                                               "status":  "PASS",
+                                                               "required":  true,
+                                                               "message":  "Available",
+                                                               "detail":  "C:\\AegisAcceptance\\repository\\demo_web\\backend\\runtime-security.lock"
+                                                           },
+                                                           {
+                                                               "id":  "package_manager",
+                                                               "label":  "Frontend package manager",
+                                                               "status":  "PASS",
+                                                               "required":  true,
+                                                               "message":  "corepack pnpm",
+                                                               "detail":  "11.23.0"
+                                                           },
+                                                           {
+                                                               "id":  "data_write",
+                                                               "label":  "Runtime data directory",
+                                                               "status":  "PASS",
+                                                               "required":  true,
+                                                               "message":  "Create/write/delete probe passed",
+                                                               "detail":  "C:\\AegisAcceptance\\repository\\demo_web\\data"
+                                                           },
+                                                           {
+                                                               "id":  "dynamic_config",
+                                                               "label":  "dynamic_config",
+                                                               "status":  "SKIP",
+                                                               "required":  false,
+                                                               "message":  "Dynamic checks skipped explicitly",
+                                                               "detail":  ""
+                                                           },
+                                                           {
+                                                               "id":  "admin_token",
+                                                               "label":  "admin_token",
+                                                               "status":  "SKIP",
+                                                               "required":  false,
+                                                               "message":  "Dynamic checks skipped explicitly",
+                                                               "detail":  ""
+                                                           },
+                                                           {
+                                                               "id":  "docker_cli",
+                                                               "label":  "docker_cli",
+                                                               "status":  "SKIP",
+                                                               "required":  false,
+                                                               "message":  "Dynamic checks skipped explicitly",
+                                                               "detail":  ""
+                                                           },
+                                                           {
+                                                               "id":  "docker_engine",
+                                                               "label":  "docker_engine",
+                                                               "status":  "SKIP",
+                                                               "required":  false,
+                                                               "message":  "Dynamic checks skipped explicitly",
+                                                               "detail":  ""
+                                                           },
+                                                           {
+                                                               "id":  "docker_image",
+                                                               "label":  "docker_image",
+                                                               "status":  "SKIP",
+                                                               "required":  false,
+                                                               "message":  "Dynamic checks skipped explicitly",
+                                                               "detail":  ""
+                                                           }
+                                                       ]
+                                        }
+                         },
+    "sensitive_values":  {
+                             "git_authentication_mode":  "read_only_deploy_key",
+                             "github_token_environment":  "AEGIS_GITHUB_READ_TOKEN",
+                             "github_token_retained":  false,
+                             "git_ssh_private_key_retained":  false,
+                             "proxy_credentials_allowed":  false
+                         },
+    "network":  {
+                    "proxy_configured":  true
+                }
+}

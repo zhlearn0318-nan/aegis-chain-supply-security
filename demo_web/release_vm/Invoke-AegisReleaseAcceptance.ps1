@@ -45,14 +45,34 @@ function Invoke-LoggedStep {
     $stepStart = [DateTimeOffset]::UtcNow
     $timer = [Diagnostics.Stopwatch]::StartNew()
     $prior = Get-Location
+    $priorErrorActionPreference = $ErrorActionPreference
     try {
         Set-Location -LiteralPath $WorkingDirectory
-        $output = (& $Command @Arguments 2>&1 | ForEach-Object { $_.ToString() }) -join "`n"
+        # Windows PowerShell 5.1 wraps native stderr as ErrorRecord objects. With the
+        # script-wide Stop policy those records terminate this collector before the
+        # native process exit code and useful stderr can be persisted. Continue only
+        # inside the collector; the explicit exit-code gate below remains fail closed.
+        $ErrorActionPreference = "Continue"
+        $records = @(& $Command @Arguments 2>&1)
+        $output = ($records | ForEach-Object {
+            if ($_ -is [Management.Automation.ErrorRecord]) {
+                $text = $_.ToString()
+                $exceptionText = if ($_.Exception) { $_.Exception.ToString() } else { "" }
+                if ($exceptionText -and $exceptionText -ne $text) {
+                    $text + "`n" + $exceptionText
+                } else {
+                    $text
+                }
+            } else {
+                $_.ToString()
+            }
+        }) -join "`n"
         $exitCode = if ($null -eq $LASTEXITCODE) { 0 } else { $LASTEXITCODE }
     } catch {
-        $output = $_.Exception.ToString()
+        $output = (@($_.ToString(), $_.Exception.ToString()) | Select-Object -Unique) -join "`n"
         $exitCode = 1
     } finally {
+        $ErrorActionPreference = $priorErrorActionPreference
         Set-Location -LiteralPath $prior
         $timer.Stop()
     }
@@ -67,6 +87,7 @@ function Invoke-LoggedStep {
         exit_code = [int]$exitCode
         log = [IO.Path]::GetFileName($logPath)
     }
+    Write-Utf8Json (Join-Path $EvidenceRoot ($Id + ".step.json")) $row
     if ($exitCode -ne 0 -and -not $AllowFailure) {
         throw "$Id failed with exit code $exitCode. See $logPath"
     }

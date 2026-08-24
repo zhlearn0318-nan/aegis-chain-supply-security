@@ -15,10 +15,12 @@
 
 ## 当前执行
 
-- [ ] 获得创建临时、单仓库只读 GitHub Deploy Key 的明确授权。
-- [ ] 生成一次性密钥，添加只读 deploy key，准备官方 GitHub SSH `known_hosts`。
-- [ ] 将更新后的引导控制器和认证材料安全传入 guest。
-- [ ] 冻结远端 `dynamic-audit-v1` 40 位 HEAD 并执行正式主运行。
+- [x] 获得创建临时、单仓库只读 GitHub Deploy Key 的明确授权。
+- [x] 生成一次性密钥，添加只读 deploy key，核验官方 GitHub SSH `known_hosts`。
+- [x] 将引导控制器和认证材料安全传入 guest；私钥 ACL 与 clone 后删除均验证通过。
+- [x] 第一次主运行完成真实 clone 与负向 preflight，随后在运行时引导阶段失败；失败证据已固化且未冒充成功。
+- [x] 修复原生 stderr 丢失，新增失败步骤 `.step.json`；AST、专项回归与行为探针通过。
+- [ ] 提交并推送修复，复制新控制器和一次性私钥，在全新工作目录执行第二次正式主运行。
 
 ## 主运行验证
 
