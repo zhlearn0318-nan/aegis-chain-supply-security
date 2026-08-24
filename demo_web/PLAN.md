@@ -340,3 +340,21 @@
 - 验证为可移植专项 `5 passed`、后端完整 `329 passed`、前端 `10 passed`、冻结离线安装和生产构建通过。
 - 结论为 `supported_on_current_machine_and_simulated_user`；真正洁净 Windows VM 从零复现未完成，保留为 P0-5。
 - 固定证据：`artifacts/experiment/2026-08-24-portable-startup-dev-v1/`；下一路由为 P0-2 动态任务并发与重启恢复。
+
+## 19. M5 P0/P1/P2 工程收敛（2026-08-24）
+
+- 用户明确要求完成 M5 全部 P0/P1/P2 工程项，不包含 PPT、视频和答辩材料。
+- 每个通过验收的里程碑可直接提交并推送到 `origin/dynamic-audit-v1`。
+- 可引入必要开源依赖，但必须固定版本、核验来源/许可/哈希，不执行第三方不可信样本。
+- P0-5 必须使用 Windows Sandbox 作为真实洁净 Windows VM；本机模拟不作为最终通过证据。
+- 详细顺序、退出门和 P0-2 验收合同见 `docs/M5_ENGINEERING_EXECUTION_PLAN.md`。
+- 当前执行节点：P0-2 `2026-08-24-dynamic-queue-recovery-dev-v1`；基线 `3f02072`。
+
+### 19.1 P0-2 实际结果
+
+- 采用 SQLite 持久队列和单执行器；数据库原子认领是全局互斥真值，UI 只展示后端队列状态。
+- 活动任务与 5 秒冷却窗口内的同类提交合并到原 ID；等待队列默认上限 4，超限结构化返回 429。
+- 重启时 running 失败闭锁、queued 保留 FIFO；执行器未落终态由调度器补写失败，不遗留永久中间态。
+- 验收：专项 14 passed、后端 335 passed、前端 10 passed、生产构建通过；规则、政策和 fixture 哈希未修改。
+- 证据：`artifacts/experiment/2026-08-24-dynamic-queue-recovery-dev-v1/`。
+- 结论边界：只证明单主机 SQLite 调度，不等价于多实例生产队列；下一节点为 P0-3 当前状态真值。

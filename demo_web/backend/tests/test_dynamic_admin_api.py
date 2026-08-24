@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import sqlite3
+import time
 
 from fastapi.testclient import TestClient
 
@@ -15,6 +16,18 @@ ADMIN_HEADER = {"X-Aegis-Admin-Token": ADMIN_TOKEN}
 def configure_isolated_runtime(monkeypatch, tmp_path) -> None:
     monkeypatch.setattr(gateway, "DB_PATH", tmp_path / "scan_history.db")
     monkeypatch.setattr(gateway, "DYNAMIC_JOB_ROOT", tmp_path / "dynamic-audit-jobs")
+
+
+def wait_for_terminal(client: TestClient, job_id: str, timeout: float = 5.0):
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline:
+        response = client.get(
+            f"/api/v1/admin/dynamic-audits/{job_id}", headers=ADMIN_HEADER
+        )
+        if response.json()["data"]["status"] in {"completed", "failed"}:
+            return response
+        time.sleep(0.02)
+    raise AssertionError(f"dynamic audit {job_id} did not reach a terminal state")
 
 
 def test_dynamic_admin_api_fails_closed_when_server_token_is_not_configured(
@@ -99,9 +112,7 @@ def test_dynamic_create_list_and_detail_persist_no_token(
         listed = client.get(
             "/api/v1/admin/dynamic-audits?limit=5", headers=ADMIN_HEADER
         )
-        detail = client.get(
-            f"/api/v1/admin/dynamic-audits/{job_id}", headers=ADMIN_HEADER
-        )
+        detail = wait_for_terminal(client, job_id)
 
     assert created.status_code == 202
     assert created.json()["data"]["status"] == "queued"
@@ -195,9 +206,7 @@ def test_skill_closure_job_uses_fixed_identity_and_persists_only_redacted_result
             "/api/v1/admin/dynamic-audits/skill-closure", headers=ADMIN_HEADER
         )
         job_id = created.json()["data"]["id"]
-        detail = client.get(
-            f"/api/v1/admin/dynamic-audits/{job_id}", headers=ADMIN_HEADER
-        )
+        detail = wait_for_terminal(client, job_id)
 
     job = detail.json()["data"]
     assert created.status_code == 202
@@ -232,9 +241,7 @@ def test_dynamic_real_fixture_execution_is_redacted_and_info_only(
     with TestClient(gateway.app) as client:
         created = client.post("/api/v1/admin/dynamic-audits", headers=ADMIN_HEADER)
         job_id = created.json()["data"]["id"]
-        detail = client.get(
-            f"/api/v1/admin/dynamic-audits/{job_id}", headers=ADMIN_HEADER
-        )
+        detail = wait_for_terminal(client, job_id)
 
     assert created.status_code == 202
     job = detail.json()["data"]
@@ -261,6 +268,7 @@ def test_dynamic_admin_openapi_declares_header_and_error_contract() -> None:
     assert "202" in operation["responses"]
     assert "400" in operation["responses"]
     assert "401" in operation["responses"]
+    assert "429" in operation["responses"]
     assert "503" in operation["responses"]
     header = next(
         item for item in operation["parameters"] if item["name"] == "X-Aegis-Admin-Token"
@@ -273,6 +281,7 @@ def test_dynamic_admin_openapi_declares_header_and_error_contract() -> None:
     assert "202" in closure_operation["responses"]
     assert "400" in closure_operation["responses"]
     assert "401" in closure_operation["responses"]
+    assert "429" in closure_operation["responses"]
     closure_header = next(
         item for item in closure_operation["parameters"]
         if item["name"] == "X-Aegis-Admin-Token"

@@ -42,6 +42,7 @@ from .api_contract import ErrorCode, GatewayHTTPException
 from .api_v1 import ApiV1Operations, install_api_v1
 from .dynamic_audit.runner import run_safe_fixture_set
 from .dynamic_audit.skill_closure import run_skill_closure_probe
+from .dynamic_queue import DynamicAuditScheduler
 from .models import SCHEMA_VERSION, DynamicAuditJob, ScanJob
 from .normalizers import normalize_mcp, normalize_pip_audit, normalize_skill
 from .policy import (
@@ -67,6 +68,12 @@ DYNAMIC_SKILL_CLOSURE_CONFIG = DEMO_ROOT / "config" / "docker_skill_closure_back
 DYNAMIC_JOB_ROOT = DATA_DIR / "dynamic-audit-jobs"
 ADMIN_TOKEN_ENV = "AEGIS_ADMIN_TOKEN"
 MIN_ADMIN_TOKEN_LENGTH = 16
+DYNAMIC_QUEUE_MAX_PENDING = max(
+    0, min(int(os.getenv("AEGIS_DYNAMIC_QUEUE_MAX_PENDING", "4")), 32)
+)
+DYNAMIC_QUEUE_DEDUPE_COOLDOWN_SECONDS = max(
+    0, min(int(os.getenv("AEGIS_DYNAMIC_DEDUPE_COOLDOWN_SECONDS", "5")), 300)
+)
 
 SKILL_SCANNER = ROOT / ".runtime_skill" / "Scripts" / "skill-scanner.exe"
 SKILL_PYTHON = ROOT / ".runtime_skill" / "Scripts" / "python.exe"
@@ -87,6 +94,12 @@ PROCESS_RUNNER = ProcessRunner(
     timeout_seconds=SCAN_TIMEOUT_SECONDS,
     cache_root=DATA_DIR / "cache",
     extra_path=MCP_SCRIPTS,
+)
+
+DYNAMIC_AUDIT_SCHEDULER = DynamicAuditScheduler(
+    claim_next=lambda: claim_next_dynamic_audit_job(),
+    run_job=lambda job_id: guarded_dynamic_audit_worker(job_id),
+    finalize_incomplete=lambda job_id: finalize_incomplete_dynamic_audit_job(job_id),
 )
 SKILL_ADAPTER = SkillScannerAdapter(scanner=SKILL_SCANNER, runner=PROCESS_RUNNER)
 MCP_ADAPTER = McpScannerAdapter(
@@ -143,7 +156,13 @@ PRESETS = {
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     init_db()
-    yield
+    recover_interrupted_dynamic_audit_jobs()
+    DYNAMIC_AUDIT_SCHEDULER.start()
+    DYNAMIC_AUDIT_SCHEDULER.notify()
+    try:
+        yield
+    finally:
+        DYNAMIC_AUDIT_SCHEDULER.stop()
 
 
 app = FastAPI(title="Agent Supply Chain Security Demo", version="1.2.0", lifespan=lifespan)
@@ -265,27 +284,56 @@ def save_dynamic_audit_job(job: dict[str, Any]) -> None:
     job.clear()
     job.update(validated)
     with closing(connect_db()) as db:
-        db.execute(
-            """
-            INSERT INTO dynamic_audits(
-                id, created_at, updated_at, status, fixture_set_id, payload_json
-            )
-            VALUES(?, ?, ?, ?, ?, ?)
-            ON CONFLICT(id) DO UPDATE SET
-                updated_at=excluded.updated_at,
-                status=excluded.status,
-                payload_json=excluded.payload_json
-            """,
-            (
-                job["id"],
-                job["created_at"],
-                job["updated_at"],
-                job["status"],
-                job["fixture_set_id"],
-                json.dumps(job, ensure_ascii=False),
-            ),
-        )
+        write_dynamic_audit_job(db, job)
         db.commit()
+
+
+def write_dynamic_audit_job(db: sqlite3.Connection, job: dict[str, Any]) -> None:
+    db.execute(
+        """
+        INSERT INTO dynamic_audits(
+            id, created_at, updated_at, status, fixture_set_id, payload_json
+        )
+        VALUES(?, ?, ?, ?, ?, ?)
+        ON CONFLICT(id) DO UPDATE SET
+            updated_at=excluded.updated_at,
+            status=excluded.status,
+            payload_json=excluded.payload_json
+        """,
+        (
+            job["id"],
+            job["created_at"],
+            job["updated_at"],
+            job["status"],
+            job["fixture_set_id"],
+            json.dumps(job, ensure_ascii=False),
+        ),
+    )
+
+
+def validate_dynamic_audit_job(payload: dict[str, Any]) -> dict[str, Any]:
+    return DynamicAuditJob.model_validate(payload).model_dump(mode="json")
+
+
+def decorate_dynamic_audit_job(job: dict[str, Any]) -> dict[str, Any]:
+    decorated = validate_dynamic_audit_job(job)
+    if decorated["status"] == "queued":
+        with closing(connect_db()) as db:
+            row = db.execute(
+                """
+                SELECT COUNT(*) AS jobs_ahead
+                FROM dynamic_audits
+                WHERE status = 'queued'
+                  AND (created_at < ? OR (created_at = ? AND id < ?))
+                """,
+                (decorated["created_at"], decorated["created_at"], decorated["id"]),
+            ).fetchone()
+        decorated["queue_position"] = int(row["jobs_ahead"]) + 1
+        decorated["queue_reason"] = "waiting_for_global_dynamic_audit_slot"
+    else:
+        decorated["queue_position"] = None
+        decorated["queue_reason"] = None
+    return decorated
 
 
 def load_dynamic_audit_job(job_id: str) -> dict[str, Any] | None:
@@ -295,12 +343,10 @@ def load_dynamic_audit_job(job_id: str) -> dict[str, Any] | None:
         ).fetchone()
     if not row:
         return None
-    return DynamicAuditJob.model_validate(
-        json.loads(row["payload_json"])
-    ).model_dump(mode="json")
+    return decorate_dynamic_audit_job(json.loads(row["payload_json"]))
 
 
-def new_dynamic_audit_job(
+def build_dynamic_audit_job(
     audit_type: str = "mechanism_fixture",
 ) -> dict[str, Any]:
     now = utc_now()
@@ -326,16 +372,189 @@ def new_dynamic_audit_job(
         updated_at=now,
         status="queued",
         fixture_set_sha256=sha256_bytes(config_path.read_bytes()),
+        submission_key=sha256_bytes(
+            f"{audit_type}:{sha256_bytes(config_path.read_bytes())}".encode("utf-8")
+        ),
+        queue_reason="waiting_for_global_dynamic_audit_slot",
         **values,
     ).model_dump(mode="json")
-    save_dynamic_audit_job(job)
     return job
+
+
+def enqueue_dynamic_audit_job(audit_type: str = "mechanism_fixture") -> dict[str, Any]:
+    candidate = build_dynamic_audit_job(audit_type)
+    with closing(connect_db()) as db:
+        db.execute("BEGIN IMMEDIATE")
+        active_rows = db.execute(
+            """
+            SELECT payload_json FROM dynamic_audits
+            WHERE status IN ('queued', 'running')
+            ORDER BY created_at ASC, id ASC
+            """
+        ).fetchall()
+        for row in active_rows:
+            active = validate_dynamic_audit_job(json.loads(row["payload_json"]))
+            if active.get("submission_key") == candidate["submission_key"]:
+                db.rollback()
+                response = decorate_dynamic_audit_job(active)
+                response["deduplicated"] = True
+                response["dedupe_reason"] = "active"
+                return response
+
+        if DYNAMIC_QUEUE_DEDUPE_COOLDOWN_SECONDS:
+            terminal_rows = db.execute(
+                """
+                SELECT payload_json FROM dynamic_audits
+                WHERE status IN ('completed', 'failed')
+                ORDER BY updated_at DESC
+                LIMIT 20
+                """
+            ).fetchall()
+            now = datetime.now(timezone.utc)
+            for row in terminal_rows:
+                terminal = validate_dynamic_audit_job(json.loads(row["payload_json"]))
+                if terminal.get("submission_key") != candidate["submission_key"]:
+                    continue
+                terminal_at = datetime.fromisoformat(
+                    terminal.get("finished_at") or terminal["updated_at"]
+                )
+                if (now - terminal_at).total_seconds() <= DYNAMIC_QUEUE_DEDUPE_COOLDOWN_SECONDS:
+                    db.rollback()
+                    response = decorate_dynamic_audit_job(terminal)
+                    response["deduplicated"] = True
+                    response["dedupe_reason"] = "cooldown"
+                    return response
+                break
+
+        queued_count = sum(
+            1
+            for row in active_rows
+            if json.loads(row["payload_json"]).get("status") == "queued"
+        )
+        running_count = len(active_rows) - queued_count
+        if queued_count >= DYNAMIC_QUEUE_MAX_PENDING and (
+            running_count > 0 or queued_count > 0
+        ):
+            db.rollback()
+            raise GatewayHTTPException(
+                429,
+                ErrorCode.DYNAMIC_AUDIT_QUEUE_FULL,
+                "动态验证等待队列已满，请等待当前任务完成后重试。",
+                details={
+                    "max_pending": DYNAMIC_QUEUE_MAX_PENDING,
+                    "queued": queued_count,
+                    "running": running_count,
+                },
+            )
+        write_dynamic_audit_job(db, candidate)
+        db.commit()
+    return decorate_dynamic_audit_job(candidate)
+
+
+def new_dynamic_audit_job(
+    audit_type: str = "mechanism_fixture",
+) -> dict[str, Any]:
+    return enqueue_dynamic_audit_job(audit_type)
 
 
 def update_dynamic_audit_job(job: dict[str, Any], **changes: Any) -> None:
     job.update(changes)
     job["updated_at"] = utc_now()
     save_dynamic_audit_job(job)
+
+
+def claim_next_dynamic_audit_job() -> str | None:
+    """Atomically claim the FIFO head only when no other job is running."""
+    with closing(connect_db()) as db:
+        db.execute("BEGIN IMMEDIATE")
+        running = db.execute(
+            "SELECT 1 FROM dynamic_audits WHERE status = 'running' LIMIT 1"
+        ).fetchone()
+        if running:
+            db.rollback()
+            return None
+        row = db.execute(
+            """
+            SELECT payload_json FROM dynamic_audits
+            WHERE status = 'queued'
+            ORDER BY created_at ASC, id ASC
+            LIMIT 1
+            """
+        ).fetchone()
+        if not row:
+            db.rollback()
+            return None
+        job = validate_dynamic_audit_job(json.loads(row["payload_json"]))
+        now = utc_now()
+        job.update(
+            status="running",
+            updated_at=now,
+            started_at=now,
+            finished_at=None,
+            attempt=int(job.get("attempt") or 0) + 1,
+            queue_position=None,
+            queue_reason=None,
+            deduplicated=False,
+            dedupe_reason=None,
+            error_code=None,
+            error=None,
+        )
+        write_dynamic_audit_job(db, validate_dynamic_audit_job(job))
+        db.commit()
+        return str(job["id"])
+
+
+def recover_interrupted_dynamic_audit_jobs() -> dict[str, int]:
+    """Fail interrupted runners and retain queued work for FIFO resumption."""
+    recovered = {"failed_running": 0, "retained_queued": 0}
+    now = utc_now()
+    with closing(connect_db()) as db:
+        db.execute("BEGIN IMMEDIATE")
+        rows = db.execute(
+            """
+            SELECT payload_json FROM dynamic_audits
+            WHERE status IN ('queued', 'running')
+            ORDER BY created_at ASC, id ASC
+            """
+        ).fetchall()
+        for row in rows:
+            job = validate_dynamic_audit_job(json.loads(row["payload_json"]))
+            job["updated_at"] = now
+            job["recovered_after_restart"] = True
+            job["recovery_count"] = int(job.get("recovery_count") or 0) + 1
+            if job["status"] == "running":
+                job.update(
+                    status="failed",
+                    finished_at=now,
+                    error_code="DYNAMIC_AUDIT_INTERRUPTED_BY_RESTART",
+                    error="服务重启中断了动态验证；任务已失败闭锁，请重新提交。",
+                    recovery_note="interrupted_running_job_failed_closed",
+                    queue_position=None,
+                    queue_reason=None,
+                )
+                recovered["failed_running"] += 1
+            else:
+                job.update(
+                    recovery_note="queued_job_retained_for_fifo_resume",
+                    queue_reason="waiting_for_global_dynamic_audit_slot",
+                )
+                recovered["retained_queued"] += 1
+            write_dynamic_audit_job(db, validate_dynamic_audit_job(job))
+        db.commit()
+    return recovered
+
+
+def finalize_incomplete_dynamic_audit_job(job_id: str) -> None:
+    job = load_dynamic_audit_job(job_id)
+    if not job or job["status"] != "running":
+        return
+    update_dynamic_audit_job(
+        job,
+        status="failed",
+        finished_at=utc_now(),
+        error_code="DYNAMIC_AUDIT_WORKER_DID_NOT_FINALIZE",
+        error="动态验证执行器未写入终态，任务已失败闭锁。",
+    )
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -592,7 +811,8 @@ def guarded_dynamic_audit_worker(job_id: str) -> None:
     job = load_dynamic_audit_job(job_id)
     if not job:
         return
-    update_dynamic_audit_job(job, status="running", error_code=None, error=None)
+    if job["status"] != "running":
+        return
     started = time.perf_counter()
     job_root = DYNAMIC_JOB_ROOT / job_id
     try:
@@ -614,6 +834,7 @@ def guarded_dynamic_audit_worker(job_id: str) -> None:
                 events=[],
                 closure=public_skill_closure_result(result),
                 duration_ms=round((time.perf_counter() - started) * 1000),
+                finished_at=utc_now(),
                 error_code=None if completed else (
                     (result.get("error") or {}).get("code")
                     or "SKILL_CLOSURE_VALIDATION_FAILED"
@@ -637,6 +858,7 @@ def guarded_dynamic_audit_worker(job_id: str) -> None:
                 events=info_events,
                 closure=None,
                 duration_ms=round((time.perf_counter() - started) * 1000),
+                finished_at=utc_now(),
                 error_code=None if completed else "DYNAMIC_FIXTURE_VALIDATION_FAILED",
                 error=None if completed else "内置动态验证未满足全部预期机制，请检查任务指标。",
             )
@@ -645,6 +867,7 @@ def guarded_dynamic_audit_worker(job_id: str) -> None:
             job,
             status="failed",
             duration_ms=round((time.perf_counter() - started) * 1000),
+            finished_at=utc_now(),
             error_code="DYNAMIC_AUDIT_EXECUTION_FAILED",
             error="内置动态验证执行失败，未产生可用于准入决策的结论。",
         )
@@ -1040,7 +1263,7 @@ def start_dynamic_audit(
             "内置动态验证样本集不可用。",
         )
     job = new_dynamic_audit_job()
-    background.add_task(guarded_dynamic_audit_worker, job["id"])
+    DYNAMIC_AUDIT_SCHEDULER.notify()
     return job
 
 
@@ -1055,7 +1278,7 @@ def start_skill_closure_audit(
             "Skill 运行时闭包能力不可用。",
         )
     job = new_dynamic_audit_job("skill_runtime_closure")
-    background.add_task(guarded_dynamic_audit_worker, job["id"])
+    DYNAMIC_AUDIT_SCHEDULER.notify()
     return job
 
 
@@ -1069,12 +1292,7 @@ def list_dynamic_audits(
             "SELECT payload_json FROM dynamic_audits ORDER BY created_at DESC LIMIT ?",
             (limit,),
         ).fetchall()
-    return [
-        DynamicAuditJob.model_validate(json.loads(row["payload_json"])).model_dump(
-            mode="json"
-        )
-        for row in rows
-    ]
+    return [decorate_dynamic_audit_job(json.loads(row["payload_json"])) for row in rows]
 
 
 def get_dynamic_audit(

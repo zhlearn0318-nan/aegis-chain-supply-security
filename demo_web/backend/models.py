@@ -145,6 +145,17 @@ class DynamicAuditJob(BaseModel):
     created_at: str
     updated_at: str
     status: DynamicAuditStatus
+    submission_key: str | None = None
+    queue_position: int | None = None
+    queue_reason: str | None = None
+    deduplicated: bool = False
+    dedupe_reason: Literal["active", "cooldown"] | None = None
+    attempt: int = 0
+    started_at: str | None = None
+    finished_at: str | None = None
+    recovered_after_restart: bool = False
+    recovery_count: int = 0
+    recovery_note: str | None = None
     audit_type: Literal["mechanism_fixture", "skill_runtime_closure"] = "mechanism_fixture"
     fixture_set_id: Literal[
         "aegis-safe-dynamic-fixtures-v1",

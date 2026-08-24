@@ -211,7 +211,7 @@ def install_api_v1(app: FastAPI, operations: ApiV1Operations) -> None:
         "/api/v1/admin/dynamic-audits",
         status_code=202,
         response_model=ApiResponse[DynamicAuditJob],
-        responses=v1_error_responses(400, 401, 503, 500),
+        responses=v1_error_responses(400, 401, 429, 503, 500),
     )
     async def start_dynamic_audit_v1(
         request: Request,
@@ -241,7 +241,7 @@ def install_api_v1(app: FastAPI, operations: ApiV1Operations) -> None:
         "/api/v1/admin/dynamic-audits/skill-closure",
         status_code=202,
         response_model=ApiResponse[DynamicAuditJob],
-        responses=v1_error_responses(400, 401, 503, 500),
+        responses=v1_error_responses(400, 401, 429, 503, 500),
     )
     async def start_skill_closure_audit_v1(
         request: Request,

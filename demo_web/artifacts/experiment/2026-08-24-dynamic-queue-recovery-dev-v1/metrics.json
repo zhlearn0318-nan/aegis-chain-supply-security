@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-24-dynamic-queue-recovery-dev-v1",
+  "max_concurrent_running": 1,
+  "fifo_violations": 0,
+  "active_duplicate_new_jobs": 0,
+  "cooldown_duplicate_new_jobs": 0,
+  "queue_limit_rejections": 1,
+  "queue_limit_http_status": 429,
+  "atomic_claim_winners_for_two_threads": 1,
+  "interrupted_running_failed_closed": 1,
+  "queued_jobs_retained_after_restart": 1,
+  "non_finalizing_workers_failed_closed": 1,
+  "permanent_intermediate_states": 0,
+  "workspace_residuals": 0,
+  "container_residuals": 0,
+  "third_party_samples_executed": 0,
+  "decision_changes": 0,
+  "targeted_tests_passed": 14,
+  "backend_tests_passed": 335,
+  "frontend_tests_passed": 10,
+  "frontend_build_passed": true
+}

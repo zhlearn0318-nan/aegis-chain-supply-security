@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-24-dynamic-queue-recovery-dev-v1",
+  "date": "2026-08-24",
+  "evidence_level": "auxiliary/dev",
+  "branch": "dynamic-audit-v1",
+  "baseline_commit": "3f02072087426ba451103b0300b71fac1fb7f2f2",
+  "objective": "为动态验证任务建立单主机持久互斥、FIFO、有界队列、去重冷却和重启恢复。",
+  "implementation": {
+    "queue_truth": "SQLite dynamic_audits",
+    "claim_transaction": "BEGIN IMMEDIATE",
+    "worker_concurrency": 1,
+    "default_max_pending": 4,
+    "default_dedupe_cooldown_seconds": 5
+  },
+  "environment": {
+    "os": "Windows",
+    "python": "3.13.14",
+    "node": "24.15.0",
+    "npm": "11.12.1"
+  },
+  "verification": [
+    {"name": "dynamic queue and admin API", "result": "14 passed", "status": "passed"},
+    {"name": "backend full regression", "result": "335 passed", "status": "passed"},
+    {"name": "frontend API tests", "result": "10 passed", "status": "passed"},
+    {"name": "frontend production build", "result": "vite build passed", "status": "passed"}
+  ],
+  "frozen_inputs": [
+    "static detection rules",
+    "admission policy",
+    "safe dynamic fixture definitions",
+    "Cisco scanner runtimes"
+  ],
+  "excluded_claims": [
+    "multi-instance distributed queue safety",
+    "high availability",
+    "third-party untrusted sample execution"
+  ]
+}

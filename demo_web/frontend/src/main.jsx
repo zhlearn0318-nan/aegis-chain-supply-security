@@ -271,6 +271,7 @@ function DynamicAuditPanel({ engine, closureEngine }) {
   const [history, setHistory] = useState([])
   const [current, setCurrent] = useState(null)
   const [error, setError] = useState(null)
+  const [submissionNotice, setSubmissionNotice] = useState('')
   const running = current && ['queued', 'running'].includes(current.status)
 
   function rememberError(err) {
@@ -307,6 +308,9 @@ function DynamicAuditPanel({ engine, closureEngine }) {
       setCurrent(job)
       setConnected(true)
       setError(null)
+      setSubmissionNotice(job.deduplicated
+        ? '相同验证已在队列或执行中，本次请求已合并到原任务。'
+        : '任务已进入持久队列；服务将按提交顺序逐个执行。')
     } catch (err) { rememberError(err) }
   }
 
@@ -342,6 +346,7 @@ function DynamicAuditPanel({ engine, closureEngine }) {
     setHistory([])
     setCurrent(null)
     setError(null)
+    setSubmissionNotice('')
   }
 
   const metrics = current?.metrics
@@ -353,8 +358,10 @@ function DynamicAuditPanel({ engine, closureEngine }) {
     ? isClosure ? '闭包验证通过' : '机制验证通过'
     : current?.status === 'failed'
       ? '机制验证异常'
-      : current
-        ? '正在验证'
+      : current?.status === 'queued'
+        ? `排队中${current.queue_position ? `（第 ${current.queue_position} 位）` : ''}`
+        : current?.status === 'running'
+          ? '正在验证'
         : '等待管理员启动'
 
   return (
@@ -399,14 +406,14 @@ function DynamicAuditPanel({ engine, closureEngine }) {
             <span className={`dynamic-state state-${current?.status || 'idle'}`}>{statusLabel}</span>
           </div>
           <div className="audit-option-grid">
-            <button type="button" onClick={() => startAudit('mechanism_fixture')} disabled={!adminToken || running || !engine?.ready}>
+            <button type="button" onClick={() => startAudit('mechanism_fixture')} disabled={!adminToken || !engine?.ready}>
               <span>基础机制</span><strong>进程 · 文件 · 回环网络</strong><small>3 个可信样本 / INFO 观测</small>
             </button>
-            <button type="button" onClick={() => startAudit('skill_runtime_closure')} disabled={!adminToken || running || !closureEngine?.ready}>
+            <button type="button" onClick={() => startAudit('skill_runtime_closure')} disabled={!adminToken || !closureEngine?.ready}>
               <span>Skill 闭包</span><strong>运行前后目录 · 静态复审</strong><small>Docker 隔离 / Cisco + Aegis</small>
             </button>
           </div>
-          {running && <div className="dynamic-running-note">{icons.scan} 固定验证正在后台运行…</div>}
+          {submissionNotice && <div className="dynamic-running-note">{icons.scan} {submissionNotice}</div>}
           <small>接口不接收请求体，不允许上传脚本、指定路径或传入命令。</small>
         </div>
       </div>
@@ -416,7 +423,7 @@ function DynamicAuditPanel({ engine, closureEngine }) {
           <div><span className="eyebrow">REDACTED MECHANISM EVIDENCE</span><h3>{current?.display_name || '尚无动态验证结果'}</h3></div>
           {current && <code>{current.id.slice(0, 12)} · {current.status}</code>}
         </div>
-        {running && <div className="scan-progress" role="status"><i /><span>后台正在按固定清单执行，页面将自动刷新脱敏证据。</span></div>}
+        {running && <div className="scan-progress" role="status"><i /><span>{current.status === 'queued' ? `等待全局动态验证执行槽位${current.queue_position ? `，当前第 ${current.queue_position} 位` : ''}。` : '后台正在按固定清单执行，页面将自动刷新脱敏证据。'}</span></div>}
         {current?.error && <div className="error-box"><strong>{current.error_code}</strong><span>{current.error}</span></div>}
         <div className="dynamic-metrics">
           {isClosure
@@ -489,7 +496,7 @@ function DynamicAuditPanel({ engine, closureEngine }) {
         {!history.length && <p className="dynamic-empty">验证管理员身份后显示历史；记录不包含管理员令牌。</p>}
         {history.map((job) => (
           <button className="dynamic-history-row" type="button" key={job.id} onClick={() => setCurrent(job)}>
-            <span>{formatTime(job.created_at)}</span><strong>{job.display_name}</strong><code>{job.audit_type === 'skill_runtime_closure' ? 'Skill 闭包' : '基础机制'} · {job.status}</code><em>查看证据 →</em>
+            <span>{formatTime(job.created_at)}</span><strong>{job.display_name}</strong><code>{job.audit_type === 'skill_runtime_closure' ? 'Skill 闭包' : '基础机制'} · {job.status === 'queued' ? `排队第 ${job.queue_position || '—'} 位` : job.status}</code><em>查看证据 →</em>
           </button>
         ))}
       </div>

@@ -30,6 +30,7 @@ class ErrorCode(str, Enum):
     DYNAMIC_AUDIT_NOT_READY = "DYNAMIC_AUDIT_NOT_READY"
     DYNAMIC_AUDIT_NOT_FOUND = "DYNAMIC_AUDIT_NOT_FOUND"
     DYNAMIC_AUDIT_BODY_NOT_ALLOWED = "DYNAMIC_AUDIT_BODY_NOT_ALLOWED"
+    DYNAMIC_AUDIT_QUEUE_FULL = "DYNAMIC_AUDIT_QUEUE_FULL"
     EXPORT_FORMAT_UNSUPPORTED = "EXPORT_FORMAT_UNSUPPORTED"
     SBOM_UNAVAILABLE = "SBOM_UNAVAILABLE"
     REQUEST_VALIDATION_ERROR = "REQUEST_VALIDATION_ERROR"
@@ -119,6 +120,7 @@ ERROR_RESPONSE_DOCS: dict[int, dict[str, Any]] = {
     405: {"model": ApiErrorResponse, "description": "请求方法不受支持"},
     413: {"model": ApiErrorResponse, "description": "上传内容超过限制"},
     422: {"model": ApiErrorResponse, "description": "请求字段校验失败"},
+    429: {"model": ApiErrorResponse, "description": "动态验证等待队列已满"},
     500: {"model": ApiErrorResponse, "description": "网关内部错误"},
     503: {"model": ApiErrorResponse, "description": "动态验证能力尚未安全配置"},
 }
