@@ -112,7 +112,7 @@ Remove-Item Env:AEGIS_GITHUB_READ_TOKEN
 
 ## 9. 当前阻塞与下一判定
 
-- P0-4 提交 `c9e7a785dd69db39154a7741999ac150a62790be` 已在本地形成，但 GitHub 443 连接超时，仍需推送；P0-5 正式 clone 必须基于已经存在于私有远端的目标提交。
+- P0-4 与 P0-5 验收程序已推送至私有远端；正式运行前必须用 `git ls-remote` 取得 `dynamic-audit-v1` 当前完整 40 位 HEAD，并将同一值传给初始化器，禁止使用只存在于本机的提交。
 - 当前宿主没有可用的 VM 管理器和 Windows 安装 ISO；需要建立真实 Windows guest 后运行上述控制器。
 
 只有远端提交可取、真实 VM run 全部通过、证据清单逐项验真后，才能把决策改为 `clean_windows_vm_release_gate_passed`。在此之前保持 `implementation_ready_vm_evidence_pending` 和生产 `NO-GO`。
