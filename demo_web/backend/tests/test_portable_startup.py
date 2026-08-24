@@ -81,8 +81,10 @@ def test_powershell_runtime_resolver_supports_conda_and_venv_layouts(
 ) -> None:
     conda_root = tmp_path / "conda-runtime"
     venv_root = tmp_path / "venv-runtime"
+    library_bin = conda_root / "Library" / "bin"
     conda_root.mkdir()
     (venv_root / "Scripts").mkdir(parents=True)
+    library_bin.mkdir(parents=True)
     (conda_root / "python.exe").touch()
     (venv_root / "Scripts" / "python.exe").touch()
     helper = DEMO_ROOT / "scripts" / "portable_runtime.ps1"
@@ -90,7 +92,10 @@ def test_powershell_runtime_resolver_supports_conda_and_venv_layouts(
         f". '{helper}'; "
         f"$conda=Resolve-AegisRuntimePython -RuntimeRoot '{conda_root}'; "
         f"$venv=Resolve-AegisRuntimePython -RuntimeRoot '{venv_root}'; "
-        "[pscustomobject]@{conda=$conda;venv=$venv} | ConvertTo-Json -Compress"
+        f"$entries=@(Get-AegisRuntimePathEntries -RuntimeRoot '{conda_root}'); "
+        f"Add-AegisRuntimeToPath -RuntimeRoots @('{conda_root}') | Out-Null; "
+        f"[pscustomobject]@{{conda=$conda;venv=$venv;library_bin=($entries -contains '{library_bin}');"
+        "path_first=($env:PATH -split ';')[0]} | ConvertTo-Json -Compress"
     )
     completed = subprocess.run(
         [_powershell(), "-NoProfile", "-NonInteractive", "-Command", command],
@@ -104,6 +109,8 @@ def test_powershell_runtime_resolver_supports_conda_and_venv_layouts(
     result = json.loads(completed.stdout)
     assert Path(result["conda"]) == conda_root / "python.exe"
     assert Path(result["venv"]) == venv_root / "Scripts" / "python.exe"
+    assert result["library_bin"] is True
+    assert Path(result["path_first"]) == conda_root
 
 
 def test_cisco_reproduction_rejects_dependency_audit_fail_open() -> None:

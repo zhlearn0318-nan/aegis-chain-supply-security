@@ -1,0 +1,2434 @@
+Creating Cisco Skill Scanner runtime with Python 3.11...
+Channels:
+ - conda-forge
+Platform: win-64
+Collecting package metadata (repodata.json): - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ done
+Solving environment: / - done
+System.Management.Automation.RemoteException
+System.Management.Automation.RemoteException
+==> WARNING: A newer version of conda exists. <==
+System.Management.Automation.RemoteException: ==> WARNING: A newer version of conda exists. <==
+    current version: 25.11.0
+System.Management.Automation.RemoteException:     current version: 25.11.0
+    latest version: 26.7.1
+System.Management.Automation.RemoteException:     latest version: 26.7.1
+System.Management.Automation.RemoteException
+Please update conda by running
+System.Management.Automation.RemoteException: Please update conda by running
+System.Management.Automation.RemoteException
+    $ conda update -n base -c conda-forge conda
+System.Management.Automation.RemoteException:     $ conda update -n base -c conda-forge conda
+System.Management.Automation.RemoteException
+System.Management.Automation.RemoteException
+
+## Package Plan ##
+
+  environment location: C:\AegisAcceptanceAttempt3\repository\.runtime_skill
+
+  added / updated specs:
+    - pip
+    - python=3.11
+
+
+The following packages will be downloaded:
+
+    package                    |            build
+    ---------------------------|-----------------
+    bzip2-1.0.8                |      h0ad9c76_10          55 KB  conda-forge
+    ca-certificates-2026.7.22  |       h4c7d964_0         129 KB  conda-forge
+    libexpat-2.8.1             |       hac47afa_1          70 KB  conda-forge
+    libffi-3.7.0               |       h3d046cb_0          49 KB  conda-forge
+    liblzma-5.8.3              |       hfd05255_1         103 KB  conda-forge
+    libsqlite-3.53.4           |       hf5d6505_1         1.3 MB  conda-forge
+    libzlib-1.3.2              |       hfd05255_3          57 KB  conda-forge
+    openssl-3.6.3              |       hf411b9b_1         9.0 MB  conda-forge
+    packaging-26.3             |     pyhc364b38_0         114 KB  conda-forge
+    pip-26.2.1                 |     pyh8b19718_0         1.1 MB  conda-forge
+    python-3.11.16             |hb12b558_0_cpython        17.6 MB  conda-forge
+    setuptools-84.0.0          |     pyh332efcf_0         512 KB  conda-forge
+    tk-8.6.13                  |       h967ab96_4         3.6 MB  conda-forge
+    tzdata-2026c               |       h151e31d_0         116 KB  conda-forge
+    vc-14.5                    |      ha367084_41          21 KB  conda-forge
+    vc14_runtime-14.51.36247   |      habf1de7_41         750 KB  conda-forge
+    vcomp14-14.51.36247        |      habf1de7_41         152 KB  conda-forge
+    wheel-0.48.0               |     pyhd8ed1ab_0          34 KB  conda-forge
+    ------------------------------------------------------------
+                                           Total:        34.7 MB
+
+The following NEW packages will be INSTALLED:
+
+  bzip2              conda-forge/win-64::bzip2-1.0.8-h0ad9c76_10 
+  ca-certificates    conda-forge/noarch::ca-certificates-2026.7.22-h4c7d964_0 
+  libexpat           conda-forge/win-64::libexpat-2.8.1-hac47afa_1 
+  libffi             conda-forge/win-64::libffi-3.7.0-h3d046cb_0 
+  liblzma            conda-forge/win-64::liblzma-5.8.3-hfd05255_1 
+  libsqlite          conda-forge/win-64::libsqlite-3.53.4-hf5d6505_1 
+  libzlib            conda-forge/win-64::libzlib-1.3.2-hfd05255_3 
+  openssl            conda-forge/win-64::openssl-3.6.3-hf411b9b_1 
+  packaging          conda-forge/noarch::packaging-26.3-pyhc364b38_0 
+  pip                conda-forge/noarch::pip-26.2.1-pyh8b19718_0 
+  python             conda-forge/win-64::python-3.11.16-hb12b558_0_cpython 
+  setuptools         conda-forge/noarch::setuptools-84.0.0-pyh332efcf_0 
+  tk                 conda-forge/win-64::tk-8.6.13-h967ab96_4 
+  tzdata             conda-forge/noarch::tzdata-2026c-h151e31d_0 
+  ucrt               conda-forge/win-64::ucrt-10.0.26100.0-h57928b3_0 
+  vc                 conda-forge/win-64::vc-14.5-ha367084_41 
+  vc14_runtime       conda-forge/win-64::vc14_runtime-14.51.36247-habf1de7_41 
+  vcomp14            conda-forge/win-64::vcomp14-14.51.36247-habf1de7_41 
+  wheel              conda-forge/noarch::wheel-0.48.0-pyhd8ed1ab_0 
+
+
+
+Downloading and Extracting Packages: ...working...
+python-3.11.16       | 17.6 MB   |            |   0% 
+
+openssl-3.6.3        | 9.0 MB    |            |   0% [A
+
+
+tk-8.6.13            | 3.6 MB    |            |   0% [A[A
+
+
+
+libsqlite-3.53.4     | 1.3 MB    |            |   0% [A[A[A
+
+
+
+
+pip-26.2.1           | 1.1 MB    |            |   0% [A[A[A[A
+
+
+
+
+
+vc14_runtime-14.51.3 | 750 KB    |            |   0% [A[A[A[A[A
+
+
+
+
+
+
+setuptools-84.0.0    | 512 KB    |            |   0% [A[A[A[A[A[A
+
+
+
+
+
+
+
+vcomp14-14.51.36247  | 152 KB    |            |   0% [A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+ca-certificates-2026 | 129 KB    |            |   0% [A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+tzdata-2026c         | 116 KB    |            |   0% [A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+packaging-26.3       | 114 KB    |            |   0% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+liblzma-5.8.3        | 103 KB    |            |   0% [A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libexpat-2.8.1       | 70 KB     |            |   0% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+libzlib-1.3.2        | 57 KB     |            |   0% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+bzip2-1.0.8          | 55 KB     |            |   0% [A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+libffi-3.7.0         | 49 KB     |            |   0% [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+wheel-0.48.0         | 34 KB     |            |   0% [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+vc-14.5              | 21 KB     |            |   0% [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+python-3.11.16       | 17.6 MB   |            |   0% 
+
+openssl-3.6.3        | 9.0 MB    |            |   0% [A
+
+
+tk-8.6.13            | 3.6 MB    |            |   0% [A[A
+
+
+
+libsqlite-3.53.4     | 1.3 MB    | 1          |   1% [A[A[A
+
+
+
+
+pip-26.2.1           | 1.1 MB    | 1          |   1% [A[A[A[A
+python-3.11.16       | 17.6 MB   |            |   1% 
+
+openssl-3.6.3        | 9.0 MB    | 1          |   2% [A
+
+
+tk-8.6.13            | 3.6 MB    | 4          |   5% [A[A
+
+
+
+
+pip-26.2.1           | 1.1 MB    | #          |  11% [A[A[A[A
+
+
+
+libsqlite-3.53.4     | 1.3 MB    | #2         |  12% [A[A[A
+python-3.11.16       | 17.6 MB   | 1          |   2% 
+
+openssl-3.6.3        | 9.0 MB    | 3          |   4% [A
+
+
+tk-8.6.13            | 3.6 MB    | #2         |  12% [A[A
+
+
+
+
+pip-26.2.1           | 1.1 MB    | ####2      |  42% [A[A[A[A
+
+
+
+libsqlite-3.53.4     | 1.3 MB    | ####6      |  46% [A[A[A
+
+openssl-3.6.3        | 9.0 MB    | 8          |   9% [A
+
+
+
+
+pip-26.2.1           | 1.1 MB    | ######2    |  63% [A[A[A[A
+python-3.11.16       | 17.6 MB   | 4          |   5% 
+
+
+tk-8.6.13            | 3.6 MB    | ##4        |  25% [A[A
+
+
+
+libsqlite-3.53.4     | 1.3 MB    | ######3    |  64% [A[A[A
+
+openssl-3.6.3        | 9.0 MB    | #1         |  11% [A
+python-3.11.16       | 17.6 MB   | 6          |   7% 
+
+
+
+
+pip-26.2.1           | 1.1 MB    | ########   |  81% [A[A[A[A
+
+
+tk-8.6.13            | 3.6 MB    | ###        |  31% [A[A
+
+
+
+libsqlite-3.53.4     | 1.3 MB    | ########   |  81% [A[A[A
+python-3.11.16       | 17.6 MB   | 7          |   8% 
+
+openssl-3.6.3        | 9.0 MB    | #3         |  13% [A
+
+
+tk-8.6.13            | 3.6 MB    | ###6       |  36% [A[A
+
+
+
+libsqlite-3.53.4     | 1.3 MB    | #########9 | 100% [A[A[A
+
+
+
+
+pip-26.2.1           | 1.1 MB    | ########## | 100% [A[A[A[A
+
+
+
+
+pip-26.2.1           | 1.1 MB    | ########## | 100% [A[A[A[A
+
+
+
+libsqlite-3.53.4     | 1.3 MB    | ########## | 100% [A[A[A
+
+openssl-3.6.3        | 9.0 MB    | #9         |  20% [A
+python-3.11.16       | 17.6 MB   | #2         |  12% 
+
+
+tk-8.6.13            | 3.6 MB    | #####3     |  54% [A[A
+
+
+
+
+
+vc14_runtime-14.51.3 | 750 KB    | 2          |   2% [A[A[A[A[A
+
+openssl-3.6.3        | 9.0 MB    | ##6        |  26% [A
+
+
+
+
+
+
+setuptools-84.0.0    | 512 KB    | 3          |   3% [A[A[A[A[A[A
+python-3.11.16       | 17.6 MB   | #4         |  15% 
+
+
+tk-8.6.13            | 3.6 MB    | #######    |  70% [A[A
+
+
+
+
+
+vc14_runtime-14.51.3 | 750 KB    | ########## | 100% [A[A[A[A[A
+
+
+
+
+
+vc14_runtime-14.51.3 | 750 KB    | ########## | 100% [A[A[A[A[A
+
+
+
+
+
+
+setuptools-84.0.0    | 512 KB    | ########## | 100% [A[A[A[A[A[A
+
+
+tk-8.6.13            | 3.6 MB    | #########7 |  98% [A[A
+
+openssl-3.6.3        | 9.0 MB    | ###1       |  32% [A
+
+
+tk-8.6.13            | 3.6 MB    | ########## | 100% [A[A
+
+
+
+
+
+
+
+
+ca-certificates-2026 | 129 KB    | #2         |  12% [A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+vcomp14-14.51.36247  | 152 KB    | #          |  11% [A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+ca-certificates-2026 | 129 KB    | ########## | 100% [A[A[A[A[A[A[A[A
+python-3.11.16       | 17.6 MB   | #6         |  17% 
+
+
+
+
+
+
+
+vcomp14-14.51.36247  | 152 KB    | ########## | 100% [A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+tzdata-2026c         | 116 KB    | #3         |  14% [A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+tzdata-2026c         | 116 KB    | ########## | 100% [A[A[A[A[A[A[A[A[A
+
+openssl-3.6.3        | 9.0 MB    | ###5       |  36% [A
+
+
+
+
+
+
+
+
+
+
+packaging-26.3       | 114 KB    | #4         |  14% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+packaging-26.3       | 114 KB    | ########## | 100% [A[A[A[A[A[A[A[A[A[A
+python-3.11.16       | 17.6 MB   | #8         |  19% 
+
+
+
+
+
+
+
+
+
+
+
+liblzma-5.8.3        | 103 KB    | #5         |  15% [A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libexpat-2.8.1       | 70 KB     | ##2        |  23% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+liblzma-5.8.3        | 103 KB    | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libexpat-2.8.1       | 70 KB     | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libexpat-2.8.1       | 70 KB     | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+libzlib-1.3.2        | 57 KB     | ##7        |  28% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+openssl-3.6.3        | 9.0 MB    | ####3      |  43% [A
+python-3.11.16       | 17.6 MB   | ##1        |  21% 
+
+
+
+
+
+
+
+
+
+
+
+
+
+libzlib-1.3.2        | 57 KB     | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+bzip2-1.0.8          | 55 KB     | ##9        |  29% [A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+libffi-3.7.0         | 49 KB     | ###2       |  33% [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+libffi-3.7.0         | 49 KB     | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+bzip2-1.0.8          | 55 KB     | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+wheel-0.48.0         | 34 KB     | ####7      |  47% [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+wheel-0.48.0         | 34 KB     | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+vc-14.5              | 21 KB     | #######6   |  77% [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+vc-14.5              | 21 KB     | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+libsqlite-3.53.4     | 1.3 MB    | ########## | 100% [A[A[A
+python-3.11.16       | 17.6 MB   | ####       |  40% 
+
+openssl-3.6.3        | 9.0 MB    | #######5   |  75% [A
+
+openssl-3.6.3        | 9.0 MB    | #########  |  91% [A
+python-3.11.16       | 17.6 MB   | ####4      |  45% 
+python-3.11.16       | 17.6 MB   | ####8      |  48% 
+
+openssl-3.6.3        | 9.0 MB    | #########8 |  99% [A
+python-3.11.16       | 17.6 MB   | #####2     |  52% 
+
+
+
+
+
+vc14_runtime-14.51.3 | 750 KB    | ########## | 100% [A[A[A[A[A
+
+openssl-3.6.3        | 9.0 MB    | ########## | 100% [A
+python-3.11.16       | 17.6 MB   | #####6     |  57% 
+python-3.11.16       | 17.6 MB   | ######     |  60% 
+python-3.11.16       | 17.6 MB   | ######3    |  64% 
+python-3.11.16       | 17.6 MB   | ######7    |  67% 
+python-3.11.16       | 17.6 MB   | #######1   |  71% 
+python-3.11.16       | 17.6 MB   | #######8   |  79% 
+python-3.11.16       | 17.6 MB   | ########2  |  83% 
+python-3.11.16       | 17.6 MB   | ########7  |  88% 
+python-3.11.16       | 17.6 MB   | #########3 |  93% 
+python-3.11.16       | 17.6 MB   | #########8 |  98% 
+python-3.11.16       | 17.6 MB   | ########## | 100% 
+
+
+
+
+
+
+setuptools-84.0.0    | 512 KB    | ########## | 100% [A[A[A[A[A[A
+
+
+
+
+
+
+setuptools-84.0.0    | 512 KB    | ########## | 100% [A[A[A[A[A[A
+
+
+
+
+
+
+
+
+ca-certificates-2026 | 129 KB    | ########## | 100% [A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+ca-certificates-2026 | 129 KB    | ########## | 100% [A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+vcomp14-14.51.36247  | 152 KB    | ########## | 100% [A[A[A[A[A[A[A
+
+
+
+
+
+
+
+vcomp14-14.51.36247  | 152 KB    | ########## | 100% [A[A[A[A[A[A[A
+
+
+
+
+pip-26.2.1           | 1.1 MB    | ########## | 100% [A[A[A[A
+
+
+
+
+
+
+
+
+
+
+packaging-26.3       | 114 KB    | ########## | 100% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+packaging-26.3       | 114 KB    | ########## | 100% [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+liblzma-5.8.3        | 103 KB    | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+liblzma-5.8.3        | 103 KB    | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+libexpat-2.8.1       | 70 KB     | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+libzlib-1.3.2        | 57 KB     | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+libzlib-1.3.2        | 57 KB     | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+bzip2-1.0.8          | 55 KB     | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+bzip2-1.0.8          | 55 KB     | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+libffi-3.7.0         | 49 KB     | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+libffi-3.7.0         | 49 KB     | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+wheel-0.48.0         | 34 KB     | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+wheel-0.48.0         | 34 KB     | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+vc-14.5              | 21 KB     | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+vc-14.5              | 21 KB     | ########## | 100% [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+tzdata-2026c         | 116 KB    | ########## | 100% [A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+tzdata-2026c         | 116 KB    | ########## | 100% [A[A[A[A[A[A[A[A[A
+
+openssl-3.6.3        | 9.0 MB    | ########## | 100% [A
+
+
+tk-8.6.13            | 3.6 MB    | ########## | 100% [A[A
+python-3.11.16       | 17.6 MB   | ########## | 100% 
+                                                     
+
+
+                                                     [A
+
+
+                                                     [A[A
+
+
+
+                                                     [A[A[A
+
+
+
+
+                                                     [A[A[A[A
+
+
+
+
+
+                                                     [A[A[A[A[A
+
+
+
+
+
+
+                                                     [A[A[A[A[A[A
+
+
+
+
+
+
+
+                                                     [A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+                                                     [A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+                                                     [A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+                                                     [A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+                                                     [A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+                                                     [A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                     [A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                     [A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                     [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                     [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                     [A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A done
+Preparing transaction: | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ done
+Verifying transaction: / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / done
+Executing transaction: \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ done
+#
+# To activate this environment, use
+#
+#     $ conda activate C:\AegisAcceptanceAttempt3\repository\.runtime_skill
+#
+# To deactivate an active environment, use
+#
+#     $ conda deactivate
+
+Cloning into 'C:\AegisAcceptanceAttempt3\repository\third_party\skill-scanner'...
+System.Management.Automation.RemoteException: Cloning into 'C:\AegisAcceptanceAttempt3\repository\third_party\skill-scanner'...
+HEAD is now at 4dee903 fix: suppress warning for recovered fenced JSON (#148)
+System.Management.Automation.RemoteException: HEAD is now at 4dee903 fix: suppress warning for recovered fenced JSON (#148)
+Processing .\third_party\skill-scanner
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: cisco-ai-skill-scanner
+  Building wheel for cisco-ai-skill-scanner (pyproject.toml): started
+  Building wheel for cisco-ai-skill-scanner (pyproject.toml): finished with status 'done'
+  Created wheel for cisco-ai-skill-scanner: filename=cisco_ai_skill_scanner-2.0.13.dev3+g4dee90371-py3-none-any.whl size=665344 sha256=7e176bcee74e1015ed287933c00e679752d51ca7b159591ddbc96cdbea57e79d
+  Stored in directory: C:\Users\aegisadmin\AppData\Local\Temp\pip-ephem-wheel-cache-6lpng5xh\wheels\5d\4f\15\cb7ea49d812a628465bc1dd352438bd5534ec0b4674fc412d5
+Successfully built cisco-ai-skill-scanner
+Built from locked source commit; wheel SHA-256: 7e176bcee74e1015ed287933c00e679752d51ca7b159591ddbc96cdbea57e79d
+Ignoring async-timeout: markers 'python_full_version < "3.11"' don't match your environment
+Ignoring backports-asyncio-runner: markers 'python_full_version < "3.11"' don't match your environment
+Ignoring coloredlogs: markers 'python_full_version < "3.11"' don't match your environment
+Ignoring exceptiongroup: markers 'python_full_version < "3.11"' don't match your environment
+Ignoring humanfriendly: markers 'python_full_version < "3.11"' don't match your environment
+Ignoring mpmath: markers 'python_full_version < "3.11"' don't match your environment
+Ignoring numpy: markers 'python_full_version < "3.11"' don't match your environment
+Ignoring onnxruntime: markers 'python_full_version < "3.11"' don't match your environment
+Ignoring pyreadline3: markers 'python_full_version < "3.11" and sys_platform == "win32"' don't match your environment
+Ignoring sympy: markers 'python_full_version < "3.11"' don't match your environment
+Ignoring uvloop: markers 'platform_python_implementation != "PyPy" and sys_platform != "cygwin" and sys_platform != "win32"' don't match your environment
+Collecting aiohappyeyeballs==2.6.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 3))
+  Downloading aiohappyeyeballs-2.6.1-py3-none-any.whl (15 kB)
+Collecting aiohttp==3.14.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 7))
+  Downloading aiohttp-3.14.1-cp311-cp311-win_amd64.whl (483 kB)
+Collecting aiosignal==1.4.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 128))
+  Downloading aiosignal-1.4.0-py3-none-any.whl (7.5 kB)
+Collecting annotated-doc==0.0.4 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 132))
+  Downloading annotated_doc-0.0.4-py3-none-any.whl (5.3 kB)
+Collecting annotated-types==0.7.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 138))
+  Downloading annotated_types-0.7.0-py3-none-any.whl (13 kB)
+Collecting anthropic==0.97.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 142))
+  Downloading anthropic-0.97.0-py3-none-any.whl (662 kB)
+     ---------------------------------------- 662.1/662.1 kB 6.5 MB/s  0:00:00
+Collecting anyio==4.13.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 146))
+  Downloading anyio-4.13.0-py3-none-any.whl (114 kB)
+Collecting attrs==26.1.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 159))
+  Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
+Collecting boolean-py==5.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 170))
+  Downloading boolean_py-5.0-py3-none-any.whl (26 kB)
+Collecting cachecontrol==0.14.4 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 174))
+  Downloading cachecontrol-0.14.4-py3-none-any.whl (22 kB)
+Collecting certifi==2026.4.22 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 178))
+  Downloading certifi-2026.4.22-py3-none-any.whl (135 kB)
+Collecting cffi==2.0.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 185))
+  Downloading cffi-2.0.0-cp311-cp311-win_amd64.whl (182 kB)
+Collecting cfgv==3.5.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 259))
+  Downloading cfgv-3.5.0-py2.py3-none-any.whl (7.4 kB)
+Collecting charset-normalizer==3.4.7 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 263))
+  Downloading charset_normalizer-3.4.7-cp311-cp311-win_amd64.whl (159 kB)
+Collecting click==8.1.8 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 363))
+  Downloading click-8.1.8-py3-none-any.whl (98 kB)
+Collecting colorama==0.4.6 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 371))
+  Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+Collecting colorclass==2.2.2 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 379))
+  Downloading colorclass-2.2.2-py2.py3-none-any.whl (18 kB)
+Collecting confusable-homoglyphs==3.3.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 387))
+  Downloading confusable_homoglyphs-3.3.1-py2.py3-none-any.whl (144 kB)
+Collecting coverage==7.13.5 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 391))
+  Downloading coverage-7.13.5-cp311-cp311-win_amd64.whl (222 kB)
+Collecting cryptography==49.0.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 499))
+  Downloading cryptography-49.0.0-cp311-abi3-win_amd64.whl (3.8 MB)
+     ---------------------------------------- 3.8/3.8 MB 7.1 MB/s  0:00:00
+Collecting cyclonedx-python-lib==11.7.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 547))
+  Downloading cyclonedx_python_lib-11.7.0-py3-none-any.whl (513 kB)
+Collecting defusedxml==0.7.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 551))
+  Downloading defusedxml-0.7.1-py2.py3-none-any.whl (25 kB)
+Collecting distlib==0.4.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 555))
+  Downloading distlib-0.4.0-py2.py3-none-any.whl (469 kB)
+Collecting distro==1.9.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 559))
+  Downloading distro-1.9.0-py3-none-any.whl (20 kB)
+Collecting docstring-parser==0.18.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 565))
+  Downloading docstring_parser-0.18.0-py3-none-any.whl (22 kB)
+Collecting easygui==0.98.3 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 569))
+  Downloading easygui-0.98.3-py2.py3-none-any.whl (92 kB)
+Collecting fastapi==0.136.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 579))
+  Downloading fastapi-0.136.1-py3-none-any.whl (117 kB)
+Collecting fastuuid==0.14.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 583))
+  Downloading fastuuid-0.14.0-cp311-cp311-win_amd64.whl (156 kB)
+Collecting filelock==3.29.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 641))
+  Downloading filelock-3.29.0-py3-none-any.whl (39 kB)
+Collecting flatbuffers==25.12.19 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 649))
+  Downloading flatbuffers-25.12.19-py2.py3-none-any.whl (26 kB)
+Collecting frozenlist==1.8.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 652))
+  Downloading frozenlist-1.8.0-cp311-cp311-win_amd64.whl (44 kB)
+Collecting fsspec==2026.3.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 770))
+  Downloading fsspec-2026.3.0-py3-none-any.whl (202 kB)
+Collecting h11==0.16.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 774))
+  Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+Collecting hf-xet==1.4.3 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 780))
+  Downloading hf_xet-1.4.3-cp37-abi3-win_amd64.whl (3.7 MB)
+     ---------------------------------------- 3.7/3.7 MB 6.4 MB/s  0:00:00
+Collecting httpcore==1.0.9 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 807))
+  Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+Collecting httptools==0.7.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 811))
+  Downloading httptools-0.7.1-cp311-cp311-win_amd64.whl (86 kB)
+Collecting httpx==0.28.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 849))
+  Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+Collecting huggingface-hub==1.12.2 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 858))
+  Downloading huggingface_hub-1.12.2-py3-none-any.whl (647 kB)
+     ---------------------------------------- 647.8/647.8 kB 4.9 MB/s  0:00:00
+Collecting identify==2.6.19 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 866))
+  Downloading identify-2.6.19-py2.py3-none-any.whl (99 kB)
+Collecting idna==3.18 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 870))
+  Downloading idna-3.18-py3-none-any.whl (65 kB)
+Collecting importlib-metadata==8.5.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 878))
+  Downloading importlib_metadata-8.5.0-py3-none-any.whl (26 kB)
+Collecting iniconfig==2.3.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 882))
+  Downloading iniconfig-2.3.0-py3-none-any.whl (7.5 kB)
+Collecting jinja2==3.1.6 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 886))
+  Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+Collecting jiter==0.14.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 890))
+  Downloading jiter-0.14.0-cp311-cp311-win_amd64.whl (204 kB)
+Collecting jsonschema==4.23.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 990))
+  Downloading jsonschema-4.23.0-py3-none-any.whl (88 kB)
+Collecting jsonschema-specifications==2025.9.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 994))
+  Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)
+Collecting librt==0.9.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 998))
+  Downloading librt-0.9.0-cp311-cp311-win_amd64.whl (62 kB)
+Collecting liccheck==0.9.2 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1078))
+  Downloading liccheck-0.9.2-py2.py3-none-any.whl (13 kB)
+Collecting license-expression==30.4.4 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1081))
+  Downloading license_expression-30.4.4-py3-none-any.whl (120 kB)
+Collecting linkify-it-py==2.1.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1085))
+  Downloading linkify_it_py-2.1.0-py3-none-any.whl (19 kB)
+Collecting litellm==1.89.3 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1089))
+  Downloading litellm-1.89.3-py3-none-any.whl (15.5 MB)
+     ---------------------------------------- 15.5/15.5 MB 14.1 MB/s  0:00:01
+Collecting magika==1.0.2 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1093))
+  Downloading magika-1.0.2-py3-none-win_amd64.whl (13.1 MB)
+     ---------------------------------------- 13.1/13.1 MB 9.1 MB/s  0:00:01
+Collecting markdown-it-py==4.0.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1100))
+  Downloading markdown_it_py-4.0.0-py3-none-any.whl (87 kB)
+Collecting markupsafe==3.0.3 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1107))
+  Downloading markupsafe-3.0.3-cp311-cp311-win_amd64.whl (15 kB)
+Collecting mdit-py-plugins==0.5.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1187))
+  Downloading mdit_py_plugins-0.5.0-py3-none-any.whl (57 kB)
+Collecting mdurl==0.1.2 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1191))
+  Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+Collecting msgpack==1.2.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1199))
+  Downloading msgpack-1.2.1-cp311-cp311-win_amd64.whl (70 kB)
+Collecting msoffcrypto-tool==6.0.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1267))
+  Downloading msoffcrypto_tool-6.0.0-py3-none-any.whl (48 kB)
+Collecting multidict==6.7.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1271))
+  Downloading multidict-6.7.1-cp311-cp311-win_amd64.whl (45 kB)
+Collecting mypy==1.19.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1403))
+  Downloading mypy-1.19.1-cp311-cp311-win_amd64.whl (10.1 MB)
+     ---------------------------------------- 10.1/10.1 MB 5.8 MB/s  0:00:01
+Collecting mypy-extensions==1.1.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1436))
+  Downloading mypy_extensions-1.1.0-py3-none-any.whl (5.0 kB)
+Collecting nodeenv==1.10.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1440))
+  Downloading nodeenv-1.10.0-py2.py3-none-any.whl (23 kB)
+Collecting numpy==2.4.4 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1501))
+  Downloading numpy-2.4.4-cp311-cp311-win_amd64.whl (12.6 MB)
+     ---------------------------------------- 12.6/12.6 MB 9.1 MB/s  0:00:01
+Collecting olefile==0.47 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1575))
+  Downloading olefile-0.47-py2.py3-none-any.whl (114 kB)
+Collecting oletools==0.60.2 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1581))
+  Downloading oletools-0.60.2-py2.py3-none-any.whl (989 kB)
+     ---------------------------------------- 989.4/989.4 kB 9.3 MB/s  0:00:00
+Collecting onnxruntime==1.25.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1611))
+  Downloading onnxruntime-1.25.1-cp311-cp311-win_amd64.whl (12.9 MB)
+     ---------------------------------------- 12.9/12.9 MB 6.1 MB/s  0:00:02
+Collecting openai==2.24.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1637))
+  Downloading openai-2.24.0-py3-none-any.whl (1.1 MB)
+     ---------------------------------------- 1.1/1.1 MB 9.2 MB/s  0:00:00
+Collecting packageurl-python==0.17.6 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1643))
+  Downloading packageurl_python-0.17.6-py3-none-any.whl (36 kB)
+Collecting packaging==26.2 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1647))
+  Downloading packaging-26.2-py3-none-any.whl (100 kB)
+Collecting pathspec==1.1.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1656))
+  Using cached pathspec-1.1.1-py3-none-any.whl (57 kB)
+Collecting pcodedmp==1.2.6 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1660))
+  Downloading pcodedmp-1.2.6-py2.py3-none-any.whl (30 kB)
+Collecting pdfid==1.1.3 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1664))
+  Downloading pdfid-1.1.3-py3-none-any.whl (13 kB)
+Collecting pip==26.1.2 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1668))
+  Downloading pip-26.1.2-py3-none-any.whl (1.8 MB)
+     ---------------------------------------- 1.8/1.8 MB 6.2 MB/s  0:00:00
+Collecting pip-api==0.0.34 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1672))
+  Downloading pip_api-0.0.34-py3-none-any.whl (120 kB)
+Collecting pip-audit==2.10.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1676))
+  Downloading pip_audit-2.10.0-py3-none-any.whl (61 kB)
+Collecting pip-requirements-parser==32.0.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1679))
+  Downloading pip_requirements_parser-32.0.1-py3-none-any.whl (35 kB)
+Collecting platformdirs==4.9.6 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1683))
+  Downloading platformdirs-4.9.6-py3-none-any.whl (21 kB)
+Collecting pluggy==1.6.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1691))
+  Using cached pluggy-1.6.0-py3-none-any.whl (20 kB)
+Collecting pre-commit==4.5.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1697))
+  Downloading pre_commit-4.5.1-py2.py3-none-any.whl (226 kB)
+Collecting propcache==0.4.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1700))
+  Downloading propcache-0.4.1-cp311-cp311-win_amd64.whl (41 kB)
+Collecting protobuf==5.29.6 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1811))
+  Downloading protobuf-5.29.6-cp310-abi3-win_amd64.whl (435 kB)
+Collecting py-serializable==2.1.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1820))
+  Downloading py_serializable-2.1.0-py3-none-any.whl (23 kB)
+Collecting pycparser==3.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1824))
+  Downloading pycparser-3.0-py3-none-any.whl (48 kB)
+Collecting pydantic==2.12.5 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1828))
+  Downloading pydantic-2.12.5-py3-none-any.whl (463 kB)
+Collecting pydantic-core==2.41.5 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1837))
+  Downloading pydantic_core-2.41.5-cp311-cp311-win_amd64.whl (2.0 MB)
+     ---------------------------------------- 2.0/2.0 MB 8.0 MB/s  0:00:00
+Collecting pygments==2.20.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1947))
+  Downloading pygments-2.20.0-py3-none-any.whl (1.2 MB)
+     ---------------------------------------- 1.2/1.2 MB 10.3 MB/s  0:00:00
+Collecting pyparsing==3.3.2 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1954))
+  Downloading pyparsing-3.3.2-py3-none-any.whl (122 kB)
+Collecting pytest==9.0.3 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1964))
+  Downloading pytest-9.0.3-py3-none-any.whl (375 kB)
+Collecting pytest-asyncio==1.3.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1970))
+  Downloading pytest_asyncio-1.3.0-py3-none-any.whl (15 kB)
+Collecting pytest-cov==7.0.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1973))
+  Downloading pytest_cov-7.0.0-py3-none-any.whl (22 kB)
+Collecting python-discovery==1.2.2 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1976))
+  Downloading python_discovery-1.2.2-py3-none-any.whl (31 kB)
+Collecting python-dotenv==1.2.2 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1980))
+  Downloading python_dotenv-1.2.2-py3-none-any.whl (22 kB)
+Collecting python-frontmatter==1.1.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1987))
+  Downloading python_frontmatter-1.1.0-py3-none-any.whl (9.8 kB)
+Collecting python-multipart==0.0.32 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1991))
+  Downloading python_multipart-0.0.32-py3-none-any.whl (30 kB)
+Collecting pyyaml==6.0.3 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 1995))
+  Downloading pyyaml-6.0.3-cp311-cp311-win_amd64.whl (158 kB)
+Collecting referencing==0.37.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2059))
+  Downloading referencing-0.37.0-py3-none-any.whl (26 kB)
+Collecting regex==2026.4.4 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2065))
+  Downloading regex-2026.4.4-cp311-cp311-win_amd64.whl (278 kB)
+Collecting requests==2.33.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2181))
+  Downloading requests-2.33.1-py3-none-any.whl (64 kB)
+Collecting rich==14.3.4 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2188))
+  Downloading rich-14.3.4-py3-none-any.whl (310 kB)
+Collecting rpds-py==0.30.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2196))
+  Downloading rpds_py-0.30.0-cp311-cp311-win_amd64.whl (236 kB)
+Collecting ruff==0.14.12 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2315))
+  Downloading ruff-0.14.12-py3-none-win_amd64.whl (14.1 MB)
+     ---------------------------------------- 14.1/14.1 MB 6.8 MB/s  0:00:02
+Collecting semantic-version==2.10.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2335))
+  Downloading semantic_version-2.10.0-py2.py3-none-any.whl (15 kB)
+Collecting shellingham==1.5.4 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2339))
+  Downloading shellingham-1.5.4-py2.py3-none-any.whl (9.8 kB)
+Collecting sniffio==1.3.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2343))
+  Downloading sniffio-1.3.1-py3-none-any.whl (10 kB)
+Collecting sortedcontainers==2.4.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2349))
+  Downloading sortedcontainers-2.4.0-py2.py3-none-any.whl (29 kB)
+Collecting starlette==1.3.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2353))
+  Downloading starlette-1.3.1-py3-none-any.whl (73 kB)
+Collecting tabulate==0.10.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2361))
+  Downloading tabulate-0.10.0-py3-none-any.whl (39 kB)
+Collecting textual==7.5.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2365))
+  Downloading textual-7.5.0-py3-none-any.whl (718 kB)
+     ---------------------------------------- 718.2/718.2 kB 5.8 MB/s  0:00:00
+Collecting tiktoken==0.12.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2369))
+  Downloading tiktoken-0.12.0-cp311-cp311-win_amd64.whl (879 kB)
+     ---------------------------------------- 879.4/879.4 kB 3.3 MB/s  0:00:00
+Collecting tokenizers==0.22.2 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2421))
+  Downloading tokenizers-0.22.2-cp39-abi3-win_amd64.whl (2.7 MB)
+     ---------------------------------------- 2.7/2.7 MB 11.4 MB/s  0:00:00
+Collecting toml==0.10.2 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2443))
+  Downloading toml-0.10.2-py2.py3-none-any.whl (16 kB)
+Collecting tomli==2.4.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2447))
+  Downloading tomli-2.4.1-cp311-cp311-win_amd64.whl (108 kB)
+Collecting tomli-w==1.2.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2500))
+  Downloading tomli_w-1.2.0-py3-none-any.whl (6.7 kB)
+Collecting tqdm==4.67.3 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2504))
+  Downloading tqdm-4.67.3-py3-none-any.whl (78 kB)
+Collecting typer==0.23.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2510))
+  Downloading typer-0.23.1-py3-none-any.whl (56 kB)
+Collecting typing-extensions==4.15.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2514))
+  Downloading typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+Collecting typing-inspection==0.4.2 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2539))
+  Downloading typing_inspection-0.4.2-py3-none-any.whl (14 kB)
+Collecting uc-micro-py==2.0.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2545))
+  Downloading uc_micro_py-2.0.0-py3-none-any.whl (6.4 kB)
+Collecting urllib3==2.7.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2549))
+  Downloading urllib3-2.7.0-py3-none-any.whl (131 kB)
+Collecting uvicorn==0.46.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2553))
+  Downloading uvicorn-0.46.0-py3-none-any.whl (70 kB)
+Collecting virtualenv==21.3.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2596))
+  Downloading virtualenv-21.3.0-py3-none-any.whl (7.6 MB)
+     ---------------------------------------- 7.6/7.6 MB 10.4 MB/s  0:00:00
+Collecting watchfiles==1.1.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2600))
+  Downloading watchfiles-1.1.1-cp311-cp311-win_amd64.whl (287 kB)
+Collecting websockets==16.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2695))
+  Downloading websockets-16.0-cp311-cp311-win_amd64.whl (178 kB)
+Collecting win-unicode-console==0.5 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2758))
+  Downloading win_unicode_console-0.5.zip (31 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting yara-x==1.15.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2761))
+  Downloading yara_x-1.15.0-cp38-abi3-win_amd64.whl (8.1 MB)
+     ---------------------------------------- 8.1/8.1 MB 5.2 MB/s  0:00:01
+Collecting yarl==1.23.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2773))
+  Downloading yarl-1.23.0-cp311-cp311-win_amd64.whl (87 kB)
+Collecting zipp==3.23.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\skill_scanner_locked_requirements.txt (line 2903))
+  Downloading zipp-3.23.1-py3-none-any.whl (10 kB)
+Building wheels for collected packages: win-unicode-console
+  Building wheel for win-unicode-console (pyproject.toml): started
+  Building wheel for win-unicode-console (pyproject.toml): finished with status 'done'
+  Created wheel for win-unicode-console: filename=win_unicode_console-0.5-py3-none-any.whl size=20242 sha256=4f038e6db199b7db35bcb3bcfa219021f2eca6347ab71fee5112a1c888070fcc
+  Stored in directory: c:\users\aegisadmin\appdata\local\pip\cache\wheels\f8\1d\0b\075724dc0c787a833dd6bb7255e7a14d9dab45eef102b1845a
+Successfully built win-unicode-console
+Installing collected packages: win-unicode-console, sortedcontainers, flatbuffers, easygui, distlib, confusable-homoglyphs, boolean-py, zipp, yara-x, websockets, urllib3, uc-micro-py, typing-extensions, tomli-w, tomli, toml, tabulate, sniffio, shellingham, semantic-version, ruff, rpds-py, regex, pyyaml, python-multipart, python-dotenv, pyparsing, pygments, pycparser, protobuf, propcache, pluggy, platformdirs, pip, pdfid, pathspec, packaging, packageurl-python, olefile, numpy, nodeenv, mypy-extensions, multidict, msgpack, mdurl, markupsafe, license-expression, librt, jiter, iniconfig, idna, identify, httptools, hf-xet, h11, fsspec, frozenlist, filelock, fastuuid, docstring-parser, distro, defusedxml, coverage, colorclass, colorama, charset-normalizer, cfgv, certifi, attrs, annotated-types, annotated-doc, aiohappyeyeballs, yarl, typing-inspection, tqdm, requests, referencing, python-frontmatter, python-discovery, pytest, pydantic-core, py-serializable, pip-requirements-parser, pip-api, onnxruntime, mypy, markdown-it-py, linkify-it-py, liccheck, jinja2, importlib-metadata, httpcore, click, cffi, anyio, aiosignal, watchfiles, virtualenv, uvicorn, tiktoken, starlette, rich, pytest-cov, pytest-asyncio, pydantic, mdit-py-plugins, magika, jsonschema-specifications, httpx, cyclonedx-python-lib, cryptography, cachecontrol, aiohttp, typer, textual, pre-commit, openai, msoffcrypto-tool, jsonschema, fastapi, anthropic, pip-audit, huggingface-hub, tokenizers, litellm, pcodedmp, oletools
+  WARNING: The script confusable_homoglyphs.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script confusable_homoglyphs.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script websockets.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script websockets.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script tabulate.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script tabulate.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script dotenv.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script dotenv.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script pygmentize.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script pygmentize.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  Attempting uninstall: pip
+    Found existing installation: pip 26.2.1
+    Uninstalling pip-26.2.1:
+      Successfully uninstalled pip-26.2.1
+  WARNING: The scripts pip.exe, pip3.11.exe and pip3.exe are installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The scripts pip.exe, pip3.11.exe and pip3.exe are installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  Attempting uninstall: packaging
+    Found existing installation: packaging 26.3
+    Uninstalling packaging-26.3:
+      Successfully uninstalled packaging-26.3
+  WARNING: The scripts f2py.exe and numpy-config.exe are installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The scripts f2py.exe and numpy-config.exe are installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script nodeenv.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script nodeenv.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script idna.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script idna.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script identify-cli.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script identify-cli.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script distro.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script distro.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts coverage-3.11.exe, coverage.exe and coverage3.exe are installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The scripts coverage-3.11.exe, coverage.exe and coverage3.exe are installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script normalizer.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script normalizer.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script tqdm.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script tqdm.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts py.test.exe and pytest.exe are installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The scripts py.test.exe and pytest.exe are installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script onnxruntime_test.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script onnxruntime_test.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts dmypy.exe, mypy.exe, mypyc.exe, stubgen.exe and stubtest.exe are installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The scripts dmypy.exe, mypy.exe, mypyc.exe, stubgen.exe and stubtest.exe are installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script markdown-it.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script markdown-it.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script liccheck.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script liccheck.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script watchfiles.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script watchfiles.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script virtualenv.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script virtualenv.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script uvicorn.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script uvicorn.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script httpx.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script httpx.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script doesitcache.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script doesitcache.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script typer.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script typer.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script pre-commit.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script pre-commit.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script openai.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script openai.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script msoffcrypto-tool.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script msoffcrypto-tool.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script jsonschema.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script jsonschema.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script fastapi.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script fastapi.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script pip-audit.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script pip-audit.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts hf.exe, huggingface-cli.exe and tiny-agents.exe are installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The scripts hf.exe, huggingface-cli.exe and tiny-agents.exe are installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts litellm-proxy.exe and litellm.exe are installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The scripts litellm-proxy.exe and litellm.exe are installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script pcodedmp.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The script pcodedmp.exe is installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts ezhexviewer.exe, ftguess.exe, mraptor.exe, msodde.exe, olebrowse.exe, oledir.exe, olefile.exe, oleid.exe, olemap.exe, olemeta.exe, oleobj.exe, oletimes.exe, olevba.exe, pyxswf.exe and rtfobj.exe are installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The scripts ezhexviewer.exe, ftguess.exe, mraptor.exe, msodde.exe, olebrowse.exe, oledir.exe, olefile.exe, oleid.exe, olemap.exe, olemeta.exe, oleobj.exe, oletimes.exe, olevba.exe, pyxswf.exe and rtfobj.exe are installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+
+Successfully installed aiohappyeyeballs-2.6.1 aiohttp-3.14.1 aiosignal-1.4.0 annotated-doc-0.0.4 annotated-types-0.7.0 anthropic-0.97.0 anyio-4.13.0 attrs-26.1.0 boolean-py-5.0 cachecontrol-0.14.4 certifi-2026.4.22 cffi-2.0.0 cfgv-3.5.0 charset-normalizer-3.4.7 click-8.1.8 colorama-0.4.6 colorclass-2.2.2 confusable-homoglyphs-3.3.1 coverage-7.13.5 cryptography-49.0.0 cyclonedx-python-lib-11.7.0 defusedxml-0.7.1 distlib-0.4.0 distro-1.9.0 docstring-parser-0.18.0 easygui-0.98.3 fastapi-0.136.1 fastuuid-0.14.0 filelock-3.29.0 flatbuffers-25.12.19 frozenlist-1.8.0 fsspec-2026.3.0 h11-0.16.0 hf-xet-1.4.3 httpcore-1.0.9 httptools-0.7.1 httpx-0.28.1 huggingface-hub-1.12.2 identify-2.6.19 idna-3.18 importlib-metadata-8.5.0 iniconfig-2.3.0 jinja2-3.1.6 jiter-0.14.0 jsonschema-4.23.0 jsonschema-specifications-2025.9.1 librt-0.9.0 liccheck-0.9.2 license-expression-30.4.4 linkify-it-py-2.1.0 litellm-1.89.3 magika-1.0.2 markdown-it-py-4.0.0 markupsafe-3.0.3 mdit-py-plugins-0.5.0 mdurl-0.1.2 msgpack-1.2.1 msoffcrypto-tool-6.0.0 multidict-6.7.1 mypy-1.19.1 mypy-extensions-1.1.0 nodeenv-1.10.0 numpy-2.4.4 olefile-0.47 oletools-0.60.2 onnxruntime-1.25.1 openai-2.24.0 packageurl-python-0.17.6 packaging-26.2 pathspec-1.1.1 pcodedmp-1.2.6 pdfid-1.1.3 pip-26.1.2 pip-api-0.0.34 pip-audit-2.10.0 pip-requirements-parser-32.0.1 platformdirs-4.9.6 pluggy-1.6.0 pre-commit-4.5.1 propcache-0.4.1 protobuf-5.29.6 py-serializable-2.1.0 pycparser-3.0 pydantic-2.12.5 pydantic-core-2.41.5 pygments-2.20.0 pyparsing-3.3.2 pytest-9.0.3 pytest-asyncio-1.3.0 pytest-cov-7.0.0 python-discovery-1.2.2 python-dotenv-1.2.2 python-frontmatter-1.1.0 python-multipart-0.0.32 pyyaml-6.0.3 referencing-0.37.0 regex-2026.4.4 requests-2.33.1 rich-14.3.4 rpds-py-0.30.0 ruff-0.14.12 semantic-version-2.10.0 shellingham-1.5.4 sniffio-1.3.1 sortedcontainers-2.4.0 starlette-1.3.1 tabulate-0.10.0 textual-7.5.0 tiktoken-0.12.0 tokenizers-0.22.2 toml-0.10.2 tomli-2.4.1 tomli-w-1.2.0 tqdm-4.67.3 typer-0.23.1 typing-extensions-4.15.0 typing-inspection-0.4.2 uc-micro-py-2.0.0 urllib3-2.7.0 uvicorn-0.46.0 virtualenv-21.3.0 watchfiles-1.1.1 websockets-16.0 win-unicode-console-0.5 yara-x-1.15.0 yarl-1.23.0 zipp-3.23.1
+Processing .\results\wheels\verified-skill-45c875162b824e3091e94d6b773839ca\cisco_ai_skill_scanner-2.0.13.dev3+g4dee90371-py3-none-any.whl
+Installing collected packages: cisco-ai-skill-scanner
+  WARNING: The scripts skill-scanner-api.exe, skill-scanner-pre-commit.exe and skill-scanner.exe are installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+System.Management.Automation.RemoteException:   WARNING: The scripts skill-scanner-api.exe, skill-scanner-pre-commit.exe and skill-scanner.exe are installed in 'C:\AegisAcceptanceAttempt3\repository\.runtime_skill\Scripts' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+System.Management.Automation.RemoteException:   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+Successfully installed cisco-ai-skill-scanner-2.0.13.dev3+g4dee90371
+System.Management.Automation.RemoteException
+[notice] A new release of pip is available: 26.1.2 -> 26.2.1
+System.Management.Automation.RemoteException: [notice] A new release of pip is available: 26.1.2 -> 26.2.1
+[notice] To update, run: C:\AegisAcceptanceAttempt3\repository\.runtime_skill\python.exe -m pip install --upgrade pip
+System.Management.Automation.RemoteException: [notice] To update, run: C:\AegisAcceptanceAttempt3\repository\.runtime_skill\python.exe -m pip install --upgrade pip
+PASS Cisco Skill Scanner was rebuilt and verified.
+Creating Cisco MCP Scanner runtime with Python 3.13...
+Channels:
+ - conda-forge
+Platform: win-64
+Collecting package metadata (repodata.json): - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / done
+Solving environment: \ | done
+System.Management.Automation.RemoteException
+System.Management.Automation.RemoteException
+==> WARNING: A newer version of conda exists. <==
+System.Management.Automation.RemoteException: ==> WARNING: A newer version of conda exists. <==
+    current version: 25.11.0
+System.Management.Automation.RemoteException:     current version: 25.11.0
+    latest version: 26.7.1
+System.Management.Automation.RemoteException:     latest version: 26.7.1
+System.Management.Automation.RemoteException
+Please update conda by running
+System.Management.Automation.RemoteException: Please update conda by running
+System.Management.Automation.RemoteException
+    $ conda update -n base -c conda-forge conda
+System.Management.Automation.RemoteException:     $ conda update -n base -c conda-forge conda
+System.Management.Automation.RemoteException
+System.Management.Automation.RemoteException
+
+## Package Plan ##
+
+  environment location: C:\AegisAcceptanceAttempt3\repository\.runtime_mcp313
+
+  added / updated specs:
+    - pip
+    - python=3.13
+    - rust=1.96
+
+
+The following packages will be downloaded:
+
+    package                    |            build
+    ---------------------------|-----------------
+    libmpdec-4.0.0             |       hfd05255_2          87 KB  conda-forge
+    pip-26.2.1                 |     pyh145f28c_0         1.1 MB  conda-forge
+    python-3.13.15             |h254dcb4_101_cp313        15.9 MB  conda-forge
+    python_abi-3.13            |          8_cp313           7 KB  conda-forge
+    rust-1.96.1                |       hf8d6059_2       184.3 MB  conda-forge
+    rust-std-x86_64-pc-windows-msvc-1.96.1|       h17fc481_2        25.2 MB  conda-forge
+    ------------------------------------------------------------
+                                           Total:       226.7 MB
+
+The following NEW packages will be INSTALLED:
+
+  bzip2              conda-forge/win-64::bzip2-1.0.8-h0ad9c76_10 
+  ca-certificates    conda-forge/noarch::ca-certificates-2026.7.22-h4c7d964_0 
+  libexpat           conda-forge/win-64::libexpat-2.8.1-hac47afa_1 
+  libffi             conda-forge/win-64::libffi-3.7.0-h3d046cb_0 
+  liblzma            conda-forge/win-64::liblzma-5.8.3-hfd05255_1 
+  libmpdec           conda-forge/win-64::libmpdec-4.0.0-hfd05255_2 
+  libsqlite          conda-forge/win-64::libsqlite-3.53.4-hf5d6505_1 
+  libzlib            conda-forge/win-64::libzlib-1.3.2-hfd05255_3 
+  openssl            conda-forge/win-64::openssl-3.6.3-hf411b9b_1 
+  pip                conda-forge/noarch::pip-26.2.1-pyh145f28c_0 
+  python             conda-forge/win-64::python-3.13.15-h254dcb4_101_cp313 
+  python_abi         conda-forge/noarch::python_abi-3.13-8_cp313 
+  rust               conda-forge/win-64::rust-1.96.1-hf8d6059_2 
+  rust-std-x86_64-p~ conda-forge/noarch::rust-std-x86_64-pc-windows-msvc-1.96.1-h17fc481_2 
+  tk                 conda-forge/win-64::tk-8.6.13-h967ab96_4 
+  tzdata             conda-forge/noarch::tzdata-2026c-h151e31d_0 
+  ucrt               conda-forge/win-64::ucrt-10.0.26100.0-h57928b3_0 
+  vc                 conda-forge/win-64::vc-14.5-ha367084_41 
+  vc14_runtime       conda-forge/win-64::vc14_runtime-14.51.36247-habf1de7_41 
+  vcomp14            conda-forge/win-64::vcomp14-14.51.36247-habf1de7_41 
+
+
+
+Downloading and Extracting Packages: ...working...
+rust-1.96.1          | 184.3 MB  |            |   0% 
+
+rust-std-x86_64-pc-w | 25.2 MB   |            |   0% [A
+
+
+python-3.13.15       | 15.9 MB   |            |   0% [A[A
+
+
+
+pip-26.2.1           | 1.1 MB    |            |   0% [A[A[A
+
+
+
+
+libmpdec-4.0.0       | 87 KB     |            |   0% [A[A[A[A
+
+
+
+
+
+python_abi-3.13      | 7 KB      |            |   0% [A[A[A[A[A
+
+
+
+
+libmpdec-4.0.0       | 87 KB     | #8         |  18% [A[A[A[A
+
+
+python-3.13.15       | 15.9 MB   |            |   0% [A[A
+
+
+
+pip-26.2.1           | 1.1 MB    | 1          |   1% [A[A[A
+
+
+
+
+libmpdec-4.0.0       | 87 KB     | ########## | 100% [A[A[A[A
+
+
+python-3.13.15       | 15.9 MB   | 1          |   1% [A[A
+
+
+
+pip-26.2.1           | 1.1 MB    | #7         |  18% [A[A[A
+
+
+
+
+
+python_abi-3.13      | 7 KB      | ########## | 100% [A[A[A[A[A
+
+
+
+
+
+python_abi-3.13      | 7 KB      | ########## | 100% [A[A[A[A[A
+
+
+python-3.13.15       | 15.9 MB   | 4          |   5% [A[A
+
+
+
+pip-26.2.1           | 1.1 MB    | #####3     |  53% [A[A[A
+
+
+
+pip-26.2.1           | 1.1 MB    | ########## | 100% [A[A[A
+
+rust-std-x86_64-pc-w | 25.2 MB   |            |   0% [A
+
+
+python-3.13.15       | 15.9 MB   | #3         |  13% [A[A
+
+rust-std-x86_64-pc-w | 25.2 MB   |            |   0% [A
+rust-1.96.1          | 184.3 MB  |            |   0% 
+
+
+python-3.13.15       | 15.9 MB   | #7         |  17% [A[A
+
+rust-std-x86_64-pc-w | 25.2 MB   | 1          |   1% [A
+rust-1.96.1          | 184.3 MB  |            |   0% 
+
+rust-std-x86_64-pc-w | 25.2 MB   | 3          |   4% [A
+
+
+python-3.13.15       | 15.9 MB   | ##         |  21% [A[A
+rust-1.96.1          | 184.3 MB  |            |   0% 
+
+rust-std-x86_64-pc-w | 25.2 MB   | 5          |   6% [A
+
+
+python-3.13.15       | 15.9 MB   | ##4        |  24% [A[A
+rust-1.96.1          | 184.3 MB  |            |   0% 
+
+
+python-3.13.15       | 15.9 MB   | ##8        |  29% [A[A
+
+rust-std-x86_64-pc-w | 25.2 MB   | 9          |  10% [A
+rust-1.96.1          | 184.3 MB  |            |   1% 
+
+rust-std-x86_64-pc-w | 25.2 MB   | #4         |  15% [A
+
+rust-std-x86_64-pc-w | 25.2 MB   | #9         |  19% [A
+rust-1.96.1          | 184.3 MB  |            |   1% 
+
+
+python-3.13.15       | 15.9 MB   | ###2       |  32% [A[A
+
+
+
+
+
+python_abi-3.13      | 7 KB      | ########## | 100% [A[A[A[A[A
+rust-1.96.1          | 184.3 MB  | 1          |   1% 
+
+
+
+
+libmpdec-4.0.0       | 87 KB     | ########## | 100% [A[A[A[A
+
+
+
+
+libmpdec-4.0.0       | 87 KB     | ########## | 100% [A[A[A[A
+
+rust-std-x86_64-pc-w | 25.2 MB   | ##2        |  23% [A
+
+
+python-3.13.15       | 15.9 MB   | ###5       |  35% [A[A
+rust-1.96.1          | 184.3 MB  | 1          |   1% 
+rust-1.96.1          | 184.3 MB  | 1          |   2% 
+
+
+python-3.13.15       | 15.9 MB   | ###9       |  40% [A[A
+
+rust-std-x86_64-pc-w | 25.2 MB   | ##6        |  27% [A
+
+rust-std-x86_64-pc-w | 25.2 MB   | ###        |  30% [A
+
+
+python-3.13.15       | 15.9 MB   | ####2      |  42% [A[A
+rust-1.96.1          | 184.3 MB  | 2          |   2% 
+rust-1.96.1          | 184.3 MB  | 2          |   3% 
+
+
+python-3.13.15       | 15.9 MB   | ####6      |  46% [A[A
+
+rust-std-x86_64-pc-w | 25.2 MB   | ###3       |  33% [A
+
+
+python-3.13.15       | 15.9 MB   | #####5     |  55% [A[A
+rust-1.96.1          | 184.3 MB  | 3          |   4% 
+
+rust-std-x86_64-pc-w | 25.2 MB   | ###6       |  36% [A
+rust-1.96.1          | 184.3 MB  | 4          |   4% 
+
+
+python-3.13.15       | 15.9 MB   | ######1    |  62% [A[A
+
+rust-std-x86_64-pc-w | 25.2 MB   | ####1      |  41% [A
+
+
+python-3.13.15       | 15.9 MB   | #######1   |  71% [A[A
+rust-1.96.1          | 184.3 MB  | 4          |   5% 
+
+rust-std-x86_64-pc-w | 25.2 MB   | ####7      |  48% [A
+
+
+python-3.13.15       | 15.9 MB   | #######7   |  78% [A[A
+
+rust-std-x86_64-pc-w | 25.2 MB   | #####1     |  52% [A
+rust-1.96.1          | 184.3 MB  | 5          |   5% 
+
+
+python-3.13.15       | 15.9 MB   | ########3  |  83% [A[A
+
+rust-std-x86_64-pc-w | 25.2 MB   | #####5     |  55% [A
+rust-1.96.1          | 184.3 MB  | 5          |   6% 
+
+
+python-3.13.15       | 15.9 MB   | ########8  |  89% [A[A
+
+rust-std-x86_64-pc-w | 25.2 MB   | #####9     |  59% [A
+rust-1.96.1          | 184.3 MB  | 6          |   6% 
+
+
+python-3.13.15       | 15.9 MB   | #########5 |  96% [A[A
+
+rust-std-x86_64-pc-w | 25.2 MB   | ######3    |  63% [A
+rust-1.96.1          | 184.3 MB  | 7          |   7% 
+
+rust-std-x86_64-pc-w | 25.2 MB   | ######9    |  70% [A
+rust-1.96.1          | 184.3 MB  | 8          |   8% 
+
+
+python-3.13.15       | 15.9 MB   | ########## | 100% [A[A
+
+rust-std-x86_64-pc-w | 25.2 MB   | #######3   |  74% [A
+rust-1.96.1          | 184.3 MB  | 8          |   9% 
+rust-1.96.1          | 184.3 MB  | 9          |   9% 
+
+rust-std-x86_64-pc-w | 25.2 MB   | #######8   |  78% [A
+
+rust-std-x86_64-pc-w | 25.2 MB   | ########2  |  82% [A
+rust-1.96.1          | 184.3 MB  | 9          |  10% 
+
+rust-std-x86_64-pc-w | 25.2 MB   | ########6  |  86% [A
+rust-1.96.1          | 184.3 MB  | #          |  11% 
+rust-1.96.1          | 184.3 MB  | #1         |  11% 
+
+rust-std-x86_64-pc-w | 25.2 MB   | #########  |  90% [A
+rust-1.96.1          | 184.3 MB  | #1         |  12% 
+
+rust-std-x86_64-pc-w | 25.2 MB   | #########3 |  94% [A
+rust-1.96.1          | 184.3 MB  | #2         |  12% 
+
+rust-std-x86_64-pc-w | 25.2 MB   | #########8 |  98% [A
+rust-1.96.1          | 184.3 MB  | #2         |  13% 
+rust-1.96.1          | 184.3 MB  | #3         |  13% 
+
+rust-std-x86_64-pc-w | 25.2 MB   | ########## | 100% [A
+rust-1.96.1          | 184.3 MB  | #3         |  14% 
+rust-1.96.1          | 184.3 MB  | #4         |  14% 
+rust-1.96.1          | 184.3 MB  | #5         |  15% 
+rust-1.96.1          | 184.3 MB  | #6         |  16% 
+rust-1.96.1          | 184.3 MB  | #6         |  17% 
+rust-1.96.1          | 184.3 MB  | #7         |  17% 
+rust-1.96.1          | 184.3 MB  | #8         |  18% 
+rust-1.96.1          | 184.3 MB  | #8         |  19% 
+rust-1.96.1          | 184.3 MB  | #9         |  19% 
+rust-1.96.1          | 184.3 MB  | #9         |  20% 
+rust-1.96.1          | 184.3 MB  | ##         |  21% 
+rust-1.96.1          | 184.3 MB  | ##1        |  21% 
+rust-1.96.1          | 184.3 MB  | ##2        |  22% 
+rust-1.96.1          | 184.3 MB  | ##3        |  23% 
+rust-1.96.1          | 184.3 MB  | ##3        |  24% 
+rust-1.96.1          | 184.3 MB  | ##4        |  24% 
+rust-1.96.1          | 184.3 MB  | ##5        |  26% 
+rust-1.96.1          | 184.3 MB  | ##6        |  27% 
+rust-1.96.1          | 184.3 MB  | ##7        |  27% 
+rust-1.96.1          | 184.3 MB  | ##8        |  28% 
+rust-1.96.1          | 184.3 MB  | ##8        |  29% 
+rust-1.96.1          | 184.3 MB  | ##9        |  30% 
+rust-1.96.1          | 184.3 MB  | ###        |  30% 
+rust-1.96.1          | 184.3 MB  | ###        |  31% 
+rust-1.96.1          | 184.3 MB  | ###1       |  31% 
+rust-1.96.1          | 184.3 MB  | ###2       |  32% 
+rust-1.96.1          | 184.3 MB  | ###3       |  33% 
+rust-1.96.1          | 184.3 MB  | ###4       |  34% 
+rust-1.96.1          | 184.3 MB  | ###5       |  35% 
+rust-1.96.1          | 184.3 MB  | ###6       |  36% 
+rust-1.96.1          | 184.3 MB  | ###6       |  37% 
+rust-1.96.1          | 184.3 MB  | ###7       |  38% 
+rust-1.96.1          | 184.3 MB  | ###8       |  38% 
+rust-1.96.1          | 184.3 MB  | ###8       |  39% 
+rust-1.96.1          | 184.3 MB  | ###9       |  40% 
+rust-1.96.1          | 184.3 MB  | ####       |  40% 
+rust-1.96.1          | 184.3 MB  | ####1      |  41% 
+rust-1.96.1          | 184.3 MB  | ####1      |  42% 
+rust-1.96.1          | 184.3 MB  | ####2      |  42% 
+rust-1.96.1          | 184.3 MB  | ####2      |  43% 
+rust-1.96.1          | 184.3 MB  | ####3      |  43% 
+rust-1.96.1          | 184.3 MB  | ####3      |  44% 
+rust-1.96.1          | 184.3 MB  | ####3      |  44% 
+rust-1.96.1          | 184.3 MB  | ####4      |  44% 
+rust-1.96.1          | 184.3 MB  | ####4      |  45% 
+rust-1.96.1          | 184.3 MB  | ####5      |  46% 
+rust-1.96.1          | 184.3 MB  | ####6      |  46% 
+rust-1.96.1          | 184.3 MB  | ####7      |  47% 
+rust-1.96.1          | 184.3 MB  | ####8      |  48% 
+rust-1.96.1          | 184.3 MB  | ####8      |  49% 
+rust-1.96.1          | 184.3 MB  | ####9      |  49% 
+
+rust-std-x86_64-pc-w | 25.2 MB   | ########## | 100% [A
+rust-1.96.1          | 184.3 MB  | ####9      |  50% 
+rust-1.96.1          | 184.3 MB  | #####      |  50% 
+rust-1.96.1          | 184.3 MB  | #####1     |  51% 
+rust-1.96.1          | 184.3 MB  | #####1     |  52% 
+rust-1.96.1          | 184.3 MB  | #####2     |  52% 
+rust-1.96.1          | 184.3 MB  | #####2     |  52% 
+rust-1.96.1          | 184.3 MB  | #####2     |  53% 
+rust-1.96.1          | 184.3 MB  | #####3     |  53% 
+rust-1.96.1          | 184.3 MB  | #####3     |  53% 
+rust-1.96.1          | 184.3 MB  | #####3     |  54% 
+rust-1.96.1          | 184.3 MB  | #####3     |  54% 
+rust-1.96.1          | 184.3 MB  | #####4     |  54% 
+rust-1.96.1          | 184.3 MB  | #####4     |  54% 
+rust-1.96.1          | 184.3 MB  | #####4     |  55% 
+rust-1.96.1          | 184.3 MB  | #####4     |  55% 
+rust-1.96.1          | 184.3 MB  | #####4     |  55% 
+rust-1.96.1          | 184.3 MB  | #####5     |  55% 
+rust-1.96.1          | 184.3 MB  | #####5     |  55% 
+rust-1.96.1          | 184.3 MB  | #####5     |  56% 
+rust-1.96.1          | 184.3 MB  | #####6     |  56% 
+rust-1.96.1          | 184.3 MB  | #####6     |  57% 
+rust-1.96.1          | 184.3 MB  | #####6     |  57% 
+rust-1.96.1          | 184.3 MB  | #####7     |  57% 
+rust-1.96.1          | 184.3 MB  | #####7     |  57% 
+rust-1.96.1          | 184.3 MB  | #####7     |  58% 
+rust-1.96.1          | 184.3 MB  | #####7     |  58% 
+rust-1.96.1          | 184.3 MB  | #####8     |  58% 
+rust-1.96.1          | 184.3 MB  | #####8     |  59% 
+rust-1.96.1          | 184.3 MB  | #####9     |  59% 
+rust-1.96.1          | 184.3 MB  | #####9     |  60% 
+rust-1.96.1          | 184.3 MB  | ######     |  60% 
+rust-1.96.1          | 184.3 MB  | ######     |  61% 
+rust-1.96.1          | 184.3 MB  | ######     |  61% 
+rust-1.96.1          | 184.3 MB  | ######1    |  62% 
+rust-1.96.1          | 184.3 MB  | ######2    |  62% 
+rust-1.96.1          | 184.3 MB  | ######3    |  63% 
+rust-1.96.1          | 184.3 MB  | ######3    |  64% 
+rust-1.96.1          | 184.3 MB  | ######3    |  64% 
+rust-1.96.1          | 184.3 MB  | ######4    |  64% 
+rust-1.96.1          | 184.3 MB  | ######4    |  65% 
+rust-1.96.1          | 184.3 MB  | ######5    |  65% 
+rust-1.96.1          | 184.3 MB  | ######5    |  66% 
+rust-1.96.1          | 184.3 MB  | ######6    |  66% 
+rust-1.96.1          | 184.3 MB  | ######6    |  66% 
+rust-1.96.1          | 184.3 MB  | ######6    |  67% 
+rust-1.96.1          | 184.3 MB  | ######7    |  67% 
+rust-1.96.1          | 184.3 MB  | ######8    |  68% 
+rust-1.96.1          | 184.3 MB  | ######8    |  69% 
+rust-1.96.1          | 184.3 MB  | ######9    |  69% 
+rust-1.96.1          | 184.3 MB  | #######    |  70% 
+
+
+
+pip-26.2.1           | 1.1 MB    | ########## | 100% [A[A[A
+rust-1.96.1          | 184.3 MB  | #######    |  71% 
+
+
+
+pip-26.2.1           | 1.1 MB    | ########## | 100% [A[A[A
+rust-1.96.1          | 184.3 MB  | #######1   |  71% 
+rust-1.96.1          | 184.3 MB  | #######1   |  72% 
+rust-1.96.1          | 184.3 MB  | #######2   |  73% 
+rust-1.96.1          | 184.3 MB  | #######3   |  73% 
+rust-1.96.1          | 184.3 MB  | #######3   |  73% 
+rust-1.96.1          | 184.3 MB  | #######4   |  74% 
+rust-1.96.1          | 184.3 MB  | #######4   |  75% 
+rust-1.96.1          | 184.3 MB  | #######5   |  75% 
+rust-1.96.1          | 184.3 MB  | #######5   |  76% 
+rust-1.96.1          | 184.3 MB  | #######6   |  76% 
+rust-1.96.1          | 184.3 MB  | #######6   |  77% 
+rust-1.96.1          | 184.3 MB  | #######7   |  77% 
+rust-1.96.1          | 184.3 MB  | #######7   |  78% 
+rust-1.96.1          | 184.3 MB  | #######8   |  78% 
+rust-1.96.1          | 184.3 MB  | #######8   |  79% 
+rust-1.96.1          | 184.3 MB  | #######9   |  80% 
+rust-1.96.1          | 184.3 MB  | #######9   |  80% 
+rust-1.96.1          | 184.3 MB  | ########   |  80% 
+rust-1.96.1          | 184.3 MB  | ########   |  81% 
+rust-1.96.1          | 184.3 MB  | ########1  |  81% 
+rust-1.96.1          | 184.3 MB  | ########1  |  82% 
+rust-1.96.1          | 184.3 MB  | ########2  |  82% 
+rust-1.96.1          | 184.3 MB  | ########2  |  83% 
+rust-1.96.1          | 184.3 MB  | ########3  |  83% 
+rust-1.96.1          | 184.3 MB  | ########3  |  84% 
+rust-1.96.1          | 184.3 MB  | ########4  |  84% 
+rust-1.96.1          | 184.3 MB  | ########5  |  85% 
+rust-1.96.1          | 184.3 MB  | ########5  |  86% 
+rust-1.96.1          | 184.3 MB  | ########6  |  87% 
+rust-1.96.1          | 184.3 MB  | ########7  |  88% 
+rust-1.96.1          | 184.3 MB  | ########8  |  89% 
+rust-1.96.1          | 184.3 MB  | #########  |  90% 
+rust-1.96.1          | 184.3 MB  | #########1 |  92% 
+rust-1.96.1          | 184.3 MB  | #########2 |  93% 
+rust-1.96.1          | 184.3 MB  | #########3 |  94% 
+rust-1.96.1          | 184.3 MB  | #########4 |  95% 
+rust-1.96.1          | 184.3 MB  | #########5 |  96% 
+rust-1.96.1          | 184.3 MB  | #########6 |  96% 
+rust-1.96.1          | 184.3 MB  | #########7 |  97% 
+rust-1.96.1          | 184.3 MB  | #########7 |  98% 
+rust-1.96.1          | 184.3 MB  | #########8 |  98% 
+rust-1.96.1          | 184.3 MB  | #########8 |  98% 
+rust-1.96.1          | 184.3 MB  | #########8 |  99% 
+rust-1.96.1          | 184.3 MB  | #########9 |  99% 
+rust-1.96.1          | 184.3 MB  | #########9 | 100% 
+rust-1.96.1          | 184.3 MB  | ########## | 100% 
+rust-1.96.1          | 184.3 MB  | ########## | 100% 
+
+
+python-3.13.15       | 15.9 MB   | ########## | 100% [A[A
+                                                     
+
+
+                                                     [A
+
+
+                                                     [A[A
+
+
+
+                                                     [A[A[A
+
+
+
+
+                                                     [A[A[A[A
+
+
+
+
+
+                                                     [A[A[A[A[A done
+Preparing transaction: - \ | / - \ | / - \ | / done
+Verifying transaction: \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | done
+Executing transaction: - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ | / - \ done
+#
+# To activate this environment, use
+#
+#     $ conda activate C:\AegisAcceptanceAttempt3\repository\.runtime_mcp313
+#
+# To deactivate an active environment, use
+#
+#     $ conda deactivate
+
+Cloning into 'C:\AegisAcceptanceAttempt3\repository\third_party\mcp-scanner'...
+System.Management.Automation.RemoteException: Cloning into 'C:\AegisAcceptanceAttempt3\repository\third_party\mcp-scanner'...
+HEAD is now at 51966cc chore: bump version to 4.8.2 (#225)
+System.Management.Automation.RemoteException: HEAD is now at 51966cc chore: bump version to 4.8.2 (#225)
+Processing .\third_party\mcp-scanner
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: cisco-ai-mcp-scanner
+  Building wheel for cisco-ai-mcp-scanner (pyproject.toml): started
+  Building wheel for cisco-ai-mcp-scanner (pyproject.toml): finished with status 'done'
+  Created wheel for cisco-ai-mcp-scanner: filename=cisco_ai_mcp_scanner-4.8.2-py3-none-any.whl size=491688 sha256=32b7fea94c5d2f8928aa9e12fcf5b164a3673e9b34b0a3d0d72202fbaeb703a4
+  Stored in directory: C:\Users\aegisadmin\AppData\Local\Temp\pip-ephem-wheel-cache-495xq090\wheels\56\2b\b0\bcacdcb9de39d9179463f470f0852888a851523f30819b1500
+Successfully built cisco-ai-mcp-scanner
+Built from locked source commit; wheel SHA-256: 32b7fea94c5d2f8928aa9e12fcf5b164a3673e9b34b0a3d0d72202fbaeb703a4
+Collecting aiohappyeyeballs==2.6.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 3))
+  Using cached aiohappyeyeballs-2.6.1-py3-none-any.whl (15 kB)
+Collecting aiohttp==3.13.5 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 7))
+  Downloading aiohttp-3.13.5-cp313-cp313-win_amd64.whl (458 kB)
+Collecting aiosignal==1.4.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 95))
+  Using cached aiosignal-1.4.0-py3-none-any.whl (7.5 kB)
+Collecting annotated-doc==0.0.4 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 99))
+  Using cached annotated_doc-0.0.4-py3-none-any.whl (5.3 kB)
+Collecting annotated-types==0.7.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 103))
+  Using cached annotated_types-0.7.0-py3-none-any.whl (13 kB)
+Collecting anyio==4.12.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 107))
+  Downloading anyio-4.12.0-py3-none-any.whl (113 kB)
+Collecting attrs==25.4.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 116))
+  Downloading attrs-25.4.0-py3-none-any.whl (67 kB)
+Collecting black==25.12.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 123))
+  Downloading black-25.12.0-cp313-cp313-win_amd64.whl (1.4 MB)
+     ---------------------------------------- 1.4/1.4 MB 6.1 MB/s  0:00:00
+Collecting boolean-py==5.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 146))
+  Using cached boolean_py-5.0-py3-none-any.whl (26 kB)
+Collecting cachecontrol==0.14.4 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 150))
+  Using cached cachecontrol-0.14.4-py3-none-any.whl (22 kB)
+Collecting certifi==2025.11.12 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 154))
+  Downloading certifi-2025.11.12-py3-none-any.whl (159 kB)
+Collecting cffi==2.0.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 161))
+  Downloading cffi-2.0.0-cp313-cp313-win_amd64.whl (183 kB)
+Collecting cfgv==3.5.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 223))
+  Using cached cfgv-3.5.0-py2.py3-none-any.whl (7.4 kB)
+Collecting charset-normalizer==3.4.4 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 227))
+  Downloading charset_normalizer-3.4.4-cp313-cp313-win_amd64.whl (107 kB)
+Collecting click==8.1.8 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 295))
+  Using cached click-8.1.8-py3-none-any.whl (98 kB)
+Collecting colorama==0.4.6 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 304))
+  Using cached colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+Collecting coverage==7.13.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 311))
+  Downloading coverage-7.13.0-cp313-cp313-win_amd64.whl (221 kB)
+Collecting cryptography==46.0.3 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 393))
+  Downloading cryptography-46.0.3-cp311-abi3-win_amd64.whl (3.5 MB)
+     ---------------------------------------- 3.5/3.5 MB 6.1 MB/s  0:00:00
+Collecting cyclonedx-python-lib==11.7.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 447))
+  Using cached cyclonedx_python_lib-11.7.0-py3-none-any.whl (513 kB)
+Collecting defusedxml==0.7.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 451))
+  Using cached defusedxml-0.7.1-py2.py3-none-any.whl (25 kB)
+Collecting distlib==0.4.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 455))
+  Using cached distlib-0.4.0-py2.py3-none-any.whl (469 kB)
+Collecting distro==1.9.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 459))
+  Using cached distro-1.9.0-py3-none-any.whl (20 kB)
+Collecting expandvars==1.1.2 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 463))
+  Downloading expandvars-1.1.2-py3-none-any.whl (7.5 kB)
+Collecting fastapi==0.125.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 467))
+  Downloading fastapi-0.125.0-py3-none-any.whl (112 kB)
+Collecting fastuuid==0.14.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 471))
+  Downloading fastuuid-0.14.0-cp313-cp313-win_amd64.whl (156 kB)
+Collecting filelock==3.20.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 518))
+  Downloading filelock-3.20.1-py3-none-any.whl (16 kB)
+Collecting flake8==7.3.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 525))
+  Downloading flake8-7.3.0-py2.py3-none-any.whl (57 kB)
+Collecting frozenlist==1.8.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 528))
+  Downloading frozenlist-1.8.0-cp313-cp313-win_amd64.whl (43 kB)
+Collecting fsspec==2025.12.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 630))
+  Downloading fsspec-2025.12.0-py3-none-any.whl (201 kB)
+Collecting h11==0.16.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 634))
+  Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+Collecting hf-xet==1.2.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 640))
+  Downloading hf_xet-1.2.0-cp37-abi3-win_amd64.whl (2.9 MB)
+     ---------------------------------------- 2.9/2.9 MB 21.4 MB/s  0:00:00
+Collecting httpcore==1.0.9 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 664))
+  Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
+Collecting httpx==0.28.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 668))
+  Using cached httpx-0.28.1-py3-none-any.whl (73 kB)
+Collecting httpx-sse==0.4.3 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 678))
+  Downloading httpx_sse-0.4.3-py3-none-any.whl (9.0 kB)
+Collecting huggingface-hub==1.2.3 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 682))
+  Downloading huggingface_hub-1.2.3-py3-none-any.whl (520 kB)
+Collecting identify==2.6.15 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 686))
+  Downloading identify-2.6.15-py2.py3-none-any.whl (99 kB)
+Collecting idna==3.11 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 690))
+  Downloading idna-3.11-py3-none-any.whl (71 kB)
+Collecting importlib-metadata==8.5.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 698))
+  Using cached importlib_metadata-8.5.0-py3-none-any.whl (26 kB)
+Collecting iniconfig==2.3.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 702))
+  Using cached iniconfig-2.3.0-py3-none-any.whl (7.5 kB)
+Collecting isort==7.0.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 706))
+  Downloading isort-7.0.0-py3-none-any.whl (94 kB)
+Collecting jinja2==3.1.6 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 709))
+  Using cached jinja2-3.1.6-py3-none-any.whl (134 kB)
+Collecting jiter==0.12.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 713))
+  Downloading jiter-0.12.0-cp313-cp313-win_amd64.whl (204 kB)
+Collecting jsonschema==4.23.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 793))
+  Using cached jsonschema-4.23.0-py3-none-any.whl (88 kB)
+Collecting jsonschema-specifications==2025.9.1 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 799))
+  Using cached jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)
+Collecting librt==0.7.4 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 803))
+  Downloading librt-0.7.4-cp313-cp313-win_amd64.whl (49 kB)
+Collecting license-expression==30.4.4 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 861))
+  Using cached license_expression-30.4.4-py3-none-any.whl (120 kB)
+Collecting litellm==1.93.0 (from -r C:\AegisAcceptanceAttempt3\repository\results\mcp_scanner_locked_requirements.txt (line 865))
+  Downloading litellm-1.93.0.tar.gz (15.9 MB)
+     ---------------------------------------- 15.9/15.9 MB 8.3 MB/s  0:00:01
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Installing backend dependencies: started
+  Installing backend dependencies: still running...
+  Installing backend dependencies: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): still running...
+  Preparing metadata (pyproject.toml): finished with status 'error'
+  error: subprocess-exited-with-error
+System.Management.Automation.RemoteException:   error: subprocess-exited-with-error
+  
+System.Management.Automation.RemoteException:   
+  脳 Preparing metadata (pyproject.toml) did not run successfully.
+System.Management.Automation.RemoteException:   脳 Preparing metadata (pyproject.toml) did not run successfully.
+  鈹?exit code: 1
+System.Management.Automation.RemoteException:   鈹?exit code: 1
+  鈺扳攢> [36 lines of output]
+System.Management.Automation.RemoteException:   鈺扳攢> [36 lines of output]
+      Python reports SOABI: cp313-win_amd64
+System.Management.Automation.RemoteException:       Python reports SOABI: cp313-win_amd64
+      Computed rustc target triple: x86_64-pc-windows-msvc
+System.Management.Automation.RemoteException:       Computed rustc target triple: x86_64-pc-windows-msvc
+      Installation directory: C:\Users\aegisadmin\AppData\Local\puccinialin\puccinialin\Cache
+System.Management.Automation.RemoteException:       Installation directory: C:\Users\aegisadmin\AppData\Local\puccinialin\puccinialin\Cache
+      Downloading rustup-init from https://static.rust-lang.org/rustup/dist/x86_64-pc-windows-msvc/rustup-init.exe
+System.Management.Automation.RemoteException:       Downloading rustup-init from https://static.rust-lang.org/rustup/dist/x86_64-pc-windows-msvc/rustup-init.exe
+      Checking for Rust toolchain....
+System.Management.Automation.RemoteException:       Checking for Rust toolchain....
+      Rust not found, installing into a temporary directory
+System.Management.Automation.RemoteException:       Rust not found, installing into a temporary directory
+      
+System.Management.Automation.RemoteException:       
+      Downloading rustup-init:   0%|          | 0.00/12.8M [00:00<?, ?B/s]
+System.Management.Automation.RemoteException:       Downloading rustup-init:   0%|          | 0.00/12.8M [00:00<?, ?B/s]
+      Downloading rustup-init:  10%|閳籠x89         | 1.27M/12.8M [00:00<00:00, 12.7MB/s]
+System.Management.Automation.RemoteException:       Downloading rustup-init:  10%|閳籠x89         | 1.27M/12.8M [00:00<00:00, 12.7MB/s]
+      Downloading rustup-init:  20%|閳诲牃鏋?       | 2.56M/12.8M [00:00<00:00, 12.6MB/s]
+System.Management.Automation.RemoteException:       Downloading rustup-init:  20%|閳诲牃鏋?       | 2.56M/12.8M [00:00<00:00, 12.6MB/s]
+      Downloading rustup-init:  33%|閳诲牃鏋呴埢鍫氭瀻      | 4.28M/12.8M [00:00<00:00, 14.3MB/s]
+System.Management.Automation.RemoteException:       Downloading rustup-init:  33%|閳诲牃鏋呴埢鍫氭瀻      | 4.28M/12.8M [00:00<00:00, 14.3MB/s]
+      Downloading rustup-init:  44%|閳诲牃鏋呴埢鍫氭瀰閳籠x8d     | 5.70M/12.8M [00:00<00:00, 9.11MB/s]
+System.Management.Automation.RemoteException:       Downloading rustup-init:  44%|閳诲牃鏋呴埢鍫氭瀰閳籠x8d     | 5.70M/12.8M [00:00<00:00, 9.11MB/s]
+      Downloading rustup-init:  53%|閳诲牃鏋呴埢鍫氭瀰閳诲牃鏋?   | 6.79M/12.8M [00:00<00:00, 8.77MB/s]
+System.Management.Automation.RemoteException:       Downloading rustup-init:  53%|閳诲牃鏋呴埢鍫氭瀰閳诲牃鏋?   | 6.79M/12.8M [00:00<00:00, 8.77MB/s]
+      Downloading rustup-init:  66%|閳诲牃鏋呴埢鍫氭瀰閳诲牃鏋呴埢\x8b   | 8.50M/12.8M [00:00<00:00, 10.7MB/s]
+System.Management.Automation.RemoteException:       Downloading rustup-init:  66%|閳诲牃鏋呴埢鍫氭瀰閳诲牃鏋呴埢\x8b   | 8.50M/12.8M [00:00<00:00, 10.7MB/s]
+      Downloading rustup-init:  83%|閳诲牃鏋呴埢鍫氭瀰閳诲牃鏋呴埢鍫氭瀰閳籠x8e | 10.7M/12.8M [00:00<00:00, 13.3MB/s]
+System.Management.Automation.RemoteException:       Downloading rustup-init:  83%|閳诲牃鏋呴埢鍫氭瀰閳诲牃鏋呴埢鍫氭瀰閳籠x8e | 10.7M/12.8M [00:00<00:00, 13.3MB/s]
+      Downloading rustup-init:  95%|閳诲牃鏋呴埢鍫氭瀰閳诲牃鏋呴埢鍫氭瀰閳诲牃鏋峾 12.1M/12.8M [00:01<00:00, 13.7MB/s]
+System.Management.Automation.RemoteException:       Downloading rustup-init:  95%|閳诲牃鏋呴埢鍫氭瀰閳诲牃鏋呴埢鍫氭瀰閳诲牃鏋峾 12.1M/12.8M [00:01<00:00, 13.7MB/s]
+      Downloading rustup-init: 100%|閳诲牃鏋呴埢鍫氭瀰閳诲牃鏋呴埢鍫氭瀰閳诲牃鏋厊 12.8M/12.8M [00:01<00:00, 12.5MB/s]
+System.Management.Automation.RemoteException:       Downloading rustup-init: 100%|閳诲牃鏋呴埢鍫氭瀰閳诲牃鏋呴埢鍫氭瀰閳诲牃鏋厊 12.8M/12.8M [00:01<00:00, 12.5MB/s]
+      Installing rust to C:\Users\aegisadmin\AppData\Local\puccinialin\puccinialin\Cache\rustup
+System.Management.Automation.RemoteException:       Installing rust to C:\Users\aegisadmin\AppData\Local\puccinialin\puccinialin\Cache\rustup
+      warn: It looks like you have an existing rustup settings file at:
+System.Management.Automation.RemoteException:       warn: It looks like you have an existing rustup settings file at:
+      warn: C:\Users\aegisadmin\AppData\Local\puccinialin\puccinialin\Cache\rustup\settings.toml
+System.Management.Automation.RemoteException:       warn: C:\Users\aegisadmin\AppData\Local\puccinialin\puccinialin\Cache\rustup\settings.toml
+      warn: Rustup will install the default toolchain as specified in the settings file,
+System.Management.Automation.RemoteException:       warn: Rustup will install the default toolchain as specified in the settings file,
+      warn: instead of the one inferred from the default host triple.
+System.Management.Automation.RemoteException:       warn: instead of the one inferred from the default host triple.
+      warn: installing msvc toolchain without its prerequisites
+System.Management.Automation.RemoteException:       warn: installing msvc toolchain without its prerequisites
+      info: profile set to minimal
+System.Management.Automation.RemoteException:       info: profile set to minimal
+      info: setting default host triple to x86_64-pc-windows-msvc
+System.Management.Automation.RemoteException:       info: setting default host triple to x86_64-pc-windows-msvc
+      info: syncing channel updates for stable-x86_64-pc-windows-msvc
+System.Management.Automation.RemoteException:       info: syncing channel updates for stable-x86_64-pc-windows-msvc
+      info: latest update on 2026-08-20 for version 1.98.0 (88d9e12ae 2026-08-18)
+System.Management.Automation.RemoteException:       info: latest update on 2026-08-20 for version 1.98.0 (88d9e12ae 2026-08-18)
+      info: downloading 3 components
+System.Management.Automation.RemoteException:       info: downloading 3 components
+      info: default toolchain set to stable-x86_64-pc-windows-msvc
+System.Management.Automation.RemoteException:       info: default toolchain set to stable-x86_64-pc-windows-msvc
+      Checking if cargo is installed
+System.Management.Automation.RemoteException:       Checking if cargo is installed
+      cargo 1.98.0 (797e8a9bc 2026-08-05)
+System.Management.Automation.RemoteException:       cargo 1.98.0 (797e8a9bc 2026-08-05)
+      
+System.Management.Automation.RemoteException:       
+      Cargo, the Rust package manager, is not installed or is not on PATH.
+System.Management.Automation.RemoteException:       Cargo, the Rust package manager, is not installed or is not on PATH.
+      This package requires Rust and Cargo to compile extensions. Install it through
+System.Management.Automation.RemoteException:       This package requires Rust and Cargo to compile extensions. Install it through
+      the system's package manager or via https://rustup.rs/
+System.Management.Automation.RemoteException:       the system's package manager or via https://rustup.rs/
+      
+System.Management.Automation.RemoteException:       
+      [end of output]
+System.Management.Automation.RemoteException:       [end of output]
+  
+System.Management.Automation.RemoteException:   
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+System.Management.Automation.RemoteException:   note: This error originates from a subprocess, and is likely not a problem with pip.
+error: metadata-generation-failed
+System.Management.Automation.RemoteException: error: metadata-generation-failed
+System.Management.Automation.RemoteException
+脳 Encountered error while generating package metadata.
+System.Management.Automation.RemoteException: 脳 Encountered error while generating package metadata.
+鈺扳攢> litellm
+System.Management.Automation.RemoteException: 鈺扳攢> litellm
+System.Management.Automation.RemoteException
+note: This is an issue with the package mentioned above, not pip.
+System.Management.Automation.RemoteException: note: This is an issue with the package mentioned above, not pip.
+hint: See above for details.
+System.Management.Automation.RemoteException: hint: See above for details.
+Hash-locked dependency installation failed for Cisco MCP Scanner. Exit code: 1
+System.Management.Automation.RemoteException: Hash-locked dependency installation failed for Cisco MCP Scanner. Exit code: 1
+所在位置 C:\AegisAcceptanceAttempt3\repository\bootstrap_runtimes.ps1:66 字符: 9
+System.Management.Automation.RemoteException: 所在位置 C:\AegisAcceptanceAttempt3\repository\bootstrap_runtimes.ps1:66 字符: 9
++         throw "$FailureMessage Exit code: $LASTEXITCODE"
+System.Management.Automation.RemoteException: +         throw "$FailureMessage Exit code: $LASTEXITCODE"
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+System.Management.Automation.RemoteException: +         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Hash-locked dep...r. Exit code: 1:String) [], RuntimeException
+System.Management.Automation.RemoteException:     + CategoryInfo          : OperationStopped: (Hash-locked dep...r. Exit code: 1:String) [], RuntimeException
+    + FullyQualifiedErrorId : Hash-locked dependency installation failed for Cisco MCP Scanner. Exit code: 1
+System.Management.Automation.RemoteException:     + FullyQualifiedErrorId : Hash-locked dependency installation failed for Cisco MCP Scanner. Exit code: 1
+ 
+System.Management.Automation.RemoteException:

@@ -15,6 +15,10 @@ $Url = "http://127.0.0.1:$Port"
 $Preflight = Join-Path $DemoRoot "preflight.ps1"
 . (Join-Path $DemoRoot "scripts\portable_runtime.ps1")
 $Python = Resolve-AegisRuntimePython -RuntimeRoot (Join-Path $ProjectRoot ".runtime_mcp313")
+Add-AegisRuntimeToPath -RuntimeRoots @(
+    (Join-Path $ProjectRoot ".runtime_skill"),
+    (Join-Path $ProjectRoot ".runtime_mcp313")
+) | Out-Null
 
 $PowerShellHost = (Get-Process -Id $PID).Path
 $preflightArguments = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $Preflight)

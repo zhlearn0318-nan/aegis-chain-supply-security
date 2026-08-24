@@ -25,7 +25,7 @@ class Runner(Protocol):
 class ProcessRunner:
     timeout_seconds: int
     cache_root: Path
-    extra_path: Path | None = None
+    extra_path: Path | Sequence[Path] | None = None
 
     def run(
         self,
@@ -51,7 +51,14 @@ class ProcessRunner:
         env["HF_HUB_OFFLINE"] = "1"
         env["TRANSFORMERS_OFFLINE"] = "1"
         if self.extra_path:
-            env["PATH"] = str(self.extra_path) + os.pathsep + env.get("PATH", "")
+            extra_paths = (
+                [self.extra_path]
+                if isinstance(self.extra_path, Path)
+                else list(self.extra_path)
+            )
+            env["PATH"] = os.pathsep.join(
+                [*(str(path) for path in extra_paths), env.get("PATH", "")]
+            )
         self.cache_root.mkdir(parents=True, exist_ok=True)
         env["LOCALAPPDATA"] = str(self.cache_root)
         env["XDG_CACHE_HOME"] = str(self.cache_root)

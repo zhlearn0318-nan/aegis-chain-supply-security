@@ -60,8 +60,26 @@
 - 项目自身供应链门禁再次 `12/12` 通过；扫描 461 个文本文件，`verified_leaks=0`、仓库卫生违规 0。
 - 原始 Conda 进度日志包含工具自身生成的尾随空格；为保持 guest 回收证据的逐字节真实性，`demo_web/artifacts/**` 继续禁用文本转换，并禁用该证据区的 whitespace 风格判定，代码/文档差异检查不放宽。
 
+## 2026-08-25：第三次真实主运行（Cargo PATH 根因）
+
+- 跨布局修复提交 `d5ee810e29eac41b2e20e8793e03fab48c4973ba` 已推送；第三次运行使用此前不存在的 `C:\AegisAcceptanceAttempt3`，再次独立下载工具、clone 固定提交并通过 VM/远端/负向 preflight。
+- `01-bootstrap-runtimes` 运行 1,672,007 ms 后以 1 失败，总门禁以 33 失败；证据固化到 `attempt-3-failed/`，不得作为通过证据；clone 后私钥再次验证为不存在。
+- 跨布局解释器修复有效：Skill Conda 根解释器被调用，Skill Scanner 固定源码 wheel 构建、哈希依赖安装和命令入口生成均完成；MCP Python 3.13 + Rust 环境、固定源码 clone 和 MCP wheel 构建也完成。
+- 新根因出现在 MCP 锁定依赖 `litellm==1.93.0` 的源码元数据构建：Conda 已安装 Rust，但未执行 activation，`Library\bin` 未进入 PATH；构建隔离因此误判 Rust/Cargo 缺失，尝试下载临时 rustup 后仍找不到 Cargo。
+- 虚拟机实查确认 `cargo.exe` 与 `rustc.exe` 分别存在于 `.runtime_mcp313\Library\bin`；这排除了“缺少 Rust 包”，将问题收敛为“运行时 PATH 未激活”。
+
+## 2026-08-25：运行时 PATH 激活修复
+
+- PowerShell 运行时合同新增 Conda/venv/POSIX PATH 条目解析与大小写不敏感去重，覆盖运行时根、`Library\mingw-w64\bin`、`Library\usr\bin`、`Library\bin`、`Scripts`、`bin`。
+- 引导在 Conda 环境创建后立即激活对应 PATH；preflight、测试、启动、项目供应链审计、发布门禁与三个根级复现脚本同步接入。
+- 后端 `ProcessRunner` 支持多个额外 PATH 条目，Web 服务为 Skill/MCP 两套运行时传入完整激活路径，使扫描子进程也能发现 Conda DLL 与工具。
+- 定向回归 `31/31` 通过，包含 PowerShell `Library\bin` 激活和 ProcessRunner 多路径传递行为；所有相关 PowerShell AST 解析通过。
+- 完整后端回归 `361/361` 通过；宿主现有 Skill/MCP venv 运行时再次通过 `VerifyOnly`，确认 PATH 激活修复保持向后兼容。
+- 项目自身供应链门禁 `12/12` 通过；扫描 465 个文本文件，`verified_leaks=0`、仓库卫生违规 0，已暂存差异检查通过。
+- 一次面向真实 guest 的临时 helper 复制因 VirtualBox Guest Control 长时间停留在 `starting` 而未执行；没有把该次操作计为行为通过，计划在提交后重启 VM 再验证。
+
 ## 当前状态
 
-- 状态：`partial / attempts 1-2 failed / runtime-layout fix validated locally`。
-- 当前没有正式通过指标或成功报告；两次失败证据均已保留且明确标记为非发布验收。
-- 下一动作：执行完整回归和供应链门禁，提交并推送跨布局修复，再用第三个全新工作目录执行完整主运行。
+- 状态：`partial / attempts 1-3 failed / runtime PATH fix validated locally`。
+- 当前没有正式通过指标或成功报告；三次失败证据均已保留且明确标记为非发布验收。
+- 下一动作：执行完整回归和供应链门禁，提交并推送 PATH 激活修复；重启 VM 验证真实 Cargo 可发现性，再用第四个全新工作目录执行完整主运行。

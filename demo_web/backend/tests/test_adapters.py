@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 from pathlib import Path
 from typing import Callable, Sequence
@@ -16,7 +17,9 @@ from backend.adapters import (
 
 
 class FakeRunner:
-    def __init__(self, handler: Callable[[list[str]], subprocess.CompletedProcess[str]]):
+    def __init__(
+        self, handler: Callable[[list[str]], subprocess.CompletedProcess[str]]
+    ):
         self.handler = handler
         self.commands: list[list[str]] = []
 
@@ -38,6 +41,10 @@ def touch(path: Path, content: str = "") -> Path:
 
 def test_process_runner_forces_safe_subprocess_options(monkeypatch, tmp_path) -> None:
     captured: dict[str, object] = {}
+    first_path = tmp_path / "runtime" / "Library" / "bin"
+    second_path = tmp_path / "runtime" / "Scripts"
+    first_path.mkdir(parents=True)
+    second_path.mkdir()
     monkeypatch.setenv("OPENAI_API_KEY", "must-not-leak")
     monkeypatch.setenv("VIRUSTOTAL_API_KEY", "must-not-leak")
 
@@ -47,7 +54,11 @@ def test_process_runner_forces_safe_subprocess_options(monkeypatch, tmp_path) ->
         return subprocess.CompletedProcess(command, 0, "ok", "")
 
     monkeypatch.setattr(subprocess, "run", fake_run)
-    runner = ProcessRunner(timeout_seconds=17, cache_root=tmp_path / "cache")
+    runner = ProcessRunner(
+        timeout_seconds=17,
+        cache_root=tmp_path / "cache",
+        extra_path=(first_path, second_path),
+    )
 
     runner.run(["scanner", "--flag", "value"])
 
@@ -60,6 +71,10 @@ def test_process_runner_forces_safe_subprocess_options(monkeypatch, tmp_path) ->
     assert "VIRUSTOTAL_API_KEY" not in captured["env"]
     assert captured["env"]["HF_HUB_OFFLINE"] == "1"
     assert captured["env"]["LITELLM_LOCAL_MODEL_COST_MAP"] == "True"
+    assert captured["env"]["PATH"].split(os.pathsep)[:2] == [
+        str(first_path),
+        str(second_path),
+    ]
 
 
 @pytest.mark.parametrize("invalid", ["scanner --flag", [], ["bad\0argument"]])
@@ -76,7 +91,10 @@ def test_skill_adapter_builds_command_and_parses_json(tmp_path) -> None:
 
     def handler(command: list[str]) -> subprocess.CompletedProcess[str]:
         output = Path(command[command.index("--output-json") + 1])
-        output.write_text(json.dumps({"results": [{"skill_name": "example", "findings": []}]}), encoding="utf-8")
+        output.write_text(
+            json.dumps({"results": [{"skill_name": "example", "findings": []}]}),
+            encoding="utf-8",
+        )
         return subprocess.CompletedProcess(command, 0, "scan complete", "")
 
     runner = FakeRunner(handler)
@@ -99,17 +117,24 @@ def test_skill_adapter_fails_closed_when_output_is_missing(tmp_path) -> None:
         SkillScannerAdapter(scanner=scanner, runner=runner).scan(skill)
 
 
-def test_skill_adapter_counts_single_result_report_without_retaining_paths(tmp_path) -> None:
+def test_skill_adapter_counts_single_result_report_without_retaining_paths(
+    tmp_path,
+) -> None:
     scanner = touch(tmp_path / "skill-scanner.exe")
     skill = tmp_path / "single-result-skill"
     touch(skill / "SKILL.md", "---\nname: single-result\n---\n")
 
     def handler(command: list[str]) -> subprocess.CompletedProcess[str]:
         output = Path(command[command.index("--output-json") + 1])
-        output.write_text(json.dumps({"skill_name": "single-result", "findings": [{"id": "one"}]}), encoding="utf-8")
+        output.write_text(
+            json.dumps({"skill_name": "single-result", "findings": [{"id": "one"}]}),
+            encoding="utf-8",
+        )
         return subprocess.CompletedProcess(command, 0, f"saved to {output}", "")
 
-    result = SkillScannerAdapter(scanner=scanner, runner=FakeRunner(handler)).scan(skill)
+    result = SkillScannerAdapter(scanner=scanner, runner=FakeRunner(handler)).scan(
+        skill
+    )
 
     assert result.logs == ["skill-scanner completed: results=1 findings=1 exit_code=0"]
     assert str(skill) not in " ".join(result.logs)
@@ -125,11 +150,15 @@ def test_mcp_adapter_builds_wrapper_command_and_parses_json(tmp_path) -> None:
 
     def handler(command: list[str]) -> subprocess.CompletedProcess[str]:
         output = Path(command[command.index("--output") + 1])
-        output.write_text(json.dumps({"scan_results": [{"status": "completed"}]}), encoding="utf-8")
+        output.write_text(
+            json.dumps({"scan_results": [{"status": "completed"}]}), encoding="utf-8"
+        )
         return subprocess.CompletedProcess(command, 0, "mcp complete", "")
 
     runner = FakeRunner(handler)
-    result = McpScannerAdapter(python, wrapper, scanner, runner).scan(tools, prompts, resources)
+    result = McpScannerAdapter(python, wrapper, scanner, runner).scan(
+        tools, prompts, resources
+    )
 
     assert result.report["scan_results"][0]["status"] == "completed"
     assert result.logs == ["mcp-scanner completed: results=1 unsafe=1 exit_code=0"]
@@ -143,13 +172,20 @@ def test_dependency_adapter_accepts_pip_audit_risk_exit_code(tmp_path) -> None:
     requirements = touch(tmp_path / "requirements.txt", "urllib3==1.24.1\n")
     report = {"dependencies": [{"name": "urllib3", "version": "1.24.1", "vulns": []}]}
     runner = FakeRunner(
-        lambda command: subprocess.CompletedProcess(command, 1, json.dumps(report), "risk found")
+        lambda command: subprocess.CompletedProcess(
+            command, 1, json.dumps(report), "risk found"
+        )
     )
 
-    result = DependencyAuditAdapter(executable, tmp_path / "cache", runner).scan(requirements)
+    result = DependencyAuditAdapter(executable, tmp_path / "cache", runner).scan(
+        requirements
+    )
 
     assert result.report == report
-    assert result.logs[0] == "pip-audit completed: dependencies=1 vulnerabilities=0 exit_code=1"
+    assert (
+        result.logs[0]
+        == "pip-audit completed: dependencies=1 vulnerabilities=0 exit_code=1"
+    )
     assert json.dumps(report) not in " ".join(result.logs)
     assert "--disable-pip" in runner.commands[0]
     assert "--cache-dir" in runner.commands[0]
@@ -163,10 +199,14 @@ def test_dependency_adapter_accepts_pip_audit_risk_exit_code(tmp_path) -> None:
         subprocess.CompletedProcess(["pip-audit"], 0, '{"unexpected": []}', ""),
     ],
 )
-def test_dependency_adapter_fails_closed_on_incomplete_output(tmp_path, completed) -> None:
+def test_dependency_adapter_fails_closed_on_incomplete_output(
+    tmp_path, completed
+) -> None:
     executable = touch(tmp_path / "pip-audit.exe")
     requirements = touch(tmp_path / "requirements.txt", "example==1.0\n")
     runner = FakeRunner(lambda command: completed)
 
     with pytest.raises(RuntimeError):
-        DependencyAuditAdapter(executable, tmp_path / "cache", runner).scan(requirements)
+        DependencyAuditAdapter(executable, tmp_path / "cache", runner).scan(
+            requirements
+        )

@@ -19,6 +19,10 @@ $SkillScanner = Join-Path $ProjectRoot ".runtime_skill\Scripts\skill-scanner.exe
 $McpPython = Resolve-AegisRuntimePython -RuntimeRoot (Join-Path $ProjectRoot ".runtime_mcp313")
 $McpScanner = Join-Path $ProjectRoot ".runtime_mcp313\Scripts\mcp-scanner.exe"
 $PipAudit = Join-Path $ProjectRoot ".runtime_mcp313\Scripts\pip-audit.exe"
+Add-AegisRuntimeToPath -RuntimeRoots @(
+    (Join-Path $ProjectRoot ".runtime_skill"),
+    (Join-Path $ProjectRoot ".runtime_mcp313")
+) | Out-Null
 $PolicyPath = Join-Path $DemoRoot "config\admission_policy.yaml"
 $ClosureConfigPath = Join-Path $DemoRoot "config\docker_skill_closure_backend.json"
 $FrontendManifest = Join-Path $DemoRoot "frontend\package.json"

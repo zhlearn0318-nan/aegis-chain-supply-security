@@ -183,6 +183,10 @@ try {
         (Join-Path $ProjectRoot "bootstrap_runtimes.ps1"), "-Component", "All"
     )
     $steps += $step.metadata
+    Add-AegisRuntimeToPath -RuntimeRoots @(
+        (Join-Path $ProjectRoot ".runtime_skill"),
+        (Join-Path $ProjectRoot ".runtime_mcp313")
+    ) | Out-Null
     $Python = Resolve-AegisRuntimePython -RuntimeRoot (Join-Path $ProjectRoot ".runtime_mcp313")
     if (-not (Test-Path -LiteralPath $Python -PathType Leaf)) {
         throw "Bootstrap did not create the locked MCP/backend Python runtime."

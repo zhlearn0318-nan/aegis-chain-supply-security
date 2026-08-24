@@ -12,6 +12,7 @@ $ProjectRoot = Split-Path $DemoRoot -Parent
 
 $Python = Resolve-AegisRuntimePython -RuntimeRoot (Join-Path $ProjectRoot ".runtime_mcp313")
 $PipAudit = Join-Path $ProjectRoot ".runtime_mcp313\Scripts\pip-audit.exe"
+Add-AegisRuntimeToPath -RuntimeRoots @((Join-Path $ProjectRoot ".runtime_mcp313")) | Out-Null
 if (-not (Test-Path -LiteralPath $Python -PathType Leaf)) {
     throw "MCP Python runtime is missing. Run .\bootstrap_runtimes.ps1 -Component Mcp first."
 }

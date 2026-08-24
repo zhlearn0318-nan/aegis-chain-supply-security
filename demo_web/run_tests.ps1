@@ -3,6 +3,7 @@ $DemoRoot = $PSScriptRoot
 $ProjectRoot = Split-Path $DemoRoot -Parent
 . (Join-Path $DemoRoot "scripts\portable_runtime.ps1")
 $Python = Resolve-AegisRuntimePython -RuntimeRoot (Join-Path $ProjectRoot ".runtime_mcp313")
+Add-AegisRuntimeToPath -RuntimeRoots @((Join-Path $ProjectRoot ".runtime_mcp313")) | Out-Null
 $TestTemp = Join-Path $DemoRoot "data\test-temp"
 
 if (-not (Test-Path -LiteralPath $Python)) {

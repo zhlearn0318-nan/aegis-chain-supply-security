@@ -11,6 +11,10 @@ $SkillScanner = Join-Path $Root ".runtime_skill\Scripts\skill-scanner.exe"
 $McpPython = Resolve-AegisRuntimePython -RuntimeRoot (Join-Path $Root ".runtime_mcp313")
 $McpScanner = Join-Path $Root ".runtime_mcp313\Scripts\mcp-scanner.exe"
 $McpScripts = Join-Path $Root ".runtime_mcp313\Scripts"
+Add-AegisRuntimeToPath -RuntimeRoots @(
+    (Join-Path $Root ".runtime_skill"),
+    (Join-Path $Root ".runtime_mcp313")
+) | Out-Null
 
 foreach ($required in @($SkillPython, $SkillScanner, $McpPython, $McpScanner)) {
     if (-not (Test-Path -LiteralPath $required)) {
@@ -20,7 +24,6 @@ foreach ($required in @($SkillPython, $SkillScanner, $McpPython, $McpScanner)) {
 
 $env:PYTHONUTF8 = "1"
 $env:PYTHONIOENCODING = "utf-8"
-$env:PATH = "$McpScripts;$env:PATH"
 
 & $SkillScanner scan-all (Join-Path $Root "fixtures\skills") `
     --recursive --use-behavioral --format json `

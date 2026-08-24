@@ -24,7 +24,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 
-from .adapters import DependencyAuditAdapter, McpScannerAdapter, ProcessRunner, SkillScannerAdapter
+from .adapters import (
+    DependencyAuditAdapter,
+    McpScannerAdapter,
+    ProcessRunner,
+    SkillScannerAdapter,
+)
 from .analyzers import (
     ANALYZER_ID as AEGIS_STATIC_ANALYZER_ID,
     COMMAND_CONTEXT_ANALYZER_ID,
@@ -64,9 +69,8 @@ from .policy import (
     pending_policy_trace,
     summarize,
 )
-from .runtime_paths import resolve_runtime_python
+from .runtime_paths import resolve_runtime_python, runtime_path_entries
 from .skill_static_pipeline import run_skill_static_pipeline
-
 
 ROOT = Path(__file__).resolve().parents[2]
 DEMO_ROOT = Path(__file__).resolve().parents[1]
@@ -75,7 +79,9 @@ DB_PATH = DATA_DIR / "scan_history.db"
 FRONTEND_DIST = DEMO_ROOT / "frontend" / "dist"
 DYNAMIC_FIXTURE_CONFIG = DEMO_ROOT / "config" / "safe_dynamic_fixtures.json"
 DYNAMIC_FIXTURE_ROOT = DEMO_ROOT / "tools" / "dynamic" / "fixtures"
-DYNAMIC_SKILL_CLOSURE_CONFIG = DEMO_ROOT / "config" / "docker_skill_closure_backend.json"
+DYNAMIC_SKILL_CLOSURE_CONFIG = (
+    DEMO_ROOT / "config" / "docker_skill_closure_backend.json"
+)
 DYNAMIC_JOB_ROOT = DATA_DIR / "dynamic-audit-jobs"
 ADMIN_TOKEN_ENV = "AEGIS_ADMIN_TOKEN"
 MIN_ADMIN_TOKEN_LENGTH = 16
@@ -92,11 +98,13 @@ _SKILL_CLOSURE_READINESS_CACHE: dict[str, Any] = {
     "value": None,
 }
 
-SKILL_SCANNER = ROOT / ".runtime_skill" / "Scripts" / "skill-scanner.exe"
-SKILL_PYTHON = resolve_runtime_python(ROOT / ".runtime_skill")
-MCP_SCRIPTS = ROOT / ".runtime_mcp313" / "Scripts"
+SKILL_RUNTIME = ROOT / ".runtime_skill"
+MCP_RUNTIME = ROOT / ".runtime_mcp313"
+SKILL_SCANNER = SKILL_RUNTIME / "Scripts" / "skill-scanner.exe"
+SKILL_PYTHON = resolve_runtime_python(SKILL_RUNTIME)
+MCP_SCRIPTS = MCP_RUNTIME / "Scripts"
 MCP_SCANNER = MCP_SCRIPTS / "mcp-scanner.exe"
-MCP_PYTHON = resolve_runtime_python(ROOT / ".runtime_mcp313")
+MCP_PYTHON = resolve_runtime_python(MCP_RUNTIME)
 PIP_AUDIT = MCP_SCRIPTS / "pip-audit.exe"
 MCP_WRAPPER = ROOT / "scripts" / "run_mcp_static.py"
 
@@ -110,7 +118,7 @@ SCAN_TIMEOUT_SECONDS = 150
 PROCESS_RUNNER = ProcessRunner(
     timeout_seconds=SCAN_TIMEOUT_SECONDS,
     cache_root=DATA_DIR / "cache",
-    extra_path=MCP_SCRIPTS,
+    extra_path=runtime_path_entries(SKILL_RUNTIME) + runtime_path_entries(MCP_RUNTIME),
 )
 
 DYNAMIC_AUDIT_SCHEDULER = DynamicAuditScheduler(
@@ -170,10 +178,14 @@ PRESETS = {
         "kind": "dependency",
         "name": "易受攻击依赖",
         "description": "使用旧版 urllib3，用于演示已知供应链漏洞检测。",
-        "path": ROOT / "fixtures" / "vulnerable_dependencies" / "requirements_urllib3.txt",
+        "path": ROOT
+        / "fixtures"
+        / "vulnerable_dependencies"
+        / "requirements_urllib3.txt",
         "tone": "risk",
     },
 }
+
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
@@ -187,7 +199,9 @@ async def lifespan(_: FastAPI):
         DYNAMIC_AUDIT_SCHEDULER.stop()
 
 
-app = FastAPI(title="Agent Supply Chain Security Demo", version="1.2.0", lifespan=lifespan)
+app = FastAPI(
+    title="Agent Supply Chain Security Demo", version="1.2.0", lifespan=lifespan
+)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://127.0.0.1:5173", "http://localhost:5173"],
@@ -210,8 +224,7 @@ def connect_db() -> sqlite3.Connection:
 
 def init_db() -> None:
     with closing(connect_db()) as db:
-        db.execute(
-            """
+        db.execute("""
             CREATE TABLE IF NOT EXISTS scans (
                 id TEXT PRIMARY KEY,
                 created_at TEXT NOT NULL,
@@ -223,10 +236,8 @@ def init_db() -> None:
                 artifact_sha256 TEXT,
                 payload_json TEXT NOT NULL
             )
-            """
-        )
-        db.execute(
-            """
+            """)
+        db.execute("""
             CREATE TABLE IF NOT EXISTS dynamic_audits (
                 id TEXT PRIMARY KEY,
                 created_at TEXT NOT NULL,
@@ -235,8 +246,7 @@ def init_db() -> None:
                 fixture_set_id TEXT NOT NULL,
                 payload_json TEXT NOT NULL
             )
-            """
-        )
+            """)
         db.commit()
 
 
@@ -257,9 +267,15 @@ def save_job(job: dict[str, Any]) -> None:
                 payload_json=excluded.payload_json
             """,
             (
-                job["id"], job["created_at"], job["updated_at"], job["status"],
-                job["target_kind"], job["source_kind"], job["display_name"],
-                job.get("artifact_sha256"), json.dumps(job, ensure_ascii=False),
+                job["id"],
+                job["created_at"],
+                job["updated_at"],
+                job["status"],
+                job["target_kind"],
+                job["source_kind"],
+                job["display_name"],
+                job.get("artifact_sha256"),
+                json.dumps(job, ensure_ascii=False),
             ),
         )
         db.commit()
@@ -273,7 +289,9 @@ def validate_stored_job(payload: dict[str, Any]) -> dict[str, Any]:
 
 def load_job(job_id: str) -> dict[str, Any] | None:
     with closing(connect_db()) as db:
-        row = db.execute("SELECT payload_json FROM scans WHERE id = ?", (job_id,)).fetchone()
+        row = db.execute(
+            "SELECT payload_json FROM scans WHERE id = ?", (job_id,)
+        ).fetchone()
     if not row:
         return None
     return validate_stored_job(json.loads(row["payload_json"]))
@@ -407,13 +425,11 @@ def enqueue_dynamic_audit_job(audit_type: str = "mechanism_fixture") -> dict[str
     candidate = build_dynamic_audit_job(audit_type)
     with closing(connect_db()) as db:
         db.execute("BEGIN IMMEDIATE")
-        active_rows = db.execute(
-            """
+        active_rows = db.execute("""
             SELECT payload_json FROM dynamic_audits
             WHERE status IN ('queued', 'running')
             ORDER BY created_at ASC, id ASC
-            """
-        ).fetchall()
+            """).fetchall()
         for row in active_rows:
             active = validate_dynamic_audit_job(json.loads(row["payload_json"]))
             if active.get("submission_key") == candidate["submission_key"]:
@@ -424,14 +440,12 @@ def enqueue_dynamic_audit_job(audit_type: str = "mechanism_fixture") -> dict[str
                 return response
 
         if DYNAMIC_QUEUE_DEDUPE_COOLDOWN_SECONDS:
-            terminal_rows = db.execute(
-                """
+            terminal_rows = db.execute("""
                 SELECT payload_json FROM dynamic_audits
                 WHERE status IN ('completed', 'failed')
                 ORDER BY updated_at DESC
                 LIMIT 20
-                """
-            ).fetchall()
+                """).fetchall()
             now = datetime.now(timezone.utc)
             for row in terminal_rows:
                 terminal = validate_dynamic_audit_job(json.loads(row["payload_json"]))
@@ -440,7 +454,9 @@ def enqueue_dynamic_audit_job(audit_type: str = "mechanism_fixture") -> dict[str
                 terminal_at = datetime.fromisoformat(
                     terminal.get("finished_at") or terminal["updated_at"]
                 )
-                if (now - terminal_at).total_seconds() <= DYNAMIC_QUEUE_DEDUPE_COOLDOWN_SECONDS:
+                if (
+                    now - terminal_at
+                ).total_seconds() <= DYNAMIC_QUEUE_DEDUPE_COOLDOWN_SECONDS:
                     db.rollback()
                     response = decorate_dynamic_audit_job(terminal)
                     response["deduplicated"] = True
@@ -495,14 +511,12 @@ def claim_next_dynamic_audit_job() -> str | None:
         if running:
             db.rollback()
             return None
-        row = db.execute(
-            """
+        row = db.execute("""
             SELECT payload_json FROM dynamic_audits
             WHERE status = 'queued'
             ORDER BY created_at ASC, id ASC
             LIMIT 1
-            """
-        ).fetchone()
+            """).fetchone()
         if not row:
             db.rollback()
             return None
@@ -532,13 +546,11 @@ def recover_interrupted_dynamic_audit_jobs() -> dict[str, int]:
     now = utc_now()
     with closing(connect_db()) as db:
         db.execute("BEGIN IMMEDIATE")
-        rows = db.execute(
-            """
+        rows = db.execute("""
             SELECT payload_json FROM dynamic_audits
             WHERE status IN ('queued', 'running')
             ORDER BY created_at ASC, id ASC
-            """
-        ).fetchall()
+            """).fetchall()
         for row in rows:
             job = validate_dynamic_audit_job(json.loads(row["payload_json"]))
             job["updated_at"] = now
@@ -608,7 +620,9 @@ def complete_scan_job(
             job,
             status="failed",
             decision="UNKNOWN",
-            policy_trace=failure_policy_trace("POLICY_CONFIGURATION_ERROR", str(exc)).model_dump(mode="json"),
+            policy_trace=failure_policy_trace(
+                "POLICY_CONFIGURATION_ERROR", str(exc)
+            ).model_dump(mode="json"),
             summary=summarize(findings),
             findings=findings,
             analyzers=analyzers,
@@ -645,7 +659,9 @@ def scan_skill_path(job: dict[str, Any], skill_path: Path) -> None:
     )
 
 
-def scan_mcp_paths(job: dict[str, Any], tools: Path, prompts: Path, resources: Path) -> None:
+def scan_mcp_paths(
+    job: dict[str, Any], tools: Path, prompts: Path, resources: Path
+) -> None:
     started = time.perf_counter()
     execution = MCP_ADAPTER.scan(tools, prompts, resources)
     findings, analyzers = normalize_mcp(execution.report)
@@ -663,7 +679,9 @@ def scan_dependency_path(job: dict[str, Any], requirements: Path) -> None:
     started = time.perf_counter()
     execution = DEPENDENCY_ADAPTER.scan(requirements)
     findings, analyzers = normalize_pip_audit(execution.report)
-    integrity_findings, integrity_analyzers, sbom = analyze_dependency_manifest(requirements)
+    integrity_findings, integrity_analyzers, sbom = analyze_dependency_manifest(
+        requirements
+    )
     complete_scan_job(
         job,
         started=started,
@@ -674,16 +692,31 @@ def scan_dependency_path(job: dict[str, Any], requirements: Path) -> None:
     )
 
 
-def scan_mcp_bundle(job: dict[str, Any], tools: Path, prompts: Path, resources: Path, requirements: Path) -> None:
+def scan_mcp_bundle(
+    job: dict[str, Any], tools: Path, prompts: Path, resources: Path, requirements: Path
+) -> None:
     started = time.perf_counter()
     static_execution = MCP_ADAPTER.scan(tools, prompts, resources)
     dependency_execution = DEPENDENCY_ADAPTER.scan(requirements)
     static_findings, static_analyzers = normalize_mcp(static_execution.report)
-    dependency_findings, dependency_analyzers = normalize_pip_audit(dependency_execution.report)
+    dependency_findings, dependency_analyzers = normalize_pip_audit(
+        dependency_execution.report
+    )
     policy_findings, policy_analyzers = analyze_mcp_objects(tools, prompts, resources)
-    integrity_findings, integrity_analyzers, sbom = analyze_dependency_manifest(requirements)
-    findings = static_findings + policy_findings + dependency_findings + integrity_findings
-    analyzers = sorted(set(static_analyzers + policy_analyzers + dependency_analyzers + integrity_analyzers))
+    integrity_findings, integrity_analyzers, sbom = analyze_dependency_manifest(
+        requirements
+    )
+    findings = (
+        static_findings + policy_findings + dependency_findings + integrity_findings
+    )
+    analyzers = sorted(
+        set(
+            static_analyzers
+            + policy_analyzers
+            + dependency_analyzers
+            + integrity_analyzers
+        )
+    )
     logs = static_execution.logs + dependency_execution.logs
     complete_scan_job(
         job,
@@ -708,7 +741,9 @@ def guarded_worker(job_id: str, worker, *args) -> None:
             job,
             status="failed",
             decision="UNKNOWN",
-            policy_trace=failure_policy_trace("SCAN_TIMEOUT", reason).model_dump(mode="json"),
+            policy_trace=failure_policy_trace("SCAN_TIMEOUT", reason).model_dump(
+                mode="json"
+            ),
             error=reason,
         )
     except Exception as exc:
@@ -717,12 +752,18 @@ def guarded_worker(job_id: str, worker, *args) -> None:
             job,
             status="failed",
             decision="UNKNOWN",
-            policy_trace=failure_policy_trace("SCAN_EXECUTION_FAILED", reason).model_dump(mode="json"),
+            policy_trace=failure_policy_trace(
+                "SCAN_EXECUTION_FAILED", reason
+            ).model_dump(mode="json"),
             error=reason,
         )
     finally:
         for path in args:
-            if isinstance(path, Path) and str(path).startswith(tempfile.gettempdir()) and path.exists():
+            if (
+                isinstance(path, Path)
+                and str(path).startswith(tempfile.gettempdir())
+                and path.exists()
+            ):
                 root = path if path.is_dir() else path.parent
                 shutil.rmtree(root, ignore_errors=True)
 
@@ -757,11 +798,19 @@ def skill_closure_readiness() -> dict[str, Any]:
     with _SKILL_CLOSURE_READINESS_LOCK:
         cached = _SKILL_CLOSURE_READINESS_CACHE.get("value")
         checked_at = float(_SKILL_CLOSURE_READINESS_CACHE.get("checked_at") or 0.0)
-        if isinstance(cached, dict) and now - checked_at < SKILL_CLOSURE_READINESS_TTL_SECONDS:
+        if (
+            isinstance(cached, dict)
+            and now - checked_at < SKILL_CLOSURE_READINESS_TTL_SECONDS
+        ):
             return dict(cached)
 
     fixture_path = (
-        DEMO_ROOT / "tools" / "dynamic" / "docker" / "fixtures" / "skill_runtime_closure.py"
+        DEMO_ROOT
+        / "tools"
+        / "dynamic"
+        / "docker"
+        / "fixtures"
+        / "skill_runtime_closure.py"
     )
     if not DYNAMIC_SKILL_CLOSURE_CONFIG.is_file():
         value = {
@@ -831,10 +880,7 @@ def public_skill_closure_result(result: dict[str, Any]) -> dict[str, Any]:
         if not isinstance(rows, list):
             return []
         return [
-            {
-                field: row.get(field)
-                for field in ("path", "bytes", "sha256", "category")
-            }
+            {field: row.get(field) for field in ("path", "bytes", "sha256", "category")}
             for row in rows
             if isinstance(row, dict)
         ]
@@ -850,36 +896,45 @@ def public_skill_closure_result(result: dict[str, Any]) -> dict[str, Any]:
     for finding in risks if isinstance(risks, list) else []:
         if not isinstance(finding, dict):
             continue
-        location = finding.get("location") if isinstance(finding.get("location"), dict) else {}
-        public_risks.append({
-            "id": finding.get("id"),
-            "rule_id": finding.get("rule_id"),
-            "analyzer": finding.get("analyzer"),
-            "severity": finding.get("severity"),
-            "category": finding.get("category"),
-            "location": {
-                key: location.get(key) for key in ("file", "line")
-                if location.get(key) is not None
-            },
-            "evidence_sha256": finding.get("evidence_sha256"),
-            "raw_content_retained": False,
-        })
+        location = (
+            finding.get("location") if isinstance(finding.get("location"), dict) else {}
+        )
+        public_risks.append(
+            {
+                "id": finding.get("id"),
+                "rule_id": finding.get("rule_id"),
+                "analyzer": finding.get("analyzer"),
+                "severity": finding.get("severity"),
+                "category": finding.get("category"),
+                "location": {
+                    key: location.get(key)
+                    for key in ("file", "line")
+                    if location.get(key) is not None
+                },
+                "evidence_sha256": finding.get("evidence_sha256"),
+                "raw_content_retained": False,
+            }
+        )
     privacy = closure.get("privacy") if isinstance(closure.get("privacy"), dict) else {}
     return {
         "pre_manifest": manifests("pre_manifest"),
         "post_manifest": manifests("post_manifest"),
         "delta": {
-            key: list(delta.get(key) or [])
-            for key in ("added", "modified", "deleted")
+            key: list(delta.get(key) or []) for key in ("added", "modified", "deleted")
         },
         "static_lift": {
             key: lift.get(key)
             for key in (
-                "pre_findings_total", "post_findings_total", "new_findings_total",
-                "vendor_scans", "pre_policy_recommendation",
-                "post_policy_recommendation", "policy_effect",
+                "pre_findings_total",
+                "post_findings_total",
+                "new_findings_total",
+                "vendor_scans",
+                "pre_policy_recommendation",
+                "post_policy_recommendation",
+                "policy_effect",
             )
-        } | {"runtime_risk_findings": public_risks},
+        }
+        | {"runtime_risk_findings": public_risks},
         "privacy": {
             "raw_content_retained": False,
             "raw_content_leaks": int(privacy.get("raw_content_leaks") or 0),
@@ -908,18 +963,24 @@ def guarded_dynamic_audit_worker(job_id: str) -> None:
                 job,
                 status="completed" if completed else "failed",
                 metrics=result["metrics"],
-                fixture_results=[{
-                    "fixture_id": "skill_runtime_closure",
-                    "status": "passed" if completed else "failed",
-                    "duration_ms": result["metrics"].get("duration_ms"),
-                }],
+                fixture_results=[
+                    {
+                        "fixture_id": "skill_runtime_closure",
+                        "status": "passed" if completed else "failed",
+                        "duration_ms": result["metrics"].get("duration_ms"),
+                    }
+                ],
                 events=[],
                 closure=public_skill_closure_result(result),
                 duration_ms=round((time.perf_counter() - started) * 1000),
                 finished_at=utc_now(),
-                error_code=None if completed else (
-                    (result.get("error") or {}).get("code")
-                    or "SKILL_CLOSURE_VALIDATION_FAILED"
+                error_code=(
+                    None
+                    if completed
+                    else (
+                        (result.get("error") or {}).get("code")
+                        or "SKILL_CLOSURE_VALIDATION_FAILED"
+                    )
                 ),
                 error=None if completed else "Skill 运行时闭包未满足全部安全与提升门。",
             )
@@ -942,7 +1003,11 @@ def guarded_dynamic_audit_worker(job_id: str) -> None:
                 duration_ms=round((time.perf_counter() - started) * 1000),
                 finished_at=utc_now(),
                 error_code=None if completed else "DYNAMIC_FIXTURE_VALIDATION_FAILED",
-                error=None if completed else "内置动态验证未满足全部预期机制，请检查任务指标。",
+                error=(
+                    None
+                    if completed
+                    else "内置动态验证未满足全部预期机制，请检查任务指标。"
+                ),
             )
     except Exception:
         update_dynamic_audit_job(
@@ -989,7 +1054,8 @@ def safe_extract_zip(data: bytes, destination: Path) -> Path:
                 raise ValueError("ZIP 累计展开大小超过演示环境限制")
             if (
                 member.file_size > 0
-                and member.file_size / max(member.compress_size, 1) > MAX_ZIP_COMPRESSION_RATIO
+                and member.file_size / max(member.compress_size, 1)
+                > MAX_ZIP_COMPRESSION_RATIO
             ):
                 raise ValueError("ZIP 成员压缩比异常，疑似压缩炸弹")
             if not member.is_dir():
@@ -1011,7 +1077,9 @@ def safe_extract_zip(data: bytes, destination: Path) -> Path:
             target.parent.mkdir(parents=True, exist_ok=True)
             member_written = 0
             try:
-                with archive.open(member, "r") as source, target.open("xb") as destination_file:
+                with archive.open(member, "r") as source, target.open(
+                    "xb"
+                ) as destination_file:
                     while block := source.read(ZIP_COPY_CHUNK_BYTES):
                         member_written += len(block)
                         actual_total += len(block)
@@ -1041,13 +1109,26 @@ def write_mcp_parts(data: bytes, destination: Path) -> tuple[Path, Path, Path]:
     nested = payload.get("result") if isinstance(payload.get("result"), dict) else {}
     tools = payload.get("tools", nested.get("tools", []))
     prompts = payload.get("prompts", nested.get("prompts", []))
-    resources = payload.get("resources", payload.get("contents", nested.get("resources", nested.get("contents", []))))
+    resources = payload.get(
+        "resources",
+        payload.get("contents", nested.get("resources", nested.get("contents", []))),
+    )
     if not any([tools, prompts, resources]):
         raise ValueError("MCP JSON 中没有 tools、prompts、resources 或 contents")
-    paths = (destination / "tools.json", destination / "prompts.json", destination / "resources.json")
-    paths[0].write_text(json.dumps({"tools": tools}, ensure_ascii=False), encoding="utf-8")
-    paths[1].write_text(json.dumps({"prompts": prompts}, ensure_ascii=False), encoding="utf-8")
-    paths[2].write_text(json.dumps({"contents": resources}, ensure_ascii=False), encoding="utf-8")
+    paths = (
+        destination / "tools.json",
+        destination / "prompts.json",
+        destination / "resources.json",
+    )
+    paths[0].write_text(
+        json.dumps({"tools": tools}, ensure_ascii=False), encoding="utf-8"
+    )
+    paths[1].write_text(
+        json.dumps({"prompts": prompts}, ensure_ascii=False), encoding="utf-8"
+    )
+    paths[2].write_text(
+        json.dumps({"contents": resources}, ensure_ascii=False), encoding="utf-8"
+    )
     return paths
 
 
@@ -1101,20 +1182,105 @@ def health() -> dict[str, Any]:
             "fail_closed": True,
             "error": str(exc),
         }
-    skill_version = version_output([str(SKILL_PYTHON), "-c", "import importlib.metadata as m; print(m.version('cisco-ai-skill-scanner'))"], "unavailable") if skill_ready else "missing"
-    mcp_version = version_output([
-        str(MCP_PYTHON), "-c", "import importlib.metadata as m; print(m.version('cisco-ai-mcp-scanner'))"
-    ], "unavailable") if mcp_ready else "missing"
+    skill_version = (
+        version_output(
+            [
+                str(SKILL_PYTHON),
+                "-c",
+                "import importlib.metadata as m; print(m.version('cisco-ai-skill-scanner'))",
+            ],
+            "unavailable",
+        )
+        if skill_ready
+        else "missing"
+    )
+    mcp_version = (
+        version_output(
+            [
+                str(MCP_PYTHON),
+                "-c",
+                "import importlib.metadata as m; print(m.version('cisco-ai-mcp-scanner'))",
+            ],
+            "unavailable",
+        )
+        if mcp_ready
+        else "missing"
+    )
     return {
-        "status": "ready" if skill_ready and mcp_ready and dependency_ready and dynamic_ready and skill_closure_ready and policy_status["ready"] else "degraded",
+        "status": (
+            "ready"
+            if skill_ready
+            and mcp_ready
+            and dependency_ready
+            and dynamic_ready
+            and skill_closure_ready
+            and policy_status["ready"]
+            else "degraded"
+        ),
         "mode": "LOCAL_STATIC_PLUS_TRUSTED_FIXTURE_DYNAMIC",
         "policy": policy_status,
         "engines": [
-            {"id": "skill", "name": "Skill Scanner + Aegis Static/Context", "ready": skill_ready, "version": skill_version, "analyzers": ["static", "bytecode", "pipeline", AEGIS_STATIC_ANALYZER_ID, SENSITIVE_FLOW_ANALYZER_ID, UNTRUSTED_EXEC_FLOW_ANALYZER_ID, ENTERPRISE_CONTROLS_ANALYZER_ID, STATIC_COVERAGE_ANALYZER_ID, NETWORK_CONTEXT_ANALYZER_ID, FILESYSTEM_CONTEXT_ANALYZER_ID, COMMAND_CONTEXT_ANALYZER_ID]},
-            {"id": "mcp", "name": "MCP Scanner + Capability Policy", "ready": mcp_ready, "version": mcp_version, "analyzers": ["yara", "offline objects", MCP_POLICY_ANALYZER_ID]},
-            {"id": "dependency", "name": "Dependency Audit + Integrity/SBOM", "ready": dependency_ready, "version": "pip-audit+aegis-v1", "analyzers": ["CVE", "GHSA", "PYSEC", DEPENDENCY_INTEGRITY_ANALYZER_ID]},
-            {"id": "dynamic-fixture", "name": "管理员可信样本动态验证", "ready": dynamic_ready, "version": "aegis-safe-dynamic-fixtures-v1", "analyzers": ["Python audit hook", "hash lock", "loopback only", "INFO only"], "reason_code": dynamic_reason, "message": dynamic_message},
-            {"id": "dynamic-skill-closure", "name": "Skill 运行时闭包与静态复审", "ready": skill_closure_ready, "version": "aegis-skill-runtime-closure-v1", "analyzers": ["Docker isolation", "directory diff", "Cisco Skill Scanner", "Aegis static lift"], "reason_code": closure_reason, "message": closure_message},
+            {
+                "id": "skill",
+                "name": "Skill Scanner + Aegis Static/Context",
+                "ready": skill_ready,
+                "version": skill_version,
+                "analyzers": [
+                    "static",
+                    "bytecode",
+                    "pipeline",
+                    AEGIS_STATIC_ANALYZER_ID,
+                    SENSITIVE_FLOW_ANALYZER_ID,
+                    UNTRUSTED_EXEC_FLOW_ANALYZER_ID,
+                    ENTERPRISE_CONTROLS_ANALYZER_ID,
+                    STATIC_COVERAGE_ANALYZER_ID,
+                    NETWORK_CONTEXT_ANALYZER_ID,
+                    FILESYSTEM_CONTEXT_ANALYZER_ID,
+                    COMMAND_CONTEXT_ANALYZER_ID,
+                ],
+            },
+            {
+                "id": "mcp",
+                "name": "MCP Scanner + Capability Policy",
+                "ready": mcp_ready,
+                "version": mcp_version,
+                "analyzers": ["yara", "offline objects", MCP_POLICY_ANALYZER_ID],
+            },
+            {
+                "id": "dependency",
+                "name": "Dependency Audit + Integrity/SBOM",
+                "ready": dependency_ready,
+                "version": "pip-audit+aegis-v1",
+                "analyzers": ["CVE", "GHSA", "PYSEC", DEPENDENCY_INTEGRITY_ANALYZER_ID],
+            },
+            {
+                "id": "dynamic-fixture",
+                "name": "管理员可信样本动态验证",
+                "ready": dynamic_ready,
+                "version": "aegis-safe-dynamic-fixtures-v1",
+                "analyzers": [
+                    "Python audit hook",
+                    "hash lock",
+                    "loopback only",
+                    "INFO only",
+                ],
+                "reason_code": dynamic_reason,
+                "message": dynamic_message,
+            },
+            {
+                "id": "dynamic-skill-closure",
+                "name": "Skill 运行时闭包与静态复审",
+                "ready": skill_closure_ready,
+                "version": "aegis-skill-runtime-closure-v1",
+                "analyzers": [
+                    "Docker isolation",
+                    "directory diff",
+                    "Cisco Skill Scanner",
+                    "Aegis static lift",
+                ],
+                "reason_code": closure_reason,
+                "message": closure_message,
+            },
         ],
         "privacy": "上传样本和动态验证工作区在任务结束后删除；历史仅保存脱敏结果，管理员令牌不持久化。",
     }
@@ -1122,7 +1288,10 @@ def health() -> dict[str, Any]:
 
 @app.get("/api/presets")
 def presets() -> list[dict[str, Any]]:
-    return [{key: value for key, value in preset.items() if key not in {"path", "paths"}} for preset in PRESETS.values()]
+    return [
+        {key: value for key, value in preset.items() if key not in {"path", "paths"}}
+        for preset in PRESETS.values()
+    ]
 
 
 @app.post("/api/scans/preset/{preset_id}")
@@ -1139,16 +1308,22 @@ def start_preset(preset_id: str, background: BackgroundTasks) -> dict[str, Any]:
         combined = b"".join(p.read_bytes() for p in preset["paths"].values())
         job["artifact_sha256"] = sha256_bytes(combined)
         save_job(job)
-        background.add_task(guarded_worker, job["id"], scan_mcp_paths, *preset["paths"].values())
+        background.add_task(
+            guarded_worker, job["id"], scan_mcp_paths, *preset["paths"].values()
+        )
     else:
         job["artifact_sha256"] = sha256_bytes(preset["path"].read_bytes())
         save_job(job)
-        background.add_task(guarded_worker, job["id"], scan_dependency_path, preset["path"])
+        background.add_task(
+            guarded_worker, job["id"], scan_dependency_path, preset["path"]
+        )
     return job
 
 
 @app.post("/api/scans/skill")
-async def upload_skill(background: BackgroundTasks, file: UploadFile = File(...)) -> dict[str, Any]:
+async def upload_skill(
+    background: BackgroundTasks, file: UploadFile = File(...)
+) -> dict[str, Any]:
     if not file.filename or not file.filename.lower().endswith(".zip"):
         raise GatewayHTTPException(
             400,
@@ -1233,14 +1408,26 @@ async def upload_mcp(
         job["artifact_sha256"] = sha256_bytes(data + req_data)
     save_job(job)
     if req_path:
-        background.add_task(guarded_worker, job["id"], scan_mcp_bundle, tools, prompts, resources, req_path)
+        background.add_task(
+            guarded_worker,
+            job["id"],
+            scan_mcp_bundle,
+            tools,
+            prompts,
+            resources,
+            req_path,
+        )
     else:
-        background.add_task(guarded_worker, job["id"], scan_mcp_paths, tools, prompts, resources)
+        background.add_task(
+            guarded_worker, job["id"], scan_mcp_paths, tools, prompts, resources
+        )
     return job
 
 
 @app.post("/api/scans/dependency")
-async def upload_dependency(background: BackgroundTasks, requirements: UploadFile = File(...)) -> dict[str, Any]:
+async def upload_dependency(
+    background: BackgroundTasks, requirements: UploadFile = File(...)
+) -> dict[str, Any]:
     data = await requirements.read(MAX_UPLOAD_BYTES + 1)
     if len(data) > MAX_UPLOAD_BYTES:
         raise GatewayHTTPException(
@@ -1252,7 +1439,9 @@ async def upload_dependency(background: BackgroundTasks, requirements: UploadFil
     temp_root = Path(tempfile.mkdtemp(prefix="dependency-upload-"))
     path = temp_root / "requirements.txt"
     path.write_bytes(data)
-    job = new_job("dependency", "upload", Path(requirements.filename or "requirements.txt").name)
+    job = new_job(
+        "dependency", "upload", Path(requirements.filename or "requirements.txt").name
+    )
     job["artifact_sha256"] = sha256_bytes(data)
     save_job(job)
     background.add_task(guarded_worker, job["id"], scan_dependency_path, path)
@@ -1263,7 +1452,9 @@ async def upload_dependency(background: BackgroundTasks, requirements: UploadFil
 def list_scans(limit: int = 20) -> list[dict[str, Any]]:
     limit = min(max(limit, 1), 100)
     with closing(connect_db()) as db:
-        rows = db.execute("SELECT payload_json FROM scans ORDER BY created_at DESC LIMIT ?", (limit,)).fetchall()
+        rows = db.execute(
+            "SELECT payload_json FROM scans ORDER BY created_at DESC LIMIT ?", (limit,)
+        ).fetchall()
     return [validate_stored_job(json.loads(row["payload_json"])) for row in rows]
 
 
@@ -1282,7 +1473,9 @@ def export_scan(job_id: str, format: str = "json"):
         raise GatewayHTTPException(404, ErrorCode.SCAN_NOT_FOUND, "扫描任务不存在")
     if format == "json":
         response = JSONResponse(job)
-        response.headers["Content-Disposition"] = f'attachment; filename="scan-{job_id}.json"'
+        response.headers["Content-Disposition"] = (
+            f'attachment; filename="scan-{job_id}.json"'
+        )
         return response
     if format in {"sbom", "cyclonedx"}:
         sbom = job.get("sbom")
@@ -1294,7 +1487,9 @@ def export_scan(job_id: str, format: str = "json"):
                 details={"target_kind": job.get("target_kind")},
             )
         response = JSONResponse(sbom, media_type="application/vnd.cyclonedx+json")
-        response.headers["Content-Disposition"] = f'attachment; filename="scan-{job_id}.cdx.json"'
+        response.headers["Content-Disposition"] = (
+            f'attachment; filename="scan-{job_id}.cdx.json"'
+        )
         return response
     if format not in {"md", "markdown"}:
         raise GatewayHTTPException(
@@ -1305,49 +1500,66 @@ def export_scan(job_id: str, format: str = "json"):
         )
     policy_trace = job.get("policy_trace") or {}
     lines = [
-        f"# 扫描技术汇报摘要：{job['display_name']}", "",
+        f"# 扫描技术汇报摘要：{job['display_name']}",
+        "",
         f"- 任务编号：`{job['id']}`",
         f"- 类型：{job['target_kind']}",
         f"- 状态：{job['status']}",
         f"- 决策：**{job['decision']}**",
         f"- 制品 SHA-256：`{job.get('artifact_sha256') or 'N/A'}`",
         f"- 分析器：{', '.join(job.get('analyzers') or []) or 'N/A'}",
-        f"- 扫描耗时：{job.get('duration_ms') or 0} ms", "",
-        "## 准入策略", "",
+        f"- 扫描耗时：{job.get('duration_ms') or 0} ms",
+        "",
+        "## 准入策略",
+        "",
         f"- 策略：`{policy_trace.get('policy_id', 'unresolved')}@{policy_trace.get('policy_version', 'unresolved')}`",
         f"- 命中规则：`{policy_trace.get('rule_id', 'PENDING_SCAN')}`",
         f"- 失败闭锁：{policy_trace.get('fail_closed', True)}",
-        f"- 判定原因：{policy_trace.get('reason') or 'N/A'}", "",
-        "## 风险发现", "",
+        f"- 判定原因：{policy_trace.get('reason') or 'N/A'}",
+        "",
+        "## 风险发现",
+        "",
     ]
     if not job.get("findings"):
         lines.append("没有产生风险发现；该结论仅适用于本次已成功执行的静态分析器。")
     for finding in job.get("findings") or []:
-        lines.extend([
-            f"### [{finding.get('severity')}] {finding.get('title')}",
-            f"- 类别：{finding.get('category')}",
-            f"- 分析器：{finding.get('analyzer')}",
-            f"- 位置：{json.dumps(finding.get('location'), ensure_ascii=False)}",
-            f"- 证据：{finding.get('evidence') or 'N/A'}", "",
-        ])
+        lines.extend(
+            [
+                f"### [{finding.get('severity')}] {finding.get('title')}",
+                f"- 类别：{finding.get('category')}",
+                f"- 分析器：{finding.get('analyzer')}",
+                f"- 位置：{json.dumps(finding.get('location'), ensure_ascii=False)}",
+                f"- 证据：{finding.get('evidence') or 'N/A'}",
+                "",
+            ]
+        )
     sbom = job.get("sbom")
     if isinstance(sbom, dict):
-        components = sbom.get("components") if isinstance(sbom.get("components"), list) else []
-        properties = ((sbom.get("metadata") or {}).get("properties") or [])
+        components = (
+            sbom.get("components") if isinstance(sbom.get("components"), list) else []
+        )
+        properties = (sbom.get("metadata") or {}).get("properties") or []
         property_map = {
             item.get("name"): item.get("value")
-            for item in properties if isinstance(item, dict)
+            for item in properties
+            if isinstance(item, dict)
         }
-        lines.extend([
-            "## 依赖清单（SBOM）", "",
-            f"- 格式：{sbom.get('bomFormat', 'N/A')} {sbom.get('specVersion', '')}".rstrip(),
-            f"- 已声明直接组件：{len(components)}",
-            f"- 清单范围：{property_map.get('aegis:inventory-scope', 'N/A')}",
-            f"- 是否执行传递依赖解析：{property_map.get('aegis:transitive-resolution-performed', 'false')}",
-            f"- 声明安装集合的哈希完整性是否齐全：{property_map.get('aegis:declared-component-integrity-complete', 'false')}",
-            f"- 传递依赖图完整性：{property_map.get('aegis:transitive-graph-completeness', 'not-proven')}", "",
-        ])
-    response = PlainTextResponse("\n".join(lines), media_type="text/markdown; charset=utf-8")
+        lines.extend(
+            [
+                "## 依赖清单（SBOM）",
+                "",
+                f"- 格式：{sbom.get('bomFormat', 'N/A')} {sbom.get('specVersion', '')}".rstrip(),
+                f"- 已声明直接组件：{len(components)}",
+                f"- 清单范围：{property_map.get('aegis:inventory-scope', 'N/A')}",
+                f"- 是否执行传递依赖解析：{property_map.get('aegis:transitive-resolution-performed', 'false')}",
+                f"- 声明安装集合的哈希完整性是否齐全：{property_map.get('aegis:declared-component-integrity-complete', 'false')}",
+                f"- 传递依赖图完整性：{property_map.get('aegis:transitive-graph-completeness', 'not-proven')}",
+                "",
+            ]
+        )
+    response = PlainTextResponse(
+        "\n".join(lines), media_type="text/markdown; charset=utf-8"
+    )
     response.headers["Content-Disposition"] = f'attachment; filename="scan-{job_id}.md"'
     return response
 
@@ -1401,9 +1613,7 @@ def list_dynamic_audits(
     return [decorate_dynamic_audit_job(json.loads(row["payload_json"])) for row in rows]
 
 
-def get_dynamic_audit(
-    admin_token: str | None, job_id: str
-) -> dict[str, Any]:
+def get_dynamic_audit(admin_token: str | None, job_id: str) -> dict[str, Any]:
     verify_admin_token(admin_token)
     job = load_dynamic_audit_job(job_id)
     if not job:
@@ -1451,6 +1661,10 @@ if FRONTEND_DIST.exists():
     @app.get("/{path:path}")
     def frontend(path: str):
         candidate = (FRONTEND_DIST / path).resolve()
-        if path and FRONTEND_DIST.resolve() in candidate.parents and candidate.is_file():
+        if (
+            path
+            and FRONTEND_DIST.resolve() in candidate.parents
+            and candidate.is_file()
+        ):
             return FileResponse(candidate)
         return FileResponse(FRONTEND_DIST / "index.html")

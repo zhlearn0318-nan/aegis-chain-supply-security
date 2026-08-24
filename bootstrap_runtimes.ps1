@@ -209,6 +209,7 @@ function Install-Runtime {
     $condaArguments = @("create", "--prefix", $Definition.Runtime) + @($Definition.CondaPackages) + @("--yes")
     Invoke-CheckedCommand $Conda $condaArguments "Conda environment creation failed for $($Definition.Label)."
     $python = Get-RuntimePython $Definition
+    Add-AegisRuntimeToPath -RuntimeRoots @($Definition.Runtime) | Out-Null
 
     New-Item -ItemType Directory -Force -Path $WheelDirectory | Out-Null
     if (-not $Offline) {

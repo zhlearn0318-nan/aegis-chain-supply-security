@@ -20,6 +20,45 @@ function Resolve-AegisRuntimePython {
     return $candidates[0]
 }
 
+function Get-AegisRuntimePathEntries {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)][string]$RuntimeRoot
+    )
+
+    $root = [IO.Path]::GetFullPath($RuntimeRoot)
+    $candidates = @(
+        $root,
+        (Join-Path $root "Library\mingw-w64\bin"),
+        (Join-Path $root "Library\usr\bin"),
+        (Join-Path $root "Library\bin"),
+        (Join-Path $root "Scripts"),
+        (Join-Path $root "bin")
+    )
+    return @($candidates | Where-Object { Test-Path -LiteralPath $_ -PathType Container })
+}
+
+function Add-AegisRuntimeToPath {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)][string[]]$RuntimeRoots
+    )
+
+    $runtimeEntries = @()
+    foreach ($runtimeRoot in $RuntimeRoots) {
+        $runtimeEntries += @(Get-AegisRuntimePathEntries -RuntimeRoot $runtimeRoot)
+    }
+    $combined = @($runtimeEntries) + @($env:PATH -split ";")
+    $seen = [Collections.Generic.HashSet[string]]::new([StringComparer]::OrdinalIgnoreCase)
+    $deduplicated = @(
+        $combined | Where-Object {
+            -not [string]::IsNullOrWhiteSpace($_) -and $seen.Add($_)
+        }
+    )
+    $env:PATH = $deduplicated -join ";"
+    return $runtimeEntries
+}
+
 function Resolve-AegisApplication {
     [CmdletBinding()]
     param(

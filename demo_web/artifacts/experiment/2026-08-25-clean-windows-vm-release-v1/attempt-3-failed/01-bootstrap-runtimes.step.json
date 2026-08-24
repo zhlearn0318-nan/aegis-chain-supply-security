@@ -1,0 +1,17 @@
+{
+    "id":  "01-bootstrap-runtimes",
+    "command":  "powershell.exe",
+    "arguments":  [
+                      "-NoProfile",
+                      "-ExecutionPolicy",
+                      "Bypass",
+                      "-File",
+                      "C:\\AegisAcceptanceAttempt3\\repository\\bootstrap_runtimes.ps1",
+                      "-Component",
+                      "All"
+                  ],
+    "started_at":  "2026-08-24T21:45:51.6857588+00:00",
+    "duration_ms":  1672007,
+    "exit_code":  1,
+    "log":  "01-bootstrap-runtimes.log"
+}
