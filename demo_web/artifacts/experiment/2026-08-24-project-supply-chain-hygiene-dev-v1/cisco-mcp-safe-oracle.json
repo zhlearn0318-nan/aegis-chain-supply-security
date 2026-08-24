@@ -1,0 +1,17 @@
+[
+  {
+    "package_name": "F:\\\u63ed\u699c\u6302\u5e05\\supply_chain_reproduction\\fixtures\\vulnerable_dependencies\\requirements_safe_latest.txt",
+    "vulnerability_description": "Vulnerable package scan of requirements_safe_latest.txt",
+    "status": "completed",
+    "is_safe": true,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "SAFE",
+        "threat_summary": "No known vulnerabilities found",
+        "threat_names": [],
+        "total_findings": 0,
+        "mcp_taxonomies": []
+      }
+    }
+  }
+]

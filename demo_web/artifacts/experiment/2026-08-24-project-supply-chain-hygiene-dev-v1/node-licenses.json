@@ -1,0 +1,343 @@
+{
+  "MIT": [
+    {
+      "name": "@emnapi/core",
+      "versions": [
+        "2.0.0-alpha.3"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\@emnapi+core@2.0.0-alpha.3\\node_modules\\@emnapi\\core"
+      ],
+      "license": "MIT",
+      "author": "toyobayashi",
+      "homepage": "https://github.com/toyobayashi/emnapi#readme",
+      "description": "emnapi core"
+    },
+    {
+      "name": "@emnapi/runtime",
+      "versions": [
+        "2.0.0-alpha.3"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\@emnapi+runtime@2.0.0-alpha.3\\node_modules\\@emnapi\\runtime"
+      ],
+      "license": "MIT",
+      "author": "toyobayashi",
+      "homepage": "https://github.com/toyobayashi/emnapi#readme",
+      "description": "emnapi runtime"
+    },
+    {
+      "name": "@emnapi/wasi-threads",
+      "versions": [
+        "2.0.1"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\@emnapi+wasi-threads@2.0.1\\node_modules\\@emnapi\\wasi-threads"
+      ],
+      "license": "MIT",
+      "author": "toyobayashi",
+      "homepage": "https://github.com/toyobayashi/emnapi#readme",
+      "description": "WASI threads proposal implementation in JavaScript"
+    },
+    {
+      "name": "@napi-rs/wasm-runtime",
+      "versions": [
+        "1.2.2"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\@napi-rs+wasm-runtime@1.2.2_4d4212bc8c81b7f8d50e744c5e31c0e1\\node_modules\\@napi-rs\\wasm-runtime"
+      ],
+      "license": "MIT",
+      "author": "LongYinan",
+      "homepage": "https://napi.rs/",
+      "description": "Runtime and polyfill for wasm targets"
+    },
+    {
+      "name": "@oxc-project/types",
+      "versions": [
+        "0.142.0"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\@oxc-project+types@0.142.0\\node_modules\\@oxc-project\\types"
+      ],
+      "license": "MIT",
+      "author": "Boshen and oxc contributors",
+      "homepage": "https://oxc.rs",
+      "description": "Types for Oxc AST nodes"
+    },
+    {
+      "name": "@rolldown/binding-wasm32-wasi",
+      "versions": [
+        "1.2.1"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\@rolldown+binding-wasm32-wasi@1.2.1\\node_modules\\@rolldown\\binding-wasm32-wasi"
+      ],
+      "license": "MIT",
+      "homepage": "https://rolldown.rs/",
+      "description": "Fast JavaScript/TypeScript bundler in Rust with Rollup-compatible API."
+    },
+    {
+      "name": "@rolldown/binding-win32-x64-msvc",
+      "versions": [
+        "1.2.1"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\@rolldown+binding-win32-x64-msvc@1.2.1\\node_modules\\@rolldown\\binding-win32-x64-msvc"
+      ],
+      "license": "MIT",
+      "homepage": "https://rolldown.rs/",
+      "description": "Fast JavaScript/TypeScript bundler in Rust with Rollup-compatible API."
+    },
+    {
+      "name": "@rolldown/pluginutils",
+      "versions": [
+        "1.0.1"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\@rolldown+pluginutils@1.0.1\\node_modules\\@rolldown\\pluginutils"
+      ],
+      "license": "MIT",
+      "homepage": "https://github.com/rolldown/plugins/tree/main/packages/pluginutils#readme",
+      "description": "Plugin utilities for Rolldown"
+    },
+    {
+      "name": "@tybys/wasm-util",
+      "versions": [
+        "0.10.3"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\@tybys+wasm-util@0.10.3\\node_modules\\@tybys\\wasm-util"
+      ],
+      "license": "MIT",
+      "author": "toyobayashi",
+      "homepage": "https://github.com/toyobayashi/wasm-util#readme",
+      "description": "WASI polyfill for browser and some wasm util"
+    },
+    {
+      "name": "@vitejs/plugin-react",
+      "versions": [
+        "6.0.5"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\@vitejs+plugin-react@6.0.5_vite@8.2.0\\node_modules\\@vitejs\\plugin-react"
+      ],
+      "license": "MIT",
+      "author": "Evan You",
+      "homepage": "https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#readme",
+      "description": "The default Vite plugin for React projects"
+    },
+    {
+      "name": "fdir",
+      "versions": [
+        "6.5.0"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\fdir@6.5.0_picomatch@4.0.5\\node_modules\\fdir"
+      ],
+      "license": "MIT",
+      "author": "thecodrr",
+      "homepage": "https://github.com/thecodrr/fdir#readme",
+      "description": "The fastest directory crawler & globbing alternative to glob, fast-glob, & tiny-glob. Crawls 1m files in < 1s"
+    },
+    {
+      "name": "nanoid",
+      "versions": [
+        "3.3.18"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\nanoid@3.3.18\\node_modules\\nanoid"
+      ],
+      "license": "MIT",
+      "author": "Andrey Sitnik",
+      "homepage": "https://github.com/ai/nanoid#readme",
+      "description": "A tiny (116 bytes), secure URL-friendly unique string ID generator"
+    },
+    {
+      "name": "picomatch",
+      "versions": [
+        "4.0.5"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\picomatch@4.0.5\\node_modules\\picomatch"
+      ],
+      "license": "MIT",
+      "author": "Jon Schlinkert",
+      "homepage": "https://github.com/micromatch/picomatch",
+      "description": "Blazing fast and accurate glob matcher written in JavaScript, with no dependencies and full support for standard and extended Bash glob features, including braces, extglobs, POSIX brackets, and regular expressions."
+    },
+    {
+      "name": "postcss",
+      "versions": [
+        "8.5.25"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\postcss@8.5.25\\node_modules\\postcss"
+      ],
+      "license": "MIT",
+      "author": "Andrey Sitnik",
+      "homepage": "https://postcss.org/",
+      "description": "Tool for transforming styles with JS plugins"
+    },
+    {
+      "name": "react",
+      "versions": [
+        "19.2.8"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\react@19.2.8\\node_modules\\react"
+      ],
+      "license": "MIT",
+      "homepage": "https://react.dev/",
+      "description": "React is a JavaScript library for building user interfaces."
+    },
+    {
+      "name": "react-dom",
+      "versions": [
+        "19.2.8"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\react-dom@19.2.8_react@19.2.8\\node_modules\\react-dom"
+      ],
+      "license": "MIT",
+      "homepage": "https://react.dev/",
+      "description": "React package for working with the DOM."
+    },
+    {
+      "name": "rolldown",
+      "versions": [
+        "1.2.1"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\rolldown@1.2.1\\node_modules\\rolldown"
+      ],
+      "license": "MIT",
+      "homepage": "https://rolldown.rs/",
+      "description": "Fast JavaScript/TypeScript bundler in Rust with Rollup-compatible API."
+    },
+    {
+      "name": "scheduler",
+      "versions": [
+        "0.27.0"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\scheduler@0.27.0\\node_modules\\scheduler"
+      ],
+      "license": "MIT",
+      "homepage": "https://react.dev/",
+      "description": "Cooperative scheduler for the browser environment."
+    },
+    {
+      "name": "tinyglobby",
+      "versions": [
+        "0.2.17"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\tinyglobby@0.2.17\\node_modules\\tinyglobby"
+      ],
+      "license": "MIT",
+      "author": "Superchupu",
+      "homepage": "https://superchupu.dev/tinyglobby",
+      "description": "A fast and minimal alternative to globby and fast-glob"
+    },
+    {
+      "name": "vite",
+      "versions": [
+        "8.2.0"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\vite@8.2.0\\node_modules\\vite"
+      ],
+      "license": "MIT",
+      "author": "Evan You",
+      "homepage": "https://vite.dev",
+      "description": "Native-ESM powered web dev build tool"
+    }
+  ],
+  "Apache-2.0": [
+    {
+      "name": "detect-libc",
+      "versions": [
+        "2.1.2"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\detect-libc@2.1.2\\node_modules\\detect-libc"
+      ],
+      "license": "Apache-2.0",
+      "author": "Lovell Fuller",
+      "homepage": "https://github.com/lovell/detect-libc#readme",
+      "description": "Node.js module to detect the C standard library (libc) implementation family and version"
+    }
+  ],
+  "MPL-2.0": [
+    {
+      "name": "lightningcss",
+      "versions": [
+        "1.33.0"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\lightningcss@1.33.0\\node_modules\\lightningcss"
+      ],
+      "license": "MPL-2.0",
+      "homepage": "https://github.com/parcel-bundler/lightningcss#readme",
+      "description": "A CSS parser, transformer, and minifier written in Rust"
+    },
+    {
+      "name": "lightningcss-win32-x64-msvc",
+      "versions": [
+        "1.33.0"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\lightningcss-win32-x64-msvc@1.33.0\\node_modules\\lightningcss-win32-x64-msvc"
+      ],
+      "license": "MPL-2.0",
+      "homepage": "https://github.com/parcel-bundler/lightningcss#readme",
+      "description": "A CSS parser, transformer, and minifier written in Rust"
+    }
+  ],
+  "ISC": [
+    {
+      "name": "picocolors",
+      "versions": [
+        "1.1.1"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\picocolors@1.1.1\\node_modules\\picocolors"
+      ],
+      "license": "ISC",
+      "author": "Alexey Raspopov",
+      "homepage": "https://github.com/alexeyraspopov/picocolors#readme",
+      "description": "The tiniest and the fastest library for terminal output formatting with ANSI colors"
+    }
+  ],
+  "BSD-3-Clause": [
+    {
+      "name": "source-map-js",
+      "versions": [
+        "1.2.1"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\source-map-js@1.2.1\\node_modules\\source-map-js"
+      ],
+      "license": "BSD-3-Clause",
+      "author": "Valentin 7rulnik Semirulnik",
+      "homepage": "https://github.com/7rulnik/source-map-js",
+      "description": "Generates and consumes source maps"
+    }
+  ],
+  "0BSD": [
+    {
+      "name": "tslib",
+      "versions": [
+        "2.8.1"
+      ],
+      "paths": [
+        "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\node_modules\\.pnpm\\tslib@2.8.1\\node_modules\\tslib"
+      ],
+      "license": "0BSD",
+      "author": "Microsoft Corp.",
+      "homepage": "https://www.typescriptlang.org/",
+      "description": "Runtime library for TypeScript helper functions"
+    }
+  ]
+}

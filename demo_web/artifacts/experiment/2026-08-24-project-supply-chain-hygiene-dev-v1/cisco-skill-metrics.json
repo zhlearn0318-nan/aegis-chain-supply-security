@@ -1,0 +1,71 @@
+{
+  "threshold": "HIGH_OR_CRITICAL",
+  "confusion_matrix": {
+    "tp": 2,
+    "tn": 1,
+    "fp": 1,
+    "fn": 5
+  },
+  "metrics": {
+    "accuracy": 0.3333,
+    "precision": 0.6667,
+    "recall": 0.2857,
+    "f1": 0.4
+  },
+  "samples": [
+    {
+      "sample": "benign_doc_summary",
+      "expected": "benign",
+      "predicted": "benign",
+      "outcome": "TN"
+    },
+    {
+      "sample": "benign_security_training",
+      "expected": "benign",
+      "predicted": "malicious",
+      "outcome": "FP"
+    },
+    {
+      "sample": "malicious_download_exec",
+      "expected": "malicious",
+      "predicted": "benign",
+      "outcome": "FN"
+    },
+    {
+      "sample": "malicious_exfiltration",
+      "expected": "malicious",
+      "predicted": "malicious",
+      "outcome": "TP"
+    },
+    {
+      "sample": "malicious_prompt_injection",
+      "expected": "malicious",
+      "predicted": "benign",
+      "outcome": "FN"
+    },
+    {
+      "sample": "misleading_readonly",
+      "expected": "malicious",
+      "predicted": "benign",
+      "outcome": "FN"
+    },
+    {
+      "sample": "obfuscated_payload",
+      "expected": "malicious",
+      "predicted": "malicious",
+      "outcome": "TP"
+    },
+    {
+      "sample": "split_chain_stage",
+      "expected": "malicious",
+      "predicted": "benign",
+      "outcome": "FN"
+    },
+    {
+      "sample": "split_chain_execute",
+      "expected": "malicious",
+      "predicted": "benign",
+      "outcome": "FN"
+    }
+  ]
+}

@@ -47,7 +47,7 @@ def test_startup_uses_preflight_frozen_frontend_and_v1_health_contract() -> None
     assert "/api/v1/health" in startup
     assert "/api/health" not in startup
     assert "[ValidateRange(1024, 65535)][int]$Port = 8000" in startup
-    assert package["packageManager"] == "pnpm@11.23.0"
+    assert package["packageManager"] == "pnpm@11.19.0"
 
 
 def test_bootstrap_locks_cisco_sources_and_refuses_automatic_overwrite() -> None:
@@ -58,6 +58,11 @@ def test_bootstrap_locks_cisco_sources_and_refuses_automatic_overwrite() -> None
     assert "https://github.com/cisco-ai-defense/mcp-scanner.git" in bootstrap
     assert "51966cce214ae057e69c3a672307911f5026e255" in bootstrap
     assert "--require-hashes" in bootstrap
+    assert "demo_web\\backend\\requirements.lock" in bootstrap
+    assert "demo_web\\backend\\runtime-security.lock" in bootstrap
+    assert "verify_installed_python_lock.py" in bootstrap
+    assert "Hash-locked project backend installation failed" in bootstrap
+    assert "Hash-locked shared-runtime security overlay failed" in bootstrap
     assert "SkillWheelSha256" in bootstrap
     assert "McpWheelSha256" in bootstrap
     assert "Offline wheel SHA-256 mismatch" in bootstrap
@@ -66,13 +71,23 @@ def test_bootstrap_locks_cisco_sources_and_refuses_automatic_overwrite() -> None
     assert "Remove-Item" not in bootstrap
 
 
+def test_cisco_reproduction_rejects_dependency_audit_fail_open() -> None:
+    reproduction = (PROJECT_ROOT / "run_cisco_reproduction.ps1").read_text(encoding="utf-8")
+
+    assert "Invoke-VerifiedMcpDependencyScan" in reproduction
+    assert "pip-audit exited|produced no JSON|pip-audit error" in reproduction
+    assert "was rejected fail-closed" in reproduction
+    assert "$TotalFindings -le 0" in reproduction
+    assert "--vulnerability-service osv" in reproduction
+
+
 def test_preflight_resolves_corepack_without_original_user_profile(tmp_path: Path) -> None:
     fake_bin = tmp_path / "bin"
     fake_bin.mkdir()
     fake_corepack = fake_bin / "corepack.cmd"
     fake_corepack.write_text(
         "@echo off\r\n"
-        'if "%1"=="pnpm" if "%2"=="--version" (echo 11.23.0& exit /b 0)\r\n'
+        'if "%1"=="pnpm" if "%2"=="--version" (echo 11.19.0& exit /b 0)\r\n'
         "exit /b 2\r\n",
         encoding="ascii",
     )
@@ -112,6 +127,8 @@ def test_preflight_resolves_corepack_without_original_user_profile(tmp_path: Pat
     assert checks["package_manager"]["message"] == "corepack pnpm"
     assert checks["skill_version"]["message"] == "2.0.13.dev3+g4dee90371"
     assert checks["mcp_version"]["message"] == "4.8.2"
+    assert checks["backend_lock_match"]["status"] == "PASS"
+    assert checks["runtime_security_lock_match"]["status"] == "PASS"
 
 
 def test_required_dynamic_preflight_fails_closed_without_admin_token() -> None:

@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-24-project-supply-chain-hygiene-dev-v1",
+  "evidence_level": "auxiliary/dev",
+  "started_on": "2026-08-24",
+  "completed_on": "2026-08-25",
+  "baseline_commit": "08562f6",
+  "branch": "dynamic-audit-v1",
+  "research_question": "Can the repository fail closed on its own dependency, vulnerability, license, secret, SBOM, and hygiene evidence?",
+  "rules_changed": false,
+  "admission_policy_changed": false,
+  "third_party_samples_executed": false,
+  "decision": "project_supply_chain_gate_supported_at_2026-08-25_snapshot"
+}

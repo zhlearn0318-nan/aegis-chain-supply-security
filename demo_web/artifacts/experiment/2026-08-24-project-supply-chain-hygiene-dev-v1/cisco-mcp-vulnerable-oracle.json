@@ -1,0 +1,602 @@
+[
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2026-1994: urllib3==1.24.1 | Aliases: CVE-2025-66471, GHSA-2xpw-w6gg-jr37 | urllib3 streaming API improperly handles highly compressed data",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2026-1994] | Aliases: CVE-2025-66471, GHSA-2xpw-w6gg-jr37 | Fix: 2.6.0 | Details: urllib3 streaming API improperly handles highly compressed data",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2026-1995: urllib3==1.24.1 | Aliases: CVE-2024-37891, GHSA-34jh-p97f-mpxf | urllib3's Proxy-Authorization request header isn't stripped during cross-origin redirects",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2026-1995] | Aliases: CVE-2024-37891, GHSA-34jh-p97f-mpxf | Fix: 2.2.2 | Details: urllib3's Proxy-Authorization request header isn't stripped during cross-origin redirects",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2026-1996: urllib3==1.24.1 | Aliases: CVE-2026-21441, GHSA-38jv-5279-wg99 | Decompression-bomb safeguards bypassed when following HTTP redirects (streaming API)",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2026-1996] | Aliases: CVE-2026-21441, GHSA-38jv-5279-wg99 | Fix: 2.6.3 | Details: Decompression-bomb safeguards bypassed when following HTTP redirects (streaming API)",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2023-212: urllib3==1.24.1 | Aliases: GHSA-g4mx-q9vg-27p4, CVE-2023-45803 | urllib3's request body not stripped after redirect from 303 status changes request method to GET",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2023-212] | Aliases: GHSA-g4mx-q9vg-27p4, CVE-2023-45803 | Fix: 1.26.18 | Details: urllib3's request body not stripped after redirect from 303 status changes request method to GET",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2026-1998: urllib3==1.24.1 | Aliases: CVE-2025-66418, GHSA-gm62-xv2j-4w53 | urllib3 allows an unbounded number of links in the decompression chain",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2026-1998] | Aliases: CVE-2025-66418, GHSA-gm62-xv2j-4w53 | Fix: 2.6.0 | Details: urllib3 allows an unbounded number of links in the decompression chain",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2023-207: urllib3==1.24.1 | Aliases: CVE-2018-25091, GHSA-gwvm-45gx-3cf8 | Authorization Header forwarded on redirect",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2023-207] | Aliases: CVE-2018-25091, GHSA-gwvm-45gx-3cf8 | Fix: 1.24.2 | Details: Authorization Header forwarded on redirect",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2019-133: urllib3==1.24.1 | Aliases: CVE-2019-11324, GHSA-mh33-7rrq-662w | Improper Certificate Validation in urllib3",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2019-133] | Aliases: CVE-2019-11324, GHSA-mh33-7rrq-662w | Fix: 1.24.2 | Details: Improper Certificate Validation in urllib3",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2026-1999: urllib3==1.24.1 | Aliases: GHSA-pq67-6m6q-mj2v, CVE-2025-50181 | urllib3 redirects are not disabled when retries are disabled on PoolManager instantiation",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2026-1999] | Aliases: GHSA-pq67-6m6q-mj2v, CVE-2025-50181 | Fix: 2.5.0 | Details: urllib3 redirects are not disabled when retries are disabled on PoolManager instantiation",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2026-141: urllib3==1.24.1 | Aliases: GHSA-qccp-gfcp-xxvc, CVE-2026-44431 | urllib3: Sensitive headers forwarded across origins in proxied low-level redirects",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2026-141] | Aliases: GHSA-qccp-gfcp-xxvc, CVE-2026-44431 | Fix: 2.7.0 | Details: urllib3: Sensitive headers forwarded across origins in proxied low-level redirects",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2019-132: urllib3==1.24.1 | Aliases: GHSA-r64q-w8jr-g9qp, CVE-2019-11236 | Improper Neutralization of CRLF Sequences in urllib3 library for Python",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2019-132] | Aliases: GHSA-r64q-w8jr-g9qp, CVE-2019-11236 | Fix: 1.24.3 | Details: Improper Neutralization of CRLF Sequences in urllib3 library for Python",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2023-192: urllib3==1.24.1 | Aliases: GHSA-v845-jxx5-vc9f, CVE-2023-43804 | `Cookie` HTTP header isn't stripped on cross-origin redirects",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2023-192] | Aliases: GHSA-v845-jxx5-vc9f, CVE-2023-43804 | Fix: 1.26.17 | Details: `Cookie` HTTP header isn't stripped on cross-origin redirects",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2020-148: urllib3==1.24.1 | Aliases: CVE-2020-26137, GHSA-wqvq-5m8c-6g24 | CRLF injection in urllib3",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2020-148] | Aliases: CVE-2020-26137, GHSA-wqvq-5m8c-6g24 | Fix: 1.25.9 | Details: CRLF injection in urllib3",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2019-132: urllib3==1.24.1 | Aliases: GHSA-r64q-w8jr-g9qp, CVE-2019-11236 | In the urllib3 library through 1.24.1 for Python, CRLF injection is possible if the attacker controls the request parameter.",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2019-132] | Aliases: GHSA-r64q-w8jr-g9qp, CVE-2019-11236 | Fix: 1.24.3 | Details: In the urllib3 library through 1.24.1 for Python, CRLF injection is possible if the attacker controls the request parameter.",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2019-133: urllib3==1.24.1 | Aliases: CVE-2019-11324, GHSA-mh33-7rrq-662w | The urllib3 library before 1.24.2 for Python mishandles certain cases where the desired set of CA certificates is different from the OS store of CA certificates, which results in SSL connections succeeding in situations where a verification failure is the correct outcome. This is related to use of the ssl_context, ca_certs, or ca_certs_dir argument.",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2019-133] | Aliases: CVE-2019-11324, GHSA-mh33-7rrq-662w | Fix: 1.24.2 | Details: The urllib3 library before 1.24.2 for Python mishandles certain cases where the desired set of CA certificates is different from the OS store of CA certificates, which results in SSL connections succeeding in situations where a verification failure is the correct outcome. This is related to use of the ssl_context, ca_certs, or ca_certs_dir argument.",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2020-148: urllib3==1.24.1 | Aliases: CVE-2020-26137, GHSA-wqvq-5m8c-6g24 | urllib3 before 1.25.9 allows CRLF injection if the attacker controls the HTTP request method, as demonstrated by inserting CR and LF control characters in the first argument of putrequest(). NOTE: this is similar to CVE-2020-26116.",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2020-148] | Aliases: CVE-2020-26137, GHSA-wqvq-5m8c-6g24 | Fix: 1.25.9 | Details: urllib3 before 1.25.9 allows CRLF injection if the attacker controls the HTTP request method, as demonstrated by inserting CR and LF control characters in the first argument of putrequest(). NOTE: this is similar to CVE-2020-26116.",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2023-192: urllib3==1.24.1 | Aliases: GHSA-v845-jxx5-vc9f, CVE-2023-43804 | urllib3 is a user-friendly HTTP client library for Python. urllib3 doesn't treat the `Cookie` HTTP header special or provide any helpers for managing cookies over HTTP, that is the responsibility of the user. However, it is possible for a user to specify a `Cookie` header and unknowingly leak information via HTTP redirects to a different origin if that user doesn't disable redirects explicitly. This issue has been patched in urllib3 version 1.26.17 or 2.0.5.",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2023-192] | Aliases: GHSA-v845-jxx5-vc9f, CVE-2023-43804 | Fix: 1.26.17, 2.0.6 | Details: urllib3 is a user-friendly HTTP client library for Python. urllib3 doesn't treat the `Cookie` HTTP header special or provide any helpers for managing cookies over HTTP, that is the responsibility of the user. However, it is possible for a user to specify a `Cookie` header and unknowingly leak information via HTTP redirects to a different origin if that user doesn't disable redirects explicitly. This issue has been patched in urllib3 version 1.26.17 or 2.0.5.",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2023-207: urllib3==1.24.1 | Aliases: CVE-2018-25091, GHSA-gwvm-45gx-3cf8 | urllib3 before 1.24.2 does not remove the authorization HTTP header when following a cross-origin redirect (i.e., a redirect that differs in host, port, or scheme). This can allow for credentials in the authorization header to be exposed to unintended hosts or transmitted in cleartext. NOTE: this issue exists because of an incomplete fix for CVE-2018-20060 (which was case-sensitive).",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2023-207] | Aliases: CVE-2018-25091, GHSA-gwvm-45gx-3cf8 | Fix: 1.24.2 | Details: urllib3 before 1.24.2 does not remove the authorization HTTP header when following a cross-origin redirect (i.e., a redirect that differs in host, port, or scheme). This can allow for credentials in the authorization header to be exposed to unintended hosts or transmitted in cleartext. NOTE: this issue exists because of an incomplete fix for CVE-2018-20060 (which was case-sensitive).",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2023-212: urllib3==1.24.1 | Aliases: GHSA-g4mx-q9vg-27p4, CVE-2023-45803 | urllib3 is a user-friendly HTTP client library for Python. urllib3 previously wouldn't remove the HTTP request body when an HTTP redirect response using status 301, 302, or 303 after the request had its method changed from one that could accept a request body (like `POST`) to `GET` as is required by HTTP RFCs. Although this behavior is not specified in the section for redirects, it can be inferred by piecing together information from different sections and we have observed the behavior in other major HTTP client implementations like curl and web browsers. Because the vulnerability requires a previously trusted service to become compromised in order to have an impact on confidentiality we believe the exploitability of this vulnerability is low. Additionally, many users aren't putting sensitive data in HTTP request bodies, if this is the case then this vulnerability isn't exploitable. Both of the following conditions must be true to be affected by this vulnerability: 1. Using urllib3 and submitting sensitive information in the HTTP request body (such as form data or JSON) and 2. The origin service is compromised and starts redirecting using 301, 302, or 303 to a malicious peer or the redirected-to service becomes compromised. This issue has been addressed in versions 1.26.18 and 2.0.7 and users are advised to update to resolve this issue. Users unable to update should disable redirects for services that aren't expecting to respond with redirects with `redirects=False` and disable automatic redirects with `redirects=False` and handle 301, 302, and 303 redirects manually by stripping the HTTP request body. ",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2023-212] | Aliases: GHSA-g4mx-q9vg-27p4, CVE-2023-45803 | Fix: 1.26.18, 2.0.7 | Details: urllib3 is a user-friendly HTTP client library for Python. urllib3 previously wouldn't remove the HTTP request body when an HTTP redirect response using status 301, 302, or 303 after the request had its method changed from one that could accept a request body (like `POST`) to `GET` as is required by HTTP RFCs. Although this behavior is not specified in the section for redirects, it can be inferred by piecing together information from different sections and we have observed the behavior in other major HTTP client implementations like curl and web browsers. Because the vulnerability requires a previously trusted service to become compromised in order to have an impact on confidentiality we believe the exploitability of this vulnerability is low. Additionally, many users aren't putting sensitive data in HTTP request bodies, if this is the case then this vulnerability isn't exploitable. Both of the following conditions must be true to be affected by this vulnerability: 1. Using urllib3 and submitting sensitive information in the HTTP request body (such as form data or JSON) and 2. The origin service is compromised and starts redirecting using 301, 302, or 303 to a malicious peer or the redirected-to service becomes compromised. This issue has been addressed in versions 1.26.18 and 2.0.7 and users are advised to update to resolve this issue. Users unable to update should disable redirects for services that aren't expecting to respond with redirects with `redirects=False` and disable automatic redirects with `redirects=False` and handle 301, 302, and 303 redirects manually by stripping the HTTP request body. ",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2026-141: urllib3==1.24.1 | Aliases: GHSA-qccp-gfcp-xxvc, CVE-2026-44431 | urllib3 is an HTTP client library for Python. From 1.23 to before 2.7.0, cross-origin redirects followed from the low-level API via ProxyManager.connection_from_url().urlopen(..., assert_same_host=False) still forward these sensitive headers. This vulnerability is fixed in 2.7.0.",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2026-141] | Aliases: GHSA-qccp-gfcp-xxvc, CVE-2026-44431 | Fix: 2.7.0 | Details: urllib3 is an HTTP client library for Python. From 1.23 to before 2.7.0, cross-origin redirects followed from the low-level API via ProxyManager.connection_from_url().urlopen(..., assert_same_host=False) still forward these sensitive headers. This vulnerability is fixed in 2.7.0.",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2026-1994: urllib3==1.24.1 | Aliases: CVE-2025-66471, GHSA-2xpw-w6gg-jr37 | urllib3 streaming API improperly handles highly compressed data",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2026-1994] | Aliases: CVE-2025-66471, GHSA-2xpw-w6gg-jr37 | Fix: 2.6.0 | Details: urllib3 streaming API improperly handles highly compressed data",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2026-1995: urllib3==1.24.1 | Aliases: CVE-2024-37891, GHSA-34jh-p97f-mpxf | urllib3's Proxy-Authorization request header isn't stripped during cross-origin redirects",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2026-1995] | Aliases: CVE-2024-37891, GHSA-34jh-p97f-mpxf | Fix: 1.26.19, 2.2.2 | Details: urllib3's Proxy-Authorization request header isn't stripped during cross-origin redirects",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2026-1996: urllib3==1.24.1 | Aliases: CVE-2026-21441, GHSA-38jv-5279-wg99 | Decompression-bomb safeguards bypassed when following HTTP redirects (streaming API)",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2026-1996] | Aliases: CVE-2026-21441, GHSA-38jv-5279-wg99 | Fix: 2.6.3 | Details: Decompression-bomb safeguards bypassed when following HTTP redirects (streaming API)",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2026-1998: urllib3==1.24.1 | Aliases: CVE-2025-66418, GHSA-gm62-xv2j-4w53 | urllib3 allows an unbounded number of links in the decompression chain",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2026-1998] | Aliases: CVE-2025-66418, GHSA-gm62-xv2j-4w53 | Fix: 2.6.0 | Details: urllib3 allows an unbounded number of links in the decompression chain",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "package_name": "urllib3==1.24.1",
+    "vulnerability_description": "PYSEC-2026-1999: urllib3==1.24.1 | Aliases: GHSA-pq67-6m6q-mj2v, CVE-2025-50181 | urllib3 redirects are not disabled when retries are disabled on PoolManager instantiation",
+    "status": "completed",
+    "is_safe": false,
+    "findings": {
+      "vulnerable_package_analyzer": {
+        "severity": "HIGH",
+        "threat_summary": "Vulnerable dependency: urllib3==1.24.1 [PYSEC-2026-1999] | Aliases: GHSA-pq67-6m6q-mj2v, CVE-2025-50181 | Fix: 2.5.0 | Details: urllib3 redirects are not disabled when retries are disabled on PoolManager instantiation",
+        "threat_names": [
+          "VULNERABLE DEPENDENCY"
+        ],
+        "total_findings": 1,
+        "mcp_taxonomies": [
+          {
+            "aitech": "AITech-9.3",
+            "aitech_name": "Supply Chain Compromise",
+            "aisubtech": "AISubtech-9.3.1",
+            "aisubtech_name": "Malicious Package / Tool Injection",
+            "description": "Introduction of malicious or adversarial tools, APIs, or packages into the toolset, registry, or dependency chain used by a system or agent, enabling the model to unknowingly invoke compromised tools that can execute attacks or expose data."
+          }
+        ]
+      }
+    }
+  }
+]

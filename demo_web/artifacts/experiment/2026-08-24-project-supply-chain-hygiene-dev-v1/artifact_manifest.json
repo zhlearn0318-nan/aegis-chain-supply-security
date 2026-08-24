@@ -1,0 +1,127 @@
+{
+  "schema_version": "1.0",
+  "algorithm": "SHA-256",
+  "artifact_count": 24,
+  "artifacts": [
+    {
+      "path": "after-node-audit.json",
+      "size_bytes": 293,
+      "sha256": "408bced5865493049f65ec1e62d82809faff14f833db4e67f354c08924f731cc"
+    },
+    {
+      "path": "after-python-audit.json",
+      "size_bytes": 1166,
+      "sha256": "b610547f9d9d1c5d13fd63af894e6e9e80b2e2178c34741e95feb90c85b646b4"
+    },
+    {
+      "path": "after-python-shared-runtime-audit.json",
+      "size_bytes": 7268,
+      "sha256": "1c78c9385d89165c65acfac10a7a558d159a191770c145da554757f50166f0dc"
+    },
+    {
+      "path": "backend-tests.xml",
+      "size_bytes": 51075,
+      "sha256": "50816128732b98eabf131cf0c03911426991c2dbde4121dc27599bc12826fdf5"
+    },
+    {
+      "path": "before-node-audit.json",
+      "size_bytes": 1011,
+      "sha256": "90ea10cff50903768cc3e4bb2166760f66495533df0da090712beb148ce5b384"
+    },
+    {
+      "path": "before-python-shared-runtime-audit.json",
+      "size_bytes": 48837,
+      "sha256": "d5aa383d9218c3036952a20fb30c3916c675e23e3b1ff981bd810afe0c8c3593"
+    },
+    {
+      "path": "cisco-mcp-safe-oracle.json",
+      "size_bytes": 556,
+      "sha256": "a2ba79cb0754bd0a0d36c406bd715d4a0174c72c7a852ef3601562358fbb907f"
+    },
+    {
+      "path": "cisco-mcp-static.json",
+      "size_bytes": 6920,
+      "sha256": "67cbb3c636b97287762ea30dc29a6e96ff09e3c8617901180152f76b1a5a500e"
+    },
+    {
+      "path": "cisco-mcp-vulnerable-oracle.json",
+      "size_bytes": 36528,
+      "sha256": "545b72607e7589d99d71121d8b95f4cecbfcc185863fb70e2cfba4105d49c27d"
+    },
+    {
+      "path": "cisco-skill-metrics.json",
+      "size_bytes": 1537,
+      "sha256": "45896487c85ab5aca855d095b2c5c31a46928e7baf4fbc3d361f6a445592bf0a"
+    },
+    {
+      "path": "claim_validation.md",
+      "size_bytes": 1411,
+      "sha256": "c6ef1d1406b151c54e9b0408d3d41442cd629d1a05e1aabbde3fcd918af3ae62"
+    },
+    {
+      "path": "fail_closed_observation.md",
+      "size_bytes": 838,
+      "sha256": "cb62901ac78fe2a28dcef80fb252aa1e2ba33588fc8234367f3a5b5db69e0fbf"
+    },
+    {
+      "path": "frontend-build.log",
+      "size_bytes": 376,
+      "sha256": "1511af0ef9f75e7149dffcb4d5f7fd55db40b0ca605a039c7d0f6a6d3887e000"
+    },
+    {
+      "path": "frontend-install.log",
+      "size_bytes": 600,
+      "sha256": "161f3cba925376165807fe002dad1ad7b940789142a38cfca0f8586fffc2e0a9"
+    },
+    {
+      "path": "frontend-tests.log",
+      "size_bytes": 862,
+      "sha256": "9f1198ed394e07db2088a00d6c69883c9b46972e633e6f350bce8891e8f0f2c8"
+    },
+    {
+      "path": "metrics.json",
+      "size_bytes": 1310,
+      "sha256": "e20f2535c32eacbea2181f03b7eb70060546fc5afef15bb2f2901e75830d3e59"
+    },
+    {
+      "path": "node-licenses.json",
+      "size_bytes": 12234,
+      "sha256": "2fb858a3d4b587754bc7757fb4ff18cea028029aba5fdc7ccb076ff5db9151fe"
+    },
+    {
+      "path": "preflight.json",
+      "size_bytes": 9415,
+      "sha256": "cf37f4ff0e95f1673a269ab2a46c7c5f7cedd2c89a979645ac625ec9485a5bd3"
+    },
+    {
+      "path": "project_sbom.generated.cdx.json",
+      "size_bytes": 64431,
+      "sha256": "947944096f542fd402a92fb978763ead8600314ab6b078e06cc8a3ec1e793c78"
+    },
+    {
+      "path": "project_supply_chain_report.json",
+      "size_bytes": 2865,
+      "sha256": "a29f881e3faf0b0dd4a777fea69de9b501879104c1d116eb5ec6f724abd27ba2"
+    },
+    {
+      "path": "run_manifest.json",
+      "size_bytes": 575,
+      "sha256": "2f5418748821d589cd942d586a41ad36ba136c478216e6a6f61f52d1c56bebcd"
+    },
+    {
+      "path": "runtime-verify.log",
+      "size_bytes": 159,
+      "sha256": "29c37fa81f4fd671251961e1b4af998a9a26e6019600d60c149eb35671994144"
+    },
+    {
+      "path": "summary.md",
+      "size_bytes": 1097,
+      "sha256": "18f4316d0d44fa79a43d6d5d5a5c465d86e52339dca23215807f9906b7bc204a"
+    },
+    {
+      "path": "third_party_notices.generated.md",
+      "size_bytes": 8067,
+      "sha256": "6644c2e12659d4e6599fee5c0d9f764ceac6270b75a54a42159cde7cdb03c954"
+    }
+  ]
+}

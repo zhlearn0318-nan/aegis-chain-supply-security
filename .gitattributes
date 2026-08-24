@@ -18,3 +18,7 @@
 *.pdf binary
 *.png binary
 *.jpg binary
+
+# Frozen experiment evidence is byte-addressed by artifact_manifest.json.
+# Preserve exact bytes so checkout conversion cannot invalidate SHA-256.
+demo_web/artifacts/** -text -eol whitespace=cr-at-eol,-blank-at-eof

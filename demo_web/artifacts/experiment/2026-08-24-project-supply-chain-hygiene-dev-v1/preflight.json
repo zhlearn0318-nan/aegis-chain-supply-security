@@ -1,0 +1,203 @@
+{
+    "schema_version":  "1.0",
+    "profile":  "static-only",
+    "ready":  true,
+    "dynamic_ready":  false,
+    "required_failures":  0,
+    "warnings":  0,
+    "project_root":  "F:\\揭榜挂帅\\supply_chain_reproduction",
+    "checks":  [
+                   {
+                       "id":  "project_root",
+                       "label":  "Project root",
+                       "status":  "PASS",
+                       "required":  true,
+                       "message":  "Resolved from script location",
+                       "detail":  "F:\\揭榜挂帅\\supply_chain_reproduction"
+                   },
+                   {
+                       "id":  "skill_python",
+                       "label":  "Skill Python",
+                       "status":  "PASS",
+                       "required":  true,
+                       "message":  "Available",
+                       "detail":  "F:\\揭榜挂帅\\supply_chain_reproduction\\.runtime_skill\\Scripts\\python.exe"
+                   },
+                   {
+                       "id":  "skill_scanner",
+                       "label":  "Cisco Skill Scanner",
+                       "status":  "PASS",
+                       "required":  true,
+                       "message":  "Available",
+                       "detail":  "F:\\揭榜挂帅\\supply_chain_reproduction\\.runtime_skill\\Scripts\\skill-scanner.exe"
+                   },
+                   {
+                       "id":  "mcp_python",
+                       "label":  "MCP Python",
+                       "status":  "PASS",
+                       "required":  true,
+                       "message":  "Available",
+                       "detail":  "F:\\揭榜挂帅\\supply_chain_reproduction\\.runtime_mcp313\\Scripts\\python.exe"
+                   },
+                   {
+                       "id":  "mcp_scanner",
+                       "label":  "Cisco MCP Scanner",
+                       "status":  "PASS",
+                       "required":  true,
+                       "message":  "Available",
+                       "detail":  "F:\\揭榜挂帅\\supply_chain_reproduction\\.runtime_mcp313\\Scripts\\mcp-scanner.exe"
+                   },
+                   {
+                       "id":  "pip_audit",
+                       "label":  "pip-audit",
+                       "status":  "PASS",
+                       "required":  true,
+                       "message":  "Available",
+                       "detail":  "F:\\揭榜挂帅\\supply_chain_reproduction\\.runtime_mcp313\\Scripts\\pip-audit.exe"
+                   },
+                   {
+                       "id":  "policy",
+                       "label":  "Admission policy",
+                       "status":  "PASS",
+                       "required":  true,
+                       "message":  "Available",
+                       "detail":  "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\config\\admission_policy.yaml"
+                   },
+                   {
+                       "id":  "frontend_manifest",
+                       "label":  "Frontend package manifest",
+                       "status":  "PASS",
+                       "required":  true,
+                       "message":  "Available",
+                       "detail":  "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\package.json"
+                   },
+                   {
+                       "id":  "frontend_lock",
+                       "label":  "Frontend frozen lockfile",
+                       "status":  "PASS",
+                       "required":  true,
+                       "message":  "Available",
+                       "detail":  "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\frontend\\pnpm-lock.yaml"
+                   },
+                   {
+                       "id":  "backend_lock",
+                       "label":  "Backend hash lockfile",
+                       "status":  "PASS",
+                       "required":  true,
+                       "message":  "Available",
+                       "detail":  "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\backend\\requirements.lock"
+                   },
+                   {
+                       "id":  "runtime_security_lock",
+                       "label":  "Shared runtime security lock",
+                       "status":  "PASS",
+                       "required":  true,
+                       "message":  "Available",
+                       "detail":  "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\backend\\runtime-security.lock"
+                   },
+                   {
+                       "id":  "skill_version",
+                       "label":  "Cisco Skill Scanner version",
+                       "status":  "PASS",
+                       "required":  true,
+                       "message":  "2.0.13.dev3+g4dee90371",
+                       "detail":  "2.0.13.dev3+g4dee90371"
+                   },
+                   {
+                       "id":  "mcp_version",
+                       "label":  "Cisco MCP Scanner version",
+                       "status":  "PASS",
+                       "required":  true,
+                       "message":  "4.8.2",
+                       "detail":  "4.8.2"
+                   },
+                   {
+                       "id":  "backend_runtime",
+                       "label":  "FastAPI runtime",
+                       "status":  "PASS",
+                       "required":  true,
+                       "message":  "Import check passed",
+                       "detail":  ""
+                   },
+                   {
+                       "id":  "backend_lock_match",
+                       "label":  "Installed backend hash lock",
+                       "status":  "PASS",
+                       "required":  true,
+                       "message":  "Installed versions match",
+                       "detail":  "{\"decision\": \"PASS\", \"expected_packages\": 15, \"mismatches\": []}"
+                   },
+                   {
+                       "id":  "runtime_security_lock_match",
+                       "label":  "Installed security overlay",
+                       "status":  "PASS",
+                       "required":  true,
+                       "message":  "Installed versions match",
+                       "detail":  "{\"decision\": \"PASS\", \"expected_packages\": 17, \"mismatches\": []}"
+                   },
+                   {
+                       "id":  "policy_load",
+                       "label":  "Admission policy load",
+                       "status":  "PASS",
+                       "required":  true,
+                       "message":  "aegis-chain-local-default@1.0.0",
+                       "detail":  "010ca27b327e5098b11d7819563b40a607cac7698ac01019740557b8eaececf5"
+                   },
+                   {
+                       "id":  "package_manager",
+                       "label":  "Frontend package manager",
+                       "status":  "PASS",
+                       "required":  true,
+                       "message":  "pnpm",
+                       "detail":  "11.19.0"
+                   },
+                   {
+                       "id":  "data_write",
+                       "label":  "Runtime data directory",
+                       "status":  "PASS",
+                       "required":  true,
+                       "message":  "Create/write/delete probe passed",
+                       "detail":  "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\data"
+                   },
+                   {
+                       "id":  "dynamic_config",
+                       "label":  "dynamic_config",
+                       "status":  "SKIP",
+                       "required":  false,
+                       "message":  "Dynamic checks skipped explicitly",
+                       "detail":  ""
+                   },
+                   {
+                       "id":  "admin_token",
+                       "label":  "admin_token",
+                       "status":  "SKIP",
+                       "required":  false,
+                       "message":  "Dynamic checks skipped explicitly",
+                       "detail":  ""
+                   },
+                   {
+                       "id":  "docker_cli",
+                       "label":  "docker_cli",
+                       "status":  "SKIP",
+                       "required":  false,
+                       "message":  "Dynamic checks skipped explicitly",
+                       "detail":  ""
+                   },
+                   {
+                       "id":  "docker_engine",
+                       "label":  "docker_engine",
+                       "status":  "SKIP",
+                       "required":  false,
+                       "message":  "Dynamic checks skipped explicitly",
+                       "detail":  ""
+                   },
+                   {
+                       "id":  "docker_image",
+                       "label":  "docker_image",
+                       "status":  "SKIP",
+                       "required":  false,
+                       "message":  "Dynamic checks skipped explicitly",
+                       "detail":  ""
+                   }
+               ]
+}

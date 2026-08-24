@@ -17,7 +17,7 @@
 | P0-1 可移植启动 | 已完成 | preflight、固定来源重建、换用户验证 | `3f02072`，后端 329/前端 10 |
 | P0-2 动态任务控制 | 已完成 | 全局互斥、FIFO、有界队列、去重/冷却、重启恢复 | 335 后端 + 10 前端；全部专项门通过 |
 | P0-3 状态真值 | 已完成 | `CURRENT_STATUS.md`、历史快照标记、文档契约测试 | 341 后端 + 10 前端；活动入口口径一致 |
-| P0-4 自身供应链卫生 | 部分完成 | 精确依赖、LICENSE/NOTICE、自身 SBOM、依赖/Secret/许可扫描 | 来源和当日扫描可复核 |
+| P0-4 自身供应链卫生 | 已完成 | 精确依赖、LICENSE/NOTICE、自身 SBOM、依赖/Secret/许可扫描 | 12/12 gate；共享环境与前端已知漏洞 0 |
 | P0-5 发布门 | 未完成 | Windows Sandbox 从新克隆到四链 E2E | 真实洁净 VM 通过才允许候选版 |
 | P1 受控试点能力 | 部分/未完成 | 静态 worker 隔离、MCP/动态独立集、生命周期、CI、能力健康 | 独立效果与运维证据齐全 |
 | P2 生产化控制面 | 未完成 | 身份/RBAC/租户、持久队列与 DB、强沙箱、治理、完整准入、可观测性 | 本地生产形态集成验收，外部组织系统差异明确 |
@@ -70,3 +70,24 @@
 - 新增 6 项文档契约测试，防止活动入口重新出现旧总数、个人路径或缺失状态链接。
 - 验收：文档专项 `6 passed`，后端完整 `341 passed`，前端 `10 passed`，生产构建通过。
 - 结论：`single_current_status_truth_enforced`；下一节点为 P0-4 项目自身供应链卫生。
+
+## 7. P0-4 验收合同
+
+- run id：`2026-08-24-project-supply-chain-hygiene-dev-v1`；等级 `auxiliary/dev`；基线 `08562f6`。
+- 研究问题：仓库能否对自身直接/传递依赖、许可证、漏洞、秘密和发布制品形成可重复、失败闭锁的准入证据？
+- 初始审计：Python 直接依赖未锁定 1；Node `latest` 4；根项目许可证/NOTICE 0；项目级发布 SBOM 0；Node High 漏洞 1（nanoid 3.3.16 / GHSA-2v37-7h3g-55p8）。
+- 备择假设：所有直接依赖精确固定；Python lock 和 pnpm lock 带完整性哈希；根 LICENSE/第三方 NOTICE 明确；CycloneDX 项目 SBOM 可重复生成；Python/Node 已知漏洞 High/Critical=0；秘密扫描 verified leaks=0。
+- 停止条件：需要删除或隐瞒真实漏洞、放宽已有安全门、提交扫描器二进制/令牌、执行第三方样本。
+- 必需证据：修复前后 audit、锁文件哈希、SBOM、许可证清单、Secret 扫描、仓库自扫描、专项/全量回归。
+- 边界：一次扫描为时间截面，不证明未来无新 CVE；许可证清单不是法律意见；私有比赛仓库默认不授予再分发权。
+
+## 8. P0-4 实际结果与决策
+
+- 初始前端锁包含 `nanoid 3.3.16` 的 1 个 High 通告；Cisco 旧共享锁的全量 OSV 审计得到 19 个受影响包、118 条数据库记录。后者包含同一漏洞的别名/重复记录，不能表述为 118 个独立 CVE。
+- Web 后端 15 包、共享运行时 17 包安全覆盖和前端 4 个直接依赖均精确固定；Python 下载对象带 SHA-256，pnpm 锁内 50 个组件均有完整性值。
+- 实际共享运行时共 126 个 Python 包，全部可映射至 Cisco 锁、Web 锁或安全覆盖锁；`pip check` 冲突 0，当日项目子集/共享环境/Node 已知漏洞均为 0。
+- CycloneDX 1.6 项目 SBOM 覆盖 126 个 Python 与 Windows x64 已安装的 26 个 Node 组件，共 152 项；许可未知/越界 0。
+- Secret 扫描检查 441 个文本文件，已验证泄露 0；合成占位值只按显式策略忽略，报告不保留原值。
+- Cisco 兼容验收完成 Skill 固定集、MCP 内容 3 safe/3 unsafe、依赖漏洞 fixture 24 项 HIGH 和安全 fixture 0 项。发现并修复复现脚本把上游 pip-audit 空输出当 SAFE 的风险，现遇到内部错误或 oracle 不符均失败闭锁。
+- 验收：自身供应链 gate 12/12、后端 `348 passed`、前端 `10 passed`、生产构建通过。结论为 `project_supply_chain_gate_supported_at_2026-08-25_snapshot`。
+- 下一节点：P0-5 必须在 Windows Sandbox 从新克隆开始验证，不以本机缓存或目录模拟替代。

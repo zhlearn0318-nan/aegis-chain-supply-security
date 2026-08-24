@@ -348,7 +348,7 @@
 - 可引入必要开源依赖，但必须固定版本、核验来源/许可/哈希，不执行第三方不可信样本。
 - P0-5 必须使用 Windows Sandbox 作为真实洁净 Windows VM；本机模拟不作为最终通过证据。
 - 详细顺序、退出门和 P0-2 验收合同见 `docs/M5_ENGINEERING_EXECUTION_PLAN.md`。
-- 当前执行节点：P0-2 `2026-08-24-dynamic-queue-recovery-dev-v1`；基线 `3f02072`。
+- 当前执行节点：P0-5 Windows Sandbox 真实洁净环境发布门；P0-4 已通过并冻结。
 
 ### 19.1 P0-2 实际结果
 
@@ -366,3 +366,12 @@
 - 新增两级文档索引和 6 项防漂移测试；API 契约补齐 P0-2 队列字段、429 与恢复失败码。
 - 验收：文档专项 6 passed、后端 341 passed、前端 10 passed、生产构建通过。
 - 证据：`artifacts/experiment/2026-08-24-current-status-truth-dev-v1/`；下一节点为 P0-4 项目自身供应链卫生。
+
+### 19.3 P0-4 实际结果
+
+- Web Python、共享 Cisco/Aegis 运行时和前端直接依赖均形成精确版本与哈希/完整性锁；实际安装版本由 preflight 校验。
+- 修复 Node `nanoid 3.3.16` 高危通告，并对共享运行时 17 个安全/兼容包应用哈希覆盖；实际 126 个 Python 包和 Windows x64 Node 安装图的当日已知漏洞为 0。
+- 新增私有比赛许可、第三方声明和 152 组件 CycloneDX 1.6 项目 SBOM；许可越界、锁不匹配、已验证 Secret 和仓库卫生违规均为 0。
+- Cisco 固定样本复现脚本新增失败闭锁 oracle，避免内部 pip-audit 无输出时被上游错误显示为 SAFE。
+- 验收：自身供应链 gate 12/12、后端 348 passed、前端 10 passed、生产构建及 Cisco 固定样本冒烟通过。
+- 证据：`artifacts/experiment/2026-08-24-project-supply-chain-hygiene-dev-v1/`；下一节点为 P0-5 Windows Sandbox 发布门。

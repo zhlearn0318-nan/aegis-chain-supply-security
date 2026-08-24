@@ -23,7 +23,7 @@ Aegis Chain 是 XA-202620 赛题“供应链安全”方向的本地工程原型
 - SkillTrustBench v1.0：已完成 5,520 条全量 Cisco 静态基线，另建 120 条开发集和 600 条封存回归集；
 - 管理员动态接口：3/3 fixture、7/7 机制，负面安全指标全部为 0；
 - MCP Docker 受控遥测实验：82/82 接受门，独立文件读取确认 1、容器残留 0；
-- 后端完整测试：341 passed；
+- 后端完整测试：348 passed；
 - 前端 API 测试：10 passed；
 - 前端生产构建：通过。
 
@@ -63,7 +63,13 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\bootstrap_runtimes.ps
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\demo_web\preflight.ps1" -SkipDynamic
 ```
 
-完整说明见 [QUICKSTART.md](QUICKSTART.md)；锁定依赖清单位于 `results/*_locked_requirements.txt`。
+完整说明见 [QUICKSTART.md](QUICKSTART.md)；Cisco、Web 与共享运行时安全覆盖锁分别位于 `results/*_locked_requirements.txt`、`demo_web/backend/requirements.lock` 和 `demo_web/backend/runtime-security.lock`。
+
+项目自身供应链门可生成并核验根目录 `PROJECT_SBOM.cdx.json` 与 `THIRD_PARTY_NOTICES.md`：
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\demo_web\audit_project_supply_chain.ps1" -WriteRepositoryArtifacts
+```
 
 ### 2. 启动演示平台
 
@@ -118,4 +124,4 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\run_tests.ps1"
 
 ## 项目状态
 
-该仓库用于挑战杯“揭榜挂帅”赛道原型开发和队内协作，目前处于 M5 工程收敛阶段。P0-1/P0-2/P0-3 已完成，下一项为项目自身供应链卫生；生产发布仍为 NO-GO，完整差距见 `CURRENT_STATUS.md`。
+该仓库用于挑战杯“揭榜挂帅”赛道原型开发和队内协作，目前处于 M5 工程收敛阶段。P0-1 至 P0-4 已完成，下一项为真实 Windows Sandbox 发布门；生产发布仍为 NO-GO，完整差距见 `CURRENT_STATUS.md`。

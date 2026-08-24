@@ -32,6 +32,15 @@
 - 管理员令牌不得写入 URL、请求体、日志、SQLite、文档或截图；
 - 如果凭据意外进入提交，应立即在对应平台吊销并轮换，而不只是删除文件。
 
+## 项目自身供应链门
+
+- 提交/发布前运行 `demo_web/audit_project_supply_chain.ps1 -WriteRepositoryArtifacts`；
+- Python Web 子集与实际共享 Cisco/Aegis 运行时必须分别审计，不能只检查顶层 requirements；
+- 直接依赖、包管理器和传递安全覆盖版本必须精确固定，安装必须核验锁文件哈希；
+- `LICENSE`、`THIRD_PARTY_NOTICES.md` 和 `PROJECT_SBOM.cdx.json` 是发布必需制品；
+- Secret 扫描只保留路径、行号和哈希指纹，不把疑似凭据复制进报告；
+- Cisco `vulnerable-package` 若出现 pip-audit 错误、空 JSON 或与固定 oracle 不符，复现脚本必须失败闭锁，不能把空 Finding 当作 SAFE。
+
 ## 漏洞反馈
 
 这是私有协作仓库。发现安全问题时，请在队内私下通知仓库维护者，不要在包含漏洞细节或凭据的公开 Issue 中披露。

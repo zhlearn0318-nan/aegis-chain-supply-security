@@ -41,19 +41,71 @@ if ($LASTEXITCODE -ne 0) { throw "Skill evaluation failed with exit code $LASTEX
     --expected-unsafe 3
 if ($LASTEXITCODE -ne 0) { throw "MCP static scan failed with exit code $LASTEXITCODE" }
 
-& $McpScanner vulnerable-package `
-    (Join-Path $Root "fixtures\vulnerable_dependencies\requirements_urllib3.txt") `
-    --no-deps --disable-pip `
-    --output (Join-Path $Root "results\mcp_vulnerable_urllib3_current.json") `
-    --format summary
-if ($LASTEXITCODE -ne 0) { throw "MCP vulnerable dependency scan failed" }
+function Invoke-VerifiedMcpDependencyScan {
+    param(
+        [Parameter(Mandatory = $true)][string]$Requirements,
+        [Parameter(Mandatory = $true)][string]$Output,
+        [Parameter(Mandatory = $true)][bool]$ExpectedSafe
+    )
 
-& $McpScanner vulnerable-package `
-    (Join-Path $Root "fixtures\vulnerable_dependencies\requirements_safe_latest.txt") `
-    --no-deps --disable-pip `
-    --output (Join-Path $Root "results\mcp_vulnerable_safe_current.json") `
-    --format summary
-if ($LASTEXITCODE -ne 0) { throw "MCP safe dependency scan failed" }
+    $PriorErrorAction = $ErrorActionPreference
+    try {
+        $ErrorActionPreference = "Continue"
+        $scanText = (& $McpScanner vulnerable-package $Requirements `
+            --no-deps --disable-pip `
+            --vulnerability-service osv `
+            --output $Output `
+            --format summary 2>&1 | Out-String).Trim()
+        $scanExit = $LASTEXITCODE
+    } finally {
+        $ErrorActionPreference = $PriorErrorAction
+    }
+    if ($scanText) { Write-Host $scanText }
+    if ($scanExit -ne 0) { throw "MCP dependency scan failed with exit code $scanExit" }
+    if ($scanText -match "pip-audit exited|produced no JSON|pip-audit error") {
+        throw "MCP dependency scan reported an internal pip-audit failure and was rejected fail-closed."
+    }
+    if (-not (Test-Path -LiteralPath $Output -PathType Leaf)) {
+        throw "MCP dependency scan did not create JSON output."
+    }
+    $parsedPayload = Get-Content -LiteralPath $Output -Raw -Encoding UTF8 | ConvertFrom-Json
+    # Windows PowerShell 5 returns a top-level JSON array as one array object,
+    # while PowerShell 7 enumerates it. Normalize both runtimes explicitly.
+    $payload = @($parsedPayload | ForEach-Object { $_ })
+    if ($payload.Count -lt 1 -or @($payload | Where-Object { $_.status -ne "completed" }).Count -gt 0) {
+        throw "MCP dependency scan output is incomplete."
+    }
+    $findings = @($payload | ForEach-Object { $_.findings.vulnerable_package_analyzer })
+    $OracleMismatches = 0
+    foreach ($item in $payload) {
+        if ($null -eq $item.findings.vulnerable_package_analyzer) {
+            $OracleMismatches++
+        } elseif ($ExpectedSafe -and -not $item.is_safe) {
+            $OracleMismatches++
+        } elseif (-not $ExpectedSafe -and $item.is_safe) {
+            $OracleMismatches++
+        }
+    }
+    if ($findings.Count -ne $payload.Count -or $OracleMismatches -gt 0) {
+        throw "MCP dependency scan result did not match the acceptance oracle (items=$($payload.Count), findings=$($findings.Count), mismatches=$OracleMismatches, expected_safe=$ExpectedSafe)."
+    }
+    $TotalFindings = ($findings | Measure-Object -Property total_findings -Sum).Sum
+    if ($ExpectedSafe -and [int]$TotalFindings -ne 0) {
+        throw "Safe dependency fixture unexpectedly has findings."
+    }
+    if (-not $ExpectedSafe -and [int]$TotalFindings -le 0) {
+        throw "Vulnerable dependency fixture was not detected."
+    }
+}
+
+Invoke-VerifiedMcpDependencyScan `
+    -Requirements (Join-Path $Root "fixtures\vulnerable_dependencies\requirements_urllib3.txt") `
+    -Output (Join-Path $Root "results\mcp_vulnerable_urllib3_current.json") `
+    -ExpectedSafe $false
+Invoke-VerifiedMcpDependencyScan `
+    -Requirements (Join-Path $Root "fixtures\vulnerable_dependencies\requirements_safe_latest.txt") `
+    -Output (Join-Path $Root "results\mcp_vulnerable_safe_current.json") `
+    -ExpectedSafe $true
 
 if ($RunTests) {
     Push-Location (Join-Path $Root "third_party\skill-scanner")

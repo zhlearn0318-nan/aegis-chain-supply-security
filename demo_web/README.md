@@ -4,11 +4,19 @@
 
 本项目是 XA-202620 赛题“供应链安全”模块的本机原型。网页会真实调用已经复现的 Cisco Skill Scanner、MCP Scanner 和依赖漏洞审计链路，不使用伪造扫描结果。
 
-当前已完成 M1.3 的可配置准入策略、`/api/v1` 和前端 v1 适配，并完成 M2 的 SkillTrustBench v1.0 全量 5,520 条评测。M3 静态审计已在 600 条密封工程回归上完成一次性评估并冻结，结论为 `supported_with_tradeoff`。M4 已实现政企 Marker、静态 Trigger Plan、Docker 安全底座、受控 MCP 2025-06-18 stdio 调用，以及客户端侧 Linux inotify/procfs 独立遥测；最新真实运行 82/82 接受门通过、独立文件读取确认 1、容器残留 0。P0-1 可移植启动、P0-2 动态持久队列和 P0-3 状态真值完成后，后端完整测试为 `341 passed`。动态部分仍只执行自建哈希锁定 fixture，不执行第三方 Skill/MCP。
+当前已完成 M1.3 的可配置准入策略、`/api/v1` 和前端 v1 适配，并完成 M2 的 SkillTrustBench v1.0 全量 5,520 条评测。M3 静态审计已在 600 条密封工程回归上完成一次性评估并冻结，结论为 `supported_with_tradeoff`。M4 已实现政企 Marker、静态 Trigger Plan、Docker 安全底座、受控 MCP 2025-06-18 stdio 调用，以及客户端侧 Linux inotify/procfs 独立遥测。M5 P0-1 至 P0-4 已完成：后端 `348 passed`，项目自身供应链门 12/12 通过，共享 Python 运行时与 Node 安装图已知漏洞均为 0。动态部分仍只执行自建哈希锁定 fixture，不执行第三方 Skill/MCP。
 
 ## 一键启动
 
-首次使用先在仓库根目录执行 `bootstrap_runtimes.ps1`，再进入本目录启动。完整的换机步骤见仓库根目录 [`QUICKSTART.md`](../QUICKSTART.md)。启动脚本会先校验 Cisco 精确版本、策略、前端锁文件和可写目录，并自动发现 `pnpm` 或 Corepack，不依赖开发者个人路径。
+首次使用先在仓库根目录执行 `bootstrap_runtimes.ps1`，再进入本目录启动。完整的换机步骤见仓库根目录 [`QUICKSTART.md`](../QUICKSTART.md)。启动脚本会先校验 Cisco 精确版本、Web 哈希锁、共享运行时安全覆盖锁、策略、前端锁文件和可写目录，并自动发现 `pnpm` 或 Corepack，不依赖开发者个人路径。
+
+提交或发布前运行自身供应链门：
+
+```powershell
+.\audit_project_supply_chain.ps1 -WriteRepositoryArtifacts
+```
+
+该命令对 Web 子集和实际共享 Python 环境分别执行漏洞审计，并核验 pnpm、许可、SBOM、Secret 与仓库卫生；任一必需证据缺失都会失败。
 
 在 PowerShell 中进入本目录后运行：
 
@@ -63,6 +71,7 @@ pnpm test
 ## 现在从哪里开始
 
 - 当前状态与下一项：[`../CURRENT_STATUS.md`](../CURRENT_STATUS.md)
+- P0-4 自身供应链报告：[`docs/M5_P0_4_PROJECT_SUPPLY_CHAIN_REPORT.md`](docs/M5_P0_4_PROJECT_SUPPLY_CHAIN_REPORT.md)
 - 开发排期：[`docs/DEVELOPMENT_PLAN.md`](docs/DEVELOPMENT_PLAN.md)
 - 每步做了什么：[`docs/WORK_LOG.md`](docs/WORK_LOG.md)
 - M1.3 策略配置说明：[`docs/M1_3_POLICY_CONFIG.md`](docs/M1_3_POLICY_CONFIG.md)

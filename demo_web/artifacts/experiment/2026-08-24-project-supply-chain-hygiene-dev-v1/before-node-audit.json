@@ -1,0 +1,40 @@
+{
+  "advisories": {
+    "1139427": {
+      "findings": [
+        {
+          "version": "3.3.16",
+          "paths": [
+            ".>@vitejs/plugin-react>vite>postcss>nanoid",
+            ".>vite>postcss>nanoid"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1139427,
+      "title": "nanoid: custom generators can loop indefinitely when size is zero",
+      "module_name": "nanoid",
+      "vulnerable_versions": "<3.3.18",
+      "patched_versions": ">=3.3.18",
+      "severity": "high",
+      "cwe": "CWE-835",
+      "github_advisory_id": "GHSA-2v37-7h3g-55p8",
+      "url": "https://github.com/advisories/GHSA-2v37-7h3g-55p8"
+    }
+  },
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 1,
+      "critical": 0
+    },
+    "dependencies": 17,
+    "devDependencies": 0,
+    "optionalDependencies": 33,
+    "totalDependencies": 50
+  }
+}

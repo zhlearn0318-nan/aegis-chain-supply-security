@@ -1,0 +1,73 @@
+{
+  "decision": "PASS",
+  "gates": {
+    "direct_dependencies_exact": true,
+    "installed_runtime_fully_locked": true,
+    "known_vulnerabilities_zero": true,
+    "licenses_approved": true,
+    "package_manager_pinned": true,
+    "pnpm_lock_integrity": true,
+    "python_dev_lock_hashed": true,
+    "python_lock_hashed": true,
+    "repository_hygiene": true,
+    "required_legal_and_sbom_files": true,
+    "runtime_security_lock_hashed": true,
+    "verified_secrets_zero": true
+  },
+  "limitations": [
+    "Vulnerability results are a point-in-time view of the selected advisory services.",
+    "Secret scanning uses deterministic high-confidence patterns and is not proof that no credential exists.",
+    "License classification is an engineering inventory and not legal advice.",
+    "The Python SBOM covers the installed shared Cisco/Aegis runtime; the Node graph represents installed Windows x64 packages.",
+    "The entire pnpm lock is integrity checked, including optional packages not installed on Windows x64."
+  ],
+  "metrics": {
+    "direct_dependencies": 4,
+    "direct_unpinned": [],
+    "installed_node_components_missing_from_lock": [],
+    "node_installed_components": 26,
+    "node_unhashed": [],
+    "pnpm_locked_components": 50,
+    "python_components": 126,
+    "python_dev_lock_components": 20,
+    "python_dev_unhashed": [],
+    "python_project_lock_components": 15,
+    "python_unhashed": [],
+    "repository_hygiene": {
+      "violation_count": 0,
+      "violations": []
+    },
+    "required_files_missing": [],
+    "runtime_lock_mismatches": [],
+    "runtime_security_unhashed": [],
+    "sbom_sha256": "3077e1fb47cbac51e28af6bd5c74290e6bf2e4006e204d131c306dfd59e568b8",
+    "secrets": {
+      "findings": [],
+      "ignored_synthetic_values": 7,
+      "redaction": "matched values are never written; only SHA-256 prefixes are retained",
+      "scanned_text_files": 441,
+      "verified_leaks": 0
+    },
+    "source_hashes": {
+      "cisco-mcp-lock": "7fca4473ba690a6a7b136eea9eea0cf42be4894cbf8ac411c8ef84d3f9b6bf6f",
+      "package-json": "cb1d5655cec7a95c58f531588fafe6033d10c66cf52a4b6792eefae43a53c9bd",
+      "pnpm-lock": "4f09a3db0acada9e5dc44546f132ba237d55dfb7846fd6a87d7d7eca83ad11b0",
+      "python-dev-lock": "d35dfbe7600d2e4805030e0f94a376187628fb34fc4ec58a52b1ad83b3f746f6",
+      "python-lock": "f0103a4c1e9c2744583fe6ade6ec13815fe2affe84efe568a39c51cd8f6b27d1",
+      "runtime-security-lock": "01c0815d3a87e88df14232e212f8b3249cb32884761e18cb2814d0893cbe4bbb"
+    },
+    "unapproved_licenses": [],
+    "vulnerabilities": {
+      "node": {
+        "critical": 0,
+        "high": 0,
+        "info": 0,
+        "low": 0,
+        "moderate": 0
+      },
+      "python_known": 0,
+      "python_shared_runtime_known": 0
+    }
+  },
+  "schema_version": "1.0"
+}

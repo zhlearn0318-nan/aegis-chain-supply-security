@@ -23,6 +23,9 @@ $PolicyPath = Join-Path $DemoRoot "config\admission_policy.yaml"
 $ClosureConfigPath = Join-Path $DemoRoot "config\docker_skill_closure_backend.json"
 $FrontendManifest = Join-Path $DemoRoot "frontend\package.json"
 $FrontendLock = Join-Path $DemoRoot "frontend\pnpm-lock.yaml"
+$BackendLock = Join-Path $DemoRoot "backend\requirements.lock"
+$RuntimeSecurityLock = Join-Path $DemoRoot "backend\runtime-security.lock"
+$BackendLockVerifier = Join-Path $DemoRoot "tools\supply_chain\verify_installed_python_lock.py"
 $ExpectedSkillVersion = "2.0.13.dev3+g4dee90371"
 $ExpectedMcpVersion = "4.8.2"
 $Checks = @()
@@ -88,6 +91,8 @@ Test-RequiredFile "pip_audit" "pip-audit" $PipAudit
 Test-RequiredFile "policy" "Admission policy" $PolicyPath
 Test-RequiredFile "frontend_manifest" "Frontend package manifest" $FrontendManifest
 Test-RequiredFile "frontend_lock" "Frontend frozen lockfile" $FrontendLock
+Test-RequiredFile "backend_lock" "Backend hash lockfile" $BackendLock
+Test-RequiredFile "runtime_security_lock" "Shared runtime security lock" $RuntimeSecurityLock
 
 if (Test-Path -LiteralPath $SkillPython -PathType Leaf) {
     $result = Invoke-CapturedCommand $SkillPython @("-c", "import importlib.metadata as m; print(m.version('cisco-ai-skill-scanner'))")
@@ -111,6 +116,26 @@ if (Test-Path -LiteralPath $McpPython -PathType Leaf) {
         Add-Check "backend_runtime" "FastAPI runtime" "PASS" $true "Import check passed"
     } else {
         Add-Check "backend_runtime" "FastAPI runtime" "FAIL" $true "Backend dependencies are incomplete" $backendResult.output
+    }
+
+    if ((Test-Path -LiteralPath $BackendLock -PathType Leaf) -and
+        (Test-Path -LiteralPath $RuntimeSecurityLock -PathType Leaf) -and
+        (Test-Path -LiteralPath $BackendLockVerifier -PathType Leaf)) {
+        $lockResult = Invoke-CapturedCommand $McpPython @($BackendLockVerifier, $BackendLock)
+        if ($lockResult.exit_code -eq 0) {
+            Add-Check "backend_lock_match" "Installed backend hash lock" "PASS" $true "Installed versions match" $lockResult.output
+        } else {
+            Add-Check "backend_lock_match" "Installed backend hash lock" "FAIL" $true "Run bootstrap_runtimes.ps1 -Component Mcp" $lockResult.output
+        }
+        $securityLockResult = Invoke-CapturedCommand $McpPython @($BackendLockVerifier, $RuntimeSecurityLock)
+        if ($securityLockResult.exit_code -eq 0) {
+            Add-Check "runtime_security_lock_match" "Installed security overlay" "PASS" $true "Installed versions match" $securityLockResult.output
+        } else {
+            Add-Check "runtime_security_lock_match" "Installed security overlay" "FAIL" $true "Run bootstrap_runtimes.ps1 -Component Mcp" $securityLockResult.output
+        }
+    } else {
+        Add-Check "backend_lock_match" "Installed backend hash lock" "FAIL" $true "Lock verifier is unavailable"
+        Add-Check "runtime_security_lock_match" "Installed security overlay" "FAIL" $true "Lock verifier is unavailable"
     }
 }
 

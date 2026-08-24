@@ -11,6 +11,9 @@ param(
 $ErrorActionPreference = "Stop"
 $ProjectRoot = $PSScriptRoot
 . (Join-Path $ProjectRoot "demo_web\scripts\portable_runtime.ps1")
+$ProjectBackendLock = Join-Path $ProjectRoot "demo_web\backend\requirements.lock"
+$RuntimeSecurityLock = Join-Path $ProjectRoot "demo_web\backend\runtime-security.lock"
+$ProjectLockVerifier = Join-Path $ProjectRoot "demo_web\tools\supply_chain\verify_installed_python_lock.py"
 
 if ([string]::IsNullOrWhiteSpace($WheelDirectory)) {
     $WheelDirectory = Join-Path $ProjectRoot "results\wheels"
@@ -101,6 +104,22 @@ function Test-Runtime {
         $pipAudit = Join-Path $Definition.Runtime "Scripts\pip-audit.exe"
         if (-not (Test-Path -LiteralPath $pipAudit -PathType Leaf)) {
             if (-not $Quiet) { Write-Warning "$($Definition.Label): pip-audit entry point is missing." }
+            return $false
+        }
+        if (-not (Test-Path -LiteralPath $ProjectBackendLock -PathType Leaf) -or
+            -not (Test-Path -LiteralPath $RuntimeSecurityLock -PathType Leaf) -or
+            -not (Test-Path -LiteralPath $ProjectLockVerifier -PathType Leaf)) {
+            if (-not $Quiet) { Write-Warning "$($Definition.Label): project backend lock contract is missing." }
+            return $false
+        }
+        & $python $ProjectLockVerifier $ProjectBackendLock | Out-Null
+        if ($LASTEXITCODE -ne 0) {
+            if (-not $Quiet) { Write-Warning "$($Definition.Label): installed backend packages do not match the project hash lock." }
+            return $false
+        }
+        & $python $ProjectLockVerifier $RuntimeSecurityLock | Out-Null
+        if ($LASTEXITCODE -ne 0) {
+            if (-not $Quiet) { Write-Warning "$($Definition.Label): shared runtime does not match the security overlay lock." }
             return $false
         }
     }
@@ -213,6 +232,24 @@ function Install-Runtime {
     }
     Invoke-CheckedCommand $python $dependencyArguments "Hash-locked dependency installation failed for $($Definition.Label)."
     Invoke-CheckedCommand $python @("-m", "pip", "install", "--no-deps", $wheel) "Cisco scanner installation failed for $($Definition.Label)."
+
+    if ($Definition.Id -eq "Mcp") {
+        if (-not (Test-Path -LiteralPath $ProjectBackendLock -PathType Leaf)) {
+            throw "Project backend lock is missing: $ProjectBackendLock"
+        }
+        $projectArguments = @("-m", "pip", "install", "--require-hashes", "-r", $ProjectBackendLock)
+        if ($Offline) {
+            $projectArguments += @("--no-index", "--find-links", $WheelDirectory)
+        }
+        Invoke-CheckedCommand $python $projectArguments "Hash-locked project backend installation failed."
+
+        $securityArguments = @("-m", "pip", "install", "--require-hashes", "--no-deps", "-r", $RuntimeSecurityLock)
+        if ($Offline) {
+            $securityArguments += @("--no-index", "--find-links", $WheelDirectory)
+        }
+        Invoke-CheckedCommand $python $securityArguments "Hash-locked shared-runtime security overlay failed."
+        Invoke-CheckedCommand $python @("-m", "pip", "check") "Shared runtime dependency compatibility check failed."
+    }
 
     if (-not (Test-Runtime $Definition -Quiet)) {
         throw "$($Definition.Label) did not pass post-install verification."

@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "approved_licenses": [
+    "0BSD",
+    "Apache-2.0",
+    "Apache-2.0 AND CNRI-Python",
+    "Apache-2.0 AND MIT",
+    "Apache-2.0 OR BSD-3-Clause",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "ISC",
+    "MIT",
+    "MIT OR Apache-2.0",
+    "MPL-2.0",
+    "MPL-2.0 AND MIT",
+    "PSF-2.0",
+    "Unlicense"
+  ],
+  "forbidden_tracked_suffixes": [
+    ".key",
+    ".p12",
+    ".pem",
+    ".pfx"
+  ],
+  "forbidden_tracked_names": [
+    ".env",
+    "credentials.json",
+    "secrets.json"
+  ],
+  "synthetic_secret_markers": [
+    "change-me",
+    "dummy",
+    "example",
+    "fake",
+    "fixture",
+    "memory-only",
+    "not-a-real",
+    "placeholder",
+    "请替换",
+    "test-"
+  ]
+}

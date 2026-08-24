@@ -30,6 +30,8 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\bootstrap_runtimes.ps
 3. 从 Cisco 官方仓库检出固定提交、构建 wheel 并以非 editable 方式安装；
 4. 精确核对扫描器版本和命令入口。
 
+MCP 运行时还会依次应用 `demo_web/backend/requirements.lock` 和 `runtime-security.lock`：前者锁定 Web 后端，后者覆盖共享 Cisco/Aegis 环境中已经确认的漏洞版本；安装后必须通过 `pip check`。
+
 已经完整且版本正确的环境会复用；已存在但不完整或版本不符的目录不会被覆盖，脚本会停止并提示人工移开该目录。
 
 仅核验现有环境：
@@ -125,9 +127,17 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\run_all.ps1"
 
 - Cisco Skill Scanner：官方提交 `4dee90371890ff23e1b21ea974e02847eacaa464`，包版本 `2.0.13.dev3+g4dee90371`；
 - Cisco MCP Scanner：官方提交 `51966cce214ae057e69c3a672307911f5026e255`，包版本 `4.8.2`；
-- 前端 Corepack 目标：`pnpm@11.23.0`；如 PATH 中已有可兼容的 pnpm，系统允许直接使用，前端依赖仍以冻结 lockfile 为准；
-- Python 依赖：`results/*_locked_requirements.txt` 中版本和下载对象均由哈希约束。
+- 前端包管理器：`pnpm@11.19.0`；直接依赖精确固定，`pnpm-lock.yaml` 保留完整性值，`pnpm-workspace.yaml` 对已知风险传递依赖设置覆盖和 24 小时最小发布年龄；
+- Python 依赖：Cisco 锁、Web 后端锁和共享运行时安全覆盖锁中的版本及下载对象均由哈希约束。
 
 两个 Cisco 上游项目当前均使用 Apache-2.0 许可证。本脚本默认在用户本机从官方固定提交构建，GitHub 仓库不重新分发大体积第三方 wheel。若最终作品包需要离线携带 wheel，应同时保留上游 LICENSE/NOTICE 与第三方组件清单。
 
 当前 P0-1 已通过本机真实启动、路径无关检查和模拟不同 Windows 用户环境验证；真正的全新虚拟机从零复现仍属于后续 P0-5 发布验收，文档不会把模拟验证表述为已完成的洁净机验证。
+
+## 7. 提交前自身供应链检查
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\demo_web\audit_project_supply_chain.ps1" -WriteRepositoryArtifacts
+```
+
+成功时会输出 `PASS`，并更新根目录项目 SBOM 和第三方声明。漏洞数据库查询需要网络；无网络或审计器异常均不会降级为通过。P0-4 结果是时间截面，不能替代后续持续扫描。

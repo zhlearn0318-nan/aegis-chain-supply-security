@@ -1,0 +1,19 @@
+$ node --test src/*.test.js
+✔ unwraps a valid v1 success envelope (26.271ms)
+✔ treats HTTP 202 scan creation as accepted success (0.6036ms)
+✔ retains v1 error status, code, message and details (0.8247ms)
+✔ fails closed when a successful response lacks the v1 envelope (0.394ms)
+✔ reports non-JSON and network failures with client-side codes (0.5285ms)
+✔ builds encoded v1 export URLs (0.1633ms)
+✔ normalizes local validation messages without discarding them (0.1452ms)
+✔ sends the administrator token only in the dedicated header (0.5583ms)
+✔ uses the administrator header for dynamic history and detail requests (0.9022ms)
+✔ starts Skill closure through the fixed bodyless administrator endpoint (0.6573ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 134.4195

@@ -4,6 +4,8 @@
 .venv*/
 .build*/
 .uv_cache/
+.uv-cache/
+.pip-cache/
 .snyk_test_home/
 __pycache__/
 *.py[cod]
@@ -46,6 +48,7 @@ demo_web/artifacts/experiment/*
 !demo_web/artifacts/experiment/2026-08-24-portable-startup-dev-v1/
 !demo_web/artifacts/experiment/2026-08-24-dynamic-queue-recovery-dev-v1/
 !demo_web/artifacts/experiment/2026-08-24-current-status-truth-dev-v1/
+!demo_web/artifacts/experiment/2026-08-24-project-supply-chain-hygiene-dev-v1/
 demo_web/artifacts/**/pytest-temp*/
 demo_web/artifacts/**/fixture_workspaces/
 demo_web/artifacts/**/platform-acceptance-*/

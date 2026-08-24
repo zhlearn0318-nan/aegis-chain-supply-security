@@ -1,8 +1,8 @@
 # Aegis Chain 当前状态（唯一状态真值）
 
 > 状态日期：2026-08-24  
-> 最近冻结功能基线：`c6427b6`（`dynamic-audit-v1`）；P0-3 状态同步由包含本文件的提交承载。  
-> 当前工程阶段：M5 工程收敛；P0-1、P0-2、P0-3 已完成，下一项为 P0-4。  
+> 最近冻结功能基线：`08562f6`（`dynamic-audit-v1`）；P0-4 状态同步由包含本文件的提交承载。
+> 当前工程阶段：M5 工程收敛；P0-1 至 P0-4 已完成，下一项为 P0-5。
 > 状态优先级：本文件高于 README 中的摘要和全部日期化阶段报告；发生冲突时以本文件及对应冻结证据为准。
 
 ## 1. 一句话结论
@@ -19,16 +19,20 @@ Aegis Chain 已是可在当前 Windows 主机运行和演示的供应链安全�
 | 准入决策 | `ALLOW / REVIEW / BLOCK / UNKNOWN`；扫描异常失败闭锁 | 动态证据当前不改变最终决策 |
 | 受控动态机制 | 可用；固定良性 fixture、MCP 协议/Marker/遥测和 Skill 运行时闭包 | 不接受用户代码、路径、命令，不执行第三方数据集样本 |
 | 动态任务控制 | 单主机 SQLite 持久队列、全局单执行、FIFO、去重冷却、429 和重启恢复 | 不等价于多实例消息队列或高可用 worker |
+| 项目自身供应链 | 共享运行时/前端精确锁定，自身 SBOM、许可、漏洞、Secret 与仓库卫生门可复现 | 漏洞结论是 2026-08-25 的时间截面 |
 | 可移植启动 | 当前主机和模拟异用户环境通过；可按固定 Cisco 提交重建运行时 | 真正洁净 Windows Sandbox 仍待 P0-5 验收 |
 
 ## 3. 最新冻结验证
 
 - P0-2 动态队列专项：`14 passed`；最大并发 running 为 1，FIFO 违反、重复新增任务和永久中间态均为 0。
-- 后端完整回归：`341 passed`。
+- P0-4 自身供应链门：12/12 gate 通过；共享环境 126 个 Python 包、Windows x64 已安装 26 个 Node 包和 pnpm 锁内 50 个组件完成核对；已知漏洞 0、已验证凭据泄露 0、许可未知/越界 0、锁不匹配 0。
+- Cisco 兼容冒烟：Skill 固定集完成；MCP 内容 6 项中 safe 3/unsafe 3；已知漏洞 fixture 检出 24 项 HIGH，安全 fixture 0 项；内部 pip-audit 失败会被复现脚本拒绝。
+- 后端完整回归：`348 passed`。
 - 前端 API 测试：`10 passed`。
 - 前端生产构建：通过。
 - P0-2 证据：`demo_web/artifacts/experiment/2026-08-24-dynamic-queue-recovery-dev-v1/`。
 - P0-1 证据：`demo_web/artifacts/experiment/2026-08-24-portable-startup-dev-v1/`。
+- P0-4 证据：`demo_web/artifacts/experiment/2026-08-24-project-supply-chain-hygiene-dev-v1/`。
 - M3 600 条密封回归结论仍为 `supported_with_tradeoff`，未因工程改造重新调规则。
 
 ## 4. M5 完成度
@@ -38,8 +42,8 @@ Aegis Chain 已是可在当前 Windows 主机运行和演示的供应链安全�
 | P0-1 | 可移植启动与运行时重建 | 已完成 | P0-5 再做洁净 VM 证明 |
 | P0-2 | 动态互斥、队列、去重、恢复 | 已完成 | P2-2 再做外部 worker/DB |
 | P0-3 | 当前状态单一真值 | 已完成 | 文档契约测试持续防漂移 |
-| P0-4 | 项目自身供应链卫生 | **下一项** | 精确依赖、许可证/NOTICE、自身 SBOM、自扫描 |
-| P0-5 | Windows Sandbox 发布门 | 未开始 | 新克隆到四链 E2E 的真实 VM 证据 |
+| P0-4 | 项目自身供应链卫生 | 已完成 | 依赖/运行时/许可/SBOM/Secret 门持续执行 |
+| P0-5 | Windows Sandbox 发布门 | **下一项** | 新克隆到四链 E2E 的真实 VM 证据 |
 | P1 | 受控试点工程能力 | 未完成 | 隔离、独立评测、任务体验、CI、能力健康 |
 | P2 | 生产化控制面 | 未完成 | 身份租户、持久平台、强沙箱、治理、准入、SLO |
 

@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "gates_passed": 12,
+  "gates_total": 12,
+  "before": {
+    "python_shared_runtime_affected_packages": 19,
+    "python_osv_database_records": 118,
+    "node_high": 1,
+    "node_vulnerable_package": "nanoid@3.3.16",
+    "direct_python_unpinned": 1,
+    "direct_node_latest": 4,
+    "root_license_present": 0,
+    "project_sbom_present": 0
+  },
+  "after": {
+    "python_installed_components": 126,
+    "node_installed_windows_x64_components": 26,
+    "pnpm_locked_components": 50,
+    "cyclonedx_components": 152,
+    "python_project_known_vulnerabilities": 0,
+    "python_shared_runtime_known_vulnerabilities": 0,
+    "node_known_vulnerabilities": 0,
+    "unapproved_or_unknown_licenses": 0,
+    "runtime_lock_mismatches": 0,
+    "verified_secret_leaks": 0,
+    "repository_hygiene_violations": 0,
+    "secret_scanned_text_files": 441,
+    "backend_tests_passed": 348,
+    "frontend_tests_passed": 10,
+    "frontend_build_passed": 1,
+    "preflight_required_failures": 0,
+    "pip_check_conflicts": 0
+  },
+  "cisco_compatibility_smoke": {
+    "skill_fixture_scan_completed": 1,
+    "mcp_content_safe": 3,
+    "mcp_content_unsafe": 3,
+    "vulnerable_dependency_high_findings": 24,
+    "safe_dependency_findings": 0,
+    "fail_open_wrapper_rejected_internal_audit_failure": 1
+  }
+}
