@@ -5,9 +5,10 @@ param(
 
 $ErrorActionPreference = "Stop"
 $Root = $PSScriptRoot
-$SkillPython = Join-Path $Root ".runtime_skill\Scripts\python.exe"
+. (Join-Path $Root "demo_web\scripts\portable_runtime.ps1")
+$SkillPython = Resolve-AegisRuntimePython -RuntimeRoot (Join-Path $Root ".runtime_skill")
 $SkillScanner = Join-Path $Root ".runtime_skill\Scripts\skill-scanner.exe"
-$McpPython = Join-Path $Root ".runtime_mcp313\Scripts\python.exe"
+$McpPython = Resolve-AegisRuntimePython -RuntimeRoot (Join-Path $Root ".runtime_mcp313")
 $McpScanner = Join-Path $Root ".runtime_mcp313\Scripts\mcp-scanner.exe"
 $McpScripts = Join-Path $Root ".runtime_mcp313\Scripts"
 

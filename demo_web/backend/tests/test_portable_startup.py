@@ -6,7 +6,6 @@ from pathlib import Path
 import shutil
 import subprocess
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 DEMO_ROOT = PROJECT_ROOT / "demo_web"
 
@@ -16,7 +15,9 @@ def _powershell() -> str:
     if discovered:
         return discovered
     system_root = Path(os.environ.get("SystemRoot", r"C:\Windows"))
-    fallback = system_root / "System32" / "WindowsPowerShell" / "v1.0" / "powershell.exe"
+    fallback = (
+        system_root / "System32" / "WindowsPowerShell" / "v1.0" / "powershell.exe"
+    )
     if fallback.is_file():
         return str(fallback)
     raise AssertionError("PowerShell is required by the Windows startup contract")
@@ -34,12 +35,16 @@ def test_active_startup_files_do_not_contain_developer_absolute_paths() -> None:
     for path in files:
         content = path.read_text(encoding="utf-8")
         for marker in forbidden:
-            assert marker not in content, f"{path.name} contains developer path: {marker}"
+            assert (
+                marker not in content
+            ), f"{path.name} contains developer path: {marker}"
 
 
 def test_startup_uses_preflight_frozen_frontend_and_v1_health_contract() -> None:
     startup = (DEMO_ROOT / "start_demo.ps1").read_text(encoding="utf-8")
-    package = json.loads((DEMO_ROOT / "frontend" / "package.json").read_text(encoding="utf-8"))
+    package = json.loads(
+        (DEMO_ROOT / "frontend" / "package.json").read_text(encoding="utf-8")
+    )
 
     assert "preflight.ps1" in startup
     assert "Resolve-AegisPackageManager" in startup
@@ -71,8 +76,40 @@ def test_bootstrap_locks_cisco_sources_and_refuses_automatic_overwrite() -> None
     assert "Remove-Item" not in bootstrap
 
 
+def test_powershell_runtime_resolver_supports_conda_and_venv_layouts(
+    tmp_path: Path,
+) -> None:
+    conda_root = tmp_path / "conda-runtime"
+    venv_root = tmp_path / "venv-runtime"
+    conda_root.mkdir()
+    (venv_root / "Scripts").mkdir(parents=True)
+    (conda_root / "python.exe").touch()
+    (venv_root / "Scripts" / "python.exe").touch()
+    helper = DEMO_ROOT / "scripts" / "portable_runtime.ps1"
+    command = (
+        f". '{helper}'; "
+        f"$conda=Resolve-AegisRuntimePython -RuntimeRoot '{conda_root}'; "
+        f"$venv=Resolve-AegisRuntimePython -RuntimeRoot '{venv_root}'; "
+        "[pscustomobject]@{conda=$conda;venv=$venv} | ConvertTo-Json -Compress"
+    )
+    completed = subprocess.run(
+        [_powershell(), "-NoProfile", "-NonInteractive", "-Command", command],
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        timeout=30,
+        check=False,
+    )
+    assert completed.returncode == 0, completed.stderr or completed.stdout
+    result = json.loads(completed.stdout)
+    assert Path(result["conda"]) == conda_root / "python.exe"
+    assert Path(result["venv"]) == venv_root / "Scripts" / "python.exe"
+
+
 def test_cisco_reproduction_rejects_dependency_audit_fail_open() -> None:
-    reproduction = (PROJECT_ROOT / "run_cisco_reproduction.ps1").read_text(encoding="utf-8")
+    reproduction = (PROJECT_ROOT / "run_cisco_reproduction.ps1").read_text(
+        encoding="utf-8"
+    )
 
     assert "Invoke-VerifiedMcpDependencyScan" in reproduction
     assert "pip-audit exited|produced no JSON|pip-audit error" in reproduction
@@ -81,7 +118,9 @@ def test_cisco_reproduction_rejects_dependency_audit_fail_open() -> None:
     assert "--vulnerability-service osv" in reproduction
 
 
-def test_preflight_resolves_corepack_without_original_user_profile(tmp_path: Path) -> None:
+def test_preflight_resolves_corepack_without_original_user_profile(
+    tmp_path: Path,
+) -> None:
     fake_bin = tmp_path / "bin"
     fake_bin.mkdir()
     fake_corepack = fake_bin / "corepack.cmd"
@@ -94,7 +133,9 @@ def test_preflight_resolves_corepack_without_original_user_profile(tmp_path: Pat
 
     env = os.environ.copy()
     system_root = Path(env.get("SystemRoot", r"C:\Windows"))
-    env["PATH"] = os.pathsep.join((str(fake_bin), str(system_root / "System32"), str(system_root)))
+    env["PATH"] = os.pathsep.join(
+        (str(fake_bin), str(system_root / "System32"), str(system_root))
+    )
     env["USERPROFILE"] = r"C:\Users\aegis-clean-user"
     env.pop("AEGIS_PNPM_COMMAND", None)
 

@@ -14,9 +14,9 @@ $DemoRoot = $PSScriptRoot
 $ProjectRoot = Split-Path $DemoRoot -Parent
 . (Join-Path $DemoRoot "scripts\portable_runtime.ps1")
 
-$SkillPython = Join-Path $ProjectRoot ".runtime_skill\Scripts\python.exe"
+$SkillPython = Resolve-AegisRuntimePython -RuntimeRoot (Join-Path $ProjectRoot ".runtime_skill")
 $SkillScanner = Join-Path $ProjectRoot ".runtime_skill\Scripts\skill-scanner.exe"
-$McpPython = Join-Path $ProjectRoot ".runtime_mcp313\Scripts\python.exe"
+$McpPython = Resolve-AegisRuntimePython -RuntimeRoot (Join-Path $ProjectRoot ".runtime_mcp313")
 $McpScanner = Join-Path $ProjectRoot ".runtime_mcp313\Scripts\mcp-scanner.exe"
 $PipAudit = Join-Path $ProjectRoot ".runtime_mcp313\Scripts\pip-audit.exe"
 $PolicyPath = Join-Path $DemoRoot "config\admission_policy.yaml"

@@ -64,6 +64,7 @@ from .policy import (
     pending_policy_trace,
     summarize,
 )
+from .runtime_paths import resolve_runtime_python
 from .skill_static_pipeline import run_skill_static_pipeline
 
 
@@ -92,10 +93,10 @@ _SKILL_CLOSURE_READINESS_CACHE: dict[str, Any] = {
 }
 
 SKILL_SCANNER = ROOT / ".runtime_skill" / "Scripts" / "skill-scanner.exe"
-SKILL_PYTHON = ROOT / ".runtime_skill" / "Scripts" / "python.exe"
+SKILL_PYTHON = resolve_runtime_python(ROOT / ".runtime_skill")
 MCP_SCRIPTS = ROOT / ".runtime_mcp313" / "Scripts"
 MCP_SCANNER = MCP_SCRIPTS / "mcp-scanner.exe"
-MCP_PYTHON = MCP_SCRIPTS / "python.exe"
+MCP_PYTHON = resolve_runtime_python(ROOT / ".runtime_mcp313")
 PIP_AUDIT = MCP_SCRIPTS / "pip-audit.exe"
 MCP_WRAPPER = ROOT / "scripts" / "run_mcp_static.py"
 

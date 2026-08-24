@@ -69,7 +69,7 @@ function Invoke-CheckedCommand {
 
 function Get-RuntimePython {
     param($Definition)
-    return Join-Path $Definition.Runtime "Scripts\python.exe"
+    return Resolve-AegisRuntimePython -RuntimeRoot $Definition.Runtime
 }
 
 function Test-Runtime {

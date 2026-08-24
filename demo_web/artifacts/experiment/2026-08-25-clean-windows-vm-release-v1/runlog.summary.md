@@ -43,8 +43,25 @@
 - 从正式门禁脚本 AST 提取真实 `Invoke-LoggedStep` 做行为测试：故意写入 stderr 并退出 7，日志保留哨兵、步骤 JSON 保留退出码 7，验证没有把失败误判为通过。
 - 宿主完整后端回归 `357/357` 通过（仅保留已知 Starlette/httpx 弃用警告）；项目自身供应链门禁 `12/12` 通过，包含 `verified_secrets_zero=true`，失败证据未检出认证材料。
 
+## 2026-08-25：第二次真实主运行（根因确认）
+
+- 日志修复提交 `6bba68f68692f029ad0dd15988eb3ca353de917d` 已推送；第二次运行使用此前不存在的 `C:\AegisAcceptanceAttempt2`，四个工具重新下载并校验，没有读取第一次工作区。
+- 远端固定提交、全新 clone、真实 VM 证明和引导前负向 preflight 再次通过；clone 后 guest 私钥再次验证为不存在。
+- `01-bootstrap-runtimes` 运行 129,755 ms 后以 1 失败，总门禁以 33 失败；完整证据固化到 `attempt-2-failed/`，不得作为通过证据。
+- 新增日志保真机制发挥作用：`.step.json` 保留了命令、参数、耗时和退出码，日志保留了 Conda 下载/事务、Cisco Skill Scanner 固定提交 clone 和原始 PowerShell 错误。
+- 根因：Windows Conda `--prefix` 环境把解释器放在运行时根目录 `python.exe`，现有引导和多个活跃入口硬编码 `Scripts\python.exe`（Windows venv 布局）；环境与 Cisco 源码实际创建成功，随后在构建 wheel 时调用了不存在的解释器路径。
+
+## 2026-08-25：跨布局运行时修复
+
+- 新增统一解释器解析合同：依次支持 Windows Conda 根目录、Windows venv `Scripts`、POSIX `bin`；缺失时返回确定的 Conda 预期路径用于失败闭锁诊断。
+- 引导、preflight、测试、启动、项目供应链审计、发布门禁、三个根级复现脚本与后端服务全部接入同一解析规则；未复制或伪造解释器文件。
+- 新增 Python 与真实 PowerShell 行为回归，覆盖 Conda/venv/POSIX 和缺失路径；10 个修改 PowerShell 文件 AST 解析通过，定向回归 `18/18` 通过，Black 检查通过。
+- 完整后端回归 `360/360` 通过；宿主现有 venv 布局的 Cisco Skill/MCP 两套运行时均通过 `VerifyOnly`，确认兼容修复没有破坏既有环境。
+- 项目自身供应链门禁再次 `12/12` 通过；扫描 461 个文本文件，`verified_leaks=0`、仓库卫生违规 0。
+- 原始 Conda 进度日志包含工具自身生成的尾随空格；为保持 guest 回收证据的逐字节真实性，`demo_web/artifacts/**` 继续禁用文本转换，并禁用该证据区的 whitespace 风格判定，代码/文档差异检查不放宽。
+
 ## 当前状态
 
-- 状态：`partial / attempt 1 failed / fix validated locally`。
-- 当前没有正式通过指标或成功报告；第一次失败证据已保留且明确标记为非发布验收。
-- 下一动作：提交并推送日志修复，将更新控制器复制到 guest，使用新的远端固定提交和全新工作目录执行第二次完整主运行。
+- 状态：`partial / attempts 1-2 failed / runtime-layout fix validated locally`。
+- 当前没有正式通过指标或成功报告；两次失败证据均已保留且明确标记为非发布验收。
+- 下一动作：执行完整回归和供应链门禁，提交并推送跨布局修复，再用第三个全新工作目录执行完整主运行。

@@ -14,6 +14,7 @@ param(
 $ErrorActionPreference = "Stop"
 $DemoRoot = Split-Path $PSScriptRoot -Parent
 $ProjectRoot = Split-Path $DemoRoot -Parent
+. (Join-Path $DemoRoot "scripts\portable_runtime.ps1")
 $ExpectedCommit = $ExpectedCommit.ToLowerInvariant()
 $EvidenceRoot = [IO.Path]::GetFullPath($EvidenceRoot)
 $AttestationPath = [IO.Path]::GetFullPath($AttestationPath)
@@ -182,7 +183,7 @@ try {
         (Join-Path $ProjectRoot "bootstrap_runtimes.ps1"), "-Component", "All"
     )
     $steps += $step.metadata
-    $Python = Join-Path $ProjectRoot ".runtime_mcp313\Scripts\python.exe"
+    $Python = Resolve-AegisRuntimePython -RuntimeRoot (Join-Path $ProjectRoot ".runtime_mcp313")
     if (-not (Test-Path -LiteralPath $Python -PathType Leaf)) {
         throw "Bootstrap did not create the locked MCP/backend Python runtime."
     }
@@ -287,7 +288,6 @@ try {
     $jobResiduals = if (Test-Path -LiteralPath $jobRoot) { @(Get-ChildItem -LiteralPath $jobRoot -Force -ErrorAction SilentlyContinue).Count } else { 0 }
     $dockerResiduals = 0
     $dockerProbe = "unavailable"
-    . (Join-Path $DemoRoot "scripts\portable_runtime.ps1")
     try { $docker = Resolve-AegisDockerCli } catch { $docker = $null }
     if ($docker) {
         $dockerText = (& $docker --context desktop-linux ps -a --filter "name=aegis-dyn-" --format "{{.ID}}" 2>&1 | Out-String).Trim()

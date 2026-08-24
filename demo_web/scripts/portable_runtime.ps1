@@ -1,3 +1,25 @@
+function Resolve-AegisRuntimePython {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)][string]$RuntimeRoot
+    )
+
+    $root = [IO.Path]::GetFullPath($RuntimeRoot)
+    $candidates = @(
+        (Join-Path $root "python.exe"),
+        (Join-Path $root "Scripts\python.exe"),
+        (Join-Path $root "bin\python")
+    )
+    foreach ($candidate in $candidates) {
+        if (Test-Path -LiteralPath $candidate -PathType Leaf) {
+            return (Resolve-Path -LiteralPath $candidate).Path
+        }
+    }
+
+    # Keep missing-path diagnostics deterministic for the Windows Conda layout.
+    return $candidates[0]
+}
+
 function Resolve-AegisApplication {
     [CmdletBinding()]
     param(

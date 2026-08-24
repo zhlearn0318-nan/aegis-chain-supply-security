@@ -1,7 +1,8 @@
 $ErrorActionPreference = "Stop"
 $DemoRoot = $PSScriptRoot
 $ProjectRoot = Split-Path $DemoRoot -Parent
-$Python = Join-Path $ProjectRoot ".runtime_mcp313\Scripts\python.exe"
+. (Join-Path $DemoRoot "scripts\portable_runtime.ps1")
+$Python = Resolve-AegisRuntimePython -RuntimeRoot (Join-Path $ProjectRoot ".runtime_mcp313")
 $TestTemp = Join-Path $DemoRoot "data\test-temp"
 
 if (-not (Test-Path -LiteralPath $Python)) {
