@@ -192,6 +192,8 @@ def analyze_plugin_package(root: Path) -> tuple[list[dict[str, Any]], list[str]]
                 findings.append(_finding("AEGIS_PLUGIN_DEPENDENCY_UNPINNED", "MEDIUM", "Plugin dependency is not pinned to an exact version", "package.json", f"dependency={str(name)[:100]}; specifier_class=non_exact"))
         if dependencies and not any((root / name).is_file() for name in ("package-lock.json", "pnpm-lock.yaml", "yarn.lock")):
             findings.append(_finding("AEGIS_PLUGIN_LOCKFILE_MISSING", "MEDIUM", "Plugin dependencies have no lockfile", "package.json", "dependency_lock_missing"))
+        if dependencies:
+            findings.append(_finding("AEGIS_PLUGIN_DEPENDENCY_VULNERABILITY_SCAN_REQUIRED", "MEDIUM", "Plugin dependencies require a vulnerability evidence check", "package.json", f"dependency_count={len(dependencies)}; vulnerability_evidence=absent"))
 
     file_count = 0
     total_bytes = 0

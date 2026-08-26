@@ -96,3 +96,34 @@ def test_plugin_file_source_remains_fail_closed(tmp_path: Path) -> None:
 
     assert response["decision"] == "block"
     assert response["findings"][0]["ruleId"] == "AEGIS_POLICY_INVALID_REQUEST"
+
+
+def test_exact_locked_dependencies_still_require_vulnerability_evidence(
+    tmp_path: Path,
+) -> None:
+    (tmp_path / "openclaw.plugin.json").write_text(
+        '{"id":"dependency-review","configSchema":{}}', encoding="utf-8"
+    )
+    (tmp_path / "index.js").write_text(
+        "export default function () {}", encoding="utf-8"
+    )
+    (tmp_path / "package.json").write_text(
+        json.dumps(
+            {
+                "name": "dependency-review",
+                "version": "1.0.0",
+                "dependencies": {"example-library": "1.2.3"},
+                "openclaw": {"extensions": ["./index.js"]},
+            }
+        ),
+        encoding="utf-8",
+    )
+    (tmp_path / "package-lock.json").write_text(
+        '{"name":"dependency-review","lockfileVersion":3,"packages":{}}',
+        encoding="utf-8",
+    )
+
+    response = evaluate_install_request(request_for(tmp_path))
+
+    assert response["decision"] == "warn"
+    assert "AEGIS_PLUGIN_DEPENDENCY_VULNERABILITY_SCAN_REQUIRED" in rules(response)

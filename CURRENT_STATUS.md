@@ -2,7 +2,7 @@
 
 > 状态日期：2026-08-26
 > 最近推送工程基线：`6526843`（`dynamic-audit-v1`）；本次范围决策由包含本文件的提交承载。
-> 当前工程阶段：比赛交付收敛；M6-4 已完成目录型原生 Plugin 与随包 MCP 定义准入；下一节点为静态审计最终评委复核与交付冻结；P0-5 真实 VM 验收继续延期且不阻断比赛交付。
+> 当前工程阶段：静态审计比赛版本已完成最终评委复核并建议冻结，进入材料准备与演示稳定性维护；P0-5 真实 VM 验收继续延期且不阻断比赛交付。
 > 状态优先级：本文件高于 README 中的摘要和全部日期化阶段报告；发生冲突时以本文件及对应冻结证据为准。
 
 ## 1. 一句话结论
@@ -34,14 +34,15 @@ Aegis Chain 已被真实 OpenClaw 稳定版调用，并完成 Skill 与目录型
 - M6-2 OpenClaw E2E：安全安装成功；恶意阻断、中风险兼容阻断和策略路径失败关闭；非预期工作区残留 0。
 - M6-3 准入加固：Cisco Skill/MCP/依赖真实冒烟通过；完整 preflight ready；安全/恶意审计2行、哈希链有效。
 - M6-4 Plugin/MCP：真实良性 Plugin 安装成功；npx运行时下载 Plugin 阻断且残留0；3行真实审计链有效。
-- 后端完整回归：`395 passed`。
+- 静态最终补强：有依赖 Plugin 在缺少 Node 漏洞证据时强制 REVIEW；Aegis 静态规则注册表125条完整。
+- 后端完整回归：`396 passed`。
 - 前端 API 测试：`10 passed`。
 - 前端生产构建：通过。
 - P0-2 证据：`demo_web/artifacts/experiment/2026-08-24-dynamic-queue-recovery-dev-v1/`。
 - P0-1 证据：`demo_web/artifacts/experiment/2026-08-24-portable-startup-dev-v1/`。
 - P0-4 证据：`demo_web/artifacts/experiment/2026-08-24-project-supply-chain-hygiene-dev-v1/`。
 - M3 600 条密封回归结论仍为 `supported_with_tradeoff`，未因工程改造重新调规则。
-- M6-4 证据：`demo_web/artifacts/experiment/2026-08-26-openclaw-plugin-mcp-admission-v1/`；下一节点为静态审计最终评委复核与交付冻结。
+- M6-4 证据：`demo_web/artifacts/experiment/2026-08-26-openclaw-plugin-mcp-admission-v1/`；最终评委复核：`demo_web/docs/STATIC_AUDIT_FINAL_JUDGE_REVIEW_2026-08-26.md`。
 
 ## 4. M5 完成度
 

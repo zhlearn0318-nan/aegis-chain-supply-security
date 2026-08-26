@@ -158,3 +158,4 @@
 - [x] M6-4：目录型原生 Plugin 与随包 MCP manifest 最小适配。
 - [x] M6-4：真实 OpenClaw Plugin allow/block/无残留闭环。
 - [ ] 生产增强：配置型 MCP 写入前准入、Plugin 单文件/归档和独立权威数据集。
+- [x] 静态最终评委复核：比赛版本可冻结，生产继续 NO-GO。

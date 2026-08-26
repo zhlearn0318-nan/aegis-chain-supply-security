@@ -1,0 +1,31 @@
+{
+  "run_id": "2026-08-26-static-audit-final-freeze-v1",
+  "date": "2026-08-26",
+  "branch": "openclaw-install-policy",
+  "baseline_commit": "16fa590",
+  "verification": {
+    "backend_passed": 396,
+    "backend_failed": 0,
+    "registered_rule_ids": 125,
+    "competition_static_freeze": "GO",
+    "production_release": "NO-GO"
+  },
+  "source_sha256": {
+    "demo_web/backend/analyzers/plugin_package.py": "41552a391225f5b5730a7d6ee594b2821f7a5ebe760325231f07b677bc8433d3",
+    "demo_web/config/aegis_rule_registry.json": "534e7ab4f1f50b8d0c4ab01837850228008ff03adc3b907a135ab8e73032e9e6",
+    "demo_web/docs/STATIC_AUDIT_FINAL_JUDGE_REVIEW_2026-08-26.md": "92e69de09a860792fbed72c093672a3c623507c177ea42785568630fd58202f9"
+  },
+  "artifact_sha256": {
+    "PLAN.md": "b84f8ac70c4e4a2cedd25baf7e00e75af9d071079fcc8a1b716ec6e60dbeebc6",
+    "CHECKLIST.md": "b0de22e2a3c5a2b984efed821acdef3f19dbce2b736b05b6c7046155455d62de",
+    "evaluation_summary.json": "243599fd7d19a82494e2b596c576f02282d5089f6fc0299664b2d66aa9780c85",
+    "results.json": "1c40e423460cdd31fb45c02d2ee71da145e385c8f2f71f77c4cfbf57d35ec391",
+    "run.log": "3cabef8ee1d3a58c58d5a4ff34eb128ce66b53eaa1ca9f277263ee026e988e07"
+  },
+  "limits": [
+    "Config-defined OpenClaw MCP writes are not transparently intercepted.",
+    "Node dependency vulnerability evidence is not yet generated; packages with dependencies remain REVIEW.",
+    "Local audit chaining is not external WORM or SIEM.",
+    "Unknown third-party code execution is not claimed safe."
+  ]
+}

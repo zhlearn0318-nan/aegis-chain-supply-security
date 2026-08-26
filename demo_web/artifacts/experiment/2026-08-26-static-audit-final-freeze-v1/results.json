@@ -1,0 +1,15 @@
+{
+  "run_id": "2026-08-26-static-audit-final-freeze-v1",
+  "backend_passed": 396,
+  "backend_failed": 0,
+  "warnings": 1,
+  "registered_aegis_static_rules": 125,
+  "rule_registry_duplicates": 0,
+  "plugin_dependency_without_vulnerability_evidence_decision": "REVIEW",
+  "existing_skill_rules_changed": false,
+  "admission_thresholds_changed": false,
+  "competition_static_freeze": "GO",
+  "production_release": "NO-GO",
+  "third_party_samples_executed": 0
+}
+

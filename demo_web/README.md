@@ -4,7 +4,7 @@
 
 本项目是 XA-202620 赛题“供应链安全”模块的本机原型。网页会真实调用已经复现的 Cisco Skill Scanner、MCP Scanner 和依赖漏洞审计链路，不使用伪造扫描结果。
 
-当前已完成 M1.3 的可配置准入策略、`/api/v1` 和前端 v1 适配，并完成 M2 的 SkillTrustBench v1.0 全量 5,520 条评测。M3 静态审计已在 600 条密封工程回归上完成一次性评估并冻结，结论为 `supported_with_tradeoff`。M4 已实现受控动态证据，M5 P0-1 至 P0-4 已完成。M6-4 已完成真实 OpenClaw Skill、目录型原生 Plugin 与随包 MCP 定义准入，以及扫描环境白名单、审计链和部署前检查；配置型 MCP 和可确认 warn 仍未完成。后端 `395 passed`，生产判断保持 `NO-GO`。动态部分仍只执行自建哈希锁定 fixture，不执行第三方 Skill/MCP。
+当前已完成 M1.3 的可配置准入策略、`/api/v1` 和前端 v1 适配，并完成 M2 的 SkillTrustBench v1.0 全量 5,520 条评测。M3 静态审计已在 600 条密封工程回归上完成一次性评估并冻结，结论为 `supported_with_tradeoff`。M4 已实现受控动态证据，M5 P0-1 至 P0-4 已完成。M6-4 已完成真实 OpenClaw Skill、目录型原生 Plugin 与随包 MCP 定义准入，以及扫描环境白名单、审计链和部署前检查；配置型 MCP 和可确认 warn 仍未完成。后端 `396 passed`，生产判断保持 `NO-GO`。动态部分仍只执行自建哈希锁定 fixture，不执行第三方 Skill/MCP。
 
 ## 一键启动
 
