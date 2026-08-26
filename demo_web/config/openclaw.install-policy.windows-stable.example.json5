@@ -1,9 +1,15 @@
 {
-  // 将下列路径替换为受信任、权限受限目录中的绝对路径。
+  // OpenClaw 2026.7.1-2 Windows 兼容示例。
+  // 必须替换为部署机器上的绝对路径，并先人工核验策略目录 ACL。
+  agents: {
+    defaults: {
+      // OPENCLAW_STATE_DIR 不会自动隔离 Skill 工作区，必须显式设置。
+      workspace: "C:\\AegisChain\\openclaw-isolated-workspace",
+    },
+  },
   security: {
     installPolicy: {
       enabled: true,
-      // v1 只声明 skill；完成插件/MCP 安装包验收后再加入 plugin。
       targets: ["skill"],
       exec: {
         source: "exec",
@@ -15,16 +21,17 @@
         passEnv: [],
         env: {
           AEGIS_OPENCLAW_SCAN_TIMEOUT_SECONDS: "12",
-          // 新协议使用 warn；只接受 allow/block 的旧稳定版改为 block。
-          AEGIS_OPENCLAW_REVIEW_MODE: "warn",
+          // 2026.7.1-2 只接受 allow/block，REVIEW 必须安全降级为 block。
+          AEGIS_OPENCLAW_REVIEW_MODE: "block",
           PYTHONUTF8: "1",
           PYTHONIOENCODING: "utf-8",
         },
-        // 解释器和 Python 策略脚本的父目录都必须列入可信目录。
         trustedDirs: [
           "C:\\AegisChain\\runtime",
           "C:\\AegisChain\\demo_web\\tools",
         ],
+        // 仅限 Windows 稳定版在自动 ACL 验证不可用、且人工核验目录后使用。
+        allowInsecurePath: true,
       },
     },
   },

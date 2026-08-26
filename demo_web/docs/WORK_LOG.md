@@ -941,3 +941,13 @@
 - 最终 OpenClaw 专项22个用例，后端完整 `383 passed`；安全固定 Skill 返回 allow，恶意外传 Skill 返回 block 并展示两条 CRITICAL 证据，输入树均未变化。
 - 当前只支持本地适配器和固定样本，不冒充 OpenClaw 真实安装提交或插件/MCP 包准入已经完成。
 - 下一步：M6-2 OpenClaw `doctor --deep` 与 allow/warn/block/failure 真实安装闭环。
+
+## 2026-08-26：M6-2 真实 OpenClaw 安装闭环
+
+- 全局稳定版 `2026.7.1-2` 配置校验通过；未修改用户原 openclaw.json，也未升级全局包。
+- 两个部署错误（Windows ACL 无法自动核验、策略脚本目录未加入 trustedDirs）均在提交前失败关闭且无残留。
+- 安全 Skill 在显式隔离 workspace 安装成功；恶意外传 Skill 被 CRITICAL 2 条阻断且无残留。
+- 发现 state dir 不会自动隔离 workspace；首次新装测试目录已可恢复移动，用户原工作区残留0，后续强制配置 agents.defaults.workspace。
+- 稳定版不接受 warn；新增 REVIEW→block 兼容模式，中风险固定网络 Skill 被明确阻断且无残留。
+- Beta `2026.8.1-beta.3` npm 包 SHA-512 核验一致并隔离安装，但 Windows ACL 门仍拒绝常见祖先目录，未选为冻结依赖。
+- 后端完整 `386 passed`；下一步 M6-3 审计、环境白名单与部署前检查。

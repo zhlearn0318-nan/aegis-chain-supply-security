@@ -150,6 +150,8 @@
 - [x] 通过22个专项用例及后端完整 `383 passed`。
 - [x] 真实安全/恶意固定 Skill 分别返回 allow/block。
 - [ ] M6-2：真实 OpenClaw `doctor --deep`。
-- [ ] M6-2：真实 allow/warn/block/failure 安装与无残留验证。
+- [x] M6-2：真实 allow/block/failure 安装与无残留验证。
+- [x] M6-2：旧稳定版 REVIEW→block 兼容验证。
+- [ ] M6-2：新版可确认 warn 与 `doctor --deep` 安装策略全绿；当前受上游 Windows ACL 限制。
 - [ ] M6-3：扫描进程环境白名单和准入审计落盘。
 - [ ] M6-4：插件/MCP 安装包最小适配。

@@ -26,6 +26,7 @@ MAX_FINDING_FILE_LENGTH = 180
 MAX_FINDING_EVIDENCE_LENGTH = 200
 MAX_FINDINGS = 3
 DEFAULT_SCAN_TIMEOUT_SECONDS = 12
+REVIEW_MODE_ENV = "AEGIS_OPENCLAW_REVIEW_MODE"
 DEMO_ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 SKILL_RUNTIME = REPOSITORY_ROOT / ".runtime_skill"
@@ -306,6 +307,14 @@ def _response_from_evaluation(
         Decision.UNKNOWN: "block",
     }
     openclaw_decision = mapping[decision]
+    if decision == Decision.REVIEW:
+        review_mode = os.getenv(REVIEW_MODE_ENV, "warn").strip().lower()
+        if review_mode == "block":
+            openclaw_decision = "block"
+            reason = f"当前 OpenClaw 兼容模式不支持可确认警告；{reason}"
+        elif review_mode != "warn":
+            openclaw_decision = "block"
+            reason = f"{REVIEW_MODE_ENV} 配置无效，已按失败关闭策略阻止安装。"
     safe_reason = _bounded_text(
         reason,
         "Aegis Chain 已完成安装前静态扫描。",

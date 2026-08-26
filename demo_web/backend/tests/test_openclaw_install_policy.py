@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -216,6 +217,34 @@ def test_high_risk_findings_are_prioritized_before_display_limit(tmp_path: Path)
     assert normalized[0]["severity"] == "critical"
 
 
+def test_legacy_review_mode_fails_closed_instead_of_emitting_warn(
+    tmp_path: Path, monkeypatch
+) -> None:
+    skill = make_skill(tmp_path)
+    monkeypatch.setenv("AEGIS_OPENCLAW_REVIEW_MODE", "block")
+
+    response = evaluate_install_request(
+        request_for(skill),
+        skill_scan=scan_with({"id": "review-1", "severity": "MEDIUM"}),
+    )
+
+    assert response["decision"] == "block"
+    assert "兼容模式" in response["reason"]
+
+
+def test_invalid_review_mode_fails_closed(tmp_path: Path, monkeypatch) -> None:
+    skill = make_skill(tmp_path)
+    monkeypatch.setenv("AEGIS_OPENCLAW_REVIEW_MODE", "unexpected")
+
+    response = evaluate_install_request(
+        request_for(skill),
+        skill_scan=scan_with({"id": "review-1", "severity": "MEDIUM"}),
+    )
+
+    assert response["decision"] == "block"
+    assert "配置无效" in response["reason"]
+
+
 def test_cli_emits_exactly_one_fail_closed_json_object_for_invalid_json() -> None:
     script = Path(__file__).resolve().parents[2] / "tools" / "openclaw_install_policy.py"
 
@@ -237,3 +266,28 @@ def test_cli_emits_exactly_one_fail_closed_json_object_for_invalid_json() -> Non
     assert response["decision"] == "block"
     assert "无法解析" in response["reason"]
     assert response["findings"][0]["ruleId"] == "AEGIS_POLICY_INVALID_REQUEST"
+
+
+def test_node_proxy_fails_closed_when_required_paths_are_missing() -> None:
+    proxy = Path(__file__).resolve().parents[2] / "tools" / "openclaw_install_policy_proxy.mjs"
+    child_env = {
+        "SYSTEMROOT": os.environ.get("SYSTEMROOT", "C:\\Windows"),
+        "WINDIR": os.environ.get("WINDIR", "C:\\Windows"),
+    }
+
+    completed = subprocess.run(
+        ["node", str(proxy)],
+        input="{}",
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        env=child_env,
+        check=False,
+        timeout=10,
+    )
+    response = json.loads(completed.stdout)
+
+    assert completed.returncode == 0
+    assert response["decision"] == "block"
+    assert response["findings"][0]["ruleId"] == "AEGIS_POLICY_PROXY_CONFIGURATION_ERROR"

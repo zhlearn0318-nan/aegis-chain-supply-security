@@ -387,3 +387,12 @@
 - 下一节点：M6-2，在本机配置 OpenClaw `security.installPolicy`，运行 `doctor --deep` 和 allow/warn/block/failure 四类安装闭环。
 - 设计真值：`docs/M6_OPENCLAW_INSTALL_POLICY_DESIGN.md`。
 - 运行证据：`artifacts/experiment/2026-08-26-openclaw-install-policy-v1/`。
+
+### 20.1 M6-2 真实 OpenClaw 结果
+
+- npm 稳定版 `2026.7.1-2` 真实完成隔离安全 Skill 安装；恶意 Skill 被 `CRITICAL 2 条` 阻断且残留0。
+- 稳定版只接受 allow/block；增加显式 REVIEW→block 兼容模式后，中风险 Skill 被说明性阻断且残留0。
+- 发现 `OPENCLAW_STATE_DIR` 不隔离 workspace，已改为强制设置 `agents.defaults.workspace`；首次测试目录可恢复移出，用户原工作区残留0。
+- 隔离核验 Beta `2026.8.1-beta.3` 官方 npm SHA-512，但其 Windows ACL 门拒绝常见祖先目录，`doctor --deep` 安装策略项未全绿；不纳入比赛冻结依赖。
+- 后端完整 `386 passed`；结论为 `supported_with_upstream_version_limits`。
+- 下一节点：M6-3 准入审计、扫描进程环境白名单和部署前检查。

@@ -1,0 +1,19 @@
+2026-08-26 OpenClaw E2E v1
+
+1. 发现全局 OpenClaw 2026.7.1-2；用户原配置只读，未修改。
+2. 建立仓库内隔离 state；config validate exit 0。
+3. 首次安全安装因 Windows ACL 自动验证不可用失败关闭，无残留。
+4. 人工核验后只在隔离配置启用稳定版 allowInsecurePath。
+5. 第二次因策略脚本父目录未列入 trustedDirs 失败关闭，无残留。
+6. 第三次安全安装成功，但发现 OPENCLAW_STATE_DIR 不隔离 workspace。
+7. 将本次新装目录可恢复移动到仓库隔离证据目录，用户原工作区残留0；显式配置 agents.defaults.workspace。
+8. 隔离安全 Skill 安装成功。
+9. 恶意外传 Skill 被 CRITICAL 2 条阻断，残留0。
+10. 中风险固定网络 Skill 经适配器得到 warn；稳定版只接受 allow/block，失败关闭且残留0。
+11. npm latest 仍为稳定版；隔离下载并核验 2026.8.1-beta.3 SHA-512，未升级全局版本。
+12. Beta doctor 在真实 Windows 权限下仍将 C:\Program Files 与 C:\Users 祖先目录判定为权限过宽；安装策略项未全绿。
+13. 新增 AEGIS_OPENCLAW_REVIEW_MODE=block，稳定版真实阻断中风险 Skill，原因明确且残留0。
+14. 完整后端测试 386 passed，0 failed。
+15. Beta ACL 验证用临时代理目录已可恢复地移回仓库隔离证据区；用户 OpenClaw 工具目录无本轮代理残留。
+
+结论：supported_with_upstream_version_limits。

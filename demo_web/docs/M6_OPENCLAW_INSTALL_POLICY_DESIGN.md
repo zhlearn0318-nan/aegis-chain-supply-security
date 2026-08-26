@@ -200,6 +200,14 @@ M6 v1 建议内部预算 12 秒，OpenClaw 配置预算 15 秒。若当前机器
 
 适配器自身只有在无法生成任何协议响应的灾难性错误时才返回非零退出；普通可归类错误均输出合法 `block` JSON，便于操作员获得明确原因。OpenClaw 外层仍会对非零退出再次失败关闭。
 
+### 5.4 OpenClaw 版本兼容
+
+- 当前本机稳定版 `2026.7.1-2` 的 install policy 只接受 `allow/block`，虽然配置架构已经包含该功能；对 `warn` 响应会失败关闭。
+- 默认 `AEGIS_OPENCLAW_REVIEW_MODE=warn`，用于支持可确认警告的新协议版本。
+- 旧稳定版设置 `AEGIS_OPENCLAW_REVIEW_MODE=block`，把 REVIEW 明确降级为阻断，不允许静默放行。
+- 无效兼容模式一律输出 `block`。
+- Windows 稳定版可能要求人工核验 ACL 后设置 `allowInsecurePath=true`；Beta 已移除该键，但当前 Beta 的祖先目录 ACL 检查仍会拒绝常见 Windows 路径。因此比赛冻结版本采用稳定版兼容模式，并把可确认 warn 列为官方稳定版升级后的复验项。
+
 ## 6. 代码变更设计
 
 | 路径 | 变更 | 目的 |

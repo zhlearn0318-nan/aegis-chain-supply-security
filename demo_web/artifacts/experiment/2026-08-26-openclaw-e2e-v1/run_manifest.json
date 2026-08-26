@@ -1,0 +1,47 @@
+{
+  "run_id": "2026-08-26-openclaw-e2e-v1",
+  "date": "2026-08-26",
+  "branch": "openclaw-install-policy",
+  "baseline_commit": "0a0d1ec920fb7c387792676612f2a229621a186c",
+  "environment": {
+    "os": "Windows",
+    "openclaw_stable": "2026.7.1-2 (0790d9f)",
+    "openclaw_beta_isolated": "2026.8.1-beta.3 (5831b80)",
+    "node": "24.15.0",
+    "python": "3.13.14 (.runtime_mcp313)",
+    "docker_used": false,
+    "gpu_used": false,
+    "network_used_by_scan": false,
+    "third_party_samples_executed": 0
+  },
+  "verification": {
+    "backend_command": ".runtime_mcp313\\Scripts\\python.exe -m pytest demo_web/backend/tests -q --basetemp demo_web/data/pytest-openclaw-m6-2-rerun",
+    "backend_passed": 386,
+    "backend_failed": 0,
+    "warnings": 1,
+    "warning_scope": "existing FastAPI/TestClient deprecation warning"
+  },
+  "source_sha256": {
+    "demo_web/backend/openclaw_install_policy.py": "b3549600b09b0716914a4cfa669258b2d971ae408f97319f5b3dfa019dd0038c",
+    "demo_web/tools/openclaw_install_policy.py": "d52e338007633d96310524471574b1ab7116006b68119f7a68fd6dc3366bb5de",
+    "demo_web/tools/openclaw_install_policy_proxy.mjs": "a9d3dca4624a2313973a404f51d141c742a5731881d289a3ffc2611bec9e5d2e",
+    "demo_web/config/openclaw.install-policy.example.json5": "63a9871830cfebda2ba48e52a9908ef73510df8b01c28df5736fc63046ad31fc",
+    "demo_web/config/openclaw.install-policy.windows-stable.example.json5": "c5d89b3854c1db3ef804f5145f4cff6ac02b104fcd52d38d5b5475fa3833a08e",
+    "demo_web/docs/M6_OPENCLAW_INSTALL_POLICY_DESIGN.md": "0fa7bf72d8925e476a51a694e7aa5f9a03d7733d6a568636b03b5ddb1902b6a7",
+    "demo_web/docs/M6_OPENCLAW_E2E_V1_REPORT.md": "6e14585c184b13c99f75308cf502b848b701d39ba94631134784b109e0c4a014"
+  },
+  "artifact_sha256": {
+    "PLAN.md": "7f01ce479daea4a4e6ddfc39d38ef4635fbaffb91b498f76ac99081842698bba",
+    "CHECKLIST.md": "55b1d934e4b8cfe58872ff4213d27442b961d1714e5e35ce0b6b270e3bdde920",
+    "evaluation_summary.json": "1de43fee9b697a93e5172338a854f2a4badb368096f1e3e70a0ee4462c1ddc14",
+    "results.json": "aa21f6c4ddeea2580c31063ebd3dba0f814a390e2ddc5d760dd031bb568dca50",
+    "run.log": "2457183cec3c9f1fe82149c1123ace43bc2daf33318c11b03d7963da5c62d84c"
+  },
+  "notes": [
+    "OPENCLAW_STATE_DIR alone did not isolate the default workspace; agents.defaults.workspace was then set explicitly.",
+    "The test-created user workspace directory was moved recoverably into the repository evidence area; no original workspace test residue remains.",
+    "The temporary beta ACL proxy deployment was moved recoverably back into the repository evidence area; no user OpenClaw tools residue remains.",
+    "The stable release rejects warn responses, so REVIEW is configured to block for the frozen competition path.",
+    "The isolated beta was integrity-verified but not selected because its Windows ancestor ACL gate did not pass."
+  ]
+}

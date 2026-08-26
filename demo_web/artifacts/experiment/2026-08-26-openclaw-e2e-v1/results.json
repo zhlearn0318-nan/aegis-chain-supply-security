@@ -1,0 +1,22 @@
+{
+  "run_id": "2026-08-26-openclaw-e2e-v1",
+  "stable_version": "2026.7.1-2",
+  "beta_version": "2026.8.1-beta.3",
+  "config_valid": true,
+  "safe_install_success": true,
+  "malicious_blocked": true,
+  "malicious_residue": false,
+  "review_raw_warn_stable_result": "fail_closed_invalid_decision",
+  "review_compatibility_blocked": true,
+  "review_residue": false,
+  "policy_path_failure_closed": true,
+  "existing_workspace_test_residue": false,
+  "user_openclaw_proxy_residue": false,
+  "recovered_copy_retained": true,
+  "recovered_proxy_retained": true,
+  "doctor_install_policy_green": false,
+  "backend_passed": 386,
+  "backend_failed": 0,
+  "global_openclaw_upgraded": false,
+  "third_party_samples_executed": 0
+}
