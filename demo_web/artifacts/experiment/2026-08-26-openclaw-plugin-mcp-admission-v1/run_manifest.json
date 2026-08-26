@@ -1,0 +1,42 @@
+{
+  "run_id": "2026-08-26-openclaw-plugin-mcp-admission-v1",
+  "date": "2026-08-26",
+  "branch": "openclaw-install-policy",
+  "baseline_commit": "7cbcabe",
+  "real_openclaw": "2026.7.1-2",
+  "verification": {
+    "backend_passed": 395,
+    "backend_failed": 0,
+    "full_preflight_ready": true,
+    "real_safe_plugin_install_exit": 0,
+    "real_blocked_plugin_install_exit": 1,
+    "blocked_plugin_residue": false,
+    "real_audit_rows": 3,
+    "real_audit_head_sha256": "02ec442a8e01a5c6345a6b8058e441be6bc2cd1e76e81da68a9a042fc2939f0d",
+    "registered_rule_ids": 124
+  },
+  "source_sha256": {
+    "demo_web/backend/analyzers/plugin_package.py": "d4d8ed6d5f1c9f99c74601fbb600c1477ab997a123c6a7916168c04aaa878c02",
+    "demo_web/backend/plugin_static_pipeline.py": "07acbe5e921491f9fe82f95b1d817375e0f03f19c26f9746d46f6889a72109ec",
+    "demo_web/backend/openclaw_install_policy.py": "af7cb6d86d437b081773e0bccbfe4739bfe584c6b0ad6dc44a90c62bef6e6980",
+    "demo_web/tools/openclaw_install_policy_preflight.py": "664c45267b504268ad15fadb0ff8ef893c0d8281ada30fcd2dfe0f9408092483",
+    "demo_web/config/aegis_rule_registry.json": "6085339acb79e820ed312427deb6343245123d363d63487f8d246a07d9ff522f",
+    "demo_web/docs/M6_OPENCLAW_PLUGIN_MCP_ADMISSION_V1_REPORT.md": "43b751178f94741139dd6a82880e1ebe804d1d656d9f2c90c8211957080a3534",
+    "fixtures/openclaw_plugins/benign_mcp_plugin/openclaw.plugin.json": "ff5f13cdab99f78ffd86ca3f741444ba0b1b58b7115d25767601507273840d56",
+    "fixtures/openclaw_plugins/blocked_runtime_fetch_only/openclaw.plugin.json": "bd0ea54c2a2baa7bfce3a2134629f762e61d6e3343721f043aaa0a770e7708a7",
+    "fixtures/openclaw_plugins/malicious_runtime_fetch/openclaw.plugin.json": "f652e7b2a2124b70e371b434ee0790b66523a82f11dbc6db39982041414380de"
+  },
+  "artifact_sha256": {
+    "PLAN.md": "2ebb3a4190bafefe966627b5f31e48e3921e5565c227b12dc8c846c73a892172",
+    "CHECKLIST.md": "d9e52fcde69ce2c18a3d2df3b1d3cdf91dde769bf33fb16f1bb322602778ffc3",
+    "evaluation_summary.json": "39001243be24a274279a493dda16822d1084d782ecb00b8141a03aa4a719fc9a",
+    "results.json": "39164a595fba4c1abafcd72baa06a012ae291bb5cfbb0085056e75bb3abcf71e",
+    "run.log": "3223cb101432d27709203c1d4f9c99eaa7d3f2601ae4481759ece7116ee78236"
+  },
+  "limits": [
+    "Plugin source uses Aegis analyzers; Cisco Plugin coverage is not claimed.",
+    "Config-defined OpenClaw MCP admission is not covered by installPolicy.",
+    "File/archive plugins and compatible bundles are not auto-allowed.",
+    "No third-party plugin was executed."
+  ]
+}

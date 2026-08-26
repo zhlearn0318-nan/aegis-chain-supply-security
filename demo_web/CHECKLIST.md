@@ -155,4 +155,6 @@
 - [ ] M6-2：新版可确认 warn 与 `doctor --deep` 安装策略全绿；当前受上游 Windows ACL 限制。
 - [x] M6-3：扫描进程环境白名单和准入审计落盘。
 - [x] M6-3：审计失败关闭、追加链校验和部署前安全/恶意固定样本检查。
-- [ ] M6-4：插件/MCP 安装包最小适配。
+- [x] M6-4：目录型原生 Plugin 与随包 MCP manifest 最小适配。
+- [x] M6-4：真实 OpenClaw Plugin allow/block/无残留闭环。
+- [ ] 生产增强：配置型 MCP 写入前准入、Plugin 单文件/归档和独立权威数据集。

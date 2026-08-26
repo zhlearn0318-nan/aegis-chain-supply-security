@@ -1,0 +1,8 @@
+{
+  "name": "aegis-benign-mcp-plugin",
+  "version": "1.0.0",
+  "type": "module",
+  "openclaw": {
+    "extensions": ["./index.js"]
+  }
+}

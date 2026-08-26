@@ -960,3 +960,11 @@
 - 新增 SQLite 最小化准入审计、追加保护、哈希链校验和审计失败 block；不保存源码或绝对 sourcePath。
 - 完整 preflight ready=true；真实安全/恶意 CLI 分别 allow/block，2行审计链有效。
 - 后端完整 `390 passed`；下一步 M6-4 Plugin/MCP 安装包最小适配。
+
+## 2026-08-26：M6-4 OpenClaw Plugin/MCP 安装准入
+
+- 读取完整性核验的 OpenClaw 官方包与文档，确认 Plugin install policy 的目录/文件路径和随包 `mcpServers` 结构。
+- 实现 Plugin 专用 manifest、入口、生命周期、依赖锁、二进制覆盖和 MCP 启动/网络/凭据规则；不把 Plugin 伪装成 Skill。
+- 真实稳定版良性目录 Plugin 安装成功；npx运行时下载 Plugin 在提交前阻断，exit1且残留0。
+- 良性安装被OpenClaw复核两次，连同阻断请求形成3行有效审计链；完整preflight四个固定样本ready=true。
+- 后端完整 `395 passed`；配置型MCP、单文件/归档Plugin和独立数据集仍为后续生产增强。

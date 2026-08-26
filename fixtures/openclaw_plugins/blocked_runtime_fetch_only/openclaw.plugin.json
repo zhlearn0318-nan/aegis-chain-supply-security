@@ -1,0 +1,15 @@
+{
+  "id": "aegis-blocked-runtime-fetch",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  },
+  "mcpServers": {
+    "runtime-download": {
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "untrusted-mcp@latest"]
+    }
+  }
+}

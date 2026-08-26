@@ -59,17 +59,20 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
-def request_for(path: Path, name: str) -> dict[str, Any]:
+def request_for(path: Path, name: str, target_type: str = "skill") -> dict[str, Any]:
     return {
         "protocolVersion": 1,
         "openclawVersion": "deployment-preflight",
-        "targetType": "skill",
+        "targetType": target_type,
         "targetName": name,
         "sourcePath": str(path.resolve()),
         "sourcePathKind": "directory",
         "source": {"kind": "local-path", "mutable": False},
         "origin": {"type": "aegis-preflight-fixture"},
-        "request": {"kind": "skill-install", "mode": "preflight"},
+        "request": {
+            "kind": "skill-install" if target_type == "skill" else "plugin-dir",
+            "mode": "preflight",
+        },
     }
 
 
@@ -152,6 +155,8 @@ def main() -> int:
     else:
         safe = REPOSITORY_ROOT / "fixtures" / "skills" / "benign_doc_summary"
         risky = REPOSITORY_ROOT / "fixtures" / "skills" / "malicious_exfiltration"
+        safe_plugin = REPOSITORY_ROOT / "fixtures" / "openclaw_plugins" / "benign_mcp_plugin"
+        blocked_plugin = REPOSITORY_ROOT / "fixtures" / "openclaw_plugins" / "blocked_runtime_fetch_only"
         with tempfile.TemporaryDirectory(
             prefix="openclaw-preflight-", dir=DEMO_ROOT / "data"
         ) as temporary:
@@ -172,12 +177,22 @@ def main() -> int:
             risky_response = evaluate_install_request(
                 request_for(risky, "aegis-preflight-risky"), audit_recorder=recorder
             )
+            safe_plugin_response = evaluate_install_request(
+                request_for(safe_plugin, "aegis-preflight-plugin-safe", "plugin"),
+                audit_recorder=recorder,
+            )
+            blocked_plugin_response = evaluate_install_request(
+                request_for(blocked_plugin, "aegis-preflight-plugin-blocked", "plugin"),
+                audit_recorder=recorder,
+            )
             audit_verification = verify_install_policy_audit(audit_db)
         scans_passed = (
             safe_response.get("decision") == "allow"
             and risky_response.get("decision") == "block"
+            and safe_plugin_response.get("decision") == "allow"
+            and blocked_plugin_response.get("decision") == "block"
             and audit_verification.get("valid") is True
-            and audit_verification.get("rows") == 2
+            and audit_verification.get("rows") == 4
         )
         add(
             "fixed_safe_and_risky_scans",
@@ -185,6 +200,8 @@ def main() -> int:
             {
                 "safe_decision": safe_response.get("decision"),
                 "risky_decision": risky_response.get("decision"),
+                "safe_plugin_decision": safe_plugin_response.get("decision"),
+                "blocked_plugin_decision": blocked_plugin_response.get("decision"),
                 "audit_chain_valid": audit_verification.get("valid"),
                 "audit_rows": audit_verification.get("rows"),
             },
@@ -194,7 +211,7 @@ def main() -> int:
     output = {
         "schema_version": "1.0",
         "ready": ready,
-        "target": "openclaw_skill_install_admission",
+        "target": "openclaw_skill_and_plugin_install_admission",
         "checks": checks,
         "manual_boundary": (
             "OpenClaw deployment config absolute paths and Windows ACLs must still be "

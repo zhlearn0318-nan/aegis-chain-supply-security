@@ -1,0 +1,10 @@
+{
+  "run_id": "2026-08-26-openclaw-plugin-mcp-admission-v1",
+  "outcome": "supported_for_directory_native_plugins_and_manifest_mcp",
+  "evaluation_summary": "真实 OpenClaw 稳定版安装良性本地 MCP Plugin 成功，npx运行时下载 Plugin 在提交前阻断且残留0；审计链与四样本 preflight 有效。",
+  "claim_update": "支持目录型原生 Plugin 与随包 MCP 定义准入；不支持配置型 MCP、单文件/归档 Plugin、Cisco Plugin 检出率或生产运行时隔离声明。",
+  "baseline_relation": "新增 Plugin 专属规则家族，不修改冻结 Skill 规则与 admission_policy 阈值。",
+  "next_action": "静态审计最终评委复核和比赛交付冻结。",
+  "go_no_go": "GO_TO_STATIC_AUDIT_FINAL_REVIEW; PRODUCTION_REMAINS_NO_GO"
+}
+

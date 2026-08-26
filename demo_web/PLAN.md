@@ -405,3 +405,11 @@
 - 完整部署 preflight 校验固定版本/哈希、环境契约、策略、安全/恶意固定样本和2行审计链，结果 ready=true。
 - 真实 CLI 两次耗时4420/4422ms，分别 allow/block，审计链头为 `0a14b264e6e87cb82db4b0ba11f68ec7397f7a96926e6af2815711f4bf1cb101`。
 - 后端完整 `390 passed`；下一节点 M6-4 Plugin/MCP 安装包最小适配。
+
+### 20.3 M6-4 Plugin/MCP 结果
+
+- 新增目录型原生 Plugin 独立分析链，不调用 Cisco Skill Scanner；复用通用源代码流分析并增加 manifest/package/MCP 专项规则。
+- 良性原生 Plugin + 本地 stdio MCP 为 allow；运行时包下载、生命周期脚本、嵌入凭据等恶意 fixture 为 block。
+- 真实 OpenClaw 稳定版良性 Plugin 安装成功；npx运行时下载 Plugin 被HIGH阻断且残留0。
+- 真实策略审计3行且链有效；完整 preflight 扩为 Skill/Plugin 四个固定样本、审计4行，ready=true。
+- 后端完整 `395 passed`；下一节点为静态审计最终评委复核与比赛交付冻结。

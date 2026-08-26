@@ -14,6 +14,7 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError
 from .adapters import ProcessRunner, SkillScannerAdapter
 from .models import Decision, Severity
 from .policy import PolicyConfigurationError, evaluate_findings
+from .plugin_static_pipeline import run_plugin_static_pipeline
 from .runtime_paths import runtime_path_entries
 from .skill_static_pipeline import run_skill_static_pipeline
 
@@ -60,6 +61,7 @@ class SourceTreeRejected(RuntimeError):
 
 
 SkillScan = Callable[[Path], dict[str, Any]]
+PluginScan = Callable[[Path], dict[str, Any]]
 TreeHasher = Callable[[Path], str]
 AuditRecorder = Callable[[Any, dict[str, Any], str | None, int], str]
 
@@ -177,6 +179,10 @@ def default_skill_scan(skill_path: Path) -> dict[str, Any]:
     )
     adapter = SkillScannerAdapter(scanner=SKILL_SCANNER, runner=runner)
     return run_skill_static_pipeline(skill_path, adapter)
+
+
+def default_plugin_scan(plugin_path: Path) -> dict[str, Any]:
+    return run_plugin_static_pipeline(plugin_path)
 
 
 def block_response(rule_id: str, reason: str) -> dict[str, Any]:
@@ -337,6 +343,7 @@ def evaluate_install_request(
     payload: Any,
     *,
     skill_scan: SkillScan = default_skill_scan,
+    plugin_scan: PluginScan = default_plugin_scan,
     tree_hasher: TreeHasher = hash_source_tree,
     audit_recorder: AuditRecorder | None = None,
 ) -> dict[str, Any]:
@@ -367,14 +374,6 @@ def evaluate_install_request(
         )
         return finalize(block_response(rule_id, str(exc)))
 
-    if request.target_type != "skill":
-        return finalize(
-            block_response(
-                "AEGIS_POLICY_UNSUPPORTED_TARGET",
-                "M6 v1 尚未完成 OpenClaw 插件/MCP 安装包适配，已按失败关闭策略阻止安装。",
-            )
-        )
-
     try:
         source_root = validate_source_path(request.source_path)
         before_hash = tree_hasher(source_root)
@@ -382,7 +381,11 @@ def evaluate_install_request(
         return finalize(block_response("AEGIS_POLICY_INVALID_SOURCE", str(exc)))
 
     try:
-        scan_result = skill_scan(source_root)
+        scan_result = (
+            skill_scan(source_root)
+            if request.target_type == "skill"
+            else plugin_scan(source_root)
+        )
         findings = scan_result.get("findings")
         if not isinstance(findings, list):
             raise RuntimeError("静态扫描流水线未返回 Finding 列表")

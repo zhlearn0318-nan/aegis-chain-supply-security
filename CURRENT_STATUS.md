@@ -2,12 +2,12 @@
 
 > 状态日期：2026-08-26
 > 最近推送工程基线：`6526843`（`dynamic-audit-v1`）；本次范围决策由包含本文件的提交承载。
-> 当前工程阶段：比赛交付收敛；M6-3 已完成扫描环境白名单、安装准入审计链和部署前检查；下一节点为 M6-4 Plugin/MCP 包最小适配；P0-5 真实 VM 验收继续延期且不阻断比赛交付。
+> 当前工程阶段：比赛交付收敛；M6-4 已完成目录型原生 Plugin 与随包 MCP 定义准入；下一节点为静态审计最终评委复核与交付冻结；P0-5 真实 VM 验收继续延期且不阻断比赛交付。
 > 状态优先级：本文件高于 README 中的摘要和全部日期化阶段报告；发生冲突时以本文件及对应冻结证据为准。
 
 ## 1. 一句话结论
 
-Aegis Chain 已被真实 OpenClaw 稳定版调用，并补齐扫描器环境白名单、审计失败关闭、最小化 SQLite 完整性链和部署前检查；可确认 warn 与 Plugin/MCP 包准入仍未完成，生产发布决策保持 **NO-GO**。
+Aegis Chain 已被真实 OpenClaw 稳定版调用，并完成 Skill 与目录型原生 Plugin 安装准入、随包 MCP 定义审查、扫描器环境白名单、审计失败关闭和部署前检查；可确认 warn 与配置型 MCP 准入仍未完成，生产发布决策保持 **NO-GO**。
 
 ## 2. 当前可复核能力
 
@@ -17,7 +17,7 @@ Aegis Chain 已被真实 OpenClaw 稳定版调用，并补齐扫描器环境白�
 | MCP 静态审计 | 可用；Tool/Prompt/Resource 与可选依赖清单统一审查 | 当前上传协议是离线 JSON，不连接未知远端服务 |
 | Python 依赖审计 | 可用；`pip-audit` + 完整性规则 + CycloneDX 导出 | 当前 SBOM 主要覆盖任务声明依赖，不代表项目自身发布 SBOM 已完成 |
 | 准入决策 | `ALLOW / REVIEW / BLOCK / UNKNOWN`；扫描异常失败闭锁 | 动态证据当前不改变最终决策 |
-| OpenClaw 安装策略 | 稳定版真实安全安装成功；恶意、中风险兼容模式和路径异常均阻断；环境白名单、审计链、preflight 已通过 | 稳定版不支持 warn；Beta Windows ACL 门未通过；v1 暂不支持 plugin/MCP 包；审计尚未外送 SIEM/WORM |
+| OpenClaw 安装策略 | Skill 与目录型原生 Plugin 真实安装成功；恶意 Skill、运行时下载 Plugin 和异常均阻断；随包 MCP manifest、环境白名单、审计链、preflight 已通过 | 稳定版不支持 warn；配置型 MCP、单文件/归档 Plugin 未接入；审计尚未外送 SIEM/WORM |
 | 受控动态机制 | 可用；固定良性 fixture、MCP 协议/Marker/遥测和 Skill 运行时闭包 | 不接受用户代码、路径、命令，不执行第三方数据集样本 |
 | 动态任务控制 | 单主机 SQLite 持久队列、全局单执行、FIFO、去重冷却、429 和重启恢复 | 不等价于多实例消息队列或高可用 worker |
 | 项目自身供应链 | 共享运行时/前端精确锁定，自身 SBOM、许可、漏洞、Secret 与仓库卫生门可复现 | 漏洞结论是 2026-08-25 的时间截面 |
@@ -33,14 +33,15 @@ Aegis Chain 已被真实 OpenClaw 稳定版调用，并补齐扫描器环境白�
 - P0-5 范围决策：2026-08-26 确认洁净 Windows VM 不是赛题明示交付物，故延期为可选工程增强，不再阻断比赛交付；临时 GitHub Deploy Key 已吊销，本地私钥、公钥和专用 `known_hosts` 已删除。
 - M6-2 OpenClaw E2E：安全安装成功；恶意阻断、中风险兼容阻断和策略路径失败关闭；非预期工作区残留 0。
 - M6-3 准入加固：Cisco Skill/MCP/依赖真实冒烟通过；完整 preflight ready；安全/恶意审计2行、哈希链有效。
-- 后端完整回归：`390 passed`。
+- M6-4 Plugin/MCP：真实良性 Plugin 安装成功；npx运行时下载 Plugin 阻断且残留0；3行真实审计链有效。
+- 后端完整回归：`395 passed`。
 - 前端 API 测试：`10 passed`。
 - 前端生产构建：通过。
 - P0-2 证据：`demo_web/artifacts/experiment/2026-08-24-dynamic-queue-recovery-dev-v1/`。
 - P0-1 证据：`demo_web/artifacts/experiment/2026-08-24-portable-startup-dev-v1/`。
 - P0-4 证据：`demo_web/artifacts/experiment/2026-08-24-project-supply-chain-hygiene-dev-v1/`。
 - M3 600 条密封回归结论仍为 `supported_with_tradeoff`，未因工程改造重新调规则。
-- M6-3 证据：`demo_web/artifacts/experiment/2026-08-26-openclaw-admission-hardening-v1/`；下一节点为 M6-4 Plugin/MCP 包最小适配。
+- M6-4 证据：`demo_web/artifacts/experiment/2026-08-26-openclaw-plugin-mcp-admission-v1/`；下一节点为静态审计最终评委复核与交付冻结。
 
 ## 4. M5 完成度
 
@@ -66,6 +67,7 @@ Aegis Chain 已被真实 OpenClaw 稳定版调用，并补齐扫描器环境白�
 - 不主张三次 P0-5 失败运行或已安装 VM 等价于洁净 Windows 发布门通过。
 - 不主张稳定版兼容阻断等价于可确认 warn；不主张 Beta `doctor --deep` 安装策略项已全绿或插件/MCP 准入已经通过。
 - 不主张本地 SQLite 哈希链等价于外部 WORM、可信时间戳或企业 SIEM；不主张企业认证代理与凭据托管已完成。
+- 不主张配置型 OpenClaw MCP 写入、Plugin 单文件/归档、安装后运行时隔离或 Plugin 权威数据集评测已经完成。
 - 不主张旧阶段报告中的测试总数、下一步或“最终”字样代表当前状态。
 
 ## 6. 文档解释规则

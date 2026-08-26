@@ -23,6 +23,10 @@ from .mcp_policy import (
     ANALYZER_ID as MCP_POLICY_ANALYZER_ID,
     analyze_mcp_objects,
 )
+from .plugin_package import (
+    ANALYZER_ID as PLUGIN_PACKAGE_ANALYZER_ID,
+    analyze_plugin_package,
+)
 from .sensitive_flow import (
     ANALYZER_ID as SENSITIVE_FLOW_ANALYZER_ID,
     analyze_sensitive_flows,
@@ -44,6 +48,7 @@ __all__ = [
     "FILESYSTEM_CONTEXT_ANALYZER_ID",
     "MCP_POLICY_ANALYZER_ID",
     "NETWORK_CONTEXT_ANALYZER_ID",
+    "PLUGIN_PACKAGE_ANALYZER_ID",
     "SENSITIVE_FLOW_ANALYZER_ID",
     "STATIC_COVERAGE_ANALYZER_ID",
     "UNTRUSTED_EXEC_FLOW_ANALYZER_ID",
@@ -53,6 +58,7 @@ __all__ = [
     "analyze_filesystem_context",
     "analyze_mcp_objects",
     "analyze_network_context",
+    "analyze_plugin_package",
     "analyze_sensitive_flows",
     "analyze_static_coverage",
     "analyze_skill_tree",

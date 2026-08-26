@@ -219,6 +219,13 @@ M6 v1 建议内部预算 12 秒，OpenClaw 配置预算 15 秒。若当前机器
 - 本地哈希链不等价于 WORM/SIEM，生产部署需外送链头和事件。
 - 专用 preflight 必须检查固定文件、版本、哈希、环境白名单、策略、安全/恶意 fixture 和审计链；跳过固定扫描只能作为诊断，不得返回部署 ready。
 
+### 5.7 Plugin 与随包 MCP 边界
+
+- 目录型原生 Plugin 走独立 Plugin 分析链，解析 `openclaw.plugin.json`、`package.json`、入口、生命周期、依赖与 `mcpServers`；不调用 Cisco Skill Scanner。
+- 明确检查 MCP 运行时下载、Shell/解释器加载、绝对宿主命令、目录逃逸、非HTTPS、TLS关闭和嵌入凭据。
+- 兼容包返回 REVIEW；单文件、归档和缺失可验证 manifest 的包失败关闭。
+- 配置型 `openclaw mcp add/set/configure` 不经过 install policy，必须作为后续独立准入接口，不得用本轮结果冒充覆盖。
+
 ## 6. 代码变更设计
 
 | 路径 | 变更 | 目的 |

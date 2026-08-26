@@ -1,0 +1,16 @@
+{
+  "id": "aegis-benign-mcp",
+  "name": "Aegis benign local MCP fixture",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  },
+  "mcpServers": {
+    "local-docs": {
+      "transport": "stdio",
+      "command": "node",
+      "args": ["./mcp-server.js"]
+    }
+  }
+}

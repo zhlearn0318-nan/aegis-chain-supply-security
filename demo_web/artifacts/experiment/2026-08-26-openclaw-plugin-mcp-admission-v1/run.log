@@ -1,0 +1,17 @@
+2026-08-26 M6-4 OpenClaw Plugin/MCP admission v1
+
+1. Inspected integrity-verified OpenClaw beta package docs/runtime; plugin requests can stage directory or file sources and native manifests may own mcpServers.
+2. Implemented a dedicated directory-plugin package analyzer; no Cisco Skill/MCP vendor coverage is claimed for plugin source.
+3. Added manifest, entry containment, lifecycle, dependency pin/lock, payload coverage and MCP command/network/credential rules.
+4. Controlled benign native plugin with local node MCP returned allow.
+5. Controlled malicious plugin with runtime download, embedded credential and lifecycle script returned block.
+6. Real stable OpenClaw config validation passed with targets skill/plugin.
+7. Real benign plugin install exited 0 and created the expected isolated extension directory.
+8. OpenClaw re-evaluated the benign request twice; both allow events were retained.
+9. Real npx runtime-fetch plugin install exited 1 with HIGH 1 and left zero extension residue.
+10. Independent audit verification passed 3 rows with head 02ec442a8e01a5c6345a6b8058e441be6bc2cd1e76e81da68a9a042fc2939f0d.
+11. Full preflight passed Skill safe/block and Plugin safe/block with four valid audit rows.
+12. Rule registry completeness passed with 124 ids; backend regression passed 395, failed 0.
+13. Config-defined MCP, file/archive plugins, third-party package execution and runtime sandboxing remain out of scope.
+
+Conclusion: supported_for_directory_native_plugins_and_manifest_mcp.

@@ -4,7 +4,7 @@
     installPolicy: {
       enabled: true,
       // v1 只声明 skill；完成插件/MCP 安装包验收后再加入 plugin。
-      targets: ["skill"],
+      targets: ["skill", "plugin"],
       exec: {
         source: "exec",
         command: "C:\\AegisChain\\runtime\\python.exe",

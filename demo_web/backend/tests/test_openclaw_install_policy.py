@@ -88,15 +88,18 @@ def test_invalid_requests_fail_closed(payload, rule_id: str) -> None:
     assert response["findings"][0]["ruleId"] == rule_id
 
 
-def test_plugin_target_fails_closed_until_v11_support(tmp_path: Path) -> None:
+def test_plugin_target_uses_dedicated_plugin_scan(tmp_path: Path) -> None:
     skill = make_skill(tmp_path)
 
     response = evaluate_install_request(
-        request_for(skill, targetType="plugin"), skill_scan=scan_with()
+        request_for(skill, targetType="plugin"),
+        skill_scan=lambda _path: (_ for _ in ()).throw(
+            AssertionError("plugin must not use the Cisco Skill pipeline")
+        ),
+        plugin_scan=scan_with(),
     )
 
-    assert response["decision"] == "block"
-    assert response["findings"][0]["ruleId"] == "AEGIS_POLICY_UNSUPPORTED_TARGET"
+    assert response["decision"] == "allow"
 
 
 @pytest.mark.parametrize(

@@ -10,7 +10,7 @@
   security: {
     installPolicy: {
       enabled: true,
-      targets: ["skill"],
+      targets: ["skill", "plugin"],
       exec: {
         source: "exec",
         command: "C:\\AegisChain\\runtime\\python.exe",

@@ -1,0 +1,23 @@
+{
+  "run_id": "2026-08-26-openclaw-plugin-mcp-admission-v1",
+  "real_openclaw_version": "2026.7.1-2",
+  "safe_plugin_decision": "allow",
+  "safe_plugin_real_install_exit": 0,
+  "safe_plugin_installed": true,
+  "blocked_plugin_decision": "block",
+  "blocked_plugin_real_install_exit": 1,
+  "blocked_plugin_residue": false,
+  "real_install_audit_rows": 3,
+  "real_install_audit_chain_valid": true,
+  "real_install_audit_head_sha256": "02ec442a8e01a5c6345a6b8058e441be6bc2cd1e76e81da68a9a042fc2939f0d",
+  "full_preflight_ready": true,
+  "full_preflight_audit_rows": 4,
+  "backend_passed": 395,
+  "backend_failed": 0,
+  "registered_aegis_static_rules": 124,
+  "cisco_plugin_vendor_scans": 0,
+  "third_party_plugins_executed": 0,
+  "config_defined_mcp_admission_supported": false,
+  "plugin_file_or_archive_auto_allow": false
+}
+
