@@ -80,6 +80,9 @@
 
 ## 当前状态
 
-- 状态：`partial / attempts 1-3 failed / runtime PATH fix validated locally`。
+- 状态：`deferred / attempts 1-3 failed / runtime PATH fix validated locally / attempt 4 not run`。
 - 当前没有正式通过指标或成功报告；三次失败证据均已保留且明确标记为非发布验收。
-- 下一动作：执行完整回归和供应链门禁，提交并推送 PATH 激活修复；重启 VM 验证真实 Cargo 可发现性，再用第四个全新工作目录执行完整主运行。
+- PATH 激活修复已完成完整回归和供应链门禁，并以 `6526843` 推送。
+- 修复后 VM 进入 Windows 安装/更新流程；在完成真实 Cargo 行为探针前会话最终处于 `aborted`，第四个全新工作目录和 Attempt 4 均未创建，不得推断修复已获真实 VM 证明。
+- 2026-08-26 依据赛题正式交付要求和剩余时间，将 P0-5 延期为不阻断比赛交付的可选增强；这不改变其“未通过”事实，也不改变生产 `NO-GO`。
+- GitHub 临时只读 Deploy Key `161198047` 已吊销，复核查询返回 HTTP 404；宿主私钥、公钥和该次专用 `known_hosts` 已删除。三次失败证据保留。

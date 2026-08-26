@@ -1,13 +1,13 @@
 # M5 P0-5 真实 Windows VM 发布门
 
-> 状态：`guest_ready_main_run_pending`
-> 日期：2026-08-25
+> 状态：`deferred_non_blocking_for_contest_delivery`
+> 日期：2026-08-26
 > 分支：`dynamic-audit-v1`
-> 结论边界：验收程序已经实现并在宿主机完成非正式烟雾测试，但尚未取得真实 Windows VM 的正式通过证据，因此 P0-5 尚未完成，系统仍为生产 `NO-GO`。
+> 结论边界：验收程序已经实现，三次真实 Windows VM 运行均保留失败证据，但尚未取得正式通过证据；P0-5 已延期且不再阻断比赛交付，系统仍为生产 `NO-GO`。
 
-## 1. 为什么必须使用真实 VM
+## 1. 若恢复 P0-5，为什么必须使用真实 VM
 
-P0-5 要回答的不是“当前开发目录能否再次运行”，而是“一个没有开发缓存、没有预装 Cisco 运行时的新 Windows 环境，能否仅依据私有远端仓库和固定来源重建系统，并完成四条审计链”。
+P0-5 要回答的不是“当前开发目录能否再次运行”，而是“一个没有开发缓存、没有预装 Cisco 运行时的新 Windows 环境，能否仅依据私有远端仓库和固定来源重建系统，并完成四条审计链”。该问题对生产发布有价值，但不是赛题明示的强制交付物。
 
 本机目录复制、换用户、Docker 容器或 WSL 都无法同时证明 Windows 主机身份、全新克隆和宿主缓存隔离，因此不能替代正式证据。当前宿主为 Windows 家庭版，不提供 Windows Sandbox；正式验收可使用 VirtualBox、VMware、QEMU/KVM、Parallels、Xen 或 Hyper-V/Sandbox 中具有独立硬件身份的 Windows guest。
 
@@ -114,10 +114,11 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Initialize-AegisAccept
 
 若 guest 必须通过宿主本地代理联网，可传入无凭据的 `-ProxyUrl "http://10.0.2.2:<port>"`，并在 VirtualBox NAT 上启用 localhost reachable。控制器拒绝含用户名、密码、路径、查询或片段的代理 URL，只在 attestation 中记录“是否配置代理”，不保留代理地址。
 
-## 9. 当前阻塞与下一判定
+## 9. 实际运行、范围调整与下一判定
 
-- P0-4 与 P0-5 验收程序已推送至私有远端；正式运行前必须用 `git ls-remote` 取得 `dynamic-audit-v1` 当前完整 40 位 HEAD，并将同一值传给初始化器，禁止使用只存在于本机的提交。
+- P0-4 与 P0-5 验收程序已推送至私有远端；三次真实运行均完成远端新克隆、VM 证明和负向 preflight，随后分别暴露日志保真、Windows Conda 解释器布局和 Conda PATH 问题。
 - 当前已完成真实 VirtualBox guest 安装：Windows 11 Enterprise Eval 25H2 ZH-CN x64 Build `26200.6584`，Guest Additions `7.2.16 r174877` 达到桌面运行级别 3；受保护密码文件驱动的 `guestcontrol` 和经宿主无凭据代理访问 GitHub 均已通过。
-- 三份引导文件已复制到 guest 外部目录，宿主/guest SHA-256 完全一致。正式 run 尚未启动，当前等待创建临时、单仓库只读 Deploy Key 的明确授权；不能把“VM 已安装”解释为 P0-5 已通过。
+- 三次失败证据已逐次固化；对应修复已推送，第四次正式运行未执行，不能把“VM 已安装”、失败运行或本地回归解释为 P0-5 已通过。
+- 2026-08-26 决定将 P0-5 延期为比赛交付的可选增强；临时只读 Deploy Key 已吊销，本地私钥、公钥和专用 `known_hosts` 已删除。若未来恢复，必须重新创建一次性认证并使用全新工作目录。
 
-只有远端提交可取、真实 VM run 全部通过、证据清单逐项验真后，才能把决策改为 `clean_windows_vm_release_gate_passed`。在此之前保持 `guest_ready_main_run_pending` 和生产 `NO-GO`。
+只有远端提交可取、真实 VM run 全部通过、证据清单逐项验真后，才能把决策改为 `clean_windows_vm_release_gate_passed`。在此之前保持 `deferred_non_blocking_for_contest_delivery` 和生产 `NO-GO`。
