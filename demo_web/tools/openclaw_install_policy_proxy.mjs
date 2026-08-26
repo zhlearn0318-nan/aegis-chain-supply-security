@@ -103,6 +103,9 @@ process.stdin.on("end", () => {
           process.env.AEGIS_OPENCLAW_SCAN_TIMEOUT_SECONDS ?? "12",
         AEGIS_OPENCLAW_REVIEW_MODE:
           process.env.AEGIS_OPENCLAW_REVIEW_MODE ?? "warn",
+        ...(process.env.AEGIS_OPENCLAW_AUDIT_DB
+          ? { AEGIS_OPENCLAW_AUDIT_DB: process.env.AEGIS_OPENCLAW_AUDIT_DB }
+          : {}),
       },
     });
 

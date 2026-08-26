@@ -245,7 +245,9 @@ def test_invalid_review_mode_fails_closed(tmp_path: Path, monkeypatch) -> None:
     assert "配置无效" in response["reason"]
 
 
-def test_cli_emits_exactly_one_fail_closed_json_object_for_invalid_json() -> None:
+def test_cli_emits_exactly_one_fail_closed_json_object_for_invalid_json(
+    tmp_path: Path,
+) -> None:
     script = Path(__file__).resolve().parents[2] / "tools" / "openclaw_install_policy.py"
 
     completed = subprocess.run(
@@ -256,6 +258,10 @@ def test_cli_emits_exactly_one_fail_closed_json_object_for_invalid_json() -> Non
         encoding="utf-8",
         errors="replace",
         check=False,
+        env={
+            **os.environ,
+            "AEGIS_OPENCLAW_AUDIT_DB": str(tmp_path / "invalid-json-audit.db"),
+        },
         timeout=10,
     )
     response = json.loads(completed.stdout)

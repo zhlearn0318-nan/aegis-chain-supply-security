@@ -1,0 +1,50 @@
+{
+  "run_id": "2026-08-26-openclaw-admission-hardening-v1",
+  "date": "2026-08-26",
+  "branch": "openclaw-install-policy",
+  "baseline_commit": "8958cd3",
+  "environment": {
+    "os": "Windows",
+    "openclaw_stable": "2026.7.1-2",
+    "skill_scanner": "2.0.13.dev3+g4dee90371",
+    "skill_scanner_sha256": "b31b66fce1b8466ba5c49e1084ee972b746e00d4ebdcaeab78ad6b38a0dce366",
+    "mcp_scanner": "4.8.2",
+    "docker_used": false,
+    "gpu_used": false,
+    "third_party_samples_executed": 0
+  },
+  "verification": {
+    "targeted_tests": 41,
+    "backend_command": ".runtime_mcp313\\Scripts\\python.exe -m pytest demo_web/backend/tests -q --basetemp demo_web/data/pytest-m6-3-full",
+    "backend_passed": 390,
+    "backend_failed": 0,
+    "warnings": 1,
+    "full_preflight_ready": true,
+    "audit_rows": 2,
+    "audit_chain_valid": true,
+    "audit_head_sha256": "0a14b264e6e87cb82db4b0ba11f68ec7397f7a96926e6af2815711f4bf1cb101"
+  },
+  "source_sha256": {
+    "demo_web/backend/adapters/process.py": "793c50c490b85a26c56bc7e0abbcc8f2c9552537d763cc70b8b4af1f658f15b7",
+    "demo_web/backend/install_policy_audit.py": "02fa7bc68830afb1d763cc74367855c5524699e928468506a9b4a8c3e8f40e2b",
+    "demo_web/backend/openclaw_install_policy.py": "58b27dcf414e6856b84875239018d0a77cd9ec62e737c98ea3083056a0cf3960",
+    "demo_web/tools/openclaw_install_policy.py": "ed76d7d7ccbe0827b85d04a8850e0bcf1f01bc1198f8624eb63aad573a54cc86",
+    "demo_web/tools/openclaw_install_policy_proxy.mjs": "63225af41a2c158536ecc351f80e26993dd3ec30f874665797f95bbc658ace9e",
+    "demo_web/tools/openclaw_install_policy_audit.py": "3dd4cbef1113ef0b7cd4cc000efb0613ee6895af5ac107cf71d5541ef1244b89",
+    "demo_web/tools/openclaw_install_policy_preflight.py": "23498f942e83e4e9841ace73be93e88feeb13f53af55c323252bc27db0d33f9a",
+    "demo_web/docs/M6_OPENCLAW_ADMISSION_HARDENING_V1_REPORT.md": "f02ea8bb4cb8009e75da490f92bd02b0c8cb790ae953278d33a429463c5ae9f0"
+  },
+  "artifact_sha256": {
+    "PLAN.md": "918300f0c81eded4b93efc42ec447425518f3c0aa64637b78c9d388d5118a537",
+    "CHECKLIST.md": "9e0b9aeb3dabaefeeaf7fa1cd884afde6e690fe4f8b3bdc5834aa4fadeca5276",
+    "evaluation_summary.json": "53e038087e7d8dfafe7b1c8b65d70c52655de9c6f802909efba0599c14d1f427",
+    "results.json": "7b67a1812f0d7f34e8f035ac674915340f3807b4c6ff01bde4698bed57ab0c94",
+    "run.log": "75e9510afd28e388f6d5d2f37a15193dc00768face50029dd8cc71bff55e8dbb"
+  },
+  "limits": [
+    "Local SQLite hash chaining is not external WORM, trusted timestamping or SIEM delivery.",
+    "Authenticated enterprise proxy configuration and credential brokering are not implemented.",
+    "Plugin/MCP package admission and confirmable warn remain unsupported.",
+    "Target-machine OpenClaw paths and Windows ACLs still require deployment-specific verification."
+  ]
+}

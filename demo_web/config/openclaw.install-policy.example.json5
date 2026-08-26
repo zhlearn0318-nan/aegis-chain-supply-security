@@ -17,6 +17,7 @@
           AEGIS_OPENCLAW_SCAN_TIMEOUT_SECONDS: "12",
           // 新协议使用 warn；只接受 allow/block 的旧稳定版改为 block。
           AEGIS_OPENCLAW_REVIEW_MODE: "warn",
+          AEGIS_OPENCLAW_AUDIT_DB: "C:\\AegisChain\\data\\admission_audit.db",
           PYTHONUTF8: "1",
           PYTHONIOENCODING: "utf-8",
         },

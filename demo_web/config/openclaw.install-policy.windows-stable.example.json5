@@ -23,6 +23,7 @@
           AEGIS_OPENCLAW_SCAN_TIMEOUT_SECONDS: "12",
           // 2026.7.1-2 只接受 allow/block，REVIEW 必须安全降级为 block。
           AEGIS_OPENCLAW_REVIEW_MODE: "block",
+          AEGIS_OPENCLAW_AUDIT_DB: "C:\\AegisChain\\data\\admission_audit.db",
           PYTHONUTF8: "1",
           PYTHONIOENCODING: "utf-8",
         },

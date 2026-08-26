@@ -1,0 +1,11 @@
+{
+  "run_id": "2026-08-26-openclaw-admission-hardening-v1",
+  "outcome": "supported_for_skill_install_admission_with_documented_platform_limits",
+  "evaluation_summary": "真实 Cisco Skill/MCP/依赖链在最小环境下完成；OpenClaw 安全/恶意准入分别 allow/block，2行最小化审计链有效，完整部署 preflight ready。",
+  "claim_update": "支持 Skill 安装准入的环境隔离、审计失败关闭、本地完整性链和部署前检查；不支持外部 WORM/SIEM、企业代理凭据托管或 Plugin/MCP 包准入声明。",
+  "baseline_relation": "复用 8958cd3 的真实 OpenClaw 门与冻结静态策略；不修改规则、严重度或决策阈值。",
+  "failure_mode_found_and_fixed": "移除真实 USERPROFILE 后 pip 内部 Windows Known Folder 调用失败；以仓库缓存内合成 profile 恢复兼容，未恢复服务环境继承。",
+  "next_action": "M6-4 Plugin/MCP 安装包最小适配。",
+  "go_no_go": "GO_TO_M6_4; PRODUCTION_REMAINS_NO_GO"
+}
+

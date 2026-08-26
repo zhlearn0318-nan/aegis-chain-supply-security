@@ -396,3 +396,12 @@
 - 隔离核验 Beta `2026.8.1-beta.3` 官方 npm SHA-512，但其 Windows ACL 门拒绝常见祖先目录，`doctor --deep` 安装策略项未全绿；不纳入比赛冻结依赖。
 - 后端完整 `386 passed`；结论为 `supported_with_upstream_version_limits`。
 - 下一节点：M6-3 准入审计、扫描进程环境白名单和部署前检查。
+
+### 20.2 M6-3 准入审计与隔离加固
+
+- 扫描子进程从空环境构建白名单，不再复制服务环境；真实用户目录由仓库缓存内合成 profile 替代。
+- Cisco Skill、MCP 和 pip-audit 三条真实链均在白名单下完成；依赖链检出1个依赖中的14个漏洞。
+- 安装策略新增最小化 SQLite 追加审计、UPDATE/DELETE 触发器、前序哈希链和独立校验工具；落库失败转为 block。
+- 完整部署 preflight 校验固定版本/哈希、环境契约、策略、安全/恶意固定样本和2行审计链，结果 ready=true。
+- 真实 CLI 两次耗时4420/4422ms，分别 allow/block，审计链头为 `0a14b264e6e87cb82db4b0ba11f68ec7397f7a96926e6af2815711f4bf1cb101`。
+- 后端完整 `390 passed`；下一节点 M6-4 Plugin/MCP 安装包最小适配。

@@ -4,6 +4,7 @@ import hashlib
 import os
 import stat
 import subprocess
+import time
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 from typing import Any, Callable
@@ -60,6 +61,7 @@ class SourceTreeRejected(RuntimeError):
 
 SkillScan = Callable[[Path], dict[str, Any]]
 TreeHasher = Callable[[Path], str]
+AuditRecorder = Callable[[Any, dict[str, Any], str | None, int], str]
 
 
 def _bounded_text(value: Any, fallback: str = "", limit: int = MAX_TEXT_LENGTH) -> str:
@@ -336,7 +338,25 @@ def evaluate_install_request(
     *,
     skill_scan: SkillScan = default_skill_scan,
     tree_hasher: TreeHasher = hash_source_tree,
+    audit_recorder: AuditRecorder | None = None,
 ) -> dict[str, Any]:
+    started = time.perf_counter()
+
+    def finalize(
+        response: dict[str, Any], source_tree_sha256: str | None = None
+    ) -> dict[str, Any]:
+        if audit_recorder is None:
+            return response
+        duration_ms = max(0, int((time.perf_counter() - started) * 1000))
+        try:
+            audit_recorder(payload, response, source_tree_sha256, duration_ms)
+        except Exception:
+            return block_response(
+                "AEGIS_POLICY_AUDIT_FAILED",
+                "安装前准入审计记录未能可靠持久化，已按失败关闭策略阻止安装。",
+            )
+        return response
+
     try:
         request = parse_request(payload)
     except ValueError as exc:
@@ -345,19 +365,21 @@ def evaluate_install_request(
             if isinstance(payload, dict) and payload.get("protocolVersion") != PROTOCOL_VERSION
             else "AEGIS_POLICY_INVALID_REQUEST"
         )
-        return block_response(rule_id, str(exc))
+        return finalize(block_response(rule_id, str(exc)))
 
     if request.target_type != "skill":
-        return block_response(
-            "AEGIS_POLICY_UNSUPPORTED_TARGET",
-            "M6 v1 尚未完成 OpenClaw 插件/MCP 安装包适配，已按失败关闭策略阻止安装。",
+        return finalize(
+            block_response(
+                "AEGIS_POLICY_UNSUPPORTED_TARGET",
+                "M6 v1 尚未完成 OpenClaw 插件/MCP 安装包适配，已按失败关闭策略阻止安装。",
+            )
         )
 
     try:
         source_root = validate_source_path(request.source_path)
         before_hash = tree_hasher(source_root)
     except SourceTreeRejected as exc:
-        return block_response("AEGIS_POLICY_INVALID_SOURCE", str(exc))
+        return finalize(block_response("AEGIS_POLICY_INVALID_SOURCE", str(exc)))
 
     try:
         scan_result = skill_scan(source_root)
@@ -366,31 +388,47 @@ def evaluate_install_request(
             raise RuntimeError("静态扫描流水线未返回 Finding 列表")
         evaluation = evaluate_findings(findings)
     except subprocess.TimeoutExpired:
-        return block_response(
-            "AEGIS_POLICY_SCAN_TIMEOUT",
-            "安装前静态扫描超过执行时间上限，已按失败关闭策略阻止安装。",
+        return finalize(
+            block_response(
+                "AEGIS_POLICY_SCAN_TIMEOUT",
+                "安装前静态扫描超过执行时间上限，已按失败关闭策略阻止安装。",
+            ),
+            before_hash,
         )
     except PolicyConfigurationError as exc:
-        return block_response("AEGIS_POLICY_SCAN_FAILED", str(exc))
+        return finalize(
+            block_response("AEGIS_POLICY_SCAN_FAILED", str(exc)), before_hash
+        )
     except Exception as exc:
-        return block_response(
-            "AEGIS_POLICY_SCAN_FAILED",
-            f"安装前静态扫描未能可靠完成：{type(exc).__name__}",
+        return finalize(
+            block_response(
+                "AEGIS_POLICY_SCAN_FAILED",
+                f"安装前静态扫描未能可靠完成：{type(exc).__name__}",
+            ),
+            before_hash,
         )
 
     try:
         after_hash = tree_hasher(source_root)
     except SourceTreeRejected as exc:
-        return block_response("AEGIS_POLICY_SOURCE_CHANGED", str(exc))
+        return finalize(
+            block_response("AEGIS_POLICY_SOURCE_CHANGED", str(exc)), before_hash
+        )
     if before_hash != after_hash:
-        return block_response(
-            "AEGIS_POLICY_SOURCE_CHANGED",
-            "暂存源码在扫描过程中发生变化，已阻止本次安装。",
+        return finalize(
+            block_response(
+                "AEGIS_POLICY_SOURCE_CHANGED",
+                "暂存源码在扫描过程中发生变化，已阻止本次安装。",
+            ),
+            before_hash,
         )
 
-    return _response_from_evaluation(
-        evaluation.decision,
-        evaluation.trace.reason,
-        findings,
-        source_root,
+    return finalize(
+        _response_from_evaluation(
+            evaluation.decision,
+            evaluation.trace.reason,
+            findings,
+            source_root,
+        ),
+        before_hash,
     )

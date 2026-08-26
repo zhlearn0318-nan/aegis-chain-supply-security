@@ -1,0 +1,27 @@
+{
+  "run_id": "2026-08-26-openclaw-admission-hardening-v1",
+  "scanner_environment_inherits_service_environment": false,
+  "real_profile_inherited": false,
+  "skill_scanner_results": 1,
+  "mcp_scanner_results": 6,
+  "mcp_scanner_unsafe": 3,
+  "dependency_count": 1,
+  "dependency_vulnerabilities": 14,
+  "safe_decision": "allow",
+  "safe_duration_ms": 4420,
+  "risky_decision": "block",
+  "risky_duration_ms": 4422,
+  "audit_rows": 2,
+  "audit_chain_valid": true,
+  "audit_head_sha256": "0a14b264e6e87cb82db4b0ba11f68ec7397f7a96926e6af2815711f4bf1cb101",
+  "audit_source_path_retained": false,
+  "audit_source_content_retained": false,
+  "audit_failure_closed": true,
+  "full_preflight_ready": true,
+  "backend_passed": 390,
+  "backend_failed": 0,
+  "rules_changed": false,
+  "policy_thresholds_changed": false,
+  "third_party_samples_executed": 0
+}
+

@@ -47,6 +47,12 @@ def test_process_runner_forces_safe_subprocess_options(monkeypatch, tmp_path) ->
     second_path.mkdir()
     monkeypatch.setenv("OPENAI_API_KEY", "must-not-leak")
     monkeypatch.setenv("VIRUSTOTAL_API_KEY", "must-not-leak")
+    monkeypatch.setenv("AWS_SECRET_ACCESS_KEY", "must-not-leak")
+    monkeypatch.setenv("AZURE_CLIENT_SECRET", "must-not-leak")
+    monkeypatch.setenv("GITHUB_TOKEN", "must-not-leak")
+    monkeypatch.setenv("HTTP_PROXY", "http://user:secret@proxy.invalid:8080")
+    monkeypatch.setenv("USERPROFILE", str(tmp_path / "sensitive-profile"))
+    monkeypatch.setenv("APPDATA", str(tmp_path / "sensitive-profile" / "AppData"))
 
     def fake_run(command, **kwargs):
         captured["command"] = command
@@ -69,8 +75,19 @@ def test_process_runner_forces_safe_subprocess_options(monkeypatch, tmp_path) ->
     assert captured["check"] is False
     assert "OPENAI_API_KEY" not in captured["env"]
     assert "VIRUSTOTAL_API_KEY" not in captured["env"]
+    assert "AWS_SECRET_ACCESS_KEY" not in captured["env"]
+    assert "AZURE_CLIENT_SECRET" not in captured["env"]
+    assert "GITHUB_TOKEN" not in captured["env"]
+    assert "HTTP_PROXY" not in captured["env"]
+    assert captured["env"]["USERPROFILE"] == str(tmp_path / "cache" / "profile")
+    assert captured["env"]["APPDATA"] == str(
+        tmp_path / "cache" / "profile" / "AppData" / "Roaming"
+    )
+    assert str(tmp_path / "sensitive-profile") not in captured["env"].values()
     assert captured["env"]["HF_HUB_OFFLINE"] == "1"
     assert captured["env"]["LITELLM_LOCAL_MODEL_COST_MAP"] == "True"
+    assert captured["env"]["TEMP"] == str(tmp_path / "cache" / "tmp")
+    assert captured["env"]["TMP"] == str(tmp_path / "cache" / "tmp")
     assert captured["env"]["PATH"].split(os.pathsep)[:2] == [
         str(first_path),
         str(second_path),

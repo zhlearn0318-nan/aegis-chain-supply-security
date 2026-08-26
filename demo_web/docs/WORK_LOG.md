@@ -951,3 +951,12 @@
 - 稳定版不接受 warn；新增 REVIEW→block 兼容模式，中风险固定网络 Skill 被明确阻断且无残留。
 - Beta `2026.8.1-beta.3` npm 包 SHA-512 核验一致并隔离安装，但 Windows ACL 门仍拒绝常见祖先目录，未选为冻结依赖。
 - 后端完整 `386 passed`；下一步 M6-3 审计、环境白名单与部署前检查。
+
+## 2026-08-26：M6-3 准入审计与隔离加固
+
+- 将扫描器子进程从“复制环境后删除4个 Key”改为从空环境构建白名单；真实 USERPROFILE/APPDATA、云密钥、Token 和认证代理不再继承。
+- 首版过窄环境令 pip-audit 的 Windows Known Folder 调用失败关闭；改用仓库缓存内合成 profile 后恢复兼容，没有重新放开真实用户目录。
+- 真实 Cisco Skill、MCP 和 pip-audit 冒烟全部完成；Skill 1个结果、MCP 6项/unsafe 3、依赖1项/漏洞14。
+- 新增 SQLite 最小化准入审计、追加保护、哈希链校验和审计失败 block；不保存源码或绝对 sourcePath。
+- 完整 preflight ready=true；真实安全/恶意 CLI 分别 allow/block，2行审计链有效。
+- 后端完整 `390 passed`；下一步 M6-4 Plugin/MCP 安装包最小适配。

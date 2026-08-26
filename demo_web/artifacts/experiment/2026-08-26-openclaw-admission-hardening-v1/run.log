@@ -1,0 +1,19 @@
+2026-08-26 M6-3 OpenClaw admission hardening v1
+
+1. Replaced os.environ.copy() scanner execution with an explicit environment allowlist.
+2. Unit sentinels confirmed OpenAI/cloud/GitHub/proxy credentials and the real user profile are absent.
+3. Real Cisco Skill smoke completed: results=1, findings=1.
+4. Real Cisco MCP smoke completed: results=6, unsafe=3.
+5. First real pip-audit smoke failed closed because Windows pip required a known user folder.
+6. Added a repository-cache synthetic USERPROFILE/APPDATA/LOCALAPPDATA; did not restore real profile inheritance.
+7. Real pip-audit rerun completed: dependencies=1, vulnerabilities=14.
+8. Added minimized SQLite append records, UPDATE/DELETE rejection triggers and a recomputable previous-hash chain.
+9. Audit write failure test converted an otherwise allow response to AEGIS_POLICY_AUDIT_FAILED/block.
+10. Real policy CLI safe request returned allow in 4420ms.
+11. Real policy CLI malicious request returned block in 4422ms with two critical findings.
+12. Independent audit tool verified 2 rows and head 0a14b264e6e87cb82db4b0ba11f68ec7397f7a96926e6af2815711f4bf1cb101.
+13. Full deployment preflight returned ready=true; skipped-fixture mode remains diagnostic/non-ready.
+14. Targeted tests passed 41; final backend regression passed 390, failed 0, with one pre-existing deprecation warning.
+15. No detection rules, policy thresholds, third-party sample execution, GPU or Docker were involved.
+
+Conclusion: supported_for_skill_install_admission_with_documented_platform_limits.
