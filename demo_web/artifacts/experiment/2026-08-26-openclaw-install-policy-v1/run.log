@@ -1,0 +1,15 @@
+2026-08-26 M6-1 OpenClaw install policy v1
+
+1. 从 dynamic-audit-v1 基线 54819f5 新建 openclaw-install-policy 分支。
+2. 冻结 OpenClaw protocol v1、失败关闭、文件树身份、性能与验收合同。
+3. 实现本地同步适配器和 CLI；不依赖 FastAPI、网络、大模型、GPU或 Docker。
+4. 首轮完整回归：375 passed，7 failed。失败原因是 Windows 对同一文件的 inode 身份报告不稳定，导致正常文件树被误判为变化。
+5. 删除不可靠 inode 比较，保留文件大小/mtime 检查及扫描前后整树 SHA-256。
+6. 第二轮完整回归：382 passed。
+7. 真实安全 Skill：allow，观察墙钟约 6.1 秒，树身份一致。
+8. 真实恶意外传 Skill：block，观察墙钟约 5.9 秒，展示 2 条 CRITICAL 证据，树身份一致。
+9. 复核 OpenClaw 4000 字符 warn 展示预算，将输出改为严重度优先的前3条精简 Finding，并强制 Windows stdout UTF-8。
+10. 最终完整回归：383 passed，0 failed，1 条既有 FastAPI/TestClient 弃用警告。
+
+结论：supported_on_local_adapter_and_controlled_fixtures。
+下一步：M6-2 OpenClaw 真实 installPolicy 配置与安装闭环。

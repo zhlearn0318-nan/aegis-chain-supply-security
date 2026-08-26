@@ -375,3 +375,15 @@
 - Cisco 固定样本复现脚本新增失败闭锁 oracle，避免内部 pip-audit 无输出时被上游错误显示为 SAFE。
 - 验收：自身供应链 gate 12/12、后端 348 passed、前端 10 passed、生产构建及 Cisco 固定样本冒烟通过。
 - 证据：`artifacts/experiment/2026-08-24-project-supply-chain-hygiene-dev-v1/`；下一节点为 P0-5 真实 Windows VM 发布门。
+
+## 20. M6 OpenClaw 安装前准入（2026-08-26）
+
+- 选定路线：使用官方 `security.installPolicy`，实现不依赖 HTTP 的本地同步适配器；Web 平台只作为后续审计展示面。
+- M6-1 已完成：protocol v1 校验、目录边界、扫描前后整树哈希、现有 Skill 静态流水线复用、决策映射、失败关闭、UTF-8 CLI 与配置示例。
+- 现有规则、默认策略、全量基准和600条密封回归结果未修改。
+- 自动测试：OpenClaw 专项22个用例；后端完整 `383 passed`。
+- 真实自建固定样本：安全 Skill 为 allow，恶意外传 Skill 为 block；输入树均保持不变。
+- 当前证据等级：`supported_on_local_adapter_and_controlled_fixtures`，尚未声称真实 OpenClaw 安装提交完成。
+- 下一节点：M6-2，在本机配置 OpenClaw `security.installPolicy`，运行 `doctor --deep` 和 allow/warn/block/failure 四类安装闭环。
+- 设计真值：`docs/M6_OPENCLAW_INSTALL_POLICY_DESIGN.md`。
+- 运行证据：`artifacts/experiment/2026-08-26-openclaw-install-policy-v1/`。

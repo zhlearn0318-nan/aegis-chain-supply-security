@@ -2,12 +2,12 @@
 
 > 状态日期：2026-08-26
 > 最近推送工程基线：`6526843`（`dynamic-audit-v1`）；本次范围决策由包含本文件的提交承载。
-> 当前工程阶段：比赛交付收敛；P0-1 至 P0-4 已完成，P0-5 三次真实 VM 运行均保留失败证据，现延期且不再阻断比赛交付。
+> 当前工程阶段：比赛交付收敛；M6-1 OpenClaw 安装前同步准入适配器已完成，下一节点为真实 OpenClaw 安装闭环；P0-5 真实 VM 验收延期且不再阻断比赛交付。
 > 状态优先级：本文件高于 README 中的摘要和全部日期化阶段报告；发生冲突时以本文件及对应冻结证据为准。
 
 ## 1. 一句话结论
 
-Aegis Chain 已是可在当前 Windows 主机运行和演示的供应链安全研究原型，具备 Skill、MCP、Python 依赖静态审计和仅面向自建哈希锁定样本的受控动态验证；当前比赛交付可以继续收敛，但洁净 Windows VM 发布门尚未通过，且系统仍不具备生产政企平台所需的完整身份、租户、高可用和不可信代码强隔离，因此生产发布决策保持 **NO-GO**。
+Aegis Chain 已是可在当前 Windows 主机运行和演示的供应链安全研究原型，具备 Skill、MCP、Python 依赖静态审计、OpenClaw Skill 安装前本地同步准入适配器，以及仅面向自建哈希锁定样本的受控动态验证；真实 OpenClaw 安装提交闭环尚待 M6-2 验收，生产发布决策保持 **NO-GO**。
 
 ## 2. 当前可复核能力
 
@@ -17,6 +17,7 @@ Aegis Chain 已是可在当前 Windows 主机运行和演示的供应链安全�
 | MCP 静态审计 | 可用；Tool/Prompt/Resource 与可选依赖清单统一审查 | 当前上传协议是离线 JSON，不连接未知远端服务 |
 | Python 依赖审计 | 可用；`pip-audit` + 完整性规则 + CycloneDX 导出 | 当前 SBOM 主要覆盖任务声明依赖，不代表项目自身发布 SBOM 已完成 |
 | 准入决策 | `ALLOW / REVIEW / BLOCK / UNKNOWN`；扫描异常失败闭锁 | 动态证据当前不改变最终决策 |
+| OpenClaw 安装策略 | protocol v1 同步适配器已通过本地真实固定样本；安全 allow、恶意 block | 尚未执行 `doctor --deep` 和真实安装提交；v1 暂不支持 plugin/MCP 包 |
 | 受控动态机制 | 可用；固定良性 fixture、MCP 协议/Marker/遥测和 Skill 运行时闭包 | 不接受用户代码、路径、命令，不执行第三方数据集样本 |
 | 动态任务控制 | 单主机 SQLite 持久队列、全局单执行、FIFO、去重冷却、429 和重启恢复 | 不等价于多实例消息队列或高可用 worker |
 | 项目自身供应链 | 共享运行时/前端精确锁定，自身 SBOM、许可、漏洞、Secret 与仓库卫生门可复现 | 漏洞结论是 2026-08-25 的时间截面 |
@@ -30,13 +31,15 @@ Aegis Chain 已是可在当前 Windows 主机运行和演示的供应链安全�
 - P0-5 验收程序本机非正式烟雾：Skill、MCP、依赖和受控动态 4/4 链完成，导出 7/7；Docker 缺失返回明确 503；漏洞服务断网形成 `failed / UNKNOWN / SCAN_EXECUTION_FAILED`。
 - P0-5 真实运行：三次均完成私有远端新克隆、VM 证明和负向 preflight，随后分别暴露日志可观测性、Windows Conda 解释器布局和 Conda `Library\bin` PATH 问题；失败证据逐次固化，第四次运行未执行，不能计作通过。
 - P0-5 范围决策：2026-08-26 确认洁净 Windows VM 不是赛题明示交付物，故延期为可选工程增强，不再阻断比赛交付；临时 GitHub Deploy Key 已吊销，本地私钥、公钥和专用 `known_hosts` 已删除。
-- 后端完整回归：`361 passed`。
+- M6-1 OpenClaw 专项：22个用例；真实安全/恶意固定 Skill 分别为 allow/block，输入树变化 0。
+- 后端完整回归：`383 passed`。
 - 前端 API 测试：`10 passed`。
 - 前端生产构建：通过。
 - P0-2 证据：`demo_web/artifacts/experiment/2026-08-24-dynamic-queue-recovery-dev-v1/`。
 - P0-1 证据：`demo_web/artifacts/experiment/2026-08-24-portable-startup-dev-v1/`。
 - P0-4 证据：`demo_web/artifacts/experiment/2026-08-24-project-supply-chain-hygiene-dev-v1/`。
 - M3 600 条密封回归结论仍为 `supported_with_tradeoff`，未因工程改造重新调规则。
+- M6-1 证据：`demo_web/artifacts/experiment/2026-08-26-openclaw-install-policy-v1/`；下一节点为 M6-2 真实 OpenClaw 安装闭环。
 
 ## 4. M5 完成度
 
@@ -60,6 +63,7 @@ Aegis Chain 已是可在当前 Windows 主机运行和演示的供应链安全�
 - 不主张受控 fixture 的通过结果能证明某个外部组件安全。
 - 不主张当前身份令牌、SQLite 和单进程调度已经满足多租户、高可用与合规审计。
 - 不主张三次 P0-5 失败运行或已安装 VM 等价于洁净 Windows 发布门通过。
+- 不主张本地 policy adapter 冒烟等价于 OpenClaw `doctor --deep`、真实安装提交、警告确认或插件/MCP 准入已经通过。
 - 不主张旧阶段报告中的测试总数、下一步或“最终”字样代表当前状态。
 
 ## 6. 文档解释规则

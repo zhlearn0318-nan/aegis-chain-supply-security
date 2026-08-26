@@ -1,0 +1,10 @@
+{
+  "run_id": "2026-08-26-openclaw-install-policy-v1",
+  "outcome": "supported_on_local_adapter_and_controlled_fixtures",
+  "evaluation_summary": "OpenClaw protocol v1 适配器的协议、决策映射、文件树身份和失败关闭机制通过自动测试；两个自建固定 Skill 的真实 Cisco+Aegis 扫描分别得到 allow 和 block。",
+  "claim_update": "可主张已完成面向 OpenClaw Skill 安装策略的本地同步适配器，不可主张已完成 OpenClaw 真实安装提交、警告确认或插件/MCP 包准入。",
+  "baseline_relation": "复用提交 54819f5 的静态流水线和 admission_policy.yaml，不修改冻结规则、决策语义、SkillTrustBench 数据或600条密封回归结果。",
+  "failure_mode": "none_in_accepted_run; Windows inode identity comparison was rejected during development and replaced by size/mtime plus whole-tree before/after hashing",
+  "next_action": "在本机定位或安装 OpenClaw，配置 security.installPolicy，执行 doctor --deep 以及 allow/warn/block/failure 的真实安装闭环。",
+  "go_no_go": "GO_TO_M6_2_OPENCLAW_E2E"
+}

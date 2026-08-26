@@ -1,0 +1,25 @@
+{
+  // 将下列路径替换为受信任、权限受限目录中的绝对路径。
+  security: {
+    installPolicy: {
+      enabled: true,
+      // v1 只声明 skill；完成插件/MCP 安装包验收后再加入 plugin。
+      targets: ["skill"],
+      exec: {
+        source: "exec",
+        command: "C:\\AegisChain\\runtime\\python.exe",
+        args: ["C:\\AegisChain\\demo_web\\tools\\openclaw_install_policy.py"],
+        timeoutMs: 15000,
+        noOutputTimeoutMs: 15000,
+        maxOutputBytes: 1048576,
+        passEnv: [],
+        env: {
+          AEGIS_OPENCLAW_SCAN_TIMEOUT_SECONDS: "12",
+          PYTHONUTF8: "1",
+          PYTHONIOENCODING: "utf-8",
+        },
+        trustedDirs: ["C:\\AegisChain\\runtime"],
+      },
+    },
+  },
+}

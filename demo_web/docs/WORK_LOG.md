@@ -930,3 +930,14 @@
 - 新增根与主系统文档索引，规定状态优先级；新增 6 项文档契约测试阻止旧测试数、个人路径和入口漂移。
 - 验收结果：文档专项 6 passed、后端完整 341 passed、前端 10 passed、生产构建通过。
 - 结论：`single_current_status_truth_enforced`；下一项为 P0-4 项目自身供应链卫生。
+
+## 2026-08-26：M6-1 OpenClaw 安装前准入适配器
+
+- 新建 `openclaw-install-policy` 分支，并完成 `M6_OPENCLAW_INSTALL_POLICY_DESIGN.md`，冻结官方 protocol v1、失败关闭、目录身份、性能和验收边界。
+- 新增不依赖 FastAPI 的同步 CLI，直接复用 Cisco Skill Scanner、Aegis 静态增强和现有 `admission_policy.yaml`。
+- 实现请求字段校验、绝对目录与链接拒绝、500文件/50 MiB边界、扫描前后整树 SHA-256、超时/异常/UNKNOWN 阻断和宿主绝对路径脱敏。
+- Windows 首轮测试发现 inode 报告不稳定会误阻断；删除该不可靠信号，保留大小/mtime及整树前后哈希，原始失败如实记录在实验日志。
+- 为满足 OpenClaw warn 的4000字符交互预算，输出按严重度排序并只展示前3条精简 Finding；完整结果仍由本系统报告承载。CLI 强制输出 UTF-8。
+- 最终 OpenClaw 专项22个用例，后端完整 `383 passed`；安全固定 Skill 返回 allow，恶意外传 Skill 返回 block 并展示两条 CRITICAL 证据，输入树均未变化。
+- 当前只支持本地适配器和固定样本，不冒充 OpenClaw 真实安装提交或插件/MCP 包准入已经完成。
+- 下一步：M6-2 OpenClaw `doctor --deep` 与 allow/warn/block/failure 真实安装闭环。

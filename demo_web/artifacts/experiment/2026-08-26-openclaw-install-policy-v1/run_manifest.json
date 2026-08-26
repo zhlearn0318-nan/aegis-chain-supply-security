@@ -1,0 +1,25 @@
+{
+  "run_id": "2026-08-26-openclaw-install-policy-v1",
+  "date": "2026-08-26",
+  "branch": "openclaw-install-policy",
+  "baseline_commit": "54819f53a32e581a1b6e508f372c226995292f77",
+  "python": "3.13.14",
+  "platform": "Windows",
+  "scanner_sha256": "B31B66FCE1B8466BA5C49E1084EE972B746E00D4EBDCAEAB78AD6B38A0DCE366",
+  "source_sha256": {
+    "backend/openclaw_install_policy.py": "BFECBB686401E824C52B2C84F4F56BAEF58D9658F82A33911EE60F50725A44A0",
+    "tools/openclaw_install_policy.py": "D52E338007633D96310524471574B1AB7116006B68119F7A68FD6DC3366BB5DE",
+    "docs/M6_OPENCLAW_INSTALL_POLICY_DESIGN.md": "E83FF80BB66E00FBA890566E6F55EF74CAB35291686610B1006F209BA03AF850",
+    "config/openclaw.install-policy.example.json5": "DCBE860DCD604028841752FF1D84AD3FBA884AD1863ABA6CF2C01826C5090618"
+  },
+  "commands": [
+    ".\\run_tests.ps1",
+    "<OpenClaw protocol v1 safe JSON> | ..\\.runtime_mcp313\\Scripts\\python.exe tools\\openclaw_install_policy.py",
+    "<OpenClaw protocol v1 risky JSON> | ..\\.runtime_mcp313\\Scripts\\python.exe tools\\openclaw_install_policy.py"
+  ],
+  "network_used": false,
+  "gpu_used": false,
+  "docker_used": false,
+  "third_party_samples_executed": 0,
+  "frozen_regression_opened": 0
+}

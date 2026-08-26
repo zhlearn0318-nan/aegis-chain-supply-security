@@ -1,0 +1,36 @@
+{
+  "run_id": "2026-08-26-openclaw-install-policy-v1",
+  "protocol_version": 1,
+  "branch": "openclaw-install-policy",
+  "baseline_commit": "54819f53a32e581a1b6e508f372c226995292f77",
+  "tests": {
+    "openclaw_policy_cases": 22,
+    "backend_passed": 383,
+    "backend_failed": 0,
+    "warnings": 1
+  },
+  "real_smoke": [
+    {
+      "target": "fixtures/skills/benign_doc_summary",
+      "expected": "allow",
+      "actual": "allow",
+      "observed_wall_time_seconds": 6.1,
+      "input_tree_unchanged": true
+    },
+    {
+      "target": "fixtures/skills/malicious_exfiltration",
+      "expected": "block",
+      "actual": "block",
+      "observed_wall_time_seconds": 5.9,
+      "input_tree_unchanged": true,
+      "critical_findings_displayed": 2
+    }
+  ],
+  "metrics": {
+    "protocol_valid_rate": 1.0,
+    "negative_case_fail_closed_rate": 1.0,
+    "expected_real_decision_match_rate": 1.0,
+    "real_input_tree_unchanged_rate": 1.0,
+    "backend_regression_passed": true
+  }
+}

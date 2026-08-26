@@ -138,3 +138,18 @@
 - [ ] P1 静态隔离、独立评测、任务体验、CI 和能力健康。
 - [ ] P2 身份/租户、持久任务平台、强沙箱、治理、完整准入与可观测性。
 - [ ] 最终全量验证、评委复审、版本冻结和发布。
+
+## M6 OpenClaw 安装前准入
+
+- [x] 新建 `openclaw-install-policy` 分支。
+- [x] 编写正式设计文档并冻结 protocol v1、失败关闭和能力边界。
+- [x] 实现同步 Skill 安装策略适配器，不依赖 Web API。
+- [x] 实现有界目录哈希、链接拒绝和扫描前后变化阻断。
+- [x] 实现 ALLOW/REVIEW/BLOCK/UNKNOWN 到 allow/warn/block 映射。
+- [x] 实现 UTF-8 单 JSON CLI 和 OpenClaw 配置示例。
+- [x] 通过22个专项用例及后端完整 `383 passed`。
+- [x] 真实安全/恶意固定 Skill 分别返回 allow/block。
+- [ ] M6-2：真实 OpenClaw `doctor --deep`。
+- [ ] M6-2：真实 allow/warn/block/failure 安装与无残留验证。
+- [ ] M6-3：扫描进程环境白名单和准入审计落盘。
+- [ ] M6-4：插件/MCP 安装包最小适配。
