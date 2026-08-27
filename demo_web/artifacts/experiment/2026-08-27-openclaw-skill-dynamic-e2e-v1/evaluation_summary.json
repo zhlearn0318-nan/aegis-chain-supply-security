@@ -1,0 +1,13 @@
+{
+  "claim_update": "refuted_or_inconclusive",
+  "limits": [
+    "仅执行哈希锁定的自建 Python Skill fixture。",
+    "当前 OpenClaw 稳定版将 REVIEW 兼容映射为 block。",
+    "Docker Desktop/WSL2 不等同于恶意代码专用虚拟机。",
+    "Falco/eBPF 与第三方 Skill 尚未验收。"
+  ],
+  "next_action": "repair_failed_e2e_gate",
+  "outcome_summary": "至少一个 OpenClaw required 动态准入接受门未通过。",
+  "run_id": "2026-08-27-openclaw-skill-dynamic-e2e-v1",
+  "schema_version": "1.0"
+}
