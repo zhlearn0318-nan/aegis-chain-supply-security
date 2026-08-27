@@ -1,0 +1,3 @@
+execution_interface=Codex exec_command
+bash_exec_available=false
+artifact_tool_available=false

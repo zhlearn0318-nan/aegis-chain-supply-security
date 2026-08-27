@@ -2,12 +2,12 @@
 
 > 状态日期：2026-08-27
 > 最近推送工程分支：`origin/skill-dynamic-sandbox-v1`；当前状态由包含本文件的最新里程碑提交承载。
-> 当前工程阶段：静态审计比赛版本保持冻结；Skill 安装前 Docker 隔离试运行已通过真实自建样本重复验收。Falco/eBPF 旁证和第三方 Skill 运行仍未完成；P0-5 真实 VM 验收继续延期且不阻断比赛交付。
+> 当前工程阶段：静态审计比赛版本保持冻结；Skill 安装前 Docker 隔离试运行已通过 20 个自建样本、8 类行为、3 轮真实回归。Falco/eBPF 旁证和第三方 Skill 运行仍未完成；P0-5 真实 VM 验收继续延期且不阻断比赛交付。
 > 状态优先级：本文件高于 README 中的摘要和全部日期化阶段报告；发生冲突时以本文件及对应冻结证据为准。
 
 ## 1. 一句话结论
 
-Aegis Chain 已被真实 OpenClaw 稳定版调用，并完成 Skill 与目录型原生 Plugin 静态安装准入；Skill 安装前动态策略除 15 次直接 Docker 验收外，已完成真实 OpenClaw 安全安装、静态 ALLOW→动态 BLOCK 和配置异常失败关闭三条 E2E。第三方 Skill 和 Falco eBPF 旁证尚未验收，生产发布决策保持 **NO-GO**。
+Aegis Chain 已被真实 OpenClaw 稳定版调用，并完成 Skill 与目录型原生 Plugin 静态安装准入；Skill 安装前动态策略已完成 20 个受控样本 × 3 轮真实 Docker 回归，以及真实 OpenClaw 安全安装、静态 ALLOW→动态 BLOCK 和配置异常失败关闭三条 E2E。第三方 Skill 和 Falco eBPF 旁证尚未验收，生产发布决策保持 **NO-GO**。
 
 ## 2. 当前可复核能力
 
@@ -19,7 +19,7 @@ Aegis Chain 已被真实 OpenClaw 稳定版调用，并完成 Skill 与目录型
 | 准入决策 | `ALLOW / REVIEW / BLOCK / UNKNOWN`；扫描异常失败闭锁 | 默认静态模式不变；显式 `required` 动态模式只允许维持或提高风险 |
 | OpenClaw 安装策略 | Skill 与目录型原生 Plugin 真实安装成功；恶意 Skill、运行时下载 Plugin 和异常均阻断；随包 MCP manifest、环境白名单、审计链、preflight 已通过 | 稳定版不支持 warn；配置型 MCP、单文件/归档 Plugin 未接入；审计尚未外送 SIEM/WORM |
 | 受控动态机制 | 可用；固定良性 fixture、MCP 协议/Marker/遥测和 Skill 运行时闭包 | 不接受用户代码、路径、命令，不执行第三方数据集样本 |
-| Skill 安装前动态沙箱 | 默认 Python 后端已通过真实 Docker 自建样本重复验收；入口发现、安全合同、行为规则和 OpenClaw 单调融合已实现 | 15 次结果仅覆盖哈希锁定自建 fixture；Falco/eBPF 和第三方 Skill 未验收，不宣称可安全执行任意未知代码 |
+| Skill 安装前动态沙箱 | 默认 Python 后端已通过 20 样本、8 行为族、3 轮真实 Docker 回归；入口发现、安全合同、行为规则和 OpenClaw 单调融合已实现 | 60 次结果仅覆盖哈希锁定自建 fixture；Falco/eBPF 和第三方 Skill 未验收，不宣称可安全执行任意未知代码 |
 | 动态任务控制 | 单主机 SQLite 持久队列、全局单执行、FIFO、去重冷却、429 和重启恢复 | 不等价于多实例消息队列或高可用 worker |
 | 项目自身供应链 | 共享运行时/前端精确锁定，自身 SBOM、许可、漏洞、Secret 与仓库卫生门可复现 | 漏洞结论是 2026-08-25 的时间截面 |
 | 可移植启动 | 当前主机和模拟异用户环境通过；真实 VirtualBox Windows guest、固定工具链和四链 E2E 验证程序均已建立 | 三次远端新克隆均在运行时重建阶段失败；失败推动了日志、Conda 布局和 PATH 三类修复，但不构成洁净 VM 通过证据 |
@@ -36,7 +36,7 @@ Aegis Chain 已被真实 OpenClaw 稳定版调用，并完成 Skill 与目录型
 - M6-3 准入加固：Cisco Skill/MCP/依赖真实冒烟通过；完整 preflight ready；安全/恶意审计2行、哈希链有效。
 - M6-4 Plugin/MCP：真实良性 Plugin 安装成功；npx运行时下载 Plugin 阻断且残留0；3行真实审计链有效。
 - 静态最终补强：有依赖 Plugin 在缺少 Node 漏洞证据时强制 REVIEW；Aegis 静态规则注册表125条完整。
-- 后端完整回归：`418 passed, 1 skipped`；跳过项仅为当前 Windows 测试账户无符号链接创建权限。
+- 后端完整回归：`422 passed, 1 skipped`；跳过项仅为当前 Windows 测试账户无符号链接创建权限。
 - 前端 API 测试：`10 passed`。
 - 前端生产构建：通过。
 - P0-2 证据：`demo_web/artifacts/experiment/2026-08-24-dynamic-queue-recovery-dev-v1/`。
@@ -46,6 +46,7 @@ Aegis Chain 已被真实 OpenClaw 稳定版调用，并完成 Skill 与目录型
 - M6-4 证据：`demo_web/artifacts/experiment/2026-08-26-openclaw-plugin-mcp-admission-v1/`；最终评委复核：`demo_web/docs/STATIC_AUDIT_FINAL_JUDGE_REVIEW_2026-08-26.md`。
 - M7 动态沙箱开发证据：`demo_web/artifacts/experiment/2026-08-27-skill-dynamic-sandbox-dev-v1/`；该开发时间截面的结论为逻辑链 `supported`、真实 Docker/Falco 运行 `inconclusive`。
 - M7 真实 Docker 重复验收：`demo_web/artifacts/experiment/2026-08-27-skill-dynamic-sandbox-real-v2/`；5 类场景×3轮共 15/15 决策正确，动态 BLOCK 9、REVIEW 3；良性误报、危险漏报、遥测缺失、清理失败和容器残留均为 0。默认 Python 后端结论更新为 `supported_on_self_built_real_docker_fixtures`，Falco 仍为可选且 `inconclusive`。
+- M7 20 样本稳定性回归：v1 按原预期 60/60 通过，但运行后审查发现 `os.system()` 标签偏宽松；原始结果保留。v2 将其提升为 `AEGIS_DYNAMIC_SHELL_SPAWN / CRITICAL / BLOCK` 后重新执行 20 个样本、8 类行为、3 轮共 60 次，决策与必需规则均 60/60，ALLOW 12、REVIEW 12、BLOCK 36；良性误报、危险漏报、复核错配、跨轮不稳定、遥测缺失、清理失败和容器残留均为 0。证据：`demo_web/artifacts/experiment/2026-08-27-skill-dynamic-regression20-v2/`。
 - M7 OpenClaw 动态 E2E：v1 因隔离 profile 缺少 Docker context 失败并保留证据；v2 用单一环境修复后 3/3 通过。安全 Skill 真实安装，静态 ALLOW 的 Shell Skill 被 `AEGIS_DYNAMIC_SHELL_SPAWN` 阻断，配置异常失败关闭；审计链有效，输入变化、阻断目录残留、用户默认 workspace 污染和容器残留均为 0。证据：`demo_web/artifacts/experiment/2026-08-27-openclaw-skill-dynamic-e2e-v2/`。
 
 ## 4. M5 完成度

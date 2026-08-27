@@ -1,0 +1,78 @@
+{
+  "behavior_families": 8,
+  "benign_false_positives": 0,
+  "cleanup_failures": 0,
+  "cloud_used": false,
+  "container_residuals": 0,
+  "dangerous_false_negatives": 0,
+  "decision_correct": 60,
+  "duration_ms_max": 4867.0,
+  "duration_ms_median": 2797.0,
+  "duration_ms_p95": 3640.0,
+  "dynamic_allows": 12,
+  "dynamic_blocks": 33,
+  "dynamic_reviews": 15,
+  "elapsed_seconds": 175.743,
+  "family_metrics": {
+    "benign_control": {
+      "decision_correct": 12,
+      "executions": 12,
+      "passed": 12,
+      "required_rules_present": 12
+    },
+    "dynamic_loading": {
+      "decision_correct": 6,
+      "executions": 6,
+      "passed": 6,
+      "required_rules_present": 6
+    },
+    "encoding_obfuscation": {
+      "decision_correct": 9,
+      "executions": 9,
+      "passed": 9,
+      "required_rules_present": 9
+    },
+    "external_network": {
+      "decision_correct": 6,
+      "executions": 6,
+      "passed": 6,
+      "required_rules_present": 6
+    },
+    "process_execution": {
+      "decision_correct": 12,
+      "executions": 12,
+      "passed": 12,
+      "required_rules_present": 12
+    },
+    "resource_abuse": {
+      "decision_correct": 3,
+      "executions": 3,
+      "passed": 3,
+      "required_rules_present": 3
+    },
+    "sensitive_data": {
+      "decision_correct": 6,
+      "executions": 6,
+      "passed": 6,
+      "required_rules_present": 6
+    },
+    "sensitive_path": {
+      "decision_correct": 6,
+      "executions": 6,
+      "passed": 6,
+      "required_rules_present": 6
+    }
+  },
+  "gpu_used": false,
+  "internet_used": false,
+  "passed_executions": 60,
+  "repeats": 3,
+  "required_rule_checks_passed": 60,
+  "review_mismatches": 0,
+  "telemetry_incomplete": 0,
+  "third_party_samples_executed": 0,
+  "total_executions": 60,
+  "unique_scenarios": 20,
+  "unstable_case_count": 0,
+  "unstable_cases": []
+}

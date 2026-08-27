@@ -1,0 +1,21 @@
+{
+  "baseline_relation": "extends_5_case_real_docker_baseline",
+  "claim_update": "supported_on_controlled_20_case_regression",
+  "evaluation_summary": {
+    "behavior_families": 8,
+    "executions": 60,
+    "passed": 60,
+    "status": "accepted"
+  },
+  "failure_mode": null,
+  "limits": [
+    "全部样本均为项目自建受控 fixture，不能据此声称现实第三方 Skill 的泛化检测率。",
+    "Python audit hook 是行为证据采集层，不是不可绕过的内核安全边界。",
+    "尚未形成 Falco/eBPF 内核级交叉证据。",
+    "Docker Desktop/WSL2 不等同于专用恶意代码分析虚拟机。"
+  ],
+  "next_action": "analyze_rule_gaps_and_add_third_party_safe_corpus",
+  "outcome_summary": "20 个自建 Skill 动态场景在真实 Docker 中连续 3 轮全部符合预期。",
+  "run_id": "2026-08-27-skill-dynamic-regression20-v1",
+  "schema_version": "1.0"
+}

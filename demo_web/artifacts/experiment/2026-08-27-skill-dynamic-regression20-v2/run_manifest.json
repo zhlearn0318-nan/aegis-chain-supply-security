@@ -1,0 +1,317 @@
+{
+  "claim_boundary": [
+    "全部样本均为项目自建受控 fixture，不能据此声称现实第三方 Skill 的泛化检测率。",
+    "Python audit hook 是行为证据采集层，不是不可绕过的内核安全边界。",
+    "尚未形成 Falco/eBPF 内核级交叉证据。",
+    "Docker Desktop/WSL2 不等同于专用恶意代码分析虚拟机。"
+  ],
+  "command": [
+    "E:\\Anaconda3\\python.exe",
+    "tools/dynamic/run_skill_sandbox_regression20.py"
+  ],
+  "completed_at": "2026-08-27T15:38:20.383523+00:00",
+  "dataset": {
+    "behavior_families": 8,
+    "repeats": 3,
+    "self_built_fixtures": 20,
+    "third_party_samples_executed": 0,
+    "total_executions": 60
+  },
+  "environment": {
+    "cloud_used": false,
+    "container_image": {
+      "architecture": "amd64",
+      "duration_ms": 199,
+      "id": "sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65",
+      "os": "linux",
+      "repo_digest_matched": true
+    },
+    "docker_engine": {
+      "api_version": "1.55",
+      "architecture": "amd64",
+      "duration_ms": 210,
+      "engine_version": "29.7.2",
+      "os": "linux"
+    },
+    "execution_interface": "Codex exec_command (bash_exec/artifact tools unavailable in this environment)",
+    "gpu_used": false,
+    "host_platform": "Windows-11-10.0.26200-SP0",
+    "host_python": "3.12.4 | packaged by Anaconda, Inc. | (main, Jun 18 2024, 15:03:56) [MSC v.1929 64 bit (AMD64)]",
+    "image_pull_used": false,
+    "internet_used": false
+  },
+  "experiment_tier": "auxiliary/dev-regression",
+  "metrics": {
+    "behavior_families": 8,
+    "benign_false_positives": 0,
+    "cleanup_failures": 0,
+    "cloud_used": false,
+    "container_residuals": 0,
+    "dangerous_false_negatives": 0,
+    "decision_correct": 60,
+    "duration_ms_max": 4753.0,
+    "duration_ms_median": 2790.0,
+    "duration_ms_p95": 3496.0,
+    "dynamic_allows": 12,
+    "dynamic_blocks": 36,
+    "dynamic_reviews": 12,
+    "elapsed_seconds": 175.512,
+    "family_metrics": {
+      "benign_control": {
+        "decision_correct": 12,
+        "executions": 12,
+        "passed": 12,
+        "required_rules_present": 12
+      },
+      "dynamic_loading": {
+        "decision_correct": 6,
+        "executions": 6,
+        "passed": 6,
+        "required_rules_present": 6
+      },
+      "encoding_obfuscation": {
+        "decision_correct": 9,
+        "executions": 9,
+        "passed": 9,
+        "required_rules_present": 9
+      },
+      "external_network": {
+        "decision_correct": 6,
+        "executions": 6,
+        "passed": 6,
+        "required_rules_present": 6
+      },
+      "process_execution": {
+        "decision_correct": 12,
+        "executions": 12,
+        "passed": 12,
+        "required_rules_present": 12
+      },
+      "resource_abuse": {
+        "decision_correct": 3,
+        "executions": 3,
+        "passed": 3,
+        "required_rules_present": 3
+      },
+      "sensitive_data": {
+        "decision_correct": 6,
+        "executions": 6,
+        "passed": 6,
+        "required_rules_present": 6
+      },
+      "sensitive_path": {
+        "decision_correct": 6,
+        "executions": 6,
+        "passed": 6,
+        "required_rules_present": 6
+      }
+    },
+    "gpu_used": false,
+    "internet_used": false,
+    "passed_executions": 60,
+    "repeats": 3,
+    "required_rule_checks_passed": 60,
+    "review_mismatches": 0,
+    "telemetry_incomplete": 0,
+    "third_party_samples_executed": 0,
+    "total_executions": 60,
+    "unique_scenarios": 20,
+    "unstable_case_count": 0,
+    "unstable_cases": []
+  },
+  "run_id": "2026-08-27-skill-dynamic-regression20-v2",
+  "schema_version": "1.0",
+  "seed": 20260827,
+  "sources": {
+    "backend/dynamic_audit/skill_sandbox.py": {
+      "bytes": 16541,
+      "sha256": "b75c003b7efd0415e784ee66e99d643360066c58a55f267ffe1fca91bd30d82b"
+    },
+    "backend/dynamic_audit/skill_sandbox_docker.py": {
+      "bytes": 19451,
+      "sha256": "6d928c25da2006f3338ce79d04d304e99fc768b99cb276bba01a745976523cba"
+    },
+    "config/skill_dynamic_regression20.json": {
+      "bytes": 7117,
+      "sha256": "f16437051f667a61a0cf2bb1b504596c1d09ad8f33c7e8d3228e576682564d0d"
+    },
+    "config/skill_dynamic_sandbox.json": {
+      "bytes": 1316,
+      "sha256": "1ea28e28ff91b81e42b24905fce2248fd7c03eac94a2162cca9046c81aee0cbb"
+    },
+    "tools/dynamic/docker/skill_sandbox/runner.py": {
+      "bytes": 8399,
+      "sha256": "1ef05198c19435bd06becb107599bb9bc28c2496bc4e98735dc4b3976873cf5f"
+    },
+    "tools/dynamic/docker/skill_sandbox/sitecustomize.py": {
+      "bytes": 3904,
+      "sha256": "70f6e29cf83feaaf78595697b4cf98585db23da17e32400dac0f606b0fa90d32"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/benign_compute/SKILL.md": {
+      "bytes": 102,
+      "sha256": "0a964a68ce22b9400f4fb9549c388404ac70fd7195db1581b977abdc043dd156"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/benign_compute/run.py": {
+      "bytes": 69,
+      "sha256": "5c12ff7b646204abc449315f3aca29dfb8f5b158e6f3fdf0e49577fafc429c7d"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/benign_loopback_request/SKILL.md": {
+      "bytes": 120,
+      "sha256": "9f9b330c83919ab441c366c31c3083da91c163d8c268e27442709343cf003abf"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/benign_loopback_request/run.py": {
+      "bytes": 205,
+      "sha256": "f8dea517b9937927618f40a9c1d23054c7501f25a919a4040504910c4af15631"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/benign_noop/SKILL.md": {
+      "bytes": 93,
+      "sha256": "83c6f771157c23ac1d0f532dca163a1619b480039c598b86f092fa55de33b84b"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/benign_noop/run.py": {
+      "bytes": 12,
+      "sha256": "3a66aebdedbad3cf107d24e72a07d4b735819b1cf4020fdd922f63c064708172"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/benign_workspace_write/SKILL.md": {
+      "bytes": 103,
+      "sha256": "f489ffd9ede3d47b102f3b389e974c1443e2fd67e53cb6e8b97ce7caa5e9f157"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/benign_workspace_write/run.py": {
+      "bytes": 107,
+      "sha256": "65ca6fa3de316beee6c7408c33e72e91f88dbf6b31090667eb507c0a5bedea77"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/decoy_base64_exfil/SKILL.md": {
+      "bytes": 109,
+      "sha256": "8c7c008aa6d12946245bb6837bc4fe51103a940a18e98532341952cb229721cf"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/decoy_base64_exfil/run.py": {
+      "bytes": 341,
+      "sha256": "83aa47bfc4b65424f91be00033538565e6f5cd937c929c9ec7988456373dc806"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/decoy_hex_exfil/SKILL.md": {
+      "bytes": 103,
+      "sha256": "bc549e388f98544ad7a7c57b5c7a56b3c50f6f800a0c38eac27e9431a9e43112"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/decoy_hex_exfil/run.py": {
+      "bytes": 321,
+      "sha256": "f9485a5a599bd1060ab34242efc4528dc5649102935dd26180431c979c55cb32"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/decoy_raw_exfil/SKILL.md": {
+      "bytes": 107,
+      "sha256": "a09fee8eba3cc0902d9a40132eba895d816e0b5bb70ce183eec2a3ca2901b198"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/decoy_raw_exfil/run.py": {
+      "bytes": 315,
+      "sha256": "0cb20371b027ffb5ebd47b77ad03fc3641fbf9230e4fcede67b7a5de9f1edbb6"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/decoy_read/SKILL.md": {
+      "bytes": 98,
+      "sha256": "2066d057a9acdf67b1c5e817d8e5c3164ea35ffd83276f8477ec06005d7fa466"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/decoy_read/run.py": {
+      "bytes": 114,
+      "sha256": "56e262336cfd2d7a5bf9de1c92ca93d316d1526e92ca727c7a5b43391a095645"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/native_load_libc/SKILL.md": {
+      "bytes": 103,
+      "sha256": "a3a0b8aa63ff8cf4439161f3828531f9173c31ffcdb99aeaa441812f0b0aa3e6"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/native_load_libc/run.py": {
+      "bytes": 41,
+      "sha256": "be7ec80896a7fd3c7af039dfa3205b5b0e8b4c71e75bdb2ed9b2547a726d04e0"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/native_load_none/SKILL.md": {
+      "bytes": 114,
+      "sha256": "7b65c4aef3fef17b46d957e01810d81aeb39fb5a3b3564e2ba94eebc8f414496"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/native_load_none/run.py": {
+      "bytes": 34,
+      "sha256": "49c4ce2e987e0301bfe962e48e21abe306bea7260a550e32c98e0fef909d87a6"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/network_dns/SKILL.md": {
+      "bytes": 97,
+      "sha256": "2807e4703b6b91bd5d09a06fc8887fa4a39aaf6fcf0e2ea446feae6fd99f3316"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/network_dns/run.py": {
+      "bytes": 93,
+      "sha256": "b26ec3f6ece39355cf4c58ea8876dcb1e7218348baa29c7417acc103f10fc34f"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/network_encoded_host/SKILL.md": {
+      "bytes": 106,
+      "sha256": "ef5e9ced0115dd70bf1f5b759dbf763207bb0d2b0d4854d5df062ce55d27e872"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/network_encoded_host/run.py": {
+      "bytes": 156,
+      "sha256": "cac491bff25bd9bab36308499184fb0145a7ee97f7e515a82f64937274962019"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/network_external_ip/SKILL.md": {
+      "bytes": 103,
+      "sha256": "45362011bc83635f15c4db7629deafa47f1fd332f1d722686ce917bc8397eda1"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/network_external_ip/run.py": {
+      "bytes": 109,
+      "sha256": "1769026f6185a2823f2956d9dcd0f2c8d9ce92af7eb60a27fa7e27cfbd7d4049"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/process_child_python/SKILL.md": {
+      "bytes": 96,
+      "sha256": "931834bbf91495c30eb81c4d474b897a336ea85e939a438a48d8f5934a720d06"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/process_child_python/run.py": {
+      "bytes": 100,
+      "sha256": "219a5030c6558f79569384b88ce44041e2b5830209b6ddc5a5b9132be9eaa688"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/process_os_system/SKILL.md": {
+      "bytes": 98,
+      "sha256": "136fe2919022b47b8df34865a4bf7dbe3c4693462ccd8ad4c39408067a75fe22"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/process_os_system/run.py": {
+      "bytes": 30,
+      "sha256": "44e28ced30f661bef78a484a11fbc8c9acd28bab7b9d52250046c8c49da11387"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/process_shell/SKILL.md": {
+      "bytes": 83,
+      "sha256": "a33fed55f24f159d8ee85470939b571b09d26f19b3863bba1256627027074d09"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/process_shell/run.py": {
+      "bytes": 71,
+      "sha256": "2f79670268e249ada220240a231de668f9b075c97535c415fc6b8b321210ee39"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/process_transfer_tool/SKILL.md": {
+      "bytes": 107,
+      "sha256": "05421183ad47d44406d5bd70ef9b06c5171f24892c4a8d869cbd2734e2e40371"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/process_transfer_tool/run.py": {
+      "bytes": 105,
+      "sha256": "609062d7bb39e812aaa091786185ec386d9d3b032a9282fcbc989e43a742e3d1"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/resource_timeout/SKILL.md": {
+      "bytes": 103,
+      "sha256": "d015f8c112c41bcfc006308356fd8132c303cfbfd47ca4a2efb61c01682ad9ac"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/resource_timeout/run.py": {
+      "bytes": 29,
+      "sha256": "125fd5d43355a1c49366b8c85fa762fa630bcd5ee9bd1136fb212728d6c76d82"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/sensitive_passwd/SKILL.md": {
+      "bytes": 106,
+      "sha256": "0dfdfce862a59a84a6a007cc9f2856b680ee7aa5a50d29372b42e3e7dece891a"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/sensitive_passwd/run.py": {
+      "bytes": 60,
+      "sha256": "d3df7aa5697bfe30f8dea50bbad7745a747fe51adfb4e4cd68d6d2068299905b"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/sensitive_ssh/SKILL.md": {
+      "bytes": 101,
+      "sha256": "285494cbae906f55967ff9c63b685b51ea8be645b8bcb1fbd86059686bcc7deb"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_regression20/sensitive_ssh/run.py": {
+      "bytes": 109,
+      "sha256": "534ae4f46aa050751c1d4233c01298f1a4a5274fc3c8dafa2c28acee0b3642b9"
+    },
+    "tools/dynamic/run_skill_sandbox_regression20.py": {
+      "bytes": 19291,
+      "sha256": "7a4f1d3abc0e7c98be83721e6f75adb95358a3592627dc7a4e9e35f99eaea71f"
+    }
+  },
+  "started_at": "2026-08-27T15:35:24.858975+00:00",
+  "status": "accepted"
+}

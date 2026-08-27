@@ -108,6 +108,19 @@ def test_dynamic_evaluation_blocks_high_and_reviews_incomplete() -> None:
     }
 
 
+def test_os_system_is_always_treated_as_shell_execution() -> None:
+    evaluation = evaluate_dynamic_result(
+        [{"type": "os.system", "command": "true"}],
+        execution_status="completed",
+        telemetry_complete=True,
+    )
+    assert evaluation.decision == Decision.BLOCK
+    assert evaluation.highest_severity == "CRITICAL"
+    assert {item["rule_id"] for item in evaluation.findings} == {
+        "AEGIS_DYNAMIC_SHELL_SPAWN"
+    }
+
+
 @pytest.mark.parametrize(
     ("static", "dynamic_events", "status", "complete", "expected"),
     [

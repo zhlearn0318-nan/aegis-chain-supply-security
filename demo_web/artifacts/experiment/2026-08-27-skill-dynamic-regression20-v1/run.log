@@ -1,0 +1,65 @@
+run_id=2026-08-27-skill-dynamic-regression20-v1
+status=accepted
+case=benign_noop replicate=1 expected=ALLOW observed=ALLOW passed=True duration_ms=2916
+case=benign_compute replicate=1 expected=ALLOW observed=ALLOW passed=True duration_ms=2741
+case=benign_workspace_write replicate=1 expected=ALLOW observed=ALLOW passed=True duration_ms=2650
+case=benign_loopback_request replicate=1 expected=ALLOW observed=ALLOW passed=True duration_ms=3530
+case=process_shell replicate=1 expected=BLOCK observed=BLOCK passed=True duration_ms=2873
+case=process_transfer_tool replicate=1 expected=BLOCK observed=BLOCK passed=True duration_ms=2753
+case=process_child_python replicate=1 expected=REVIEW observed=REVIEW passed=True duration_ms=3640
+case=process_os_system replicate=1 expected=REVIEW observed=REVIEW passed=True duration_ms=3110
+case=network_external_ip replicate=1 expected=BLOCK observed=BLOCK passed=True duration_ms=2894
+case=network_dns replicate=1 expected=BLOCK observed=BLOCK passed=True duration_ms=2792
+case=network_encoded_host replicate=1 expected=BLOCK observed=BLOCK passed=True duration_ms=2629
+case=decoy_read replicate=1 expected=BLOCK observed=BLOCK passed=True duration_ms=2619
+case=decoy_raw_exfil replicate=1 expected=BLOCK observed=BLOCK passed=True duration_ms=2966
+case=decoy_base64_exfil replicate=1 expected=BLOCK observed=BLOCK passed=True duration_ms=3041
+case=decoy_hex_exfil replicate=1 expected=BLOCK observed=BLOCK passed=True duration_ms=3108
+case=sensitive_passwd replicate=1 expected=BLOCK observed=BLOCK passed=True duration_ms=2529
+case=sensitive_ssh replicate=1 expected=BLOCK observed=BLOCK passed=True duration_ms=2676
+case=native_load_none replicate=1 expected=REVIEW observed=REVIEW passed=True duration_ms=2701
+case=native_load_libc replicate=1 expected=REVIEW observed=REVIEW passed=True duration_ms=2708
+case=resource_timeout replicate=1 expected=REVIEW observed=REVIEW passed=True duration_ms=4701
+case=benign_noop replicate=2 expected=ALLOW observed=ALLOW passed=True duration_ms=2773
+case=benign_compute replicate=2 expected=ALLOW observed=ALLOW passed=True duration_ms=2757
+case=benign_workspace_write replicate=2 expected=ALLOW observed=ALLOW passed=True duration_ms=2722
+case=benign_loopback_request replicate=2 expected=ALLOW observed=ALLOW passed=True duration_ms=3194
+case=process_shell replicate=2 expected=BLOCK observed=BLOCK passed=True duration_ms=2774
+case=process_transfer_tool replicate=2 expected=BLOCK observed=BLOCK passed=True duration_ms=2647
+case=process_child_python replicate=2 expected=REVIEW observed=REVIEW passed=True duration_ms=3447
+case=process_os_system replicate=2 expected=REVIEW observed=REVIEW passed=True duration_ms=2802
+case=network_external_ip replicate=2 expected=BLOCK observed=BLOCK passed=True duration_ms=2476
+case=network_dns replicate=2 expected=BLOCK observed=BLOCK passed=True duration_ms=2399
+case=network_encoded_host replicate=2 expected=BLOCK observed=BLOCK passed=True duration_ms=2370
+case=decoy_read replicate=2 expected=BLOCK observed=BLOCK passed=True duration_ms=2737
+case=decoy_raw_exfil replicate=2 expected=BLOCK observed=BLOCK passed=True duration_ms=2895
+case=decoy_base64_exfil replicate=2 expected=BLOCK observed=BLOCK passed=True duration_ms=2899
+case=decoy_hex_exfil replicate=2 expected=BLOCK observed=BLOCK passed=True duration_ms=2935
+case=sensitive_passwd replicate=2 expected=BLOCK observed=BLOCK passed=True duration_ms=2453
+case=sensitive_ssh replicate=2 expected=BLOCK observed=BLOCK passed=True duration_ms=2488
+case=native_load_none replicate=2 expected=REVIEW observed=REVIEW passed=True duration_ms=2581
+case=native_load_libc replicate=2 expected=REVIEW observed=REVIEW passed=True duration_ms=2515
+case=resource_timeout replicate=2 expected=REVIEW observed=REVIEW passed=True duration_ms=4461
+case=benign_noop replicate=3 expected=ALLOW observed=ALLOW passed=True duration_ms=2473
+case=benign_compute replicate=3 expected=ALLOW observed=ALLOW passed=True duration_ms=2452
+case=benign_workspace_write replicate=3 expected=ALLOW observed=ALLOW passed=True duration_ms=2483
+case=benign_loopback_request replicate=3 expected=ALLOW observed=ALLOW passed=True duration_ms=3171
+case=process_shell replicate=3 expected=BLOCK observed=BLOCK passed=True duration_ms=2725
+case=process_transfer_tool replicate=3 expected=BLOCK observed=BLOCK passed=True duration_ms=2699
+case=process_child_python replicate=3 expected=REVIEW observed=REVIEW passed=True duration_ms=2752
+case=process_os_system replicate=3 expected=REVIEW observed=REVIEW passed=True duration_ms=2626
+case=network_external_ip replicate=3 expected=BLOCK observed=BLOCK passed=True duration_ms=2895
+case=network_dns replicate=3 expected=BLOCK observed=BLOCK passed=True duration_ms=2853
+case=network_encoded_host replicate=3 expected=BLOCK observed=BLOCK passed=True duration_ms=2917
+case=decoy_read replicate=3 expected=BLOCK observed=BLOCK passed=True duration_ms=3091
+case=decoy_raw_exfil replicate=3 expected=BLOCK observed=BLOCK passed=True duration_ms=3427
+case=decoy_base64_exfil replicate=3 expected=BLOCK observed=BLOCK passed=True duration_ms=3121
+case=decoy_hex_exfil replicate=3 expected=BLOCK observed=BLOCK passed=True duration_ms=3197
+case=sensitive_passwd replicate=3 expected=BLOCK observed=BLOCK passed=True duration_ms=2888
+case=sensitive_ssh replicate=3 expected=BLOCK observed=BLOCK passed=True duration_ms=2941
+case=native_load_none replicate=3 expected=REVIEW observed=REVIEW passed=True duration_ms=2948
+case=native_load_libc replicate=3 expected=REVIEW observed=REVIEW passed=True duration_ms=3097
+case=resource_timeout replicate=3 expected=REVIEW observed=REVIEW passed=True duration_ms=4867
+unstable_cases=
+container_residuals=0
+elapsed_seconds=175.743

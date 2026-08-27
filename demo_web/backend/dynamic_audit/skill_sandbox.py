@@ -261,7 +261,15 @@ def classify_dynamic_events(events: Iterable[dict[str, Any]]) -> list[dict[str, 
                     "HIGH",
                     f"type={event_type}; host={host}",
                 )
-        elif event_type in {"process.spawn", "subprocess.popen", "os.system"}:
+        elif event_type == "os.system":
+            candidate = (
+                "AEGIS_DYNAMIC_SHELL_SPAWN",
+                "Skill 在隔离运行期间通过系统 Shell 执行命令",
+                "command_execution",
+                "CRITICAL",
+                "api=os.system",
+            )
+        elif event_type in {"process.spawn", "subprocess.popen"}:
             name = _command_name(event)
             if name in _SHELL_NAMES:
                 candidate = (

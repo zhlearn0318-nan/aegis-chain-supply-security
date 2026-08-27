@@ -1003,3 +1003,12 @@
 - v1 的安全与 Shell 两例均因合成 profile 缺少 Docker `desktop-linux` context 而失败关闭。3 条审计链有效，且没有安装、用户 workspace 或容器残留；失败结果、根因和清单原样固化。
 - 只读对照证明显式 Docker config 后 Engine 29.7.2 可访问。v2 仅向可信 policy 进程提供 context 目录；Cisco 扫描器合成 profile、目标容器挂载和全部安全限制不变。
 - v2 最终 3/3：安全 Skill exit 0 并安装；静态 ALLOW 的 Shell Skill由 `AEGIS_DYNAMIC_SHELL_SPAWN` 升级 BLOCK；无效动态模式由 `AEGIS_DYNAMIC_POLICY_CONFIG_INVALID` 失败关闭。审计证据3/3，输入变化、阻断残留、默认用户 workspace污染和容器残留均为0，总耗时88.576秒；专项30 passed，后端完整418 passed、1 skipped。
+
+## 2026-08-27：M7 20 样本动态稳定性回归 v1/v2
+
+- 先预注册 H0/H1、接受线和停止条件，再建立 20 个完全自建、文件集合与 SHA-256 锁定的 Python Skill。覆盖 4 个良性对照、4 个进程执行、3 个网络/运行时编码地址、4 个诱饵读取与编码外传、2 个敏感路径、2 个原生加载和 1 个超时场景，共 8 个行为族。
+- v1 在真实 Docker 中 20×3=60 次全部符合原预期；随后进行语义审查，发现 `os.system()` 本质通过系统 Shell 执行，但原标签仅为普通子进程 REVIEW。没有用 60/60 掩盖该问题，v1 原始证据保留并增加运行后说明。
+- 分类器将任意 `os.system()` 提升为 `AEGIS_DYNAMIC_SHELL_SPAWN / CRITICAL / BLOCK`，单元测试固定该语义；v2 保持样本代码、哈希、镜像、容器安全合同和种子不变，重新执行完整 60 次。
+- v2 最终 60/60 决策正确、60/60 必需规则命中：ALLOW 12、REVIEW 12、BLOCK 36；良性误报、危险漏报、复核错配、跨轮不稳定、遥测缺失、清理失败和容器残留均为 0。中位单次 2.790 秒、P95 3.496 秒、最大 4.753 秒，总耗时 175.512 秒；GPU、云、互联网和第三方样本使用均为 0。
+- 完整后端首次误用缺少 FastAPI 的系统 Python，17 项在收集阶段失败，未计为代码回归；改用仓库固定运行时后，文档状态测试先暴露旧计数，更新唯一状态真值后最终 `422 passed, 1 skipped`。
+- 结论限定为受控自建样本稳定性。仍缺非 Python Skill、OOM/PID 安全门真实事件、压缩/加密/分片外传、主动绕过对抗、Falco/eBPF 内核旁证和独立第三方语料泛化验证。
