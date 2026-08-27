@@ -986,3 +986,12 @@
 - 专项 46 项通过；完整后端 `417 passed, 1 skipped`，新增 21 项通过且原 396 项未回退。跳过项仅为当前 Windows 测试账户无法创建符号链接。
 - 真实环境检查确认 Docker Desktop 4.86.0 已安装，但 Linux Engine 未运行；GUI 隐藏启动未持续，`docker desktop start` 长时间无输出后终止，官方 status 返回未运行。未下载 Falco、未运行第三方 Skill，真实 Docker/Falco 结论记为 `inconclusive`。
 - 下一步：在可交互桌面中启动 Docker Desktop，先运行自建安全/外连/诱饵/Shell/超时 fixture，确认 inspect 安全门和容器残留为 0；随后再固定 Falco 0.44.x 镜像 digest并决定是否启用 eBPF 增强。
+
+## 2026-08-27：M7 真实 Docker 修复与重复验收 v2
+
+- Docker Desktop 4.86.0 启动错误先定位到 `dockerInference`，清理后又暴露同类的 `docker-secrets-engine/engine.sock`。两个文件均为 2026-08-22 遗留的 0 字节 ReparsePoint；未采用恢复出厂设置。
+- 经用户授权，关闭 Docker/WSL 残留进程，将异常目录改名备份，并备份 `settings-store.json` 后把 `EnableDockerAI` 从 true 改为 false。Docker 官方 `desktop status` 随后为 running，Model Runner 官方关闭命令成功，Client/Server 均为 29.7.2。
+- 新增 5 个完全自建并锁定 SHA-256 的 Skill fixture：良性写临时文件、外部连接尝试、读取政企诱饵并发送到容器内汇点、启动无害 Shell、确定性超时。未下载镜像，未执行第三方样本。
+- 新增真实验收程序，逐容器执行 create→inspect→start→cleanup，并在整轮结束后按后端标签查询残留。每个目标保持断网、非 root、只读根、cap-drop ALL、no-new-privileges、资源限制和只读输入。
+- 首轮 5/5 通过；提交前发现残留查询未失败闭锁并补强，使用修正版重跑最终 v2。3 轮共 15/15 决策正确：良性 ALLOW 3 次，高危 BLOCK 9 次，超时 REVIEW 3 次。良性误报、危险漏报、遥测缺失、清理失败、容器残留均为 0，总运行 49.626 秒。
+- 结论更新为 `supported_on_self_built_real_docker_fixtures`。边界不变：Docker/WSL2 不等于恶意代码 VM，Python audit hook 不对抗主动绕过，第三方 Skill 与 Falco/eBPF 尚未验收。

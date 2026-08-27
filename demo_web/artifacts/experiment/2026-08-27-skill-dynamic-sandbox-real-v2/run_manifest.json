@@ -1,0 +1,130 @@
+{
+  "claim_boundary": [
+    "仅覆盖自建 Python fixture，尚未执行第三方 Skill。",
+    "Python audit hook 是行为证据采集层，不是容器安全边界。",
+    "尚未形成 Falco/eBPF 内核级交叉证据。",
+    "Docker Desktop/WSL2 不等同于恶意代码专用虚拟机。"
+  ],
+  "command": [
+    "F:\\揭榜挂帅\\supply_chain_reproduction\\.runtime_mcp313\\Scripts\\python.exe",
+    "demo_web\\tools\\dynamic\\run_skill_sandbox_real_acceptance.py",
+    "--repeats",
+    "3"
+  ],
+  "completed_at": "2026-08-27T12:19:20.145063+00:00",
+  "dataset": {
+    "repeats": 3,
+    "self_built_fixtures": 5,
+    "third_party_samples_executed": 0,
+    "total_executions": 15
+  },
+  "environment": {
+    "cloud_used": false,
+    "container_image": {
+      "architecture": "amd64",
+      "duration_ms": 202,
+      "id": "sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65",
+      "os": "linux",
+      "repo_digest_matched": true
+    },
+    "docker_engine": {
+      "api_version": "1.55",
+      "architecture": "amd64",
+      "duration_ms": 184,
+      "engine_version": "29.7.2",
+      "os": "linux"
+    },
+    "gpu_used": false,
+    "host_platform": "Windows-11-10.0.26200-SP0",
+    "host_python": "3.13.14 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:26:41) [MSC v.1942 64 bit (AMD64)]",
+    "image_pull_used": false
+  },
+  "experiment_tier": "auxiliary/dev-real-runtime",
+  "metrics": {
+    "cleanup_failures": 0,
+    "container_residuals": 0,
+    "dangerous_false_negatives": 0,
+    "decision_correct": 15,
+    "dynamic_blocks": 9,
+    "dynamic_reviews": 3,
+    "elapsed_seconds": 49.626,
+    "gpu_used": false,
+    "passed_executions": 15,
+    "repeats": 3,
+    "safe_false_positives": 0,
+    "telemetry_incomplete": 0,
+    "third_party_samples_executed": 0,
+    "total_executions": 15,
+    "unique_scenarios": 5
+  },
+  "run_id": "2026-08-27-skill-dynamic-sandbox-real-v2",
+  "schema_version": "1.0",
+  "sources": {
+    "backend/dynamic_audit/skill_sandbox.py": {
+      "bytes": 16253,
+      "sha256": "fd8239d87e75b54578e4494485245bb08c59cbf3784d3f64f4b33f450ac492f6"
+    },
+    "backend/dynamic_audit/skill_sandbox_docker.py": {
+      "bytes": 19451,
+      "sha256": "6d928c25da2006f3338ce79d04d304e99fc768b99cb276bba01a745976523cba"
+    },
+    "config/skill_dynamic_sandbox.json": {
+      "bytes": 1316,
+      "sha256": "1ea28e28ff91b81e42b24905fce2248fd7c03eac94a2162cca9046c81aee0cbb"
+    },
+    "tools/dynamic/docker/skill_sandbox/runner.py": {
+      "bytes": 8399,
+      "sha256": "1ef05198c19435bd06becb107599bb9bc28c2496bc4e98735dc4b3976873cf5f"
+    },
+    "tools/dynamic/docker/skill_sandbox/sitecustomize.py": {
+      "bytes": 3904,
+      "sha256": "70f6e29cf83feaaf78595697b4cf98585db23da17e32400dac0f606b0fa90d32"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_samples/decoy_exfiltration_skill/SKILL.md": {
+      "bytes": 214,
+      "sha256": "6b5d3c9d82b8dc85b7bac0f182c7cc552dfd217a4c4b2da03dc7731b5bc35075"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_samples/decoy_exfiltration_skill/run.py": {
+      "bytes": 327,
+      "sha256": "8b43f25bcb9b0d2dacc197a6df2af372f6f4c901943c0b4895adfea65dc3596a"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_samples/external_network_skill/SKILL.md": {
+      "bytes": 210,
+      "sha256": "0816593c6fa959dc1e767301374b53a0f0e0f4f5dfc815b7aa7cf897d9397430"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_samples/external_network_skill/run.py": {
+      "bytes": 109,
+      "sha256": "1769026f6185a2823f2956d9dcd0f2c8d9ce92af7eb60a27fa7e27cfbd7d4049"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_samples/safe_skill/SKILL.md": {
+      "bytes": 199,
+      "sha256": "65dbb2a015f37edd0e638ad0c7682ca08372a180b8666741f859cd19f2649ed0"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_samples/safe_skill/run.py": {
+      "bytes": 139,
+      "sha256": "801a926578d7c96b4f518043af6474dce6afa49047abd03936251828add65ba3"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_samples/shell_spawn_skill/SKILL.md": {
+      "bytes": 179,
+      "sha256": "1d4e8b51770910aaa320001f209e47d2a740795b640bf17d1d3bceb0ef4ecabb"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_samples/shell_spawn_skill/run.py": {
+      "bytes": 72,
+      "sha256": "b9e887e2f5aec3a144c60b311131e4bb64c02e2b622f3f40b7b505f100faa53d"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_samples/timeout_skill/SKILL.md": {
+      "bytes": 198,
+      "sha256": "a3fc8dfe379437d3a932943a8239e1fd0103e94b5bca2d77c4378116012eca27"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_samples/timeout_skill/run.py": {
+      "bytes": 29,
+      "sha256": "125fd5d43355a1c49366b8c85fa762fa630bcd5ee9bd1136fb212728d6c76d82"
+    },
+    "tools/dynamic/run_skill_sandbox_real_acceptance.py": {
+      "bytes": 14089,
+      "sha256": "7cd954f91c9cd8b269adb008cab07152f5c2827d748c0e3a604b794ea3134eab"
+    }
+  },
+  "started_at": "2026-08-27T12:18:30.519495+00:00",
+  "status": "accepted"
+}

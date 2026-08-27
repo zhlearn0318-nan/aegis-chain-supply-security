@@ -1,0 +1,512 @@
+{
+  "cases": [
+    {
+      "case_id": "safe_skill",
+      "cleanup": {
+        "attempted": true,
+        "remove_duration_ms": 202,
+        "removed": true,
+        "residual": false
+      },
+      "duration_ms": 2714,
+      "error": null,
+      "event_type_counts": {
+        "file.open": 3,
+        "telemetry.ready": 1
+      },
+      "execution_status": "completed",
+      "expected_decision": "ALLOW",
+      "expected_rules": [],
+      "highest_severity": "SAFE",
+      "inspect_gates": {
+        "passed": 23,
+        "total": 23
+      },
+      "observed_decision": "ALLOW",
+      "observed_rules": [],
+      "passed": true,
+      "replicate": 1,
+      "telemetry_complete": true
+    },
+    {
+      "case_id": "external_network_skill",
+      "cleanup": {
+        "attempted": true,
+        "remove_duration_ms": 223,
+        "removed": true,
+        "residual": false
+      },
+      "duration_ms": 2601,
+      "error": null,
+      "event_type_counts": {
+        "dns.resolve": 1,
+        "file.open": 10,
+        "socket.connect": 1,
+        "telemetry.ready": 1
+      },
+      "execution_status": "completed",
+      "expected_decision": "BLOCK",
+      "expected_rules": [
+        "AEGIS_DYNAMIC_EXTERNAL_NETWORK_ATTEMPT"
+      ],
+      "highest_severity": "HIGH",
+      "inspect_gates": {
+        "passed": 23,
+        "total": 23
+      },
+      "observed_decision": "BLOCK",
+      "observed_rules": [
+        "AEGIS_DYNAMIC_EXTERNAL_NETWORK_ATTEMPT"
+      ],
+      "passed": true,
+      "replicate": 1,
+      "telemetry_complete": true
+    },
+    {
+      "case_id": "decoy_exfiltration_skill",
+      "cleanup": {
+        "attempted": true,
+        "remove_duration_ms": 194,
+        "removed": true,
+        "residual": false
+      },
+      "duration_ms": 3251,
+      "error": null,
+      "event_type_counts": {
+        "decoy.read": 1,
+        "dns.resolve": 1,
+        "file.open": 87,
+        "marker.sink": 1,
+        "socket.connect": 1,
+        "telemetry.ready": 1
+      },
+      "execution_status": "completed",
+      "expected_decision": "BLOCK",
+      "expected_rules": [
+        "AEGIS_DYNAMIC_DECOY_ACCESS",
+        "AEGIS_DYNAMIC_DECOY_EXFILTRATION"
+      ],
+      "highest_severity": "CRITICAL",
+      "inspect_gates": {
+        "passed": 23,
+        "total": 23
+      },
+      "observed_decision": "BLOCK",
+      "observed_rules": [
+        "AEGIS_DYNAMIC_DECOY_ACCESS",
+        "AEGIS_DYNAMIC_DECOY_EXFILTRATION"
+      ],
+      "passed": true,
+      "replicate": 1,
+      "telemetry_complete": true
+    },
+    {
+      "case_id": "shell_spawn_skill",
+      "cleanup": {
+        "attempted": true,
+        "remove_duration_ms": 224,
+        "removed": true,
+        "residual": false
+      },
+      "duration_ms": 2942,
+      "error": null,
+      "event_type_counts": {
+        "file.open": 14,
+        "process.spawn": 1,
+        "telemetry.ready": 1
+      },
+      "execution_status": "completed",
+      "expected_decision": "BLOCK",
+      "expected_rules": [
+        "AEGIS_DYNAMIC_SHELL_SPAWN"
+      ],
+      "highest_severity": "CRITICAL",
+      "inspect_gates": {
+        "passed": 23,
+        "total": 23
+      },
+      "observed_decision": "BLOCK",
+      "observed_rules": [
+        "AEGIS_DYNAMIC_SHELL_SPAWN"
+      ],
+      "passed": true,
+      "replicate": 1,
+      "telemetry_complete": true
+    },
+    {
+      "case_id": "timeout_skill",
+      "cleanup": {
+        "attempted": true,
+        "remove_duration_ms": 209,
+        "removed": true,
+        "residual": false
+      },
+      "duration_ms": 5188,
+      "error": null,
+      "event_type_counts": {
+        "file.open": 2,
+        "runtime.timeout": 1,
+        "telemetry.ready": 1
+      },
+      "execution_status": "timeout",
+      "expected_decision": "REVIEW",
+      "expected_rules": [
+        "AEGIS_DYNAMIC_EXECUTION_INCONCLUSIVE",
+        "AEGIS_DYNAMIC_RESOURCE_OR_TIMEOUT"
+      ],
+      "highest_severity": "MEDIUM",
+      "inspect_gates": {
+        "passed": 23,
+        "total": 23
+      },
+      "observed_decision": "REVIEW",
+      "observed_rules": [
+        "AEGIS_DYNAMIC_EXECUTION_INCONCLUSIVE",
+        "AEGIS_DYNAMIC_RESOURCE_OR_TIMEOUT"
+      ],
+      "passed": true,
+      "replicate": 1,
+      "telemetry_complete": true
+    },
+    {
+      "case_id": "safe_skill",
+      "cleanup": {
+        "attempted": true,
+        "remove_duration_ms": 197,
+        "removed": true,
+        "residual": false
+      },
+      "duration_ms": 2602,
+      "error": null,
+      "event_type_counts": {
+        "file.open": 3,
+        "telemetry.ready": 1
+      },
+      "execution_status": "completed",
+      "expected_decision": "ALLOW",
+      "expected_rules": [],
+      "highest_severity": "SAFE",
+      "inspect_gates": {
+        "passed": 23,
+        "total": 23
+      },
+      "observed_decision": "ALLOW",
+      "observed_rules": [],
+      "passed": true,
+      "replicate": 2,
+      "telemetry_complete": true
+    },
+    {
+      "case_id": "external_network_skill",
+      "cleanup": {
+        "attempted": true,
+        "remove_duration_ms": 190,
+        "removed": true,
+        "residual": false
+      },
+      "duration_ms": 2582,
+      "error": null,
+      "event_type_counts": {
+        "dns.resolve": 1,
+        "file.open": 10,
+        "socket.connect": 1,
+        "telemetry.ready": 1
+      },
+      "execution_status": "completed",
+      "expected_decision": "BLOCK",
+      "expected_rules": [
+        "AEGIS_DYNAMIC_EXTERNAL_NETWORK_ATTEMPT"
+      ],
+      "highest_severity": "HIGH",
+      "inspect_gates": {
+        "passed": 23,
+        "total": 23
+      },
+      "observed_decision": "BLOCK",
+      "observed_rules": [
+        "AEGIS_DYNAMIC_EXTERNAL_NETWORK_ATTEMPT"
+      ],
+      "passed": true,
+      "replicate": 2,
+      "telemetry_complete": true
+    },
+    {
+      "case_id": "decoy_exfiltration_skill",
+      "cleanup": {
+        "attempted": true,
+        "remove_duration_ms": 252,
+        "removed": true,
+        "residual": false
+      },
+      "duration_ms": 3206,
+      "error": null,
+      "event_type_counts": {
+        "decoy.read": 1,
+        "dns.resolve": 1,
+        "file.open": 87,
+        "marker.sink": 1,
+        "socket.connect": 1,
+        "telemetry.ready": 1
+      },
+      "execution_status": "completed",
+      "expected_decision": "BLOCK",
+      "expected_rules": [
+        "AEGIS_DYNAMIC_DECOY_ACCESS",
+        "AEGIS_DYNAMIC_DECOY_EXFILTRATION"
+      ],
+      "highest_severity": "CRITICAL",
+      "inspect_gates": {
+        "passed": 23,
+        "total": 23
+      },
+      "observed_decision": "BLOCK",
+      "observed_rules": [
+        "AEGIS_DYNAMIC_DECOY_ACCESS",
+        "AEGIS_DYNAMIC_DECOY_EXFILTRATION"
+      ],
+      "passed": true,
+      "replicate": 2,
+      "telemetry_complete": true
+    },
+    {
+      "case_id": "shell_spawn_skill",
+      "cleanup": {
+        "attempted": true,
+        "remove_duration_ms": 282,
+        "removed": true,
+        "residual": false
+      },
+      "duration_ms": 2775,
+      "error": null,
+      "event_type_counts": {
+        "file.open": 14,
+        "process.spawn": 1,
+        "telemetry.ready": 1
+      },
+      "execution_status": "completed",
+      "expected_decision": "BLOCK",
+      "expected_rules": [
+        "AEGIS_DYNAMIC_SHELL_SPAWN"
+      ],
+      "highest_severity": "CRITICAL",
+      "inspect_gates": {
+        "passed": 23,
+        "total": 23
+      },
+      "observed_decision": "BLOCK",
+      "observed_rules": [
+        "AEGIS_DYNAMIC_SHELL_SPAWN"
+      ],
+      "passed": true,
+      "replicate": 2,
+      "telemetry_complete": true
+    },
+    {
+      "case_id": "timeout_skill",
+      "cleanup": {
+        "attempted": true,
+        "remove_duration_ms": 256,
+        "removed": true,
+        "residual": false
+      },
+      "duration_ms": 5022,
+      "error": null,
+      "event_type_counts": {
+        "file.open": 2,
+        "runtime.timeout": 1,
+        "telemetry.ready": 1
+      },
+      "execution_status": "timeout",
+      "expected_decision": "REVIEW",
+      "expected_rules": [
+        "AEGIS_DYNAMIC_EXECUTION_INCONCLUSIVE",
+        "AEGIS_DYNAMIC_RESOURCE_OR_TIMEOUT"
+      ],
+      "highest_severity": "MEDIUM",
+      "inspect_gates": {
+        "passed": 23,
+        "total": 23
+      },
+      "observed_decision": "REVIEW",
+      "observed_rules": [
+        "AEGIS_DYNAMIC_EXECUTION_INCONCLUSIVE",
+        "AEGIS_DYNAMIC_RESOURCE_OR_TIMEOUT"
+      ],
+      "passed": true,
+      "replicate": 2,
+      "telemetry_complete": true
+    },
+    {
+      "case_id": "safe_skill",
+      "cleanup": {
+        "attempted": true,
+        "remove_duration_ms": 288,
+        "removed": true,
+        "residual": false
+      },
+      "duration_ms": 3077,
+      "error": null,
+      "event_type_counts": {
+        "file.open": 3,
+        "telemetry.ready": 1
+      },
+      "execution_status": "completed",
+      "expected_decision": "ALLOW",
+      "expected_rules": [],
+      "highest_severity": "SAFE",
+      "inspect_gates": {
+        "passed": 23,
+        "total": 23
+      },
+      "observed_decision": "ALLOW",
+      "observed_rules": [],
+      "passed": true,
+      "replicate": 3,
+      "telemetry_complete": true
+    },
+    {
+      "case_id": "external_network_skill",
+      "cleanup": {
+        "attempted": true,
+        "remove_duration_ms": 201,
+        "removed": true,
+        "residual": false
+      },
+      "duration_ms": 2897,
+      "error": null,
+      "event_type_counts": {
+        "dns.resolve": 1,
+        "file.open": 10,
+        "socket.connect": 1,
+        "telemetry.ready": 1
+      },
+      "execution_status": "completed",
+      "expected_decision": "BLOCK",
+      "expected_rules": [
+        "AEGIS_DYNAMIC_EXTERNAL_NETWORK_ATTEMPT"
+      ],
+      "highest_severity": "HIGH",
+      "inspect_gates": {
+        "passed": 23,
+        "total": 23
+      },
+      "observed_decision": "BLOCK",
+      "observed_rules": [
+        "AEGIS_DYNAMIC_EXTERNAL_NETWORK_ATTEMPT"
+      ],
+      "passed": true,
+      "replicate": 3,
+      "telemetry_complete": true
+    },
+    {
+      "case_id": "decoy_exfiltration_skill",
+      "cleanup": {
+        "attempted": true,
+        "remove_duration_ms": 247,
+        "removed": true,
+        "residual": false
+      },
+      "duration_ms": 3233,
+      "error": null,
+      "event_type_counts": {
+        "decoy.read": 1,
+        "dns.resolve": 1,
+        "file.open": 87,
+        "marker.sink": 1,
+        "socket.connect": 1,
+        "telemetry.ready": 1
+      },
+      "execution_status": "completed",
+      "expected_decision": "BLOCK",
+      "expected_rules": [
+        "AEGIS_DYNAMIC_DECOY_ACCESS",
+        "AEGIS_DYNAMIC_DECOY_EXFILTRATION"
+      ],
+      "highest_severity": "CRITICAL",
+      "inspect_gates": {
+        "passed": 23,
+        "total": 23
+      },
+      "observed_decision": "BLOCK",
+      "observed_rules": [
+        "AEGIS_DYNAMIC_DECOY_ACCESS",
+        "AEGIS_DYNAMIC_DECOY_EXFILTRATION"
+      ],
+      "passed": true,
+      "replicate": 3,
+      "telemetry_complete": true
+    },
+    {
+      "case_id": "shell_spawn_skill",
+      "cleanup": {
+        "attempted": true,
+        "remove_duration_ms": 222,
+        "removed": true,
+        "residual": false
+      },
+      "duration_ms": 2699,
+      "error": null,
+      "event_type_counts": {
+        "file.open": 14,
+        "process.spawn": 1,
+        "telemetry.ready": 1
+      },
+      "execution_status": "completed",
+      "expected_decision": "BLOCK",
+      "expected_rules": [
+        "AEGIS_DYNAMIC_SHELL_SPAWN"
+      ],
+      "highest_severity": "CRITICAL",
+      "inspect_gates": {
+        "passed": 23,
+        "total": 23
+      },
+      "observed_decision": "BLOCK",
+      "observed_rules": [
+        "AEGIS_DYNAMIC_SHELL_SPAWN"
+      ],
+      "passed": true,
+      "replicate": 3,
+      "telemetry_complete": true
+    },
+    {
+      "case_id": "timeout_skill",
+      "cleanup": {
+        "attempted": true,
+        "remove_duration_ms": 243,
+        "removed": true,
+        "residual": false
+      },
+      "duration_ms": 4646,
+      "error": null,
+      "event_type_counts": {
+        "file.open": 2,
+        "runtime.timeout": 1,
+        "telemetry.ready": 1
+      },
+      "execution_status": "timeout",
+      "expected_decision": "REVIEW",
+      "expected_rules": [
+        "AEGIS_DYNAMIC_EXECUTION_INCONCLUSIVE",
+        "AEGIS_DYNAMIC_RESOURCE_OR_TIMEOUT"
+      ],
+      "highest_severity": "MEDIUM",
+      "inspect_gates": {
+        "passed": 23,
+        "total": 23
+      },
+      "observed_decision": "REVIEW",
+      "observed_rules": [
+        "AEGIS_DYNAMIC_EXECUTION_INCONCLUSIVE",
+        "AEGIS_DYNAMIC_RESOURCE_OR_TIMEOUT"
+      ],
+      "passed": true,
+      "replicate": 3,
+      "telemetry_complete": true
+    }
+  ],
+  "residual_container_ids": [],
+  "run_id": "2026-08-27-skill-dynamic-sandbox-real-v2",
+  "schema_version": "1.0",
+  "status": "accepted"
+}

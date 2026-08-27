@@ -1,0 +1,17 @@
+{
+  "cleanup_failures": 0,
+  "container_residuals": 0,
+  "dangerous_false_negatives": 0,
+  "decision_correct": 15,
+  "dynamic_blocks": 9,
+  "dynamic_reviews": 3,
+  "elapsed_seconds": 49.626,
+  "gpu_used": false,
+  "passed_executions": 15,
+  "repeats": 3,
+  "safe_false_positives": 0,
+  "telemetry_incomplete": 0,
+  "third_party_samples_executed": 0,
+  "total_executions": 15,
+  "unique_scenarios": 5
+}

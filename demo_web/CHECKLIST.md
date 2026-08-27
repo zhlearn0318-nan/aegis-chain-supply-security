@@ -159,3 +159,16 @@
 - [x] M6-4：真实 OpenClaw Plugin allow/block/无残留闭环。
 - [ ] 生产增强：配置型 MCP 写入前准入、Plugin 单文件/归档和独立权威数据集。
 - [x] 静态最终评委复核：比赛版本可冻结，生产继续 NO-GO。
+
+## M7 Skill 安装前动态沙箱
+
+- [x] 新建 `skill-dynamic-sandbox-v1` 分支并完成正式设计文档。
+- [x] 实现 Python 入口发现、Docker 安全合同、动态行为规则和静动态单调融合。
+- [x] 实现固定容器父启动器、Python audit hook、政企诱饵与容器内本地汇点。
+- [x] OpenClaw 增加显式 `required` 动态模式；默认 `disabled` 保持静态冻结决策不变。
+- [x] Docker Desktop 启动故障定位为本地残留 Unix socket；可恢复备份后关闭 Model Runner，Engine 恢复运行。
+- [x] 固定镜像身份核验通过，运行期间 `pull=never`。
+- [x] 良性、外连、诱饵外传、Shell、超时 5 类自建 fixture 绑定 SHA-256。
+- [x] 真实 Docker 3 轮共 15 次执行：决策正确 15/15，误报/危险漏报/遥测缺失/清理失败/容器残留均为 0。
+- [ ] 可选：Falco/eBPF preflight 与内核级交叉证据；失败不阻断默认 Python 后端。
+- [ ] 第三方 Skill 风险试验；仅在更强隔离、单独授权和明确停止条件下开展。

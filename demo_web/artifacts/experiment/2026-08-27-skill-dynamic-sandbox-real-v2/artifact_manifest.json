@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-27-skill-dynamic-sandbox-real-v2",
+  "evidence_files": {
+    "CHECKLIST.md": {
+      "bytes": 698,
+      "sha256": "67d0a03ec389abcaca2af9abc6601bcce2557d7da38ef5f93d818ef5ea5b96fe"
+    },
+    "evaluation_summary.json": {
+      "bytes": 638,
+      "sha256": "70bf42aba6bd1ed7b215de33dfad59219514d070482512d7e868db2cf1925161"
+    },
+    "metrics.json": {
+      "bytes": 402,
+      "sha256": "d422d9cda1895ec44559c6abb3f7d2a5efd0b87ac492d3d24ec57cfefc9b8f06"
+    },
+    "PLAN.md": {
+      "bytes": 2072,
+      "sha256": "0c20956f0267bebd9e0cb2f94b666237bb7f66bbf8355954182d4e5afdc00ab2"
+    },
+    "results.json": {
+      "bytes": 12849,
+      "sha256": "cb31bf05163dc74e234c2a72f52ea53c35298a39603c3cde7b689e23d9581245"
+    },
+    "run_manifest.json": {
+      "bytes": 4936,
+      "sha256": "06159b8125ef0cdb9fe544374df284861a14d2227219c88d2b3164a8c47fbc62"
+    },
+    "run.log": {
+      "bytes": 1528,
+      "sha256": "56f620aadcf8bfd289904b7dcd3c4d1c5e3c957d8b69e9dd6b0f947348c4238e"
+    },
+    "summary.md": {
+      "bytes": 721,
+      "sha256": "30195e300ed112917cd636e18c9c13da7d86896128d02baaca45f9b3e31b4333"
+    }
+  }
+}

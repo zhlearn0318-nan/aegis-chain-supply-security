@@ -1,0 +1,13 @@
+{
+  "claim_update": "supported_on_self_built_real_docker_fixtures",
+  "limits": [
+    "仅覆盖自建 Python fixture，尚未执行第三方 Skill。",
+    "Python audit hook 是行为证据采集层，不是容器安全边界。",
+    "尚未形成 Falco/eBPF 内核级交叉证据。",
+    "Docker Desktop/WSL2 不等同于恶意代码专用虚拟机。"
+  ],
+  "next_action": "expand_regression_and_optional_falco_preflight",
+  "outcome_summary": "真实 Docker 容器已正确区分 5 类自建 Skill 行为，且观测完整、清理无残留。",
+  "run_id": "2026-08-27-skill-dynamic-sandbox-real-v2",
+  "schema_version": "1.0"
+}

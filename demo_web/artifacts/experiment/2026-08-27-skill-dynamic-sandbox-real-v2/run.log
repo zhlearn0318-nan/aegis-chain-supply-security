@@ -1,0 +1,19 @@
+run_id=2026-08-27-skill-dynamic-sandbox-real-v2
+status=accepted
+case=safe_skill replicate=1 expected=ALLOW observed=ALLOW passed=True duration_ms=2714
+case=external_network_skill replicate=1 expected=BLOCK observed=BLOCK passed=True duration_ms=2601
+case=decoy_exfiltration_skill replicate=1 expected=BLOCK observed=BLOCK passed=True duration_ms=3251
+case=shell_spawn_skill replicate=1 expected=BLOCK observed=BLOCK passed=True duration_ms=2942
+case=timeout_skill replicate=1 expected=REVIEW observed=REVIEW passed=True duration_ms=5188
+case=safe_skill replicate=2 expected=ALLOW observed=ALLOW passed=True duration_ms=2602
+case=external_network_skill replicate=2 expected=BLOCK observed=BLOCK passed=True duration_ms=2582
+case=decoy_exfiltration_skill replicate=2 expected=BLOCK observed=BLOCK passed=True duration_ms=3206
+case=shell_spawn_skill replicate=2 expected=BLOCK observed=BLOCK passed=True duration_ms=2775
+case=timeout_skill replicate=2 expected=REVIEW observed=REVIEW passed=True duration_ms=5022
+case=safe_skill replicate=3 expected=ALLOW observed=ALLOW passed=True duration_ms=3077
+case=external_network_skill replicate=3 expected=BLOCK observed=BLOCK passed=True duration_ms=2897
+case=decoy_exfiltration_skill replicate=3 expected=BLOCK observed=BLOCK passed=True duration_ms=3233
+case=shell_spawn_skill replicate=3 expected=BLOCK observed=BLOCK passed=True duration_ms=2699
+case=timeout_skill replicate=3 expected=REVIEW observed=REVIEW passed=True duration_ms=4646
+container_residuals=0
+elapsed_seconds=49.626
