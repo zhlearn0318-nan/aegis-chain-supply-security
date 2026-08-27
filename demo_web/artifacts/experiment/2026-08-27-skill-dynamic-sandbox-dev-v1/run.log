@@ -1,0 +1,12 @@
+2026-08-27 M7 Skill dynamic sandbox dev-v1
+
+1. Created branch skill-dynamic-sandbox-v1 from static freeze commit 4c7b5db.
+2. Compared Falco, Tracee, Inspektor Gadget and nsjail under permissive-license and Docker Desktop constraints.
+3. Selected existing Docker safety backend plus deterministic Python telemetry; Falco remains optional.
+4. Docker Desktop 4.86.0 was found in the Windows installed-program registry.
+5. Docker Linux Engine did not become ready. Hidden GUI start did not persist; docker desktop start was terminated after no status; docker desktop status reported not running.
+6. No Falco image was downloaded and no third-party Skill was executed.
+7. First targeted test used an inaccessible user Temp directory: 11 passed, 3 setup errors. Re-running with repository-local --basetemp produced 13 passed, 1 skipped.
+8. After Docker command contract and OpenClaw integration were added, targeted tests produced 46 passed.
+9. Full backend regression produced 417 passed, 1 skipped, and one existing FastAPI/TestClient deprecation warning.
+10. Result: logic_supported; real_docker_inconclusive; falco_inconclusive.

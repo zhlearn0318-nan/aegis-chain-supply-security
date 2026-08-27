@@ -29,6 +29,8 @@ MAX_FINDING_EVIDENCE_LENGTH = 200
 MAX_FINDINGS = 3
 DEFAULT_SCAN_TIMEOUT_SECONDS = 12
 REVIEW_MODE_ENV = "AEGIS_OPENCLAW_REVIEW_MODE"
+DYNAMIC_SKILL_MODE_ENV = "AEGIS_OPENCLAW_DYNAMIC_SKILL_POLICY"
+DYNAMIC_SKILL_CONFIG = Path(__file__).resolve().parents[1] / "config" / "skill_dynamic_sandbox.json"
 DEMO_ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 SKILL_RUNTIME = REPOSITORY_ROOT / ".runtime_skill"
@@ -62,6 +64,7 @@ class SourceTreeRejected(RuntimeError):
 
 SkillScan = Callable[[Path], dict[str, Any]]
 PluginScan = Callable[[Path], dict[str, Any]]
+DynamicSkillScan = Callable[[Path], dict[str, Any]]
 TreeHasher = Callable[[Path], str]
 AuditRecorder = Callable[[Any, dict[str, Any], str | None, int], str]
 
@@ -183,6 +186,71 @@ def default_skill_scan(skill_path: Path) -> dict[str, Any]:
 
 def default_plugin_scan(plugin_path: Path) -> dict[str, Any]:
     return run_plugin_static_pipeline(plugin_path)
+
+
+def default_dynamic_skill_scan(skill_path: Path) -> dict[str, Any]:
+    from .dynamic_audit.skill_sandbox_docker import run_python_skill_sandbox
+
+    return run_python_skill_sandbox(DYNAMIC_SKILL_CONFIG, skill_path)
+
+
+def _dynamic_skill_mode() -> str:
+    mode = os.getenv(DYNAMIC_SKILL_MODE_ENV, "disabled").strip().lower()
+    if mode not in {"disabled", "required"}:
+        raise ValueError(f"{DYNAMIC_SKILL_MODE_ENV} 仅支持 disabled 或 required")
+    return mode
+
+
+def _dynamic_failure_finding(error_name: str) -> dict[str, Any]:
+    return {
+        "id": "dynamic-aegis_dynamic_execution_inconclusive",
+        "rule_id": "AEGIS_DYNAMIC_EXECUTION_INCONCLUSIVE",
+        "title": "Skill 隔离试运行未可靠完成",
+        "category": "execution_failure",
+        "severity": "MEDIUM",
+        "analyzer": "aegis-skill-sandbox-v1",
+        "location": {"object": "dynamic-sandbox", "type": "runtime"},
+        "evidence": f"failure_type={_bounded_text(error_name, 'unknown', 80)}",
+        "description": "动态设施、入口或证据完整性未满足准入合同。",
+        "remediation": "修复动态执行环境并重新扫描；不得将未验证解释为安全。",
+    }
+
+
+def _apply_required_dynamic_scan(
+    source_root: Path,
+    static_decision: Decision,
+    static_reason: str,
+    static_findings: list[dict[str, Any]],
+    dynamic_skill_scan: DynamicSkillScan,
+) -> tuple[Decision, str, list[dict[str, Any]]]:
+    if static_decision in {Decision.BLOCK, Decision.UNKNOWN}:
+        return Decision.BLOCK, static_reason, static_findings
+    try:
+        result = dynamic_skill_scan(source_root)
+        if not isinstance(result, dict):
+            raise RuntimeError("动态流水线没有返回对象")
+        dynamic_findings = result.get("findings")
+        if not isinstance(dynamic_findings, list) or not all(
+            isinstance(item, dict) for item in dynamic_findings
+        ):
+            raise RuntimeError("动态流水线没有返回 Finding 列表")
+        dynamic_decision = Decision(str(result.get("decision") or "UNKNOWN").upper())
+        dynamic_reason = _bounded_text(
+            result.get("reason"), "隔离试运行需要人工复核。", MAX_REASON_LENGTH
+        )
+    except Exception as exc:
+        dynamic_decision = Decision.REVIEW
+        dynamic_reason = "Skill 隔离试运行未可靠完成，需要人工复核。"
+        dynamic_findings = [_dynamic_failure_finding(type(exc).__name__)]
+
+    ranks = {Decision.ALLOW: 0, Decision.REVIEW: 1, Decision.BLOCK: 2}
+    final_decision = (
+        dynamic_decision
+        if ranks[dynamic_decision] > ranks[static_decision]
+        else static_decision
+    )
+    reason = dynamic_reason if final_decision != static_decision else static_reason
+    return final_decision, reason, [*static_findings, *dynamic_findings]
 
 
 def block_response(rule_id: str, reason: str) -> dict[str, Any]:
@@ -344,6 +412,7 @@ def evaluate_install_request(
     *,
     skill_scan: SkillScan = default_skill_scan,
     plugin_scan: PluginScan = default_plugin_scan,
+    dynamic_skill_scan: DynamicSkillScan = default_dynamic_skill_scan,
     tree_hasher: TreeHasher = hash_source_tree,
     audit_recorder: AuditRecorder | None = None,
 ) -> dict[str, Any]:
@@ -411,6 +480,26 @@ def evaluate_install_request(
             before_hash,
         )
 
+    final_decision = evaluation.decision
+    final_reason = evaluation.trace.reason
+    final_findings = findings
+    if request.target_type == "skill":
+        try:
+            dynamic_mode = _dynamic_skill_mode()
+        except ValueError as exc:
+            return finalize(
+                block_response("AEGIS_DYNAMIC_POLICY_CONFIG_INVALID", str(exc)),
+                before_hash,
+            )
+        if dynamic_mode == "required":
+            final_decision, final_reason, final_findings = _apply_required_dynamic_scan(
+                source_root,
+                evaluation.decision,
+                evaluation.trace.reason,
+                findings,
+                dynamic_skill_scan,
+            )
+
     try:
         after_hash = tree_hasher(source_root)
     except SourceTreeRejected as exc:
@@ -428,9 +517,9 @@ def evaluate_install_request(
 
     return finalize(
         _response_from_evaluation(
-            evaluation.decision,
-            evaluation.trace.reason,
-            findings,
+            final_decision,
+            final_reason,
+            final_findings,
             source_root,
         ),
         before_hash,

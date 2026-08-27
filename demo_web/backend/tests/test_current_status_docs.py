@@ -13,7 +13,7 @@ def read(relative: str) -> str:
 def test_active_entrypoints_delegate_status_to_one_canonical_file() -> None:
     current = read("CURRENT_STATUS.md")
     assert "唯一状态真值" in current
-    assert "396 passed" in current
+    assert "417 passed" in current
     assert "P0-5" in current and "真实 VM" in current
     assert "NO-GO" in current
 

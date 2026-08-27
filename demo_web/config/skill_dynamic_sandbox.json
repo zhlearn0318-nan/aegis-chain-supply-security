@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "backend_id": "aegis-python-skill-sandbox-v1",
+  "docker_context": "desktop-linux",
+  "pull_policy": "never",
+  "image": {
+    "reference": "public.ecr.aws/docker/library/python@sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65",
+    "id": "sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65",
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  "tool": {
+    "root": "tools/dynamic/docker/skill_sandbox",
+    "container_root": "/aegis_tool",
+    "files": {
+      "runner.py": "1ef05198c19435bd06becb107599bb9bc28c2496bc4e98735dc4b3976873cf5f",
+      "sitecustomize.py": "70f6e29cf83feaaf78595697b4cf98585db23da17e32400dac0f606b0fa90d32"
+    }
+  },
+  "execution": {
+    "total_timeout_seconds": 90,
+    "max_entrypoints": 3
+  },
+  "security": {
+    "network_mode": "none",
+    "read_only_rootfs": true,
+    "user": "65532:65532",
+    "cap_drop": ["ALL"],
+    "no_new_privileges": true,
+    "privileged": false,
+    "pid_mode": "",
+    "ipc_mode": "none",
+    "pids_limit": 64,
+    "memory_bytes": 268435456,
+    "nano_cpus": 500000000,
+    "init": true,
+    "log_driver": "none",
+    "tmpfs": {
+      "/tmp": "rw,noexec,nosuid,nodev,size=16777216,mode=1777",
+      "/workspace": "rw,noexec,nosuid,nodev,size=67108864,mode=1777"
+    }
+  }
+}

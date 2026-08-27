@@ -975,3 +975,14 @@
 - Aegis 静态规则注册表由124增至125，Plugin家族明确不纳入既有M3 Skill密封回归指标。
 - 最终复核结论：比赛静态版本可冻结并进入材料准备；配置型MCP、Node漏洞扫描、外部SIEM和生产强隔离列入后续，生产仍NO-GO。
 - 后端完整 `396 passed`。
+
+## 2026-08-27：M7 Skill 安装前动态沙箱 dev-v1
+
+- 用户确认只覆盖 Skill，使用 Docker 容器运行脚本，默认禁止外网、仅允许本地模拟服务，总预算 60–120 秒，并让动态高危结果直接影响准入。
+- 按宽松许可证约束比较 Falco、Tracee、Inspektor Gadget 和 nsjail。结论是保留现有已验收 Docker 底座，以 Aegis Python 行为采集为默认后端，Falco 仅在 eBPF preflight 通过后作为可选内核旁证。
+- 新建 `skill-dynamic-sandbox-v1` 分支和 `M7_SKILL_DYNAMIC_SANDBOX_DESIGN.md`。新增有界 Python 入口发现、软链接/歧义拒绝、外连/Shell/诱饵/敏感路径/资源/遥测规则、Falco JSON 目标容器过滤，以及静动态单调融合。
+- 新增固定容器父启动器和 Python audit hook：子脚本输出只保留长度与 SHA-256；容器内提供假公文、假数据库凭据和假运维令牌，以及 `127.0.0.1` HTTP 汇点；目标容器保持断网、非 root、只读根、`cap-drop=ALL`、`no-new-privileges`、资源限制和两个只读 bind。
+- OpenClaw 增加 `AEGIS_OPENCLAW_DYNAMIC_SKILL_POLICY=required` 显式模式和 135 秒稳定版示例。静态 BLOCK 不启动动态；动态 HIGH/CRITICAL 升级 BLOCK；设施失败降为 REVIEW，稳定版兼容模式映射为阻断。默认 `disabled` 保持静态封板行为不变。
+- 专项 46 项通过；完整后端 `417 passed, 1 skipped`，新增 21 项通过且原 396 项未回退。跳过项仅为当前 Windows 测试账户无法创建符号链接。
+- 真实环境检查确认 Docker Desktop 4.86.0 已安装，但 Linux Engine 未运行；GUI 隐藏启动未持续，`docker desktop start` 长时间无输出后终止，官方 status 返回未运行。未下载 Falco、未运行第三方 Skill，真实 Docker/Falco 结论记为 `inconclusive`。
+- 下一步：在可交互桌面中启动 Docker Desktop，先运行自建安全/外连/诱饵/Shell/超时 fixture，确认 inspect 安全门和容器残留为 0；随后再固定 Falco 0.44.x 镜像 digest并决定是否启用 eBPF 增强。

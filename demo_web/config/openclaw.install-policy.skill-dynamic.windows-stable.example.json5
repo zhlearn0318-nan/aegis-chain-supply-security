@@ -1,0 +1,38 @@
+{
+  // OpenClaw Windows 稳定版：Skill 静态审计 + 安装前 Docker 隔离试运行。
+  // 动态链路总预算 90 秒，因此策略进程超时必须高于 120 秒。
+  agents: {
+    defaults: {
+      workspace: "C:\\AegisChain\\openclaw-isolated-workspace",
+    },
+  },
+  security: {
+    installPolicy: {
+      enabled: true,
+      targets: ["skill", "plugin"],
+      exec: {
+        source: "exec",
+        command: "C:\\AegisChain\\runtime\\python.exe",
+        args: ["C:\\AegisChain\\demo_web\\tools\\openclaw_install_policy.py"],
+        timeoutMs: 135000,
+        noOutputTimeoutMs: 135000,
+        maxOutputBytes: 1048576,
+        passEnv: [],
+        env: {
+          AEGIS_OPENCLAW_SCAN_TIMEOUT_SECONDS: "12",
+          AEGIS_OPENCLAW_REVIEW_MODE: "block",
+          // 仅 Skill 启用动态试运行；Plugin 保持 M6 静态准入。
+          AEGIS_OPENCLAW_DYNAMIC_SKILL_POLICY: "required",
+          AEGIS_OPENCLAW_AUDIT_DB: "C:\\AegisChain\\data\\admission_audit.db",
+          PYTHONUTF8: "1",
+          PYTHONIOENCODING: "utf-8",
+        },
+        trustedDirs: [
+          "C:\\AegisChain\\runtime",
+          "C:\\AegisChain\\demo_web\\tools",
+        ],
+        allowInsecurePath: true,
+      },
+    },
+  },
+}

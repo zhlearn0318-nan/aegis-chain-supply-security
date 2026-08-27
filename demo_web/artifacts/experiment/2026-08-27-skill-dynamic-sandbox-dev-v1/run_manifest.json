@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-27-skill-dynamic-sandbox-dev-v1",
+  "date": "2026-08-27",
+  "branch": "skill-dynamic-sandbox-v1",
+  "commands": [
+    ".runtime_mcp313\\Scripts\\python.exe -m pytest demo_web\\backend\\tests\\test_skill_sandbox.py demo_web\\backend\\tests\\test_skill_sandbox_docker.py demo_web\\backend\\tests\\test_falco_backend.py demo_web\\backend\\tests\\test_openclaw_install_policy.py -q --basetemp .pytest-tmp-skill-sandbox",
+    ".runtime_mcp313\\Scripts\\python.exe -m pytest demo_web\\backend\\tests -q --basetemp .pytest-tmp-full-dynamic"
+  ],
+  "environment": {
+    "os": "Windows",
+    "docker_desktop_installed_version": "4.86.0",
+    "docker_linux_engine_ready": false,
+    "python_runtime": ".runtime_mcp313",
+    "gpu_used": false
+  },
+  "artifacts_sha256": {
+    "backend/dynamic_audit/skill_sandbox.py": "fd8239d87e75b54578e4494485245bb08c59cbf3784d3f64f4b33f450ac492f6",
+    "backend/dynamic_audit/skill_sandbox_docker.py": "6d928c25da2006f3338ce79d04d304e99fc768b99cb276bba01a745976523cba",
+    "backend/dynamic_audit/falco_backend.py": "4086275f7ed6eb7c4efba6d5c67ddcf60e3ddc83d5de2626ba4ee3b0b78bf529",
+    "backend/openclaw_install_policy.py": "e4b7d3d977c17991533eab96cba4685bcfda489b36dfb24c0b03bb832ae12641",
+    "config/skill_dynamic_sandbox.json": "1ea28e28ff91b81e42b24905fce2248fd7c03eac94a2162cca9046c81aee0cbb",
+    "tools/dynamic/docker/skill_sandbox/runner.py": "1ef05198c19435bd06becb107599bb9bc28c2496bc4e98735dc4b3976873cf5f",
+    "tools/dynamic/docker/skill_sandbox/sitecustomize.py": "70f6e29cf83feaaf78595697b4cf98585db23da17e32400dac0f606b0fa90d32"
+  },
+  "result": {
+    "targeted": "46 passed",
+    "full_backend": "417 passed, 1 skipped, 1 existing deprecation warning",
+    "claim": "logic_supported_real_runtime_inconclusive"
+  }
+}

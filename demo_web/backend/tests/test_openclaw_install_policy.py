@@ -248,6 +248,82 @@ def test_invalid_review_mode_fails_closed(tmp_path: Path, monkeypatch) -> None:
     assert "配置无效" in response["reason"]
 
 
+def test_required_dynamic_high_risk_upgrades_static_allow_to_block(
+    tmp_path: Path, monkeypatch
+) -> None:
+    skill = make_skill(tmp_path)
+    monkeypatch.setenv("AEGIS_OPENCLAW_DYNAMIC_SKILL_POLICY", "required")
+
+    response = evaluate_install_request(
+        request_for(skill),
+        skill_scan=scan_with(),
+        dynamic_skill_scan=lambda _path: {
+            "decision": "BLOCK",
+            "reason": "隔离试运行观察到外部联网行为。",
+            "findings": [
+                {
+                    "id": "dynamic-network",
+                    "rule_id": "AEGIS_DYNAMIC_EXTERNAL_NETWORK_ATTEMPT",
+                    "title": "Skill 尝试访问外部网络",
+                    "severity": "HIGH",
+                    "analyzer": "aegis-skill-sandbox-v1",
+                    "location": {"object": "event:1"},
+                    "evidence": "host=203.0.113.10",
+                }
+            ],
+        },
+    )
+
+    assert response["decision"] == "block"
+    assert response["findings"][0]["ruleId"] == "AEGIS_DYNAMIC_EXTERNAL_NETWORK_ATTEMPT"
+
+
+def test_static_block_skips_required_dynamic_execution(tmp_path: Path, monkeypatch) -> None:
+    skill = make_skill(tmp_path)
+    monkeypatch.setenv("AEGIS_OPENCLAW_DYNAMIC_SKILL_POLICY", "required")
+
+    response = evaluate_install_request(
+        request_for(skill),
+        skill_scan=scan_with({"id": "static-critical", "severity": "CRITICAL"}),
+        dynamic_skill_scan=lambda _path: (_ for _ in ()).throw(
+            AssertionError("static BLOCK must not execute the Skill")
+        ),
+    )
+
+    assert response["decision"] == "block"
+    assert response["findings"][0]["ruleId"] == "static-critical"
+
+
+def test_required_dynamic_infrastructure_failure_never_allows(
+    tmp_path: Path, monkeypatch
+) -> None:
+    skill = make_skill(tmp_path)
+    monkeypatch.setenv("AEGIS_OPENCLAW_DYNAMIC_SKILL_POLICY", "required")
+    monkeypatch.setenv("AEGIS_OPENCLAW_REVIEW_MODE", "warn")
+
+    response = evaluate_install_request(
+        request_for(skill),
+        skill_scan=scan_with(),
+        dynamic_skill_scan=lambda _path: (_ for _ in ()).throw(
+            RuntimeError("private infrastructure detail")
+        ),
+    )
+
+    assert response["decision"] == "warn"
+    assert response["findings"][0]["ruleId"] == "AEGIS_DYNAMIC_EXECUTION_INCONCLUSIVE"
+    assert "private infrastructure detail" not in json.dumps(response, ensure_ascii=False)
+
+
+def test_invalid_dynamic_mode_fails_closed(tmp_path: Path, monkeypatch) -> None:
+    skill = make_skill(tmp_path)
+    monkeypatch.setenv("AEGIS_OPENCLAW_DYNAMIC_SKILL_POLICY", "unexpected")
+
+    response = evaluate_install_request(request_for(skill), skill_scan=scan_with())
+
+    assert response["decision"] == "block"
+    assert response["findings"][0]["ruleId"] == "AEGIS_DYNAMIC_POLICY_CONFIG_INVALID"
+
+
 def test_cli_emits_exactly_one_fail_closed_json_object_for_invalid_json(
     tmp_path: Path,
 ) -> None:
