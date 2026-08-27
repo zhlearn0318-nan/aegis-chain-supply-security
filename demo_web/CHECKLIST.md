@@ -170,5 +170,7 @@
 - [x] 固定镜像身份核验通过，运行期间 `pull=never`。
 - [x] 良性、外连、诱饵外传、Shell、超时 5 类自建 fixture 绑定 SHA-256。
 - [x] 真实 Docker 3 轮共 15 次执行：决策正确 15/15，误报/危险漏报/遥测缺失/清理失败/容器残留均为 0。
+- [x] 真实 OpenClaw required E2E：安全安装、静态 ALLOW→动态 Shell BLOCK、配置异常失败关闭 3/3；审计证据 3/3，阻断/用户 workspace/容器残留均为 0。
+- [x] OpenClaw 隔离 profile 的 Docker context 发现失败已保留；显式可信 `DOCKER_CONFIG` 修复有回归测试且不进入目标容器。
 - [ ] 可选：Falco/eBPF preflight 与内核级交叉证据；失败不阻断默认 Python 后端。
 - [ ] 第三方 Skill 风险试验；仅在更强隔离、单独授权和明确停止条件下开展。

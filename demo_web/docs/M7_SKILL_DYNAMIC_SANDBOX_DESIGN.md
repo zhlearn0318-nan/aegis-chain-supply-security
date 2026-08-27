@@ -77,6 +77,8 @@ flowchart TD
 
 Falco 观测器与目标容器分离。即使 Falco 需要较高观测权限，也不得把权限授予目标 Skill 容器。
 
+OpenClaw 使用合成 profile 调用策略时，可信策略进程必须显式获得包含 `desktop-linux` 的 Docker CLI context 目录，否则 Docker CLI 会在合成 profile 下报告 context 不存在。该目录只供可信 Aegis 父进程定位本地 Engine：Cisco 扫描器继续使用独立合成 profile，目标 Skill 容器不挂载 Docker 配置、用户目录或 Docker Socket。
+
 ## 7. 确定性行为采集
 
 首期在固定 Python 启动器中安装审计钩子，并由父进程通过专用管道收集子进程事件。采集范围：
@@ -150,26 +152,26 @@ Falco preflight 必须验证：
 
 ### M7-2：Python Skill 试运行 MVP
 
-- [ ] 入口发现、目录限额和软链接拒绝；
-- [ ] 固定 Python 审计启动器；
-- [ ] Docker 创建后 inspect 安全门；
-- [ ] 进程、文件、网络尝试、诱饵和资源证据；
-- [ ] 安全/恶意/超时/不兼容样本测试。
+- [x] 入口发现、目录限额和软链接拒绝；
+- [x] 固定 Python 审计启动器；
+- [x] Docker 创建后 inspect 安全门；
+- [x] 进程、文件、网络尝试、诱饵和资源证据；
+- [x] 安全/恶意/超时/不兼容样本测试。
 
 ### M7-3：准入融合
 
-- [ ] 动态 Finding 归一化；
-- [ ] 静态 `BLOCK` 跳过动态；
-- [ ] 动态高危升级 `BLOCK`；
-- [ ] OpenClaw install policy 联动和审计链；
-- [ ] JSON/Markdown 报告。
+- [x] 动态 Finding 归一化；
+- [x] 静态 `BLOCK` 跳过动态；
+- [x] 动态高危升级 `BLOCK`；
+- [x] OpenClaw install policy 联动和审计链；
+- [x] JSON/Markdown 报告。
 
 ### M7-4：Falco 增强与真实验收
 
 - [ ] Falco 自定义 Skill 规则；
 - [ ] 目标容器过滤与事件归一；
 - [ ] 与 Python 行为采集交叉验证；
-- [ ] Docker Desktop 真实安全、恶意和失败样本验收；
+- [x] Docker Desktop 真实安全、恶意和失败样本验收；
 - [ ] 冻结动态开发集和独立回归集。
 
 ## 11. 验收标准

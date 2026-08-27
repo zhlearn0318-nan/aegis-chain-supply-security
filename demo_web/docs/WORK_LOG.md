@@ -995,3 +995,11 @@
 - 新增真实验收程序，逐容器执行 create→inspect→start→cleanup，并在整轮结束后按后端标签查询残留。每个目标保持断网、非 root、只读根、cap-drop ALL、no-new-privileges、资源限制和只读输入。
 - 首轮 5/5 通过；提交前发现残留查询未失败闭锁并补强，使用修正版重跑最终 v2。3 轮共 15/15 决策正确：良性 ALLOW 3 次，高危 BLOCK 9 次，超时 REVIEW 3 次。良性误报、危险漏报、遥测缺失、清理失败、容器残留均为 0，总运行 49.626 秒。
 - 结论更新为 `supported_on_self_built_real_docker_fixtures`。边界不变：Docker/WSL2 不等于恶意代码 VM，Python audit hook 不对抗主动绕过，第三方 Skill 与 Falco/eBPF 尚未验收。
+
+## 2026-08-27：M7 OpenClaw required 动态准入 E2E
+
+- 新增可复跑真实平台验收工具，固定 OpenClaw 2026.7.1-2、Node、Aegis 源码和两个自建 fixture 身份；使用全新 state/workspace/profile/temp/audit database，不修改用户原配置。
+- 静态对照确认 safe 与 Shell 样本均为 ALLOW；外联和诱饵外传已被静态阻断，不用于夸大动态增益。
+- v1 的安全与 Shell 两例均因合成 profile 缺少 Docker `desktop-linux` context 而失败关闭。3 条审计链有效，且没有安装、用户 workspace 或容器残留；失败结果、根因和清单原样固化。
+- 只读对照证明显式 Docker config 后 Engine 29.7.2 可访问。v2 仅向可信 policy 进程提供 context 目录；Cisco 扫描器合成 profile、目标容器挂载和全部安全限制不变。
+- v2 最终 3/3：安全 Skill exit 0 并安装；静态 ALLOW 的 Shell Skill由 `AEGIS_DYNAMIC_SHELL_SPAWN` 升级 BLOCK；无效动态模式由 `AEGIS_DYNAMIC_POLICY_CONFIG_INVALID` 失败关闭。审计证据3/3，输入变化、阻断残留、默认用户 workspace污染和容器残留均为0，总耗时88.576秒；专项30 passed，后端完整418 passed、1 skipped。

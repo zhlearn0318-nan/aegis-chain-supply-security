@@ -24,6 +24,8 @@
           // 仅 Skill 启用动态试运行；Plugin 保持 M6 静态准入。
           AEGIS_OPENCLAW_DYNAMIC_SKILL_POLICY: "required",
           AEGIS_OPENCLAW_AUDIT_DB: "C:\\AegisChain\\data\\admission_audit.db",
+          // 必须包含 desktop-linux context；仅可信策略进程使用，不挂载进 Skill 容器。
+          DOCKER_CONFIG: "C:\\Users\\operator\\.docker",
           PYTHONUTF8: "1",
           PYTHONIOENCODING: "utf-8",
         },

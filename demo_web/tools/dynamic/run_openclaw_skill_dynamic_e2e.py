@@ -38,7 +38,7 @@ from backend.openclaw_install_policy import (  # noqa: E402
 )
 
 
-RUN_ID = "2026-08-27-openclaw-skill-dynamic-e2e-v1"
+RUN_ID = "2026-08-27-openclaw-skill-dynamic-e2e-v2"
 EXPECTED_OPENCLAW_VERSION = "2026.7.1-2"
 EXPECTED_OPENCLAW_COMMIT = "0790d9f"
 DEFAULT_OUTPUT = DEMO_ROOT / "artifacts" / "experiment" / RUN_ID
@@ -193,6 +193,9 @@ def _policy_config(
         if local_app_data
         else Path(program_files) / "Docker" / "Docker" / "resources" / "bin"
     )
+    docker_config = (Path.home() / ".docker").resolve(strict=True)
+    if not docker_config.is_dir():
+        raise ValueError("Docker CLI config directory is unavailable")
     policy_path = os.pathsep.join(
         [str(docker_bin), str(Path(system_root) / "System32"), system_root]
     )
@@ -222,6 +225,7 @@ def _policy_config(
                         "PATHEXT": ".COM;.EXE;.BAT;.CMD",
                         "LOCALAPPDATA": local_app_data,
                         "ProgramFiles": program_files,
+                        "DOCKER_CONFIG": str(docker_config),
                         "PATH": policy_path,
                     },
                     "trustedDirs": [
@@ -311,6 +315,8 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def run(args: argparse.Namespace) -> dict[str, Any]:
+    started_at = datetime.now(timezone.utc)
+    started = time.perf_counter()
     output = args.output.resolve(strict=False)
     runtime_root = args.runtime_root.resolve(strict=False)
     protected = (
@@ -493,8 +499,10 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "default_workspace_test_residuals": sum(default_after.values()),
         "default_workspace_preexisting_test_slugs": sum(default_before.values()),
         "docker_container_residuals": len(residual_ids),
+        "docker_config_explicit": True,
         "third_party_samples_executed": 0,
         "gpu_used": False,
+        "elapsed_seconds": round(time.perf_counter() - started, 3),
     }
     accepted = (
         config_validation["passed"]
@@ -530,6 +538,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "source_hashes_after": source_hashes_after,
         "unexpected_isolated_workspace_entries": unexpected_isolated,
         "docker_residual_ids": residual_ids,
+        "docker_context_policy": "explicit_trusted_cli_config_not_mounted_to_target",
     }
     _write_json(output / "results.json", results)
     _write_json(output / "metrics.json", metrics)
@@ -566,7 +575,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "run_id": RUN_ID,
         "status": results["status"],
         "experiment_tier": "auxiliary/dev-real-platform-e2e",
-        "started_at": datetime.now(timezone.utc).isoformat(),
+        "started_at": started_at.isoformat(),
+        "completed_at": datetime.now(timezone.utc).isoformat(),
         "environment": {
             "host_platform": platform.platform(),
             "host_python": sys.version,

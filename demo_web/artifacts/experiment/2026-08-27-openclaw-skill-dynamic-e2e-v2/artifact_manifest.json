@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-27-openclaw-skill-dynamic-e2e-v2",
+  "evidence_files": {
+    "CHECKLIST.md": {"bytes": 723, "sha256": "149903dcff27547eee1e57cb50e7e8e72815f782f1baa3d232335bd58d9788b1"},
+    "evaluation_summary.json": {"bytes": 644, "sha256": "6c3c5e72dc317893ca07862c85e70cd630ce59ef9d4924de88a7f839abee2844"},
+    "metrics.json": {"bytes": 529, "sha256": "95d1d5ea12d4f7d2970bf4059dce5ab8d6b24193a8a1aaa69c7127c3f6cec24a"},
+    "PLAN.md": {"bytes": 1438, "sha256": "804aaff9fe3c426775e0a9acb988b612122b979fbadd40f651c5e092d903bb6f"},
+    "results.json": {"bytes": 8006, "sha256": "507bbd7809e86a35177badcb9dcfc4e74e382c953ff27a81fd461e209a9af866"},
+    "run_manifest.json": {"bytes": 3502, "sha256": "7a547c08f100a494ddd8c314e10ff07a61eabf65e31161bb3fcb0f6ab3f3f655"},
+    "run.log": {"bytes": 464, "sha256": "cdf33bd30f676d3e6fbe074f8b4f721efbe2dc87da3cb9c046edf816c9f12ed9"},
+    "summary.md": {"bytes": 753, "sha256": "ef24636d7c9635b83107586f4a7275e32593db3e2245cf6338b99b92ea01c15f"}
+  }
+}

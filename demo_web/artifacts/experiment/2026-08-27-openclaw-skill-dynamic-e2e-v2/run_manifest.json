@@ -1,0 +1,94 @@
+{
+  "claim_boundary": [
+    "仅执行哈希锁定的自建 Python Skill fixture。",
+    "当前 OpenClaw 稳定版将 REVIEW 兼容映射为 block。",
+    "Docker Desktop/WSL2 不等同于恶意代码专用虚拟机。",
+    "Falco/eBPF 与第三方 Skill 尚未验收。"
+  ],
+  "completed_at": "2026-08-27T14:13:51.597062+00:00",
+  "environment": {
+    "docker_engine": {
+      "api_version": "1.55",
+      "architecture": "amd64",
+      "duration_ms": 200,
+      "engine_version": "29.7.2",
+      "os": "linux"
+    },
+    "gpu_used": false,
+    "host_platform": "Windows-11-10.0.26200-SP0",
+    "host_python": "3.13.14 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:26:41) [MSC v.1942 64 bit (AMD64)]",
+    "openclaw_commit": "0790d9f",
+    "openclaw_version": "2026.7.1-2",
+    "third_party_samples_executed": 0
+  },
+  "experiment_tier": "auxiliary/dev-real-platform-e2e",
+  "metrics": {
+    "audit_chain_valid": true,
+    "audit_gates_passed": 3,
+    "audit_gates_total": 3,
+    "audit_rows": 3,
+    "blocked_install_residuals": 0,
+    "cases_passed": 3,
+    "cases_total": 3,
+    "default_workspace_preexisting_test_slugs": 0,
+    "default_workspace_test_residuals": 0,
+    "docker_config_explicit": true,
+    "docker_container_residuals": 0,
+    "elapsed_seconds": 88.576,
+    "gpu_used": false,
+    "source_hash_changes": 0,
+    "static_allow_controls": 2,
+    "third_party_samples_executed": 0,
+    "unexpected_isolated_workspace_entries": 0
+  },
+  "run_id": "2026-08-27-openclaw-skill-dynamic-e2e-v2",
+  "schema_version": "1.0",
+  "sources": {
+    "backend/dynamic_audit/skill_sandbox.py": {
+      "bytes": 16253,
+      "sha256": "fd8239d87e75b54578e4494485245bb08c59cbf3784d3f64f4b33f450ac492f6"
+    },
+    "backend/dynamic_audit/skill_sandbox_docker.py": {
+      "bytes": 19451,
+      "sha256": "6d928c25da2006f3338ce79d04d304e99fc768b99cb276bba01a745976523cba"
+    },
+    "backend/install_policy_audit.py": {
+      "bytes": 10388,
+      "sha256": "02fa7bc68830afb1d763cc74367855c5524699e928468506a9b4a8c3e8f40e2b"
+    },
+    "backend/openclaw_install_policy.py": {
+      "bytes": 19797,
+      "sha256": "e4b7d3d977c17991533eab96cba4685bcfda489b36dfb24c0b03bb832ae12641"
+    },
+    "config/skill_dynamic_sandbox.json": {
+      "bytes": 1316,
+      "sha256": "1ea28e28ff91b81e42b24905fce2248fd7c03eac94a2162cca9046c81aee0cbb"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_samples/safe_skill/SKILL.md": {
+      "bytes": 199,
+      "sha256": "65dbb2a015f37edd0e638ad0c7682ca08372a180b8666741f859cd19f2649ed0"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_samples/safe_skill/run.py": {
+      "bytes": 139,
+      "sha256": "801a926578d7c96b4f518043af6474dce6afa49047abd03936251828add65ba3"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_samples/shell_spawn_skill/SKILL.md": {
+      "bytes": 179,
+      "sha256": "1d4e8b51770910aaa320001f209e47d2a740795b640bf17d1d3bceb0ef4ecabb"
+    },
+    "tools/dynamic/fixtures/skill_sandbox_samples/shell_spawn_skill/run.py": {
+      "bytes": 72,
+      "sha256": "b9e887e2f5aec3a144c60b311131e4bb64c02e2b622f3f40b7b505f100faa53d"
+    },
+    "tools/dynamic/run_openclaw_skill_dynamic_e2e.py": {
+      "bytes": 24458,
+      "sha256": "c900f8825587fa9e1e0735fca68f4b9cb963e52e221650ef549f9e3ce592adc4"
+    },
+    "tools/openclaw_install_policy.py": {
+      "bytes": 2493,
+      "sha256": "ed76d7d7ccbe0827b85d04a8850e0bcf1f01bc1198f8624eb63aad573a54cc86"
+    }
+  },
+  "started_at": "2026-08-27T14:12:23.020035+00:00",
+  "status": "accepted"
+}

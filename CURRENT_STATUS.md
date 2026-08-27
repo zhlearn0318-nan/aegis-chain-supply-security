@@ -7,7 +7,7 @@
 
 ## 1. 一句话结论
 
-Aegis Chain 已被真实 OpenClaw 稳定版调用，并完成 Skill 与目录型原生 Plugin 静态安装准入；Skill 安装前动态策略已在真实 Docker 上完成 5 类自建场景、3 轮共 15 次重复验收，保证“静态 BLOCK 不执行、动态高危升级 BLOCK、动态失败不 ALLOW”。第三方 Skill 和 Falco eBPF 旁证尚未验收，生产发布决策保持 **NO-GO**。
+Aegis Chain 已被真实 OpenClaw 稳定版调用，并完成 Skill 与目录型原生 Plugin 静态安装准入；Skill 安装前动态策略除 15 次直接 Docker 验收外，已完成真实 OpenClaw 安全安装、静态 ALLOW→动态 BLOCK 和配置异常失败关闭三条 E2E。第三方 Skill 和 Falco eBPF 旁证尚未验收，生产发布决策保持 **NO-GO**。
 
 ## 2. 当前可复核能力
 
@@ -36,7 +36,7 @@ Aegis Chain 已被真实 OpenClaw 稳定版调用，并完成 Skill 与目录型
 - M6-3 准入加固：Cisco Skill/MCP/依赖真实冒烟通过；完整 preflight ready；安全/恶意审计2行、哈希链有效。
 - M6-4 Plugin/MCP：真实良性 Plugin 安装成功；npx运行时下载 Plugin 阻断且残留0；3行真实审计链有效。
 - 静态最终补强：有依赖 Plugin 在缺少 Node 漏洞证据时强制 REVIEW；Aegis 静态规则注册表125条完整。
-- 后端完整回归：`417 passed, 1 skipped`；跳过项仅为当前 Windows 测试账户无符号链接创建权限。
+- 后端完整回归：`418 passed, 1 skipped`；跳过项仅为当前 Windows 测试账户无符号链接创建权限。
 - 前端 API 测试：`10 passed`。
 - 前端生产构建：通过。
 - P0-2 证据：`demo_web/artifacts/experiment/2026-08-24-dynamic-queue-recovery-dev-v1/`。
@@ -46,6 +46,7 @@ Aegis Chain 已被真实 OpenClaw 稳定版调用，并完成 Skill 与目录型
 - M6-4 证据：`demo_web/artifacts/experiment/2026-08-26-openclaw-plugin-mcp-admission-v1/`；最终评委复核：`demo_web/docs/STATIC_AUDIT_FINAL_JUDGE_REVIEW_2026-08-26.md`。
 - M7 动态沙箱开发证据：`demo_web/artifacts/experiment/2026-08-27-skill-dynamic-sandbox-dev-v1/`；该开发时间截面的结论为逻辑链 `supported`、真实 Docker/Falco 运行 `inconclusive`。
 - M7 真实 Docker 重复验收：`demo_web/artifacts/experiment/2026-08-27-skill-dynamic-sandbox-real-v2/`；5 类场景×3轮共 15/15 决策正确，动态 BLOCK 9、REVIEW 3；良性误报、危险漏报、遥测缺失、清理失败和容器残留均为 0。默认 Python 后端结论更新为 `supported_on_self_built_real_docker_fixtures`，Falco 仍为可选且 `inconclusive`。
+- M7 OpenClaw 动态 E2E：v1 因隔离 profile 缺少 Docker context 失败并保留证据；v2 用单一环境修复后 3/3 通过。安全 Skill 真实安装，静态 ALLOW 的 Shell Skill 被 `AEGIS_DYNAMIC_SHELL_SPAWN` 阻断，配置异常失败关闭；审计链有效，输入变化、阻断目录残留、用户默认 workspace 污染和容器残留均为 0。证据：`demo_web/artifacts/experiment/2026-08-27-openclaw-skill-dynamic-e2e-v2/`。
 
 ## 4. M5 完成度
 

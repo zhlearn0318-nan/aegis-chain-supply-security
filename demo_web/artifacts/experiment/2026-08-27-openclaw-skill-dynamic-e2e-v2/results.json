@@ -1,0 +1,199 @@
+{
+  "audit_gates": {
+    "dynamic_shell_block": true,
+    "invalid_mode_block": true,
+    "safe_allow": true
+  },
+  "audit_verification": {
+    "head_chain_sha256": "49c14fd27af5f4279571721a51bd990186032f635a77979bb519c98fc9e9bcd6",
+    "rows": 3,
+    "valid": true
+  },
+  "audits": [
+    {
+      "chain_sha256": "b53ec9567bbc7068bc8dcfdcba72edd02bb0ec99fc58a518c7103b2a649d2c36",
+      "created_at": "2026-08-27T14:13:07.437812+00:00",
+      "decision": "allow",
+      "duration_ms": 7871,
+      "event_id": "0c28447d56934975983b2131592a9d05",
+      "finding_rule_ids": [
+        "MANIFEST_MISSING_LICENSE",
+        "AEGIS_STATIC_COVERAGE_SUMMARY",
+        "AEGIS_CONTEXT_FILESYSTEM_CAPABILITY_DECLARED"
+      ],
+      "finding_severities": [
+        "info",
+        "info",
+        "info"
+      ],
+      "openclaw_version": "2026.7.1-2",
+      "reason_code": "MANIFEST_MISSING_LICENSE",
+      "review_mode": "block",
+      "sequence": 1,
+      "source_tree_sha256": "470ca3a2ef639d7725645fe2b0ff0025f4ea84bb2ef9fed2afdc0c3b11a7574a",
+      "target_name": "aegis-dyn-safe",
+      "target_type": "skill"
+    },
+    {
+      "chain_sha256": "abdd8fb05a2cdc537c8b262ca2d4c5f62e52bfd89574a61e131ba544e3e82511",
+      "created_at": "2026-08-27T14:13:31.081149+00:00",
+      "decision": "block",
+      "duration_ms": 7629,
+      "event_id": "8074d7ddc7b24e559cc66a0d4d67f816",
+      "finding_rule_ids": [
+        "AEGIS_DYNAMIC_SHELL_SPAWN",
+        "MANIFEST_MISSING_LICENSE",
+        "AEGIS_STATIC_COVERAGE_SUMMARY"
+      ],
+      "finding_severities": [
+        "critical",
+        "info",
+        "info"
+      ],
+      "openclaw_version": "2026.7.1-2",
+      "reason_code": "AEGIS_DYNAMIC_SHELL_SPAWN",
+      "review_mode": "block",
+      "sequence": 2,
+      "source_tree_sha256": "e83cea5ee6692aede980c88ce3526a1eac3e15ecd3fb965c0ef9281c01e43c72",
+      "target_name": "aegis-dyn-shell-block",
+      "target_type": "skill"
+    },
+    {
+      "chain_sha256": "49c14fd27af5f4279571721a51bd990186032f635a77979bb519c98fc9e9bcd6",
+      "created_at": "2026-08-27T14:13:51.019116+00:00",
+      "decision": "block",
+      "duration_ms": 4741,
+      "event_id": "49c6904c57a44cecb79ab944e039c0ad",
+      "finding_rule_ids": [
+        "AEGIS_DYNAMIC_POLICY_CONFIG_INVALID"
+      ],
+      "finding_severities": [
+        "critical"
+      ],
+      "openclaw_version": "2026.7.1-2",
+      "reason_code": "AEGIS_DYNAMIC_POLICY_CONFIG_INVALID",
+      "review_mode": "block",
+      "sequence": 3,
+      "source_tree_sha256": "470ca3a2ef639d7725645fe2b0ff0025f4ea84bb2ef9fed2afdc0c3b11a7574a",
+      "target_name": "aegis-dyn-config-block",
+      "target_type": "skill"
+    }
+  ],
+  "cases": [
+    {
+      "destination_exists": true,
+      "duration_ms": 23139,
+      "exit_code": 0,
+      "expected_success": true,
+      "passed": true,
+      "slug": "aegis-dyn-safe",
+      "stderr": "",
+      "stdout": "Installing to <RUNTIME>\\workspace\\skills\\aegis-dyn-safe…\nInstalled aegis-dyn-safe from path -> <RUNTIME>\\workspace\\skills\\aegis-dyn-safe\n"
+    },
+    {
+      "destination_exists": false,
+      "duration_ms": 22598,
+      "exit_code": 1,
+      "expected_success": false,
+      "passed": true,
+      "slug": "aegis-dyn-shell-block",
+      "stderr": "blocked by install policy: 隔离试运行观察到高危行为，已升级为阻断。\n",
+      "stdout": "Install policy target=skill:aegis-dyn-shell-block request=skill-install/install origin=path pathKind=directory source=local-path/user: blocked by install policy: 隔离试运行观察到高危行为，已升级为阻断。\n"
+    },
+    {
+      "destination_exists": false,
+      "duration_ms": 19943,
+      "exit_code": 1,
+      "expected_success": false,
+      "passed": true,
+      "slug": "aegis-dyn-config-block",
+      "stderr": "blocked by install policy: AEGIS_OPENCLAW_DYNAMIC_SKILL_POLICY 仅支持 disabled 或 required\n",
+      "stdout": "Install policy target=skill:aegis-dyn-config-block request=skill-install/install origin=path pathKind=directory source=local-path/user: blocked by install policy: AEGIS_OPENCLAW_DYNAMIC_SKILL_POLICY 仅支持 disabled 或 required\n"
+    }
+  ],
+  "config_validation": {
+    "invalid_mode_schema_exit_code": 0,
+    "passed": true,
+    "required_exit_code": 0
+  },
+  "docker_context_policy": "explicit_trusted_cli_config_not_mounted_to_target",
+  "docker_residual_ids": [],
+  "openclaw": {
+    "commit": "0790d9f",
+    "entrypoint_sha256": "f643b005d6db233a0b45204e8d8e943256874ccc6897b8a6e0cf42a9b376a188",
+    "node": "C:\\Program Files\\nodejs\\node.exe",
+    "version": "2026.7.1-2",
+    "wrapper_sha256": "43f7c1bd4b44b4341fdaa9b6d2c9aaf2993c80c475c0b7576b9e0a3f63e1324a"
+  },
+  "run_id": "2026-08-27-openclaw-skill-dynamic-e2e-v2",
+  "schema_version": "1.0",
+  "source_hashes_after": {
+    "safe_skill": "470ca3a2ef639d7725645fe2b0ff0025f4ea84bb2ef9fed2afdc0c3b11a7574a",
+    "shell_spawn_skill": "e83cea5ee6692aede980c88ce3526a1eac3e15ecd3fb965c0ef9281c01e43c72"
+  },
+  "source_hashes_before": {
+    "safe_skill": "470ca3a2ef639d7725645fe2b0ff0025f4ea84bb2ef9fed2afdc0c3b11a7574a",
+    "shell_spawn_skill": "e83cea5ee6692aede980c88ce3526a1eac3e15ecd3fb965c0ef9281c01e43c72"
+  },
+  "static_controls": {
+    "safe_skill": {
+      "decision": "allow",
+      "findings": [
+        {
+          "evidence": "vendor_signal=MANIFEST_MISSING_LICENSE; evidence_sha256=9ff2a3d05b0cac1238b27856d00cd70ce8ba6eefef3146139a0a838dcb42a7d7; raw_content_retained=false",
+          "file": "SKILL.md",
+          "message": "Skill scanner reported a static security risk",
+          "ruleId": "MANIFEST_MISSING_LICENSE",
+          "severity": "info"
+        },
+        {
+          "evidence": "coverage_counts=files_total:2,security_text_inspected:2,non_code_data_counted:0,test_context_security_text:0,coverage_gap_files:0,python_parsed:1,python_parse_failed:0; raw_value_retained=false",
+          "file": "SKILL.md",
+          "message": "Static inspection coverage summary",
+          "ruleId": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "info"
+        },
+        {
+          "evidence": "context_features=filesystem_behavior_observed,filesystem_declared; files=SKILL.md,run.py; cisco_rule_ids=",
+          "file": "SKILL.md",
+          "message": "Filesystem capability is declared by the Skill",
+          "ruleId": "AEGIS_CONTEXT_FILESYSTEM_CAPABILITY_DECLARED",
+          "severity": "info"
+        }
+      ],
+      "protocolVersion": 1,
+      "reason": "扫描成功，所有发现均处于允许严重度集合，准入策略允许继续。"
+    },
+    "shell_spawn_skill": {
+      "decision": "allow",
+      "findings": [
+        {
+          "evidence": "vendor_signal=MANIFEST_MISSING_LICENSE; evidence_sha256=9ff2a3d05b0cac1238b27856d00cd70ce8ba6eefef3146139a0a838dcb42a7d7; raw_content_retained=false",
+          "file": "SKILL.md",
+          "message": "Skill scanner reported a static security risk",
+          "ruleId": "MANIFEST_MISSING_LICENSE",
+          "severity": "info"
+        },
+        {
+          "evidence": "coverage_counts=files_total:2,security_text_inspected:2,non_code_data_counted:0,test_context_security_text:0,coverage_gap_files:0,python_parsed:1,python_parse_failed:0; raw_value_retained=false",
+          "file": "SKILL.md",
+          "message": "Static inspection coverage summary",
+          "ruleId": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "info"
+        },
+        {
+          "evidence": "context_features=argument_vector_call,shell_interpretation_not_implied; files=run.py; cisco_rule_ids=",
+          "file": "run.py",
+          "line": 4,
+          "message": "Process call uses an argument-vector form",
+          "ruleId": "AEGIS_CONTEXT_ARGUMENT_VECTOR_PROCESS_CALL",
+          "severity": "info"
+        }
+      ],
+      "protocolVersion": 1,
+      "reason": "扫描成功，所有发现均处于允许严重度集合，准入策略允许继续。"
+    }
+  },
+  "status": "accepted",
+  "unexpected_isolated_workspace_entries": []
+}

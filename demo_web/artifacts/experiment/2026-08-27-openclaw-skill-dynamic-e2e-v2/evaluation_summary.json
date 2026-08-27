@@ -1,0 +1,13 @@
+{
+  "claim_update": "supported_real_openclaw_required_dynamic_admission",
+  "limits": [
+    "仅执行哈希锁定的自建 Python Skill fixture。",
+    "当前 OpenClaw 稳定版将 REVIEW 兼容映射为 block。",
+    "Docker Desktop/WSL2 不等同于恶意代码专用虚拟机。",
+    "Falco/eBPF 与第三方 Skill 尚未验收。"
+  ],
+  "next_action": "expand_dynamic_regression_before_third_party_trial",
+  "outcome_summary": "真实 OpenClaw 已完成安全安装、静态 ALLOW 到动态 BLOCK、配置异常失败关闭三条安装前闭环。",
+  "run_id": "2026-08-27-openclaw-skill-dynamic-e2e-v2",
+  "schema_version": "1.0"
+}

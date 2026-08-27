@@ -1,0 +1,11 @@
+run_id=2026-08-27-openclaw-skill-dynamic-e2e-v2
+status=accepted
+openclaw=2026.7.1-2 (0790d9f)
+case=aegis-dyn-safe exit=0 destination=True passed=True duration_ms=23139
+case=aegis-dyn-shell-block exit=1 destination=False passed=True duration_ms=22598
+case=aegis-dyn-config-block exit=1 destination=False passed=True duration_ms=19943
+audit_chain_valid=True
+audit_gates=3/3
+blocked_install_residuals=0
+default_workspace_test_residuals=0
+docker_container_residuals=0
