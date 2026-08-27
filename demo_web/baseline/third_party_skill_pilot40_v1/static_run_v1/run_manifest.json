@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-28-third-party-skill-pilot40-static-v1",
+  "status": "completed",
+  "started_at": "2026-08-28T00:54:24+08:00",
+  "baseline_id": "third-party-skill-pilot40-v1",
+  "dataset": {
+    "cases": 40,
+    "case_ids_sha256": "58768c2badfe65f49f77a9a7e932b77a8d2341e6a53cf315739c5d6e8274dc53"
+  },
+  "scanner": {
+    "name": "Cisco Skill Scanner + Aegis static pipeline",
+    "version_output": "skill-scanner 2.0.13.dev3+g4dee90371",
+    "executable_sha256": "b31b66fce1b8466ba5c49e1084ee972b746e00d4ebdcaeab78ad6b38a0dce366",
+    "timeout_seconds_per_case": 60,
+    "parallel_workers": 4
+  },
+  "policy": {
+    "id": "aegis-chain-local-default",
+    "version": "1.0.0",
+    "sha256": "010ca27b327e5098b11d7819563b40a607cac7698ac01019740557b8eaececf5"
+  },
+  "metric_contract": {
+    "sha256": "96b991b132c90de80de8a07fbe05ab93584bef32414a7cf79aa0bc780c10cee1",
+    "primary_metric": "strict_macro_f1_on_strong_labels"
+  },
+  "environment": {
+    "python": "3.13.14 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:26:41) [MSC v.1942 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "sample_execution": false,
+    "sample_install": false,
+    "network_requested_by_scan_runner": false,
+    "ground_truth_passed_to_scanner": false
+  },
+  "completed_at": "2026-08-28T00:55:41+08:00",
+  "wall_seconds": 76.976,
+  "outputs": {
+    "per_case_results.jsonl": {
+      "sha256": "294dd76d111b5c15efcd63f9dff9a842cd90760d507ef600053cef278c2d1df3",
+      "bytes": 125010
+    },
+    "metrics.json": {
+      "sha256": "e22ff205e3f967e2e239702a5a6aaab624cda67663449a1ec98cd009d72c8009",
+      "bytes": 2209
+    },
+    "dynamic_eligibility.json": {
+      "sha256": "acd57b1abe575ba5ff2ab15e2d133bec6d09948697d4ef4d920747363878b646",
+      "bytes": 10570
+    },
+    "strong_label_errors.jsonl": {
+      "sha256": "8972b705deba79d4bb13fcf6cb39726fd03fe7578865f599c0d64df924063f11",
+      "bytes": 26881
+    },
+    "rule_distribution.json": {
+      "sha256": "a8cd1165b3b7f44857c75d1cb07b0bb521d2f3e0827480f5acce58ec507808c2",
+      "bytes": 2177
+    }
+  }
+}

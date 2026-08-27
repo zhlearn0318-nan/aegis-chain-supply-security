@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "baseline_id": "third-party-skill-pilot40-v1-static-run-v1",
+  "decision": "accepted_with_caveats",
+  "accepted_at": "2026-08-28",
+  "performance_measured": true,
+  "reasons": [
+    "The frozen 40-case manifest was scanned without changing sample IDs or metric mapping.",
+    "All sample trees were verified before and after scanning.",
+    "The 16-case strong-label metrics and 24-case weak-negative diagnostics are reported separately.",
+    "The two UNKNOWN outcomes were reproduced sequentially and explained as stable manifest-format failures."
+  ],
+  "caveats": [
+    "Strict macro F1 is 0.4889 on only 16 strong-label cases and must not be generalized as a population estimate.",
+    "The 24 weak negatives cannot support accuracy or false-positive-rate claims.",
+    "One normal sample was blocked by repeated vendor jailbreak-YARA matches, and one T01 suspicious sample was allowed.",
+    "No third-party sample passed the full dynamic eligibility gate, so no third-party dynamic result exists."
+  ],
+  "next_route": "Return to experiment for structured manifest preflight and a separately frozen expansion of eligible normal/safe single-entrypoint dynamic candidates."
+}

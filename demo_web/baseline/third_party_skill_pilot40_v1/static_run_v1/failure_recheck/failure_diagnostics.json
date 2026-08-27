@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "scope": "diagnostic_only_no_sample_execution",
+  "cases": [
+    {
+      "case_id": "masb-048-api-design",
+      "status": "failed",
+      "error_type": "RuntimeError",
+      "safe_log_tail": "Skill Scanner failed with exit code 1: Error loading skill: SKILL.md missing required field: name"
+    },
+    {
+      "case_id": "stb-case_03882",
+      "status": "failed",
+      "error_type": "RuntimeError",
+      "safe_log_tail": "Skill Scanner failed with exit code 1: Error loading skill: Failed to parse YAML frontmatter: while scanning a simple key\n  in \"<unicode string>\", line 4, column 1\ncould not find expected ':'\n  in \"<unicode string>\", line 5, column 1"
+    }
+  ]
+}

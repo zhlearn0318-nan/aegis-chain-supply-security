@@ -1,0 +1,105 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-28-third-party-skill-pilot40-static-v1",
+  "cases": 40,
+  "decision_counts_all40": {
+    "ALLOW": 23,
+    "BLOCK": 11,
+    "REVIEW": 4,
+    "UNKNOWN": 2
+  },
+  "strong_label_metrics": {
+    "cases": 16,
+    "coverage": 0.9375,
+    "failure_rate": 0.0625,
+    "strict_macro_f1": 0.4888888888888889,
+    "malicious_recall": 1.0,
+    "non_normal_recall": 0.875,
+    "normal_fpr": 0.125,
+    "confusion_matrix": {
+      "normal": {
+        "normal": 6,
+        "suspicious": 0,
+        "malicious": 1,
+        "abstain": 1
+      },
+      "suspicious": {
+        "normal": 1,
+        "suspicious": 0,
+        "malicious": 3,
+        "abstain": 0
+      },
+      "malicious": {
+        "normal": 0,
+        "suspicious": 0,
+        "malicious": 4,
+        "abstain": 0
+      }
+    },
+    "per_risk_label_recall": {
+      "T01": {
+        "support": 6,
+        "detected": 5,
+        "recall": 0.8333333333333334
+      },
+      "T02": {
+        "support": 1,
+        "detected": 1,
+        "recall": 1.0
+      },
+      "T03": {
+        "support": 3,
+        "detected": 3,
+        "recall": 1.0
+      },
+      "T04": {
+        "support": 3,
+        "detected": 3,
+        "recall": 1.0
+      },
+      "T05": {
+        "support": 1,
+        "detected": 1,
+        "recall": 1.0
+      },
+      "T06": {
+        "support": 1,
+        "detected": 1,
+        "recall": 1.0
+      },
+      "T07": {
+        "support": 1,
+        "detected": 1,
+        "recall": 1.0
+      },
+      "T08": {
+        "support": 3,
+        "detected": 3,
+        "recall": 1.0
+      },
+      "T09": {
+        "support": 1,
+        "detected": 1,
+        "recall": 1.0
+      }
+    }
+  },
+  "weak_negative_diagnostics": {
+    "cases": 24,
+    "scan_completion_rate": 0.9583333333333334,
+    "decision_counts": {
+      "ALLOW": 16,
+      "BLOCK": 3,
+      "REVIEW": 4,
+      "UNKNOWN": 1
+    },
+    "weak_negative_review_rate": 0.16666666666666666,
+    "weak_negative_block_rate": 0.125
+  },
+  "latency_all40": {
+    "median_ms": 7645.0,
+    "p95_ms": 8216,
+    "max_ms": 9418
+  },
+  "claim_boundary": "Accuracy metrics use only 16 strong labels; 24 weak negatives are descriptive diagnostics."
+}

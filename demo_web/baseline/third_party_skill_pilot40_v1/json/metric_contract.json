@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "contract_id": "third-party-skill-pilot40-v1-metrics-v1",
+  "baseline_id": "third-party-skill-pilot40-v1",
+  "status": "frozen_before_first_scan",
+  "task": "static_agent_skill_security_screening_with_guarded_dynamic_followup",
+  "primary_metric": "strict_macro_f1_on_strong_labels",
+  "dataset": {
+    "split": "frozen_mixed_pilot40",
+    "cases": 40,
+    "case_ids_sha256": "58768c2badfe65f49f77a9a7e932b77a8d2341e6a53cf315739c5d6e8274dc53",
+    "strong_label_cases": 16,
+    "weak_negative_cases": 24
+  },
+  "prediction_mapping": {
+    "ALLOW": "normal",
+    "REVIEW": "suspicious",
+    "BLOCK": "malicious",
+    "UNKNOWN": "abstain",
+    "failed": "abstain"
+  },
+  "strong_label_metrics": [
+    {"name": "coverage", "direction": "higher", "definition": "non_abstained_strong_label_cases / 16"},
+    {"name": "failure_rate", "direction": "lower", "definition": "failed_or_unknown_strong_label_cases / 16"},
+    {"name": "strict_macro_f1", "direction": "higher", "role": "primary", "definition": "Macro F1 over normal, suspicious and malicious; abstentions count as errors."},
+    {"name": "malicious_recall", "direction": "higher", "definition": "correct_malicious / 4"},
+    {"name": "non_normal_recall", "direction": "higher", "definition": "predicted REVIEW or BLOCK among 8 suspicious or malicious cases"},
+    {"name": "normal_fpr", "direction": "lower", "definition": "normal cases predicted REVIEW or BLOCK / 8"},
+    {"name": "per_risk_label_recall", "direction": "higher", "labels": ["T01", "T02", "T03", "T04", "T05", "T06", "T07", "T08", "T09"]},
+    {"name": "latency_median_ms", "direction": "lower"},
+    {"name": "latency_p95_ms", "direction": "lower"}
+  ],
+  "weak_negative_diagnostics": [
+    {"name": "scan_completion_rate", "direction": "higher"},
+    {"name": "weak_negative_review_rate", "direction": "descriptive_only"},
+    {"name": "weak_negative_block_rate", "direction": "descriptive_only"},
+    {"name": "finding_rule_distribution", "direction": "descriptive_only"}
+  ],
+  "dynamic_followup_metrics": [
+    {"name": "eligible_case_count", "direction": "descriptive_only"},
+    {"name": "sandbox_completion_rate", "direction": "higher"},
+    {"name": "timeout_rate", "direction": "lower"},
+    {"name": "policy_violation_count", "direction": "lower"},
+    {"name": "cleanup_success_rate", "direction": "higher"}
+  ],
+  "dynamic_gate": {
+    "required_ground_truth": ["normal", "weak_safe"],
+    "required_static_decision": ["ALLOW", "REVIEW"],
+    "blocked_ground_truth": ["suspicious", "malicious"],
+    "required_entrypoint": "exactly_one_conservative_python_scripts_entrypoint",
+    "runtime": "network-disabled container with resource and time limits"
+  },
+  "claim_boundaries": [
+    "All accuracy metrics are calculated only on the 16 strong-label SkillTrustBench cases.",
+    "The 24 weak negatives are ecological compatibility diagnostics and must not be called true negatives.",
+    "This 40-case stratified pilot is not representative of ecosystem prevalence.",
+    "No result may be reported without coverage, failure count, sample counts and label-strength separation.",
+    "Ground truth must not be supplied to the scanner or used to alter per-case decisions."
+  ]
+}

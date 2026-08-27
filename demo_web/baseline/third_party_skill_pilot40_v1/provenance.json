@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "baseline_id": "third-party-skill-pilot40-v1",
+  "baseline_kind": "mixed_authoritative_third_party_skill_pilot",
+  "prepared_at": "2026-08-28",
+  "importer": "tools/datasets/prepare_third_party_skill_pilot.py",
+  "import_command": "..\\.runtime_mcp313\\Scripts\\python.exe tools\\datasets\\prepare_third_party_skill_pilot.py",
+  "generated_data_root": "../../../datasets/third_party_skill_pilot40_v1",
+  "selection_seed": "20260827",
+  "sources": [
+    {
+      "name": "MaliciousAgentSkillsBench",
+      "repository": "https://github.com/protectskills/MaliciousAgentSkillsBench",
+      "paper": "https://arxiv.org/abs/2602.06547",
+      "repository_commit": "f7d28b1a9de4eb33d552529cf79d1065d765f6c3",
+      "license": "MIT",
+      "selected_cases": 24,
+      "selection": "SHA-256 ranking over safe, unredacted GitHub rows; unique repository; then fail-closed license, pinned-head and named-Skill-path gates.",
+      "label_strength": "weak_negative",
+      "label_caveat": "The upstream safe class passed a static funnel and was not individually behaviorally confirmed."
+    },
+    {
+      "name": "SkillTrustBench",
+      "repository": "https://huggingface.co/datasets/cuhk-zhuque/SkillTrustBench",
+      "content_revision": "762d5388b3a047b26df9679582af868a0e5b2c8f",
+      "license": "CC-BY-NC-SA-4.0",
+      "selected_cases": 16,
+      "selection": "Exclude the frozen 120-case development and 600-case regression sets; select 8 normal, 4 suspicious and 4 malicious while covering T01-T09, with SHA-256 deterministic tie-breaking.",
+      "label_strength": "curated_strong_label"
+    }
+  ],
+  "frozen_identities": {
+    "source_lock_sha256": "bb1be3283e9ca667aefcc090d8c7c6ddbc1374764012379950f2505c39c6bf53",
+    "case_ids_sha256": "58768c2badfe65f49f77a9a7e932b77a8d2341e6a53cf315739c5d6e8274dc53",
+    "pilot_manifest_sha256": "90279916dc5eb2d4ad54ee42dcfcaeb2e4aafeaa85808e88778cf2f2bab44641",
+    "intake_manifest_sha256": "e5ea72364e5b953328b51fa4eb5908e421023ed95b344807010a97376c52ff56"
+  },
+  "label_firewall": "Ground-truth and upstream classifications are evaluation-only fields and must not be passed to scanners."
+}

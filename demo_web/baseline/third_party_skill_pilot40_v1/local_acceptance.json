@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "baseline_id": "third-party-skill-pilot40-v1",
+  "decision": "accepted_with_caveats",
+  "comparison_ready": true,
+  "performance_measured": false,
+  "accepted_at": "2026-08-28",
+  "reasons": [
+    "Two public datasets with fixed versions, licenses and content hashes are recorded.",
+    "Every real-ecosystem Skill passed an explicit-license, pinned-commit and exact-path gate.",
+    "The 16 strong-label cases are disjoint from existing development and regression sets and cover T01-T09.",
+    "The metric contract and case IDs were frozen before the first scan."
+  ],
+  "caveats": [
+    "The 24 MaliciousAgentSkillsBench safe rows are weak negatives and cannot support false-positive-rate or accuracy claims.",
+    "The 16 strong-label cases are a small stratified diagnostic pilot, not a prevalence sample.",
+    "Only one case is a preliminary dynamic candidate; static policy must approve it before container execution.",
+    "No static or dynamic performance result exists yet."
+  ],
+  "acceptance_method": "Local evidence record because the baseline artifact confirmation service is unavailable in this workspace."
+}

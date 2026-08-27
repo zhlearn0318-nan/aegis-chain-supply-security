@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "baseline_id": "third-party-skill-pilot40-v1-static-run-v1",
+  "parent_baseline_id": "third-party-skill-pilot40-v1",
+  "frozen_at": "2026-08-28",
+  "run_id": "2026-08-28-third-party-skill-pilot40-static-v1",
+  "files": [
+    {"path": "dynamic_eligibility.json", "bytes": 10570, "sha256": "acd57b1abe575ba5ff2ab15e2d133bec6d09948697d4ef4d920747363878b646"},
+    {"path": "failure_recheck/analysis_summary.json", "bytes": 1043, "sha256": "8eae4e1897bd8eb83e1e36867961f26947f3fa8e7d0d1df4a8d880b00144c3a1"},
+    {"path": "failure_recheck/failure_diagnostics.json", "bytes": 711, "sha256": "47a6e3b3cdf698592259c0739c8f30caa8591a26bf5f29fae10703ccefdec5de"},
+    {"path": "failure_recheck/per_case_results.jsonl", "bytes": 2077, "sha256": "b4f3adf975c0b1f179467b43b29222f93e321b4ac80e829402b30a86daf1be0b"},
+    {"path": "failure_recheck/verification.json", "bytes": 275, "sha256": "ce66c206f30690e1cfe054b5cd5ca09fdf87d83fe7b702061810b181ae24e37d"},
+    {"path": "metrics.json", "bytes": 2209, "sha256": "e22ff205e3f967e2e239702a5a6aaab624cda67663449a1ec98cd009d72c8009"},
+    {"path": "per_case_results.jsonl", "bytes": 125010, "sha256": "294dd76d111b5c15efcd63f9dff9a842cd90760d507ef600053cef278c2d1df3"},
+    {"path": "rule_distribution.json", "bytes": 2177, "sha256": "a8cd1165b3b7f44857c75d1cb07b0bb521d2f3e0827480f5acce58ec507808c2"},
+    {"path": "run_manifest.json", "bytes": 2104, "sha256": "a63e5dafb3f6658eebeca883584f835d7e5c85bdf1c6be7c70330eda3cadbaeb"},
+    {"path": "strong_label_errors.jsonl", "bytes": 26881, "sha256": "8972b705deba79d4bb13fcf6cb39726fd03fe7578865f599c0d64df924063f11"}
+  ],
+  "sample_content_in_git": false,
+  "dynamic_execution_performed": false
+}

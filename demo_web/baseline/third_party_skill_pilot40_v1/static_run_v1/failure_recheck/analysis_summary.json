@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "analysis_run_id": "2026-08-28-third-party-skill-pilot40-failure-recheck-v1",
+  "parent_run_id": "2026-08-28-third-party-skill-pilot40-static-v1",
+  "question": "Are the two parent UNKNOWN outcomes reproducible when only parallelism changes from 4 to 1?",
+  "fixed_conditions": [
+    "dataset",
+    "case hashes",
+    "scanner binary",
+    "Aegis analyzers",
+    "policy",
+    "60-second timeout"
+  ],
+  "changed_condition": "parallel_workers: 4 -> 1",
+  "cases": [
+    "masb-048-api-design",
+    "stb-case_03882"
+  ],
+  "outcomes": [
+    {
+      "case_id": "masb-048-api-design",
+      "status": "failed",
+      "decision": "UNKNOWN",
+      "duration_ms": 4332
+    },
+    {
+      "case_id": "stb-case_03882",
+      "status": "failed",
+      "decision": "UNKNOWN",
+      "duration_ms": 4135
+    }
+  ],
+  "recovered_count": 0,
+  "wall_seconds": 8.49,
+  "completed_at": "2026-08-28T00:59:00+08:00",
+  "comparability": "Failure robustness slice only; it does not replace or merge into the frozen parent metrics."
+}

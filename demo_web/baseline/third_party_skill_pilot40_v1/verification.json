@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "baseline_id": "third-party-skill-pilot40-v1",
+  "verified_at": "2026-08-28",
+  "status": "verified_before_first_scan",
+  "checks": {
+    "total_cases": 40,
+    "unique_case_ids": 40,
+    "malicious_agent_skills_bench_cases": 24,
+    "skilltrustbench_cases": 16,
+    "metric_ground_truth_counts": {"normal": 8, "suspicious": 4, "malicious": 4},
+    "risk_label_coverage": ["T01", "T02", "T03", "T04", "T05", "T06", "T07", "T08", "T09"],
+    "overlap_with_existing_development120": 0,
+    "overlap_with_existing_regression600": 0,
+    "repositories_with_explicit_standard_license": 24,
+    "repository_commits_pinned": 24,
+    "license_git_blobs_pinned": 24,
+    "links_or_reparse_points_imported": 0,
+    "dynamic_candidates_before_static_scan": 1,
+    "dynamic_execution_performed": false
+  },
+  "frozen_identities": {
+    "source_lock_sha256": "bb1be3283e9ca667aefcc090d8c7c6ddbc1374764012379950f2505c39c6bf53",
+    "case_ids_sha256": "58768c2badfe65f49f77a9a7e932b77a8d2341e6a53cf315739c5d6e8274dc53",
+    "pilot_manifest_sha256": "90279916dc5eb2d4ad54ee42dcfcaeb2e4aafeaa85808e88778cf2f2bab44641",
+    "intake_manifest_sha256": "e5ea72364e5b953328b51fa4eb5908e421023ed95b344807010a97376c52ff56"
+  }
+}

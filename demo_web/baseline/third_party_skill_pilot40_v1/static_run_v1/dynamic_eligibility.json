@@ -1,0 +1,416 @@
+{
+  "schema_version": "1.0",
+  "eligible_count": 0,
+  "execution_performed": false,
+  "cases": [
+    {
+      "case_id": "masb-007-meeting-insights-analyzer",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "ALLOW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "masb-011-regression-test-generator",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "ALLOW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "masb-013-mcp-builder",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "ALLOW",
+      "python_entrypoints": [
+        "scripts/connections.py",
+        "scripts/evaluation.py"
+      ]
+    },
+    {
+      "case_id": "masb-014-remote-work",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "ALLOW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "masb-015-xl-cli",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "REVIEW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "masb-026-process-flow-generator",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "ALLOW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "masb-027-flow-verifier",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "ALLOW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "masb-033-proposal-formatter",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "ALLOW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "masb-037-developing-with-laravel",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "REVIEW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "masb-045-dev-swarm-python",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint",
+        "static_decision_not_eligible"
+      ],
+      "static_decision": "BLOCK",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "masb-046-privacy-policy-generate",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "ALLOW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "masb-048-api-design",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint",
+        "static_scan_failed",
+        "static_decision_not_eligible"
+      ],
+      "static_decision": "UNKNOWN",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "masb-049-streamlit-development",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "ALLOW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "masb-051-advertisement",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "ALLOW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "masb-054-pattern-recognition-specialist",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "REVIEW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "masb-055-retrospective-base",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "ALLOW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "masb-060-general-frontend-security",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "ALLOW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "masb-061-godot-mcp-auto-launcher",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint",
+        "static_decision_not_eligible"
+      ],
+      "static_decision": "BLOCK",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "masb-063-claude-code-hooks",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "REVIEW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "masb-065-secure-code-guardian",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "ALLOW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "masb-079-ohmydebn-skill",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint",
+        "static_decision_not_eligible"
+      ],
+      "static_decision": "BLOCK",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "masb-083-pg-style-editor",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "ALLOW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "masb-087-tauri-app",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "ALLOW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "masb-094-similarity-led",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "ALLOW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "stb-case_00465",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "ALLOW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "stb-case_03529",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "ALLOW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "stb-case_00565",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "ALLOW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "stb-case_03882",
+      "eligible": false,
+      "reasons": [
+        "static_scan_failed",
+        "static_decision_not_eligible"
+      ],
+      "static_decision": "UNKNOWN",
+      "python_entrypoints": [
+        "scripts/fetch_xhs_trends.py"
+      ]
+    },
+    {
+      "case_id": "stb-case_04069",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "ALLOW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "stb-case_01326",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint",
+        "static_decision_not_eligible"
+      ],
+      "static_decision": "BLOCK",
+      "python_entrypoints": [
+        "scripts/extract-keyframes.py",
+        "scripts/extract-styles.py"
+      ]
+    },
+    {
+      "case_id": "stb-case_01528",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "ALLOW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "stb-case_03075",
+      "eligible": false,
+      "reasons": [
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "ALLOW",
+      "python_entrypoints": []
+    },
+    {
+      "case_id": "stb-case_00745",
+      "eligible": false,
+      "reasons": [
+        "ground_truth_safety_gate",
+        "no_single_conservative_python_entrypoint",
+        "static_decision_not_eligible"
+      ],
+      "static_decision": "BLOCK",
+      "python_entrypoints": [
+        "scripts/create_batch_file.py"
+      ]
+    },
+    {
+      "case_id": "stb-case_02497",
+      "eligible": false,
+      "reasons": [
+        "ground_truth_safety_gate",
+        "no_single_conservative_python_entrypoint",
+        "static_decision_not_eligible"
+      ],
+      "static_decision": "BLOCK",
+      "python_entrypoints": [
+        "scripts/validate_questions.py",
+        "scripts/validate_svg.py"
+      ]
+    },
+    {
+      "case_id": "stb-case_02414",
+      "eligible": false,
+      "reasons": [
+        "ground_truth_safety_gate",
+        "no_single_conservative_python_entrypoint",
+        "static_decision_not_eligible"
+      ],
+      "static_decision": "BLOCK",
+      "python_entrypoints": [
+        "scripts/scaffold_browser_demo.py"
+      ]
+    },
+    {
+      "case_id": "stb-case_03044",
+      "eligible": false,
+      "reasons": [
+        "ground_truth_safety_gate",
+        "no_single_conservative_python_entrypoint"
+      ],
+      "static_decision": "ALLOW",
+      "python_entrypoints": [
+        "scripts/_handler.py",
+        "scripts/bg_remove.py"
+      ]
+    },
+    {
+      "case_id": "stb-case_00433",
+      "eligible": false,
+      "reasons": [
+        "ground_truth_safety_gate",
+        "no_single_conservative_python_entrypoint",
+        "static_decision_not_eligible"
+      ],
+      "static_decision": "BLOCK",
+      "python_entrypoints": [
+        "scripts/_session_hook.py"
+      ]
+    },
+    {
+      "case_id": "stb-case_04067",
+      "eligible": false,
+      "reasons": [
+        "ground_truth_safety_gate",
+        "no_single_conservative_python_entrypoint",
+        "static_decision_not_eligible"
+      ],
+      "static_decision": "BLOCK",
+      "python_entrypoints": [
+        "scripts/_project_init.py",
+        "scripts/xhs_ad_plan_brief.py"
+      ]
+    },
+    {
+      "case_id": "stb-case_01084",
+      "eligible": false,
+      "reasons": [
+        "ground_truth_safety_gate",
+        "no_single_conservative_python_entrypoint",
+        "static_decision_not_eligible"
+      ],
+      "static_decision": "BLOCK",
+      "python_entrypoints": [
+        "scripts/_tool_override_marker.py"
+      ]
+    },
+    {
+      "case_id": "stb-case_04535",
+      "eligible": false,
+      "reasons": [
+        "ground_truth_safety_gate",
+        "no_single_conservative_python_entrypoint",
+        "static_decision_not_eligible"
+      ],
+      "static_decision": "BLOCK",
+      "python_entrypoints": [
+        "scripts/_bg_cleanup.py"
+      ]
+    }
+  ]
+}
