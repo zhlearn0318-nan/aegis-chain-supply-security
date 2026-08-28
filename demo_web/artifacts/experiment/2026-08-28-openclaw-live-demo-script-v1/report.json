@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0",
+  "run_id": "openclaw-live-20260828-180116-88357a",
+  "started_at": "2026-08-28T10:01:16.9709119Z",
+  "accepted": true,
+  "preflight": {
+    "openclaw_config_valid": true,
+    "policy_enabled": true,
+    "target_skill": true,
+    "dynamic_policy": "required",
+    "docker_engine": "29.7.2",
+    "windows_acl_compatibility": true
+  },
+  "sample_comparison": {
+    "dataset_revision": "762d5388b3a047b26df9679582af868a0e5b2c8f",
+    "safe_case": "case_00906",
+    "malicious_case": "case_01084",
+    "same_main_python_sha256": "180a7cd0be96106b0478f409192c8717ece77fe634dbaf27e2aecf29c6cdaced",
+    "skill_manifest_changed": true,
+    "malicious_extra_file_sha256": "14e8408055d816ab3af79ff2f7356b91d7a8c43b3dda6ac17cd450d41f079bc2",
+    "malicious_risk_labels": ["T01", "T04", "T07"]
+  },
+  "safe": {
+    "installed": true,
+    "install_exit_code": 0,
+    "end_to_end_duration_ms": 59259,
+    "payload_valid": true,
+    "openclaw_eligible": true,
+    "openclaw_model_visible": true,
+    "audit_decision": "allow",
+    "audit_duration_ms": 10691,
+    "finding_rule_ids": [
+      "AEGIS_DYNAMIC_EXECUTION_CLEAN",
+      "MANIFEST_MISSING_LICENSE",
+      "AEGIS_STATIC_COVERAGE_SUMMARY"
+    ]
+  },
+  "malicious": {
+    "installed": false,
+    "install_exit_code": 1,
+    "end_to_end_duration_ms": 20915,
+    "audit_decision": "block",
+    "audit_duration_ms": 5106,
+    "finding_rule_ids": [
+      "YARA_prompt_injection_generic",
+      "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN",
+      "AEGIS_STATIC_PYTHON_PARSE_FAILED"
+    ],
+    "dynamic_executed": false
+  },
+  "audit": {
+    "chain_valid": true,
+    "rows": 5,
+    "head_chain_sha256": "65017af680df034bb54f0a391647f94d96d477ac1465aa2edba6e3b3510cb86b",
+    "docker_container_residuals": 0,
+    "gpu_used": false
+  },
+  "cleanup": {
+    "safe_removed": true,
+    "malicious_removed": true
+  },
+  "limits": [
+    "本次动态结论只适用于固定样本、固定输入和固定容器策略。",
+    "Python 审计钩子不是不可绕过的内核级遥测。",
+    "Docker Desktop/WSL2 不等价于恶意代码专用虚拟机。"
+  ],
+  "finished_at": "2026-08-28T10:03:19.7957416Z"
+}

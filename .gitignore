@@ -51,6 +51,7 @@ demo_web/artifacts/experiment/*
 !demo_web/artifacts/experiment/2026-08-24-project-supply-chain-hygiene-dev-v1/
 !demo_web/artifacts/experiment/2026-08-28-openclaw-third-party-skill-demo-v1/
 !demo_web/artifacts/experiment/2026-08-28-openclaw-third-party-skill-demo-v2/
+!demo_web/artifacts/experiment/2026-08-28-openclaw-live-demo-script-v1/
 demo_web/artifacts/**/pytest-temp*/
 demo_web/artifacts/**/fixture_workspaces/
 demo_web/artifacts/**/platform-acceptance-*/

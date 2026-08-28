@@ -143,5 +143,8 @@
 - 隔离第三方 E2E 成功结果：`demo_web/artifacts/experiment/2026-08-28-openclaw-third-party-skill-demo-v2/`
 - 隔离第三方 E2E 首轮失败记录：`demo_web/artifacts/experiment/2026-08-28-openclaw-third-party-skill-demo-v1/`
 - 可复跑工具：`demo_web/tools/dynamic/run_openclaw_third_party_skill_demo.py`
+- 现场一键程序：`demo_web/一键演示_OpenClaw_Skill准入.cmd`
+- 一键程序主体：`demo_web/demo_openclaw_live_admission.ps1`
+- 逐阶段讲解稿：`demo_web/docs/M8_OPENCLAW现场一键演示讲解稿.md`
 - 实际 OpenClaw 安装目录：`%USERPROFILE%\\.openclaw\\workspace\\skills\\aegis-demo-meeting-safe`
 - 实际审计数据库：`%USERPROFILE%\\.openclaw\\aegis-policy\\data\\admission_audit.db`
