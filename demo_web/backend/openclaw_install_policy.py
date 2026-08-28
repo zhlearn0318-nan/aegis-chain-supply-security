@@ -216,6 +216,70 @@ def _dynamic_failure_finding(error_name: str) -> dict[str, Any]:
     }
 
 
+def _dynamic_clean_finding(result: dict[str, Any]) -> dict[str, Any]:
+    if result.get("backend_id") != "aegis-python-skill-sandbox-v1":
+        raise RuntimeError("动态流水线身份无法验证")
+    if result.get("status") != "clean":
+        raise RuntimeError("动态流水线状态与 ALLOW 不一致")
+    plan = result.get("entrypoint_plan")
+    runs = result.get("runs")
+    if not isinstance(plan, dict) or not isinstance(runs, list):
+        raise RuntimeError("动态流水线缺少执行证据")
+    entrypoints = plan.get("entrypoints")
+    if (
+        not isinstance(entrypoints, list)
+        or not entrypoints
+        or len(entrypoints) > 3
+        or len(runs) != len(entrypoints)
+    ):
+        raise RuntimeError("动态流水线入口证据无效")
+
+    event_count = 0
+    for run in runs:
+        if not isinstance(run, dict) or run.get("success") is not True:
+            raise RuntimeError("动态流水线执行未成功")
+        cleanup = run.get("cleanup")
+        runner = run.get("runner")
+        inspect_gates = run.get("inspect_gates")
+        image_gates = run.get("image_gates")
+        if (
+            not isinstance(cleanup, dict)
+            or cleanup.get("removed") is not True
+            or cleanup.get("residual") is not False
+            or not isinstance(runner, dict)
+            or runner.get("telemetry_complete") is not True
+            or str(runner.get("execution_status") or "").casefold()
+            not in {"completed", "clean"}
+            or not isinstance(inspect_gates, dict)
+            or not inspect_gates
+            or not all(value is True for value in inspect_gates.values())
+            or not isinstance(image_gates, dict)
+            or not image_gates
+            or not all(value is True for value in image_gates.values())
+        ):
+            raise RuntimeError("动态流水线安全门或遥测证据不完整")
+        events = runner.get("events")
+        if not isinstance(events, list):
+            raise RuntimeError("动态流水线事件证据无效")
+        event_count += len(events)
+
+    return {
+        "id": "dynamic-aegis_dynamic_execution_clean",
+        "rule_id": "AEGIS_DYNAMIC_EXECUTION_CLEAN",
+        "title": "Skill 已完成容器隔离试运行",
+        "category": "execution_attestation",
+        "severity": "INFO",
+        "analyzer": "aegis-skill-sandbox-v1",
+        "location": {"object": "dynamic-sandbox", "type": "runtime"},
+        "evidence": (
+            f"entrypoints={len(entrypoints)}; events={event_count}; "
+            "telemetry_complete=true; cleanup=verified"
+        ),
+        "description": "固定镜像和安全门已验证，执行遥测完整且容器无残留。",
+        "remediation": "无需处理；该证据只证明本次受控输入下未观察到阻断行为。",
+    }
+
+
 def _apply_required_dynamic_scan(
     source_root: Path,
     static_decision: Decision,
@@ -238,6 +302,8 @@ def _apply_required_dynamic_scan(
         dynamic_reason = _bounded_text(
             result.get("reason"), "隔离试运行需要人工复核。", MAX_REASON_LENGTH
         )
+        if dynamic_decision == Decision.ALLOW:
+            dynamic_findings = [_dynamic_clean_finding(result), *dynamic_findings]
     except Exception as exc:
         dynamic_decision = Decision.REVIEW
         dynamic_reason = "Skill 隔离试运行未可靠完成，需要人工复核。"
@@ -249,8 +315,13 @@ def _apply_required_dynamic_scan(
         if ranks[dynamic_decision] > ranks[static_decision]
         else static_decision
     )
-    reason = dynamic_reason if final_decision != static_decision else static_reason
-    return final_decision, reason, [*static_findings, *dynamic_findings]
+    reason = (
+        dynamic_reason
+        if final_decision != static_decision
+        or (static_decision == Decision.ALLOW and dynamic_decision == Decision.ALLOW)
+        else static_reason
+    )
+    return final_decision, reason, [*dynamic_findings, *static_findings]
 
 
 def block_response(rule_id: str, reason: str) -> dict[str, Any]:

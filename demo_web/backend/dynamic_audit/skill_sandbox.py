@@ -178,17 +178,32 @@ def discover_python_entrypoints(
         for relative in files
         if relative.startswith("scripts/") and relative.lower().endswith(".py")
     )
-    if not fallback:
-        raise SkillSandboxRejected(
-            "PYTHON_ENTRYPOINT_NOT_FOUND",
-            "SKILL.md 未引用 Python 脚本，scripts/ 下也没有候选",
-        )
-    if len(fallback) > max_entrypoints:
+    if fallback:
+        if len(fallback) > max_entrypoints:
+            raise SkillSandboxRejected(
+                "ENTRYPOINT_AMBIGUOUS",
+                f"scripts/ 下存在 {len(fallback)} 个候选入口",
+            )
+        return EntrypointPlan(tuple(fallback), "scripts_fallback", files_seen, total_bytes)
+
+    root_fallback = sorted(
+        relative
+        for relative in files
+        if "/" not in relative and relative.lower().endswith(".py")
+    )
+    if len(root_fallback) > 1:
         raise SkillSandboxRejected(
             "ENTRYPOINT_AMBIGUOUS",
-            f"scripts/ 下存在 {len(fallback)} 个候选入口",
+            f"Skill 根目录存在 {len(root_fallback)} 个 Python 候选入口",
         )
-    return EntrypointPlan(tuple(fallback), "scripts_fallback", files_seen, total_bytes)
+    if root_fallback:
+        return EntrypointPlan(
+            tuple(root_fallback), "root_single_python_fallback", files_seen, total_bytes
+        )
+    raise SkillSandboxRejected(
+        "PYTHON_ENTRYPOINT_NOT_FOUND",
+        "SKILL.md 未引用 Python 脚本，scripts/ 和 Skill 根目录下也没有候选",
+    )
 
 
 def _finding(

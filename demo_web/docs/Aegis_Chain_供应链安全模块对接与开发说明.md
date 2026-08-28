@@ -1123,3 +1123,11 @@ ScanJob schema 升级到 `1.2`，新增可选 `sbom`。依赖任务或带 requir
 当前自动准入仍为确定性规则，不调用大模型。MCP 层不连接/调用真实 Server，Skill 层不执行样本，依赖层不安装包；无法检查的二进制、嵌套归档、未知语言或解析失败会变成覆盖缺口而不是静默安全。
 
 静态开发完成报告和最终复核命令见 `docs/M3_STATIC_AUDIT_COMPLETION_REPORT.md`。600 条封存回归集尚未打开，只有在用户明确授权后才运行一次最终评估。
+
+## 2026-08-28 OpenClaw 第三方 Skill 动态准入增量
+
+动态阶段已从自建 fixture 推进到公开研究数据集第三方样本，并接入用户实际 OpenClaw `2026.7.1-2` 工作区。选用 SkillTrustBench 中的正常样本 `case_00906` 和同名恶意变体 `case_01084`：二者主 Python 文件 SHA-256 相同，恶意变体通过修改指令和增加隐藏工具覆盖文件形成风险，适合展示完整供应链包审查的必要性。
+
+正常样本经静态审计和 Docker 隔离试运行后获得 `AEGIS_DYNAMIC_EXECUTION_CLEAN`，由 OpenClaw 安装成功；恶意变体命中 CRITICAL，在静态阶段阻断，动态执行次数和安装残留均为 0。安装文件逐文件哈希一致，审计哈希链有效，Docker 容器残留为 0，GPU 未使用。
+
+实际策略以版本化副本部署在 OpenClaw 用户目录，未直接信任开发源码目录。Windows 稳定版无法自动验证 ACL，因此只在人工确认发布目录仅当前用户、SYSTEM 和管理员可修改后启用 `allowInsecurePath=true`；该兼容声明不关闭 Aegis 扫描或失败关闭。详细选样理由、结果、演示顺序和限制见 `docs/M8_OPENCLAW_THIRD_PARTY_SKILL_LIVE_ACCEPTANCE.md`，可复跑工具为 `tools/dynamic/run_openclaw_third_party_skill_demo.py`。

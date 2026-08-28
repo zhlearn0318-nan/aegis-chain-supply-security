@@ -1,0 +1,13 @@
+{
+  "claim_update": "supported_authoritative_third_party_openclaw_dynamic_admission",
+  "limits": [
+    "只动态执行 SkillTrustBench 官方 normal/safe_pool 样本。",
+    "恶意对照仅静态扫描，未执行任何脚本。",
+    "Python 审计钩子提供可解释行为证据，但不是不可绕过的内核边界。",
+    "本次证明固定样本和固定输入下的安装前闭环，不代表所有第三方 Skill 安全。"
+  ],
+  "next_action": "deploy_policy_to_operator_openclaw_and_run_live_install_demo",
+  "outcome_summary": "权威正常 Skill 经静态准入和 Docker 隔离试运行后由真实 OpenClaw 安装；同名恶意 Skill 在执行前被静态阻断。",
+  "run_id": "2026-08-28-openclaw-third-party-skill-demo-v2",
+  "schema_version": "1.0"
+}

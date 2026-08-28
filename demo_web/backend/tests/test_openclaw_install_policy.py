@@ -278,6 +278,66 @@ def test_required_dynamic_high_risk_upgrades_static_allow_to_block(
     assert response["findings"][0]["ruleId"] == "AEGIS_DYNAMIC_EXTERNAL_NETWORK_ATTEMPT"
 
 
+def test_required_dynamic_clean_result_is_visible_and_attested(
+    tmp_path: Path, monkeypatch
+) -> None:
+    skill = make_skill(tmp_path)
+    monkeypatch.setenv("AEGIS_OPENCLAW_DYNAMIC_SKILL_POLICY", "required")
+
+    response = evaluate_install_request(
+        request_for(skill),
+        skill_scan=scan_with(),
+        dynamic_skill_scan=lambda _path: {
+            "backend_id": "aegis-python-skill-sandbox-v1",
+            "decision": "ALLOW",
+            "status": "clean",
+            "reason": "隔离试运行完成，未观察到影响准入的动态风险。",
+            "findings": [],
+            "entrypoint_plan": {"entrypoints": ["run.py"]},
+            "runs": [
+                {
+                    "success": True,
+                    "runner": {
+                        "execution_status": "completed",
+                        "telemetry_complete": True,
+                        "events": [],
+                    },
+                    "cleanup": {"removed": True, "residual": False},
+                    "inspect_gates": {"network_none": True},
+                    "image_gates": {"image_id_exact": True},
+                }
+            ],
+        },
+    )
+
+    assert response["decision"] == "allow"
+    assert "隔离试运行完成" in response["reason"]
+    assert response["findings"][0]["ruleId"] == "AEGIS_DYNAMIC_EXECUTION_CLEAN"
+    assert "cleanup=verified" in response["findings"][0]["evidence"]
+
+
+def test_required_dynamic_allow_without_attestation_fails_closed_to_review(
+    tmp_path: Path, monkeypatch
+) -> None:
+    skill = make_skill(tmp_path)
+    monkeypatch.setenv("AEGIS_OPENCLAW_DYNAMIC_SKILL_POLICY", "required")
+    monkeypatch.setenv("AEGIS_OPENCLAW_REVIEW_MODE", "block")
+
+    response = evaluate_install_request(
+        request_for(skill),
+        skill_scan=scan_with(),
+        dynamic_skill_scan=lambda _path: {
+            "decision": "ALLOW",
+            "status": "clean",
+            "reason": "untrusted clean",
+            "findings": [],
+        },
+    )
+
+    assert response["decision"] == "block"
+    assert response["findings"][0]["ruleId"] == "AEGIS_DYNAMIC_EXECUTION_INCONCLUSIVE"
+
+
 def test_static_block_skips_required_dynamic_execution(tmp_path: Path, monkeypatch) -> None:
     skill = make_skill(tmp_path)
     monkeypatch.setenv("AEGIS_OPENCLAW_DYNAMIC_SKILL_POLICY", "required")

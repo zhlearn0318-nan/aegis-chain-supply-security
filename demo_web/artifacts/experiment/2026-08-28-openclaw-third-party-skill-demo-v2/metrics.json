@@ -1,0 +1,18 @@
+{
+  "audit_chain_valid": true,
+  "audit_gates_passed": 4,
+  "audit_gates_total": 4,
+  "cases_passed": 2,
+  "cases_total": 2,
+  "default_workspace_preexisting_test_slugs": 0,
+  "default_workspace_test_residuals": 0,
+  "docker_container_residuals": 0,
+  "elapsed_seconds": 51.626,
+  "gpu_used": false,
+  "malicious_install_residuals": 0,
+  "malicious_samples_executed": 0,
+  "safe_installed": true,
+  "safe_installed_hash_matches": true,
+  "safe_third_party_samples_executed": 1,
+  "source_hash_changes": 0
+}

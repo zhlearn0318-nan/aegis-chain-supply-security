@@ -9,7 +9,8 @@
   security: {
     installPolicy: {
       enabled: true,
-      targets: ["skill", "plugin"],
+      // 本配置只接管 Skill 安装；Plugin/MCP 不在本阶段动态执行范围内。
+      targets: ["skill"],
       exec: {
         source: "exec",
         command: "C:\\AegisChain\\runtime\\python.exe",
@@ -21,7 +22,7 @@
         env: {
           AEGIS_OPENCLAW_SCAN_TIMEOUT_SECONDS: "12",
           AEGIS_OPENCLAW_REVIEW_MODE: "block",
-          // 仅 Skill 启用动态试运行；Plugin 保持 M6 静态准入。
+          // Skill 静态通过后必须完成动态试运行，否则失败关闭。
           AEGIS_OPENCLAW_DYNAMIC_SKILL_POLICY: "required",
           AEGIS_OPENCLAW_AUDIT_DB: "C:\\AegisChain\\data\\admission_audit.db",
           // 必须包含 desktop-linux context；仅可信策略进程使用，不挂载进 Skill 容器。

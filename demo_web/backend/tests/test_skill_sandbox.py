@@ -47,6 +47,27 @@ def test_falls_back_to_bounded_scripts_directory(tmp_path: Path) -> None:
     assert plan.discovery == "scripts_fallback"
 
 
+def test_falls_back_to_exactly_one_root_python_entrypoint(tmp_path: Path) -> None:
+    skill = make_skill(
+        tmp_path / "skill",
+        "No explicit executable path.\n",
+        {"run.py": "print('ok')\n", "reference.txt": "context"},
+    )
+    plan = discover_python_entrypoints(skill)
+    assert plan.entrypoints == ("run.py",)
+    assert plan.discovery == "root_single_python_fallback"
+
+
+def test_rejects_multiple_root_python_entrypoints(tmp_path: Path) -> None:
+    skill = make_skill(
+        tmp_path / "skill",
+        "No explicit executable path.\n",
+        {"run.py": "print('ok')\n", "helper.py": "pass\n"},
+    )
+    with pytest.raises(SkillSandboxRejected, match="ENTRYPOINT_AMBIGUOUS"):
+        discover_python_entrypoints(skill)
+
+
 def test_rejects_ambiguous_and_linked_skill(tmp_path: Path) -> None:
     skill = make_skill(
         tmp_path / "many",

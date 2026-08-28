@@ -1,0 +1,102 @@
+{
+  "claim_boundary": [
+    "只动态执行 SkillTrustBench 官方 normal/safe_pool 样本。",
+    "恶意对照仅静态扫描，未执行任何脚本。",
+    "Python 审计钩子提供可解释行为证据，但不是不可绕过的内核边界。",
+    "本次证明固定样本和固定输入下的安装前闭环，不代表所有第三方 Skill 安全。"
+  ],
+  "completed_at": "2026-08-28T04:40:19.513450+00:00",
+  "environment": {
+    "docker_engine": {
+      "api_version": "1.55",
+      "architecture": "amd64",
+      "duration_ms": 188,
+      "engine_version": "29.7.2",
+      "os": "linux"
+    },
+    "gpu_used": false,
+    "host_platform": "Windows-11-10.0.26200-SP0",
+    "host_python": "3.13.14 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:26:41) [MSC v.1942 64 bit (AMD64)]",
+    "malicious_samples_executed": 0,
+    "openclaw_commit": "0790d9f",
+    "openclaw_version": "2026.7.1-2",
+    "safe_third_party_samples_executed": 1
+  },
+  "experiment_tier": "auxiliary/authoritative-third-party-real-platform-e2e",
+  "metrics": {
+    "audit_chain_valid": true,
+    "audit_gates_passed": 4,
+    "audit_gates_total": 4,
+    "cases_passed": 2,
+    "cases_total": 2,
+    "default_workspace_preexisting_test_slugs": 0,
+    "default_workspace_test_residuals": 0,
+    "docker_container_residuals": 0,
+    "elapsed_seconds": 55.909,
+    "gpu_used": false,
+    "malicious_install_residuals": 0,
+    "malicious_samples_executed": 0,
+    "safe_installed": true,
+    "safe_installed_hash_matches": false,
+    "safe_third_party_samples_executed": 1,
+    "source_hash_changes": 0
+  },
+  "run_id": "2026-08-28-openclaw-third-party-skill-demo-v1",
+  "schema_version": "1.0",
+  "sources": {
+    "backend/dynamic_audit/skill_sandbox.py": {
+      "bytes": 17062,
+      "sha256": "4b1eeb782834675954d0fa905254fa1877749ed0523670cd722314e48a623c82"
+    },
+    "backend/dynamic_audit/skill_sandbox_docker.py": {
+      "bytes": 19451,
+      "sha256": "6d928c25da2006f3338ce79d04d304e99fc768b99cb276bba01a745976523cba"
+    },
+    "backend/install_policy_audit.py": {
+      "bytes": 10388,
+      "sha256": "02fa7bc68830afb1d763cc74367855c5524699e928468506a9b4a8c3e8f40e2b"
+    },
+    "backend/openclaw_install_policy.py": {
+      "bytes": 22868,
+      "sha256": "8e12e0cff12b3bded3b044c01e7244b70017add5ccf86b20f5e40dadbe772bf0"
+    },
+    "config/skill_dynamic_sandbox.json": {
+      "bytes": 1316,
+      "sha256": "1ea28e28ff91b81e42b24905fce2248fd7c03eac94a2162cca9046c81aee0cbb"
+    },
+    "skilltrustbench/full_manifest.jsonl": {
+      "bytes": 2744861,
+      "sha256": "3a061cda6145151fbac0cbabfab7ee16e7ca60d50659eb45c73807dd037ba6ac"
+    },
+    "skilltrustbench/malicious/SKILL.md": {
+      "bytes": 7542,
+      "sha256": "919ec70a6f2e0a43402454ac16ca534175aa93658bf719ce524adebb39ffbfe2"
+    },
+    "skilltrustbench/malicious/meeting_notes_generator.py": {
+      "bytes": 14132,
+      "sha256": "180a7cd0be96106b0478f409192c8717ece77fe634dbaf27e2aecf29c6cdaced"
+    },
+    "skilltrustbench/malicious/scripts/_tool_override_marker.py": {
+      "bytes": 270,
+      "sha256": "14e8408055d816ab3af79ff2f7356b91d7a8c43b3dda6ac17cd450d41f079bc2"
+    },
+    "skilltrustbench/safe/SKILL.md": {
+      "bytes": 7199,
+      "sha256": "f928ae5efe62d5574b518b311aee5c217ddb09c69c897d144887a55f7bdd171f"
+    },
+    "skilltrustbench/safe/meeting_notes_generator.py": {
+      "bytes": 14132,
+      "sha256": "180a7cd0be96106b0478f409192c8717ece77fe634dbaf27e2aecf29c6cdaced"
+    },
+    "tools/dynamic/run_openclaw_third_party_skill_demo.py": {
+      "bytes": 19195,
+      "sha256": "c2ac5f001c78d595ba3ed6ae971bd62b58515bc79e13ce835997a2dc75e69c82"
+    },
+    "tools/openclaw_install_policy.py": {
+      "bytes": 2493,
+      "sha256": "ed76d7d7ccbe0827b85d04a8850e0bcf1f01bc1198f8624eb63aad573a54cc86"
+    }
+  },
+  "started_at": "2026-08-28T04:39:23.568744+00:00",
+  "status": "failed"
+}

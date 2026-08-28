@@ -1,0 +1,9 @@
+run_id=2026-08-28-openclaw-third-party-skill-demo-v2
+status=accepted
+openclaw=2026.7.1-2 (0790d9f)
+case=aegis-demo-meeting-safe exit=0 destination=True passed=True duration_ms=23634
+case=aegis-demo-meeting-malicious exit=1 destination=False passed=True duration_ms=21230
+safe_dynamic_clean_attested=True
+malicious_dynamic_not_executed=True
+audit_chain_valid=True
+docker_container_residuals=0
