@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "run_id": "openclaw-live-20260828-180116-88357a",
-  "started_at": "2026-08-28T10:01:16.9709119Z",
+  "run_id": "openclaw-live-20260828-181800-a368f5",
+  "started_at": "2026-08-28T10:18:00.6205797Z",
   "accepted": true,
   "preflight": {
     "openclaw_config_valid": true,
@@ -23,12 +23,12 @@
   "safe": {
     "installed": true,
     "install_exit_code": 0,
-    "end_to_end_duration_ms": 59259,
+    "end_to_end_duration_ms": 23843,
     "payload_valid": true,
     "openclaw_eligible": true,
     "openclaw_model_visible": true,
     "audit_decision": "allow",
-    "audit_duration_ms": 10691,
+    "audit_duration_ms": 8142,
     "finding_rule_ids": [
       "AEGIS_DYNAMIC_EXECUTION_CLEAN",
       "MANIFEST_MISSING_LICENSE",
@@ -38,9 +38,9 @@
   "malicious": {
     "installed": false,
     "install_exit_code": 1,
-    "end_to_end_duration_ms": 20915,
+    "end_to_end_duration_ms": 20879,
     "audit_decision": "block",
-    "audit_duration_ms": 5106,
+    "audit_duration_ms": 5094,
     "finding_rule_ids": [
       "YARA_prompt_injection_generic",
       "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN",
@@ -50,8 +50,8 @@
   },
   "audit": {
     "chain_valid": true,
-    "rows": 5,
-    "head_chain_sha256": "65017af680df034bb54f0a391647f94d96d477ac1465aa2edba6e3b3510cb86b",
+    "rows": 8,
+    "head_chain_sha256": "1433457068eb7255c336e69a0b561b30adbb03a9558c0a5bffc07e1d36a3e68a",
     "docker_container_residuals": 0,
     "gpu_used": false
   },
@@ -64,5 +64,5 @@
     "Python 审计钩子不是不可绕过的内核级遥测。",
     "Docker Desktop/WSL2 不等价于恶意代码专用虚拟机。"
   ],
-  "finished_at": "2026-08-28T10:03:19.7957416Z"
+  "finished_at": "2026-08-28T10:19:08.1012731Z"
 }

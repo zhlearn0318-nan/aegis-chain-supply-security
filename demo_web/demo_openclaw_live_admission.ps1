@@ -2,13 +2,18 @@
 param(
     [ValidateRange(0, 10)][int]$PauseSeconds = 2,
     [switch]$KeepInstalled,
-    [string]$ReportDirectory = ""
+    [string]$ReportDirectory = "",
+    [string]$ScriptRootOverride = ""
 )
 
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
-$DemoRoot = $PSScriptRoot
+$DemoRoot = if ($ScriptRootOverride) {
+    [IO.Path]::GetFullPath($ScriptRootOverride).TrimEnd("\")
+} else {
+    $PSScriptRoot
+}
 $ProjectRoot = Split-Path $DemoRoot -Parent
 $DatasetRoot = Join-Path $ProjectRoot "datasets\skilltrustbench_v1_0"
 $ManifestPath = Join-Path $DatasetRoot "full\full_manifest.jsonl"
@@ -121,7 +126,15 @@ function Assert-Directory {
 
 function Get-Sha256 {
     param([string]$Path)
-    (Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash.ToLowerInvariant()
+    $stream = [IO.File]::OpenRead([IO.Path]::GetFullPath($Path))
+    $algorithm = [Security.Cryptography.SHA256]::Create()
+    try {
+        $bytes = $algorithm.ComputeHash($stream)
+        ([BitConverter]::ToString($bytes) -replace "-", "").ToLowerInvariant()
+    } finally {
+        $algorithm.Dispose()
+        $stream.Dispose()
+    }
 }
 
 function Assert-Hash {
@@ -166,7 +179,11 @@ function Test-InstalledPayload {
         }
     }
     try {
-        $origin = Get-Content -LiteralPath $installedFiles[".openclaw/source-origin.json"] -Raw | ConvertFrom-Json
+        $originText = [IO.File]::ReadAllText(
+            $installedFiles[".openclaw/source-origin.json"],
+            [Text.Encoding]::UTF8
+        )
+        $origin = $originText | ConvertFrom-Json
         $originValid = (
             $origin.version -eq 1 -and
             $origin.source -eq "path" -and
@@ -210,7 +227,8 @@ try {
     Assert-Directory $SafeSource "正常样本"
     Assert-Directory $MaliciousSource "恶意样本"
 
-    $config = Get-Content -LiteralPath $OpenClawConfig -Raw | ConvertFrom-Json
+    $configText = [IO.File]::ReadAllText($OpenClawConfig, [Text.Encoding]::UTF8)
+    $config = $configText | ConvertFrom-Json
     $policy = $config.security.installPolicy
     if ($policy.enabled -ne $true) { throw "OpenClaw Skill 安装准入策略未启用。" }
     if (@($policy.targets) -notcontains "skill") { throw "OpenClaw 准入目标未包含 skill。" }

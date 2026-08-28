@@ -15,7 +15,7 @@
 - 不要移动项目目录或 `.openclaw/aegis-policy` 发布目录；
 - 关闭无关窗口和消息通知；
 - 将终端字号调大，建议 20—24；
-- 保留至少 3 分钟演示时间，正常情况下约 90—150 秒完成；
+- 保留至少 3 分钟演示时间，正常情况下约 60—120 秒完成；
 - 不要在演示过程中关闭 Docker Desktop。
 
 推荐提前完整运行一次，确认最终显示绿色的 `[ACCEPTED]`。
@@ -26,11 +26,11 @@
 
 `demo_web/一键演示_OpenClaw_Skill准入.cmd`
 
-也可以在项目根目录运行：
+如果中文文件名在资源管理器中显示异常，也可以双击完全相同的 ASCII 兼容入口：
 
-```powershell
-pwsh -NoProfile -ExecutionPolicy Bypass -File .\demo_web\demo_openclaw_live_admission.ps1
-```
+`demo_web/Run_OpenClaw_Demo.cmd`
+
+启动器直接使用 Windows 自带的 PowerShell 5.1，并显式按 UTF-8 加载中文演示程序，不要求另外安装 PowerShell 7。也可以在命令提示符中运行 `demo_web\Run_OpenClaw_Demo.cmd`。
 
 默认每个阶段停顿 2 秒，并在结束后自动删除本次创建的临时 Skill。审计记录和 JSON 报告会保留。
 
@@ -200,14 +200,14 @@ pwsh -NoProfile -ExecutionPolicy Bypass -File .\demo_web\demo_openclaw_live_admi
 2026-08-28 已使用真实 OpenClaw 和 Docker Desktop 完成一次全流程彩排：
 
 - 最终状态：`ACCEPTED`；
-- 正常样本端到端时间：59,259 ms；
-- 恶意样本端到端时间：20,915 ms；
+- 正常样本端到端时间：23,843 ms；
+- 恶意样本端到端时间：20,879 ms；
 - 正常样本：ALLOW，安装文件哈希一致，OpenClaw 模型可见；
 - 恶意样本：BLOCK，动态执行次数 0；
 - 审计哈希链：有效；
 - Docker 容器残留：0；
 - 本轮正常与恶意临时目录：均已清理；
-- 完整彩排墙钟时间：约 123 秒。
+- 完整彩排墙钟时间：约 67 秒（自动测试关闭了阶段停顿，现场默认会额外停顿约 14 秒）。
 
 脱敏机器报告保存在：
 
