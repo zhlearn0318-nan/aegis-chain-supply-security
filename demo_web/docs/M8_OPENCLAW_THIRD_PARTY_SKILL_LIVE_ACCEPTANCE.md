@@ -87,6 +87,7 @@
 | 正常样本 `case_00906` | `ALLOW`，安装成功 |
 | 正常样本策略执行时间 | 9,031 ms |
 | 正常样本端到端安装时间 | 24,137 ms |
+| OpenClaw 能力识别 | 内部名称 `meeting-notes-generator`，`eligible=true`、`modelVisible=true` |
 | 动态清洁证明 | `AEGIS_DYNAMIC_EXECUTION_CLEAN` |
 | 恶意样本 `case_01084` | `BLOCK`，安装失败 |
 | 恶意样本策略执行时间 | 5,056 ms |
@@ -106,7 +107,7 @@
 建议按以下叙事演示，不需要单独开发 Web 页面：
 
 1. 展示两个样本名称相同、主 Python 文件哈希相同；
-2. 通过 OpenClaw 安装正常样本，展示安装成功；
+2. 通过 OpenClaw 安装正常样本，展示安装成功，并在 Skill 列表中展示 `meeting-notes-generator` 可用且模型可见；
 3. 展示审计记录中的静态摘要和 `AEGIS_DYNAMIC_EXECUTION_CLEAN`；
 4. 通过 OpenClaw 安装恶意变体，展示 CRITICAL 阻断；
 5. 展示恶意目录不存在、恶意样本没有动态规则、容器残留为 0；
