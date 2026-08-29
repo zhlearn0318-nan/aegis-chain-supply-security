@@ -6,6 +6,18 @@ Aegis Chain 是 XA-202620 赛题“供应链安全”方向的本地工程原型
 
 当前系统已接入 Cisco AI Skill Scanner、Cisco AI MCP Scanner 和 `pip-audit`，并实现自研 Aegis Static、Network/Filesystem/Command Context，以及只运行自建哈希锁定 fixture 的 Docker/MCP 动态机制验证。
 
+## OpenClaw 最终版一键安装（Windows）
+
+将完整项目目录放到目标 Windows 电脑后，双击根目录：
+
+```text
+Install_Aegis_OpenClaw_Final.cmd
+```
+
+脚本会固定 OpenClaw `2026.7.1-2`，重建锁定扫描运行时，准备 Docker 隔离后端，备份并写入安装策略，安装 Aegis 插件，重启 Gateway，并验证五个 OpenClaw 侧边栏页面与完整动态预检。失败时窗口不会闪退，且会恢复原 OpenClaw 配置。
+
+最终集成、部署、真实验收与安全边界见 [M10 OpenClaw 最终集成与 Windows 一键部署说明](demo_web/docs/M10_OPENCLAW_FINAL_INTEGRATION_AND_WINDOWS_DEPLOYMENT.md)。
+
 ## 当前能力
 
 - Skill ZIP：Cisco 静态/字节码/管道分析 + Aegis 静态关联规则；
@@ -17,13 +29,14 @@ Aegis Chain 是 XA-202620 赛题“供应链安全”方向的本地工程原型
 - 管理员动态验证：固定 3 份自建 fixture，验证 7 类预期机制，不接受用户代码、路径或命令；
 - 受控 MCP 动态闭环：MCP 2025-06-18 stdio 真实调用、政企 Marker 源到汇证据、Linux inotify/procfs 独立遥测和 Docker 失败闭锁。
 - 动态任务控制：SQLite 持久 FIFO、全局单执行、活动/冷却去重、有界等待队列、429 和重启恢复。
+- OpenClaw 最终集成：Skill/Plugin 自动安装准入，MCP 配置提交前准入，以及准入、报告、审计、规则、MCP 五个侧边栏页面。
 
 最近冻结结果：
 
 - SkillTrustBench v1.0：已完成 5,520 条全量 Cisco 静态基线，另建 120 条开发集和 600 条封存回归集；
 - 管理员动态接口：3/3 fixture、7/7 机制，负面安全指标全部为 0；
 - MCP Docker 受控遥测实验：82/82 接受门，独立文件读取确认 1、容器残留 0；
-- 后端完整测试：396 passed；
+- 后端完整测试：450 passed，1 skipped；
 - 前端 API 测试：10 passed；
 - 前端生产构建：通过。
 

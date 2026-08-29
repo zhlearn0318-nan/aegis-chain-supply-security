@@ -270,3 +270,42 @@ def read_recent_install_policy_audits(
         }
         for row in rows
     ]
+
+
+def read_install_policy_audit(
+    sequence: int, database: Path | None = None
+) -> dict[str, Any] | None:
+    database = database or resolve_audit_db()
+    if not database.is_file() or int(sequence) < 1:
+        return None
+    with closing(_connect(database)) as connection:
+        row = connection.execute(
+            """
+            SELECT sequence, event_id, created_at, openclaw_version, target_type,
+                   target_name, source_tree_sha256, decision, reason_code,
+                   finding_rule_ids_json, finding_severities_json, duration_ms,
+                   review_mode, previous_chain_sha256, chain_sha256
+            FROM install_policy_audit
+            WHERE sequence = ?
+            """,
+            (int(sequence),),
+        ).fetchone()
+    if row is None:
+        return None
+    return {
+        "sequence": row["sequence"],
+        "event_id": row["event_id"],
+        "created_at": row["created_at"],
+        "openclaw_version": row["openclaw_version"],
+        "target_type": row["target_type"],
+        "target_name": row["target_name"],
+        "source_tree_sha256": row["source_tree_sha256"],
+        "decision": row["decision"],
+        "reason_code": row["reason_code"],
+        "finding_rule_ids": json.loads(row["finding_rule_ids_json"]),
+        "finding_severities": json.loads(row["finding_severities_json"]),
+        "duration_ms": row["duration_ms"],
+        "review_mode": row["review_mode"],
+        "previous_chain_sha256": row["previous_chain_sha256"],
+        "chain_sha256": row["chain_sha256"],
+    }

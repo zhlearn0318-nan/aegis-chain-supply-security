@@ -13,7 +13,7 @@ def read(relative: str) -> str:
 def test_active_entrypoints_delegate_status_to_one_canonical_file() -> None:
     current = read("CURRENT_STATUS.md")
     assert "唯一状态真值" in current
-    assert "422 passed" in current
+    assert "450 passed" in current
     assert "P0-5" in current and "真实 VM" in current
     assert "NO-GO" in current
 
@@ -29,17 +29,13 @@ def test_active_entrypoints_delegate_status_to_one_canonical_file() -> None:
 def test_active_summaries_do_not_keep_the_previous_backend_count() -> None:
     for relative in ("README.md", "demo_web/README.md"):
         content = read(relative)
-        assert "396 passed" in content
-        assert "395 passed" not in content
-        assert "390 passed" not in content
-        assert "386 passed" not in content
-        assert "383 passed" not in content
-        assert "361 passed" not in content
-        assert "357 passed" not in content
-        assert "348 passed" not in content
-        assert "341 passed" not in content
-        assert "329 passed" not in content
-        assert "335 passed" not in content
+        assert "450 passed" in content
+        for previous in (
+            "447 passed", "422 passed", "396 passed", "395 passed", "390 passed",
+            "386 passed", "383 passed", "361 passed", "357 passed",
+            "348 passed", "341 passed", "329 passed", "335 passed",
+        ):
+            assert previous not in content
 
 
 def test_historical_entrypoints_are_explicitly_marked_as_snapshots() -> None:

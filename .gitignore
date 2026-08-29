@@ -10,6 +10,7 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.pytest-tmp*/
 .mypy_cache/
 .ruff_cache/
 .coverage
@@ -81,3 +82,10 @@ Desktop.ini
 *.swp
 *.tmp
 *~
+
+# Final deliverable output: keep only the verified OpenClaw acceptance PDF
+tmp/
+output/*
+!output/pdf/
+output/pdf/*
+!output/pdf/Aegis-OpenClaw-Final-Acceptance.pdf

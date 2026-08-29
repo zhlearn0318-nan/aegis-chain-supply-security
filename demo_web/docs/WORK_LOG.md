@@ -945,12 +945,32 @@
 ## 2026-08-26：M6-2 真实 OpenClaw 安装闭环
 
 - 全局稳定版 `2026.7.1-2` 配置校验通过；未修改用户原 openclaw.json，也未升级全局包。
+
+## 2026-08-28：M9 OpenClaw Web 控制台准入页
+
+- 核对 OpenClaw 2026.7.1-2：原生 Skills 页只提供 ClawHub 安装，本地固定样本需要插件页承载。
+- 使用官方 `registerControlUiDescriptor(surface=tab)` 和 `registerHttpRoute` 增加“Aegis 准入”入口；未修改 OpenClaw 自带压缩前端。
+- 页面固定展示 SkillTrustBench `case_00906` 与 `case_01084` 的 `SKILL.md`，提供“安装安全 Skill”和“阻断恶意 Skill”两个按钮。
+- 后台继续调用真实 `openclaw skills install`；安装请求仍经过 `security.installPolicy`，没有直接复制 Skill 或跳过准入策略。
+- 增加固定样本枚举、文件哈希校验、30 分钟随机页面令牌、JSON-only、单任务互斥和精确演示目录清理。
+- 修复 Windows PowerShell 5.1 对无 BOM UTF-8 脚本的解析问题：后台执行器改为 ASCII，中文展示留在 Web 页面。
+- 实测正常样本 `ALLOW`、动态清洁并安装；恶意样本 `BLOCK`、动态执行 0 次且未安装；页面 API 端到端阻断测试通过。
+- 浏览器人工点击复核发现首版生成页面把 `\n` 展开成了 JavaScript 字符串内的真实换行，导致按钮事件脚本解析失败；改为双层转义后修复，并增加生成页面脚本语法回归检查。
+- OpenClaw 外部插件页默认运行在 `sandbox="allow-scripts"` 的不透明来源中；为固定演示接口增加仅限 `Origin: null` 的 CORS 预检响应，同时保留 256 bit 页面令牌、固定样本枚举和 JSON-only 约束。
 - 两个部署错误（Windows ACL 无法自动核验、策略脚本目录未加入 trustedDirs）均在提交前失败关闭且无残留。
 - 安全 Skill 在显式隔离 workspace 安装成功；恶意外传 Skill 被 CRITICAL 2 条阻断且无残留。
 - 发现 state dir 不会自动隔离 workspace；首次新装测试目录已可恢复移动，用户原工作区残留0，后续强制配置 agents.defaults.workspace。
 - 稳定版不接受 warn；新增 REVIEW→block 兼容模式，中风险固定网络 Skill 被明确阻断且无残留。
 - Beta `2026.8.1-beta.3` npm 包 SHA-512 核验一致并隔离安装，但 Windows ACL 门仍拒绝常见祖先目录，未选为冻结依赖。
 - 后端完整 `386 passed`；下一步 M6-3 审计、环境白名单与部署前检查。
+
+## 2026-08-29：M9 底部实时原始日志与证据面板
+
+- 将后台执行从完成后一次性返回改为真实子进程流式采集；Web 接口使用 NDJSON 连续输出原始日志、5 秒心跳和最终结构化结果。
+- OpenClaw 准入页底部新增统一终端、6 阶段进度条和 8 项证据卡片；正常/恶意两张样本卡仍并排展示，终端用于解释实际执行过程。
+- 原始日志只做明显 Bearer、Token、密码、API Key、Secret、本机用户目录和项目目录脱敏，不由前端伪造安全结论。
+- 修复 Windows 子进程 UTF-8 输出，正常与恶意链路均无 Unicode 替换字符；修复页面模板中阶段匹配表达式的双层转义。
+- 最终真实验收：恶意样本 28 条日志、6 个阶段、3 条发现，`BLOCK`、未安装、动态执行 0 次、审计链有效；安全样本 28 条日志、6 个阶段，Docker 清洁、`ALLOW`、真实安装、审计链有效，耗时 28.250 秒。
 
 ## 2026-08-26：M6-3 准入审计与隔离加固
 
@@ -1012,3 +1032,19 @@
 - v2 最终 60/60 决策正确、60/60 必需规则命中：ALLOW 12、REVIEW 12、BLOCK 36；良性误报、危险漏报、复核错配、跨轮不稳定、遥测缺失、清理失败和容器残留均为 0。中位单次 2.790 秒、P95 3.496 秒、最大 4.753 秒，总耗时 175.512 秒；GPU、云、互联网和第三方样本使用均为 0。
 - 完整后端首次误用缺少 FastAPI 的系统 Python，17 项在收集阶段失败，未计为代码回归；改用仓库固定运行时后，文档状态测试先暴露旧计数，更新唯一状态真值后最终 `422 passed, 1 skipped`。
 - 结论限定为受控自建样本稳定性。仍缺非 Python Skill、OOM/PID 安全门真实事件、压缩/加密/分片外传、主动绕过对抗、Falco/eBPF 内核旁证和独立第三方语料泛化验证。
+
+## 2026-08-29：M10 OpenClaw 最终集成与 Windows 一键部署
+
+- 新建 `openclaw-final-integration` 分支，把 Aegis Chain 从固定 Skill 演示页扩展为 OpenClaw 后台安全引擎与五个侧边栏模块：准入、报告、审计、规则、MCP。
+- 实现安全自定义规则注册表：只接受有界结构化条件与保存前编译的 YARA，不接受任意 Python/Shell；revision 并发控制、原子替换、作用域、启停、删除和规则变更哈希链均完成。
+- 自定义规则接入 Skill、Plugin、MCP 三条静态管线；专项 7 项通过，并用临时规则真实阻断一次 OpenClaw Skill 安装，证明页面保存后立即影响最终决策。
+- 增加配置型 MCP 准入：HTTPS/TLS、运行时下载、Shell/解释器、环境注入、明文秘密和工具最小权限规则；可选离线 Tool/Prompt/Resource 进入 Cisco MCP Scanner 与 Aegis MCP 策略。
+- MCP 只在 ALLOW 后调用官方 `openclaw mcp set`，再用 `mcp show --json` 复核；失败调用 `unset` 回滚。页面原 30 秒超时导致安全 MCP 已写入但前端无返回，按实际冷启动耗时把 MCP 专用超时提高到 90 秒。
+- 真实 MCP 回归：安全 HTTPS/OAuth/工具白名单配置 ALLOW 并保存，危险 `npx + literal API_KEY` 5 ms BLOCK 且未保存；测试安全配置最终用官方命令清理。
+- 报告页使用本机 Edge 无头打印 A4 PDF；最终 `Aegis-OpenClaw-Final-Acceptance.pdf` 对应 AEGIS-39，90,040 字节、PDF 1.4、无 JavaScript，Poppler 渲染后人工检查通过。
+- 新增 `Install_Aegis_OpenClaw_Final.cmd` 与 `install_openclaw_final.ps1`：检查/安装依赖、固定 OpenClaw 与 pnpm、重建哈希锁扫描器、固定 Docker 镜像、配置备份/失败回滚、策略 dry-run、策略内安装插件、Gateway 重启、五页探活、完整预检和安装回执。
+- 当前 Docker 4.86.0 再现官方已记录的 Windows AF_UNIX 遗留故障；没有恢复出厂设置或删除业务数据。将仅含 ReparsePoint 的 `Docker\run` 和 `docker-secrets-engine` 改名备份，备份设置后关闭 Model Runner/Inference，Engine 29.7.2/API 1.55 恢复。精确识别、非套接字拒绝和可恢复改名逻辑进入安装器。
+- 一键安装/修复当前主机最终成功：五页 HTTP 200；全平台预检24项 PASS、0 WARN、dynamic ready；生成项目本地安装回执。
+- 最终真实审计：Plugin ALLOW 序号35、Skill ALLOW/BLOCK 36/37、MCP ALLOW/BLOCK 38/39、浏览器真实点击 BLOCK 40；提交前审查再把 MCP 更新改为旧值快照→set→精确 show→失败恢复，真实事务式 ALLOW 为序号41且临时配置已清理。41条 SHA-256 哈希链有效。
+- 浏览器回归使用 Edge 真正点击恶意按钮：运行中按钮禁用、终端 6/6、心跳、进度100%、BLOCK、未安装、动态执行0、审计链有效；无页面脚本错误。
+- 最终完整回归：后端 `450 passed, 1 skipped`；自定义规则与 MCP 专项 `15 passed`；前端 `10 passed`；前端生产构建通过。比赛演示版本 READY；生产仍 NO-GO，第二台洁净 Windows/VM、SSO/RBAC、外部 WORM/SIEM 与高可用继续延期。

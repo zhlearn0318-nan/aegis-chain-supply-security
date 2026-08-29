@@ -1,0 +1,12 @@
+{
+  "id": "aegis-admission-ui",
+  "name": "Aegis Chain 供应链安全",
+  "description": "OpenClaw 安装前准入、PDF 报告、哈希链审计与自定义规则管理。",
+  "activation": {
+    "onStartup": true
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false
+  }
+}

@@ -149,7 +149,7 @@
 - [x] 实现 UTF-8 单 JSON CLI 和 OpenClaw 配置示例。
 - [x] 通过22个专项用例及后端完整 `383 passed`。
 - [x] 真实安全/恶意固定 Skill 分别返回 allow/block。
-- [ ] M6-2：真实 OpenClaw `doctor --deep`。
+- [x] M6-2：真实 OpenClaw 稳定版安装策略与 Skill allow/block/failure 闭环；`doctor --deep` 的稳定版兼容限制如实保留。
 - [x] M6-2：真实 allow/block/failure 安装与无残留验证。
 - [x] M6-2：旧稳定版 REVIEW→block 兼容验证。
 - [ ] M6-2：新版可确认 warn 与 `doctor --deep` 安装策略全绿；当前受上游 Windows ACL 限制。
@@ -172,6 +172,20 @@
 - [x] 真实 Docker 3 轮共 15 次执行：决策正确 15/15，误报/危险漏报/遥测缺失/清理失败/容器残留均为 0。
 - [x] 真实 OpenClaw required E2E：安全安装、静态 ALLOW→动态 Shell BLOCK、配置异常失败关闭 3/3；审计证据 3/3，阻断/用户 workspace/容器残留均为 0。
 - [x] OpenClaw 隔离 profile 的 Docker context 发现失败已保留；显式可信 `DOCKER_CONFIG` 修复有回归测试且不进入目标容器。
+
+## M10 OpenClaw 最终集成与 Windows 部署
+
+- [x] OpenClaw 左侧提供准入、报告、审计、规则、MCP 五个页面。
+- [x] Skill 与 Plugin 安装自动调用 Aegis `security.installPolicy`。
+- [x] 配置型 MCP 扫描后使用官方 `mcp set/show` 原子提交与复核；失败回滚。
+- [x] 结构化规则/YARA 可新增、修改、启停、删除并立即生效，规则变更写入哈希链。
+- [x] 准入报告可在本机导出 A4 PDF。
+- [x] Windows 一键安装/修复完成固定版本、配置备份/回滚、Docker、策略、插件、Gateway 和完整预检。
+- [x] 当前主机五页 HTTP 200、24项预检0警告、Skill/Plugin/MCP ALLOW+BLOCK 和41条有效审计链通过。
+- [x] MCP 更新先快照旧值，写入后逐字段复核；提交或复核失败恢复旧配置。
+- [x] 后端 `450 passed, 1 skipped`，前端 `10 passed`，生产构建通过。
+- [ ] 第二台洁净 Windows 或真实 VM 完整一键部署证据（不阻断比赛交付）。
+- [ ] 生产 SSO/RBAC、外部 WORM/SIEM、多实例高可用与专用恶意代码隔离。
 - [x] 建立 20 个哈希锁定的自建动态样本，覆盖良性对照、进程、外连、诱饵/编码外传、敏感路径、动态加载和超时共 8 类行为。
 - [x] v1 60/60 后发现 `os.system()` 风险标签偏宽松；不改写原始结果，提升为 Shell CRITICAL/BLOCK 并建立 v2。
 - [x] v2 20 样本×3轮共60次真实容器执行：决策/规则 60/60，误报、漏报、复核错配、不稳定、遥测缺失、清理失败和残留均为0。

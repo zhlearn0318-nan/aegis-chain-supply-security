@@ -3,6 +3,10 @@ from .command_context import (
     ANALYZER_ID as COMMAND_CONTEXT_ANALYZER_ID,
     analyze_command_context,
 )
+from ..custom_rules import (
+    ANALYZER_ID as CUSTOM_RULES_ANALYZER_ID,
+    analyze_custom_rules,
+)
 from .filesystem_context import (
     ANALYZER_ID as FILESYSTEM_CONTEXT_ANALYZER_ID,
     analyze_filesystem_context,
@@ -43,6 +47,7 @@ from .untrusted_exec_flow import (
 __all__ = [
     "ANALYZER_ID",
     "COMMAND_CONTEXT_ANALYZER_ID",
+    "CUSTOM_RULES_ANALYZER_ID",
     "DEPENDENCY_INTEGRITY_ANALYZER_ID",
     "ENTERPRISE_CONTROLS_ANALYZER_ID",
     "FILESYSTEM_CONTEXT_ANALYZER_ID",
@@ -53,6 +58,7 @@ __all__ = [
     "STATIC_COVERAGE_ANALYZER_ID",
     "UNTRUSTED_EXEC_FLOW_ANALYZER_ID",
     "analyze_command_context",
+    "analyze_custom_rules",
     "analyze_dependency_manifest",
     "analyze_enterprise_controls",
     "analyze_filesystem_context",

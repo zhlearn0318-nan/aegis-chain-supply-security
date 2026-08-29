@@ -5,6 +5,7 @@ from typing import Any
 
 from .analyzers import (
     analyze_enterprise_controls,
+    analyze_custom_rules,
     analyze_sensitive_flows,
     analyze_skill_tree,
     analyze_untrusted_exec_flows,
@@ -25,6 +26,9 @@ def run_plugin_static_pipeline(plugin_path: Path) -> dict[str, Any]:
     for result_findings, result_analyzers in generic_results:
         findings.extend(result_findings)
         analyzers.extend(result_analyzers)
+    custom_findings, custom_analyzers = analyze_custom_rules(plugin_path, "plugin")
+    findings.extend(custom_findings)
+    analyzers.extend(custom_analyzers)
     return {
         "findings": findings,
         "analyzers": sorted(set(analyzers)),

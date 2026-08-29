@@ -6,6 +6,7 @@ from typing import Any
 from .adapters.skill import SkillScannerAdapter
 from .analyzers import (
     analyze_command_context,
+    analyze_custom_rules,
     analyze_enterprise_controls,
     analyze_filesystem_context,
     analyze_network_context,
@@ -36,6 +37,7 @@ def run_skill_static_pipeline(
     command_findings, command_analyzers = analyze_command_context(
         skill_path, cisco_findings
     )
+    custom_findings, custom_analyzers = analyze_custom_rules(skill_path, "skill")
     findings = (
         cisco_findings
         + aegis_findings
@@ -46,6 +48,7 @@ def run_skill_static_pipeline(
         + network_findings
         + filesystem_findings
         + command_findings
+        + custom_findings
     )
     analyzers = sorted(set(
         cisco_analyzers
@@ -57,6 +60,7 @@ def run_skill_static_pipeline(
         + network_analyzers
         + filesystem_analyzers
         + command_analyzers
+        + custom_analyzers
     ))
     return {
         "findings": findings,

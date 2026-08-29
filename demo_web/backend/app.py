@@ -43,6 +43,7 @@ from .analyzers import (
     UNTRUSTED_EXEC_FLOW_ANALYZER_ID,
     analyze_dependency_manifest,
     analyze_mcp_objects,
+    analyze_custom_rules,
 )
 from .api_contract import ErrorCode, GatewayHTTPException
 from .api_v1 import ApiV1Operations, install_api_v1
@@ -666,11 +667,17 @@ def scan_mcp_paths(
     execution = MCP_ADAPTER.scan(tools, prompts, resources)
     findings, analyzers = normalize_mcp(execution.report)
     policy_findings, policy_analyzers = analyze_mcp_objects(tools, prompts, resources)
+    custom_findings: list[dict[str, Any]] = []
+    custom_analyzers: list[str] = []
+    for path in (tools, prompts, resources):
+        path_findings, path_analyzers = analyze_custom_rules(path, "mcp")
+        custom_findings.extend(path_findings)
+        custom_analyzers.extend(path_analyzers)
     complete_scan_job(
         job,
         started=started,
-        findings=findings + policy_findings,
-        analyzers=sorted(set(analyzers + policy_analyzers)),
+        findings=findings + policy_findings + custom_findings,
+        analyzers=sorted(set(analyzers + policy_analyzers + custom_analyzers)),
         logs=execution.logs[-4:],
     )
 
@@ -703,16 +710,23 @@ def scan_mcp_bundle(
         dependency_execution.report
     )
     policy_findings, policy_analyzers = analyze_mcp_objects(tools, prompts, resources)
+    custom_findings: list[dict[str, Any]] = []
+    custom_analyzers: list[str] = []
+    for path in (tools, prompts, resources):
+        path_findings, path_analyzers = analyze_custom_rules(path, "mcp")
+        custom_findings.extend(path_findings)
+        custom_analyzers.extend(path_analyzers)
     integrity_findings, integrity_analyzers, sbom = analyze_dependency_manifest(
         requirements
     )
     findings = (
-        static_findings + policy_findings + dependency_findings + integrity_findings
+        static_findings + policy_findings + custom_findings + dependency_findings + integrity_findings
     )
     analyzers = sorted(
         set(
             static_analyzers
             + policy_analyzers
+            + custom_analyzers
             + dependency_analyzers
             + integrity_analyzers
         )
