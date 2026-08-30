@@ -1,5 +1,7 @@
 # M10 OpenClaw 最终集成与 Windows 一键部署说明
 
+> 后续状态：本文件记录固定样本准入页阶段。真实 ZIP/文件夹上传、扫描后安装和同名确认更新已经在 M11 完成，当前准入能力请以 [`M11_OPENCLAW_FORMAL_SKILL_UPLOAD_ADMISSION.md`](M11_OPENCLAW_FORMAL_SKILL_UPLOAD_ADMISSION.md) 为准。
+
 > 状态日期：2026-08-29
 > 适用分支：`openclaw-final-integration`
 > 固定 OpenClaw 版本：`2026.7.1-2`

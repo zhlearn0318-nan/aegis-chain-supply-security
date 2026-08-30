@@ -100,7 +100,7 @@ process.stdin.on("end", () => {
         HF_HUB_OFFLINE: "1",
         TRANSFORMERS_OFFLINE: "1",
         AEGIS_OPENCLAW_SCAN_TIMEOUT_SECONDS:
-          process.env.AEGIS_OPENCLAW_SCAN_TIMEOUT_SECONDS ?? "12",
+          process.env.AEGIS_OPENCLAW_SCAN_TIMEOUT_SECONDS ?? "60",
         AEGIS_OPENCLAW_REVIEW_MODE:
           process.env.AEGIS_OPENCLAW_REVIEW_MODE ?? "warn",
         ...(process.env.AEGIS_OPENCLAW_AUDIT_DB

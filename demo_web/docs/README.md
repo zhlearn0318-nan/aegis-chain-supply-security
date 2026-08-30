@@ -11,6 +11,7 @@
 - 安全：[`../../SECURITY.md`](../../SECURITY.md)
 - 项目自身供应链：[`M5_P0_4_PROJECT_SUPPLY_CHAIN_REPORT.md`](M5_P0_4_PROJECT_SUPPLY_CHAIN_REPORT.md)
 - 真实 Windows VM 发布门：[`M5_P0_5_CLEAN_WINDOWS_VM_RELEASE_GATE.md`](M5_P0_5_CLEAN_WINDOWS_VM_RELEASE_GATE.md)
+- OpenClaw 正式 Skill 上传准入：[`M11_OPENCLAW_FORMAL_SKILL_UPLOAD_ADMISSION.md`](M11_OPENCLAW_FORMAL_SKILL_UPLOAD_ADMISSION.md)
 
 ## 历史证据
 
@@ -18,6 +19,7 @@
 - `M2_*`：Cisco/SkillTrustBench 基线；
 - `M3_*`：静态规则增强、密封回归与最小动态 fixture；
 - `M4_*`：Marker、Docker、MCP 遥测和 Skill 运行时闭包；
+- `M9_*` 与 `M10_*`：固定样本控制页、OpenClaw 集成和 Windows 部署的阶段证据；准入页现状以 M11 为准；
 - `M5_供应链安全系统真实可用性评委与工程审查.md`：2026-08-23 开发前审查快照；整改状态以当前状态文件为准；
 - `WORK_LOG.md`：按时间追加的工程日志，不承担当前状态汇总职责。
 

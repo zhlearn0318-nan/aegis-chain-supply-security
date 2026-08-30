@@ -1,6 +1,6 @@
 import { randomBytes, timingSafeEqual } from "node:crypto";
 import { spawn } from "node:child_process";
-import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -13,6 +13,8 @@ import {
   renderReportsPage,
   renderRulesPage,
 } from "./admin_pages.js";
+import { renderAdmissionPage } from "./admission_page.js";
+import { SESSION_TTL_MS, UploadError, UploadSessionStore } from "./upload_sessions.js";
 
 const PANEL_PATH = "/plugins/aegis-admission/panel";
 const API_PATH = "/plugins/aegis-admission/api/run";
@@ -39,7 +41,7 @@ function sendJson(res, status, body) {
 function setSandboxCorsHeaders(res) {
   res.setHeader("Access-Control-Allow-Origin", "null");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-Aegis-Demo-Token");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-Aegis-Action, X-Aegis-Token, X-Aegis-Demo-Token, X-Aegis-Session, X-Aegis-Relative-Path");
   res.setHeader("Access-Control-Max-Age", "300");
   res.setHeader("Vary", "Origin");
 }
@@ -301,12 +303,193 @@ async function runScenario(projectRoot, scenario, onEvent) {
   });
 }
 
+async function runUploadedSkillOperation(projectRoot, request, onEvent = () => {}) {
+  const python = adminRuntime(projectRoot);
+  const script = path.join(projectRoot, "demo_web", "tools", "openclaw_uploaded_skill_cli.py");
+  return await new Promise((resolve, reject) => {
+    const child = spawn(python, [script], {
+      cwd: projectRoot,
+      windowsHide: true,
+      stdio: ["pipe", "pipe", "pipe"],
+      env: {
+        ...process.env,
+        PYTHONUTF8: "1",
+        PYTHONIOENCODING: "utf-8",
+        AEGIS_OPENCLAW_SCAN_TIMEOUT_SECONDS: "60",
+        AEGIS_OPENCLAW_REVIEW_MODE: "block",
+        AEGIS_OPENCLAW_DYNAMIC_SKILL_POLICY: "required",
+        AEGIS_CUSTOM_RULES_PATH: path.join(projectRoot, "demo_web", "data", "openclaw-final", "custom_rules.json"),
+        AEGIS_OPENCLAW_AUDIT_DB: path.join(projectRoot, "demo_web", "data", "openclaw-final", "admission_audit.db"),
+        DOCKER_CONFIG: path.join(process.env.USERPROFILE || os.homedir(), ".docker"),
+      },
+    });
+    let stdout = "";
+    let stderrBuffer = "";
+    const flushLogs = (flush = false) => {
+      const parts = stderrBuffer.split(/\r?\n/u);
+      const tail = parts.pop() ?? "";
+      const complete = flush ? parts.concat(tail ? [tail] : []) : parts;
+      stderrBuffer = flush ? "" : tail;
+      for (const line of complete) if (line.trim()) onEvent({ type: "log", line: redactLogLine(line, projectRoot) });
+    };
+    child.stdout.setEncoding("utf8");
+    child.stderr.setEncoding("utf8");
+    child.stdout.on("data", (chunk) => {
+      stdout += chunk;
+      if (stdout.length > 4 * 1024 * 1024) child.kill();
+    });
+    child.stderr.on("data", (chunk) => { stderrBuffer += chunk; flushLogs(false); });
+    const timeoutMs = request?.operation === "prepare_scan" ? 180_000 : 30_000;
+    const heartbeat = setInterval(() => onEvent({ type: "heartbeat", line: "[gateway] 安全引擎仍在运行……" }), 5_000);
+    const timeout = setTimeout(() => {
+      child.kill();
+      reject(new UploadError("ENGINE_TIMEOUT", "安全引擎执行超时，已失败关闭。", 504));
+    }, timeoutMs);
+    child.once("error", (error) => { clearInterval(heartbeat); clearTimeout(timeout); reject(error); });
+    child.once("close", () => {
+      clearInterval(heartbeat);
+      clearTimeout(timeout);
+      flushLogs(true);
+      try {
+        const result = JSON.parse(stdout.trim());
+        if (!result.ok) reject(new UploadError(result.error?.code || "ENGINE_FAILED", result.error?.message || "安全引擎执行失败。"));
+        else resolve(result.data);
+      } catch (error) {
+        if (error instanceof UploadError) reject(error);
+        else reject(new UploadError("ENGINE_RESPONSE_INVALID", `安全引擎返回无效结果：${error.message}`));
+      }
+    });
+    child.stdin.end(JSON.stringify(request));
+  });
+}
+
+function openclawRuntime() {
+  const node = process.platform === "win32"
+    ? path.join(process.env.ProgramFiles || "C:\\Program Files", "nodejs", "node.exe")
+    : process.execPath;
+  const module = process.env.AEGIS_OPENCLAW_MJS
+    || path.join(process.env.APPDATA || "", "npm", "node_modules", "openclaw", "openclaw.mjs");
+  if (!existsSync(node) || !existsSync(module)) {
+    throw new UploadError("OPENCLAW_RUNTIME_MISSING", "OpenClaw CLI 运行时不可用。", 503);
+  }
+  return { node, module };
+}
+
+async function runOpenClaw(projectRoot, args, onEvent = () => {}, timeoutMs = 180_000) {
+  const runtime = openclawRuntime();
+  return await new Promise((resolve, reject) => {
+    const child = spawn(runtime.node, [runtime.module, ...args], {
+      cwd: projectRoot,
+      windowsHide: true,
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+    let stdout = "";
+    let stderr = "";
+    const emit = (channel, chunk) => {
+      const text = redactLogLine(chunk, projectRoot);
+      for (const line of text.split(/\r?\n/u)) if (line.trim()) onEvent({ type: "log", line: `[openclaw:${channel}] ${line}` });
+    };
+    child.stdout.setEncoding("utf8");
+    child.stderr.setEncoding("utf8");
+    child.stdout.on("data", (chunk) => { stdout += chunk; emit("stdout", chunk); });
+    child.stderr.on("data", (chunk) => { stderr += chunk; emit("stderr", chunk); });
+    const timeout = setTimeout(() => { child.kill(); reject(new UploadError("OPENCLAW_TIMEOUT", "OpenClaw 命令执行超时。", 504)); }, timeoutMs);
+    child.once("error", (error) => { clearTimeout(timeout); reject(error); });
+    child.once("close", (code) => {
+      clearTimeout(timeout);
+      resolve({ code: Number(code ?? 1), stdout, stderr });
+    });
+  });
+}
+
+async function resolveWorkspace(projectRoot) {
+  const completed = await runOpenClaw(projectRoot, ["config", "get", "agents.defaults.workspace", "--json"], () => {}, 30_000);
+  if (completed.code !== 0) throw new UploadError("WORKSPACE_UNAVAILABLE", "无法读取 OpenClaw 默认工作区。", 503);
+  let value;
+  try { value = JSON.parse(completed.stdout.trim()); } catch { value = completed.stdout.trim(); }
+  if (value && typeof value === "object") value = value.value ?? value.path;
+  if (typeof value !== "string" || !path.isAbsolute(value)) throw new UploadError("WORKSPACE_INVALID", "OpenClaw 默认工作区路径无效。", 503);
+  return path.resolve(value);
+}
+
+async function resolveInstallContext(projectRoot, session) {
+  const workspace = await resolveWorkspace(projectRoot);
+  const skillsRoot = path.resolve(workspace, "skills");
+  const destination = path.resolve(skillsRoot, session.targetName);
+  if (path.dirname(destination).toLowerCase() !== skillsRoot.toLowerCase()) {
+    throw new UploadError("INSTALL_PATH_DENIED", "安装目标超出 OpenClaw Skill 目录。", 400);
+  }
+  return { skillsRoot, destination, existed: existsSync(destination) };
+}
+
+async function installUploadedSkill(projectRoot, session, installContext, onEvent) {
+  const verification = await runUploadedSkillOperation(projectRoot, {
+    operation: "verify",
+    source_root: session.sourceRoot,
+    expected_sha256: session.scan.source_tree_sha256,
+  }, onEvent);
+  onEvent({ type: "log", line: `[verify] 扫描指纹复核通过 ${verification.source_tree_sha256}` });
+  const { skillsRoot, destination, existed } = installContext;
+  const backup = path.join(skillsRoot, `.aegis-backup-${session.targetName}-${randomBytes(6).toString("hex")}`);
+  let backedUp = false;
+  try {
+    if (existed) {
+      renameSync(destination, backup);
+      backedUp = true;
+      onEvent({ type: "log", line: "[transaction] 已暂存原版本；安装失败时将自动恢复。" });
+    }
+    onEvent({ type: "log", line: "[install] 调用 OpenClaw skills install；原生 installPolicy 将执行第二次安全复扫。" });
+    const completed = await runOpenClaw(
+      projectRoot,
+      ["skills", "install", session.sourceRoot, "--as", session.targetName],
+      onEvent,
+    );
+    if (completed.code !== 0 || !existsSync(destination)) {
+      throw new UploadError("INSTALL_FAILED", "OpenClaw 未完成安装，原版本（如有）将恢复。", 500);
+    }
+    const audits = await runAdminOperation(projectRoot, { operation: "list_audits", limit: 10 });
+    const matching = audits.data?.audits?.find((item) =>
+      item.target_type === "skill"
+      && item.target_name === session.targetName
+      && item.source_tree_sha256 === session.scan.source_tree_sha256
+      && item.decision === "allow"
+    );
+    if (!matching || audits.data?.integrity?.valid !== true) {
+      throw new UploadError("INSTALL_EVIDENCE_MISSING", "安装完成但未找到有效的 ALLOW 审计证据，已按失败关闭处理。", 500);
+    }
+    if (backedUp) rmSync(backup, { recursive: true, force: true });
+    session.installed = true;
+    session.state = "installed";
+    return {
+      installed: true,
+      updated: existed,
+      target_name: session.targetName,
+      install_path: destination,
+      source_tree_sha256: session.scan.source_tree_sha256,
+      audit: matching,
+      audit_integrity: audits.data.integrity,
+    };
+  } catch (error) {
+    if (backedUp) {
+      if (existsSync(destination)) rmSync(destination, { recursive: true, force: true });
+      if (existsSync(backup)) renameSync(backup, destination);
+      onEvent({ type: "log", line: "[rollback] 安装未成功，原 Skill 已恢复。" });
+    } else if (!existed && existsSync(destination)) {
+      rmSync(destination, { recursive: true, force: true });
+      onEvent({ type: "log", line: "[rollback] 已清理未获有效审计证据的安装目录。" });
+    }
+    throw error;
+  }
+}
+
 export default definePluginEntry({
   id: "aegis-admission-ui",
   name: "Aegis Chain 供应链安全",
   description: "OpenClaw 安装前准入、报告、审计与安全规则管理。",
   register(api) {
     const projectRoot = projectRootFromModule();
+    const uploadsRoot = path.join(projectRoot, "demo_web", "data", "openclaw-final", "uploads");
+    const uploadStore = new UploadSessionStore(uploadsRoot);
     api.session.controls.registerControlUiDescriptor({
       surface: "tab", id: "admission", label: "Aegis 准入", description: "Skill 安装前安全审计", icon: "shield", group: "control", order: 35, path: PANEL_PATH,
     });
@@ -324,7 +507,7 @@ export default definePluginEntry({
     });
     api.registerHttpRoute({ path: PANEL_PATH, auth: "plugin", match: "exact", handler: async (req, res) => {
       if ((req.method ?? "GET").toUpperCase() !== "GET") { res.statusCode = 405; res.end("Method Not Allowed"); return true; }
-      try { sendHtml(res, renderPanel(projectRoot, issueToken())); } catch (error) { sendJson(res, 500, { error: String(error) }); }
+      try { sendHtml(res, renderAdmissionPage(issueToken())); } catch (error) { sendJson(res, 500, { error: String(error) }); }
       return true;
     }});
     api.registerHttpRoute({ path: API_PATH, auth: "plugin", match: "exact", handler: async (req, res) => {
@@ -334,31 +517,98 @@ export default definePluginEntry({
       setSandboxCorsHeaders(res);
       if (method === "OPTIONS") { res.statusCode = 204; res.end(); return true; }
       if (method !== "POST") { res.statusCode = 405; res.end("Method Not Allowed"); return true; }
-      if (!consumeToken(req.headers["x-aegis-demo-token"])) { sendJson(res, 403, { error: "演示令牌无效或已过期，请刷新页面。" }); return true; }
-      if (!String(req.headers["content-type"] ?? "").toLowerCase().startsWith("application/json")) { sendJson(res, 415, { error: "仅接受 JSON 请求。" }); return true; }
-      if (running) { sendJson(res, 409, { error: "已有准入任务正在运行，请稍后重试。" }); return true; }
+      if (!consumeToken(req.headers["x-aegis-token"])) { sendJson(res, 403, { error: { code: "TOKEN_INVALID", message: "页面令牌无效或已过期，请刷新页面。" } }); return true; }
+      const action = String(req.headers["x-aegis-action"] ?? "").toLowerCase();
+      let activeSession = null;
+      let ownsRunning = false;
+      let installContext = null;
       try {
+        if (action === "create") {
+          if (!String(req.headers["content-type"] ?? "").toLowerCase().startsWith("application/json")) throw new UploadError("CONTENT_TYPE_INVALID", "创建会话仅接受 JSON。", 415);
+          const body = await readJsonBody(req);
+          const session = uploadStore.create({ sourceKind: body.source_kind, targetName: body.target_name, displayName: body.display_name });
+          sendJson(res, 201, { ok: true, data: { session_id: session.id, expires_in_seconds: Math.floor(SESSION_TTL_MS / 1000) } });
+          return true;
+        }
+        if (action === "upload") {
+          if (!String(req.headers["content-type"] ?? "").toLowerCase().startsWith("application/octet-stream")) throw new UploadError("CONTENT_TYPE_INVALID", "文件上传仅接受二进制流。", 415);
+          const session = uploadStore.get(req.headers["x-aegis-session"]);
+          const progress = await uploadStore.receiveFile(req, session, req.headers["x-aegis-relative-path"]);
+          sendJson(res, 200, { ok: true, data: progress });
+          return true;
+        }
+        if (action === "cancel") {
+          const body = await readJsonBody(req);
+          const session = uploadStore.get(body.session_id);
+          if (session.running) throw new UploadError("SESSION_BUSY", "扫描或安装运行中，不能取消会话。", 409);
+          uploadStore.remove(session.id);
+          sendJson(res, 200, { ok: true, data: { removed: true } });
+          return true;
+        }
+        if (action !== "scan" && action !== "install") throw new UploadError("ACTION_INVALID", "不支持的准入操作。", 400);
+        if (!String(req.headers["content-type"] ?? "").toLowerCase().startsWith("application/json")) throw new UploadError("CONTENT_TYPE_INVALID", "扫描与安装仅接受 JSON。", 415);
         const body = await readJsonBody(req);
-        if (body?.scenario !== "safe" && body?.scenario !== "malicious") { sendJson(res, 400, { error: "只允许固定的 safe 或 malicious 演示样本。" }); return true; }
+        const session = uploadStore.get(body.session_id);
+        activeSession = session;
+        if (running || session.running) throw new UploadError("ENGINE_BUSY", "已有准入任务正在运行，请稍后重试。", 409);
+        if (action === "scan" && (session.state !== "uploading" || session.fileCount < 1)) throw new UploadError("UPLOAD_INCOMPLETE", "上传尚未完成或该会话已扫描。", 409);
+        if (action === "install" && (session.state !== "scanned" || session.scan?.install_eligible !== true || !session.sourceRoot)) throw new UploadError("INSTALL_NOT_ELIGIBLE", "当前会话没有有效的 ALLOW 安装资格。", 409);
+        if (action === "install") {
+          installContext = await resolveInstallContext(projectRoot, session);
+          if (installContext.existed && body.overwrite_confirmed !== true) {
+            sendJson(res, 200, { ok: true, data: { installed: false, requires_confirmation: true } });
+            return true;
+          }
+        }
         running = true;
+        session.running = true;
+        ownsRunning = true;
+        session.state = action === "scan" ? "scanning" : "installing";
         res.statusCode = 200;
         res.setHeader("Content-Type", "application/x-ndjson; charset=utf-8");
         res.setHeader("Cache-Control", "no-store, no-transform");
         res.setHeader("X-Content-Type-Options", "nosniff");
         res.setHeader("X-Accel-Buffering", "no");
         res.flushHeaders?.();
-        sendStreamEvent(res, { type: "log", line: `[gateway] accepted fixed scenario=${body.scenario}` });
-        const result = await runScenario(projectRoot, body.scenario, (event) => sendStreamEvent(res, event));
+        let result;
+        if (action === "scan") {
+          sendStreamEvent(res, { type: "progress", percent: 40 });
+          sendStreamEvent(res, { type: "log", line: `[gateway] 已接收正式上传会话 ${session.id}；开始静态与动态审计。` });
+          const engine = await runUploadedSkillOperation(projectRoot, {
+            operation: "prepare_scan",
+            session_root: session.root,
+            uploads_root: uploadsRoot,
+            source_kind: session.sourceKind,
+            target_name: session.targetName,
+          }, (event) => sendStreamEvent(res, event));
+          session.sourceRoot = engine.source_root;
+          result = { ...engine, source_root: undefined, session_id: session.id };
+          session.scan = result;
+          session.state = result.install_eligible ? "scanned" : "blocked";
+          sendStreamEvent(res, { type: "progress", percent: 100 });
+        } else {
+          sendStreamEvent(res, { type: "progress", percent: 10 });
+          result = await installUploadedSkill(projectRoot, session, installContext, (event) => sendStreamEvent(res, event));
+          sendStreamEvent(res, { type: "progress", percent: 100 });
+        }
         sendStreamEvent(res, { type: "result", result });
         res.end();
       } catch (error) {
+        if (ownsRunning && activeSession && !activeSession.installed) {
+          activeSession.state = action === "scan" ? "failed" : "scanned";
+        }
         const detail = error?.stdout?.toString?.().trim() || error?.stderr?.toString?.().trim() || error?.message || String(error);
         if (res.headersSent) {
           sendStreamEvent(res, { type: "log", line: `[ERROR] ${redactLogLine(detail, projectRoot)}` });
-          sendStreamEvent(res, { type: "result", result: { accepted: false, decision: "ERROR", installed: false, duration_ms: 0, audit_chain_valid: false, finding_rule_ids: [], dynamic_summary: "Failed closed", title: "Admission run failed", error: detail } });
+          sendStreamEvent(res, { type: "error", error: { code: error?.code || "ADMISSION_FAILED", message: redactLogLine(detail, projectRoot) } });
           res.end();
-        } else sendJson(res, 500, { error: detail });
-      } finally { running = false; }
+        } else sendJson(res, Number(error?.status || 500), { ok: false, error: { code: error?.code || "ADMISSION_FAILED", message: redactLogLine(detail, projectRoot) } });
+      } finally {
+        if (ownsRunning && activeSession) {
+          activeSession.running = false;
+          running = false;
+        }
+      }
       return true;
     }});
     for (const [routePath, renderer] of [

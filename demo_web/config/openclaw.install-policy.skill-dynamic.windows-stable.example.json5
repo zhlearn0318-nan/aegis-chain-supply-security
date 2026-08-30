@@ -20,7 +20,7 @@
         maxOutputBytes: 1048576,
         passEnv: [],
         env: {
-          AEGIS_OPENCLAW_SCAN_TIMEOUT_SECONDS: "12",
+          AEGIS_OPENCLAW_SCAN_TIMEOUT_SECONDS: "60",
           AEGIS_OPENCLAW_REVIEW_MODE: "block",
           // Skill 静态通过后必须完成动态试运行，否则失败关闭。
           AEGIS_OPENCLAW_DYNAMIC_SKILL_POLICY: "required",

@@ -14,7 +14,7 @@
         maxOutputBytes: 1048576,
         passEnv: [],
         env: {
-          AEGIS_OPENCLAW_SCAN_TIMEOUT_SECONDS: "12",
+          AEGIS_OPENCLAW_SCAN_TIMEOUT_SECONDS: "60",
           // 新协议使用 warn；只接受 allow/block 的旧稳定版改为 block。
           AEGIS_OPENCLAW_REVIEW_MODE: "warn",
           AEGIS_OPENCLAW_AUDIT_DB: "C:\\AegisChain\\data\\admission_audit.db",

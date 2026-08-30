@@ -1048,3 +1048,14 @@
 - 最终真实审计：Plugin ALLOW 序号35、Skill ALLOW/BLOCK 36/37、MCP ALLOW/BLOCK 38/39、浏览器真实点击 BLOCK 40；提交前审查再把 MCP 更新改为旧值快照→set→精确 show→失败恢复，真实事务式 ALLOW 为序号41且临时配置已清理。41条 SHA-256 哈希链有效。
 - 浏览器回归使用 Edge 真正点击恶意按钮：运行中按钮禁用、终端 6/6、心跳、进度100%、BLOCK、未安装、动态执行0、审计链有效；无页面脚本错误。
 - 最终完整回归：后端 `450 passed, 1 skipped`；自定义规则与 MCP 专项 `15 passed`；前端 `10 passed`；前端生产构建通过。比赛演示版本 READY；生产仍 NO-GO，第二台洁净 Windows/VM、SSO/RBAC、外部 WORM/SIEM 与高可用继续延期。
+
+## 2026-08-30：M11 OpenClaw 正式 Skill 上传准入
+
+- 将 M9 固定 safe/malicious 样本页替换为 ZIP 和浏览器本地文件夹正式上传页；页面展示上传进度、原始日志、内容指纹、静态/动态结论、审计链与安装状态。
+- 新增随机上传会话、二进制流上传、安全相对路径、50 MB ZIP、200 MB 总量、5,000 文件、单文件 50 MB 和30分钟会话边界；Gateway 重启后清理失效会话目录。
+- 新增 ZIP 安全解包：阻止路径穿越、绝对路径、反斜杠、控制字符、保留名、非法字符、大小写冲突、加密包、非 stored/deflate 和符号链接。
+- 扫描资格绑定源树 SHA-256；安装前再次核验，随后由 OpenClaw `security.installPolicy` 二次执行 Cisco/Aegis 静态与 Docker 动态审计。
+- 同名 Skill 从沙箱 iframe 不可用的 `confirm()` 改为页面内“确认更新并替换”；原版本同盘暂存，新安装或审计证据失败时恢复。
+- 冷启动实测暴露 12秒静态扫描预算过窄，产生序号46 `AEGIS_POLICY_SCAN_TIMEOUT`；统一调整为60秒并由一键安装器重新配置，24项预检0警告。
+- 真实 Edge 验收：文件夹安全扫描/安装序号52–53；ZIP安全扫描/安装54–55；文件夹同名确认更新56–57；恶意文件夹BLOCK序号58、动态执行0、安装按钮禁用。58条哈希链有效。
+- 最终回归：后端 `466 passed, 1 skipped`；上传边界 Node `10 passed`；正式上传专项 Python 与状态文档 `54 passed`。

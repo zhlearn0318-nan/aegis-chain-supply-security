@@ -27,7 +27,7 @@ MAX_FINDING_MESSAGE_LENGTH = 160
 MAX_FINDING_FILE_LENGTH = 180
 MAX_FINDING_EVIDENCE_LENGTH = 200
 MAX_FINDINGS = 3
-DEFAULT_SCAN_TIMEOUT_SECONDS = 12
+DEFAULT_SCAN_TIMEOUT_SECONDS = 60
 REVIEW_MODE_ENV = "AEGIS_OPENCLAW_REVIEW_MODE"
 DYNAMIC_SKILL_MODE_ENV = "AEGIS_OPENCLAW_DYNAMIC_SKILL_POLICY"
 DYNAMIC_SKILL_CONFIG = Path(__file__).resolve().parents[1] / "config" / "skill_dynamic_sandbox.json"
@@ -53,9 +53,12 @@ class InstallPolicyRequest(BaseModel):
 
 @dataclass(frozen=True)
 class SourceTreeLimits:
-    max_files: int = 500
-    max_total_bytes: int = 50 * 1024 * 1024
-    max_file_bytes: int = 15 * 1024 * 1024
+    # Browser admission and the OpenClaw install hook intentionally share the
+    # same boundary so an upload cannot pass preflight and fail only because
+    # the install-time tree validator uses a smaller, hidden limit.
+    max_files: int = 5_000
+    max_total_bytes: int = 200 * 1024 * 1024
+    max_file_bytes: int = 50 * 1024 * 1024
 
 
 class SourceTreeRejected(RuntimeError):

@@ -1,9 +1,12 @@
 {
   "name": "aegis-admission-ui",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "type": "module",
   "private": true,
   "description": "Aegis Chain security engine integration for OpenClaw admission, reports, audit, and rule management.",
+  "scripts": {
+    "test": "node --test upload_sessions.test.js"
+  },
   "peerDependencies": {
     "openclaw": "2026.7.1-2"
   },

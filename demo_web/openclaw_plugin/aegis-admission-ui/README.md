@@ -1,6 +1,6 @@
 # Aegis Admission UI for OpenClaw
 
-该插件使用 OpenClaw 官方 Control UI 插件页机制，在左侧导航增加“Aegis 准入、Aegis 报告、Aegis 审计、Aegis 规则、Aegis MCP”五个页面。准入页只用于固定的现场演示样本，不提供任意文件上传或任意路径安装；管理页调用项目内安全引擎并保留最小化审计。
+该插件使用 OpenClaw 官方 Control UI 插件页机制，在左侧导航增加“Aegis 准入、Aegis 报告、Aegis 审计、Aegis 规则、Aegis MCP”五个页面。准入页支持真实 `.zip` 和浏览器本地文件夹上传，执行静态审计与 Docker 隔离试运行；只有 `ALLOW` 才能安装，同名 Skill 必须在页面内确认后事务更新。管理页调用项目内安全引擎并保留最小化审计。
 
 ## 安装
 
@@ -28,7 +28,12 @@ http://127.0.0.1:18789/plugin?plugin=aegis-admission-ui&id=admission
 
 MCP 配置准入通过“Aegis MCP”页执行；放行时使用 OpenClaw 官方 `mcp set` 写入并用 `mcp show` 复核，阻断时不修改配置。
 
-## 固定演示结果
+## 正式准入流程
 
-- `case_00906`：预期 `ALLOW`，Docker 隔离试运行清洁，安装为 `aegis-web-safe-demo`；
-- `case_01084`：预期 `BLOCK`，动态执行 0 次，不生成 `aegis-web-malicious-demo`。
+1. 选择 `.zip` 或本地 Skill 文件夹；
+2. 上传后执行静态审计，静态允许才进入 Docker 隔离试运行；
+3. 最终 `ALLOW` 且审计链有效时启用安装按钮；
+4. 安装前复核内容哈希，并由 OpenClaw 原生策略再次扫描；
+5. 同名 Skill 显示页面内确认，确认后事务更新，失败恢复原版本。
+
+默认限制为 ZIP 50 MB、解压或文件夹总量 200 MB、5,000 个文件、单文件 50 MB。详细合同与真实验收证据见 [`../../docs/M11_OPENCLAW_FORMAL_SKILL_UPLOAD_ADMISSION.md`](../../docs/M11_OPENCLAW_FORMAL_SKILL_UPLOAD_ADMISSION.md)。

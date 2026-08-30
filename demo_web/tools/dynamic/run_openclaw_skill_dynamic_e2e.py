@@ -214,7 +214,7 @@ def _policy_config(
                     "maxOutputBytes": 1048576,
                     "passEnv": [],
                     "env": {
-                        "AEGIS_OPENCLAW_SCAN_TIMEOUT_SECONDS": "12",
+                        "AEGIS_OPENCLAW_SCAN_TIMEOUT_SECONDS": "60",
                         "AEGIS_OPENCLAW_REVIEW_MODE": "block",
                         "AEGIS_OPENCLAW_DYNAMIC_SKILL_POLICY": dynamic_mode,
                         "AEGIS_OPENCLAW_AUDIT_DB": str(audit_db),
