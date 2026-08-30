@@ -1,5 +1,7 @@
 # M11 OpenClaw 正式 Skill 上传准入设计与验收
 
+> 后续状态：M12 已将五个侧边栏入口合并为唯一“Aegis 安全中心”，但本文件定义的上传、扫描和安装安全合同保持不变。最终界面见 [`M12_OPENCLAW_UNIFIED_SECURITY_CENTER_RELEASE.md`](M12_OPENCLAW_UNIFIED_SECURITY_CENTER_RELEASE.md)。
+
 > 状态日期：2026-08-30
 > 适用分支：`openclaw-final-integration`
 > 结论：比赛正式演示版本 `READY`；生产发布仍为 `NO-GO`
@@ -10,7 +12,7 @@ M9 准入页只能运行预置的安全/恶意样本，适合解释技术链路�
 
 ## 2. 用户工作流
 
-1. 在 OpenClaw 左侧进入“Aegis 准入”。
+1. 在 OpenClaw 左侧进入“Aegis 安全中心”，选择“准入扫描”。
 2. 选择一个 `.zip` 压缩包，或选择一个本地 Skill 文件夹。
 3. 填写或确认 OpenClaw 安装名称。
 4. 点击“上传并开始安全扫描”。

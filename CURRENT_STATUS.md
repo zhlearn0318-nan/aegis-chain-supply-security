@@ -1,13 +1,13 @@
 # Aegis Chain 当前状态（唯一状态真值）
 
 > 状态日期：2026-08-30
-> 当前开发分支：`openclaw-final-integration`；本文件随 M11 正式上传准入提交承载。
-> 当前工程阶段：静态审计比赛版本保持冻结；OpenClaw 已支持 ZIP/本地文件夹正式上传、扫描后安装、同名确认更新与事务恢复。配置型 MCP 准入、五个管理页面和 Windows 一键安装器已在当前主机通过。第二台洁净 Windows/真实 VM 验收、Falco/eBPF 旁证和生产控制面继续延期且不阻断比赛交付。
+> 当前开发分支：`openclaw-final-integration`；本文件随 M12 统一安全中心正式发布提交承载。
+> 当前工程阶段：静态审计比赛版本保持冻结；OpenClaw 左侧只保留一个“Aegis 安全中心”，默认总览并内含准入、报告、审计、规则和 MCP 五个功能标签。ZIP/文件夹正式上传、扫描后安装、同名事务更新和 Windows 一键安装器已在当前主机通过。第二台洁净 Windows/真实 VM 验收、Falco/eBPF 旁证和生产控制面继续延期且不阻断比赛交付。
 > 状态优先级：本文件高于 README 中的摘要和全部日期化阶段报告；发生冲突时以本文件及对应冻结证据为准。
 
 ## 1. 一句话结论
 
-Aegis Chain 已作为 OpenClaw `2026.7.1-2` 的后台安全引擎接入：准入页可上传 ZIP 或本地文件夹，执行静态审计与 Docker 隔离试运行，只有 `ALLOW` 才能安装；Skill/Plugin 原生安装仍自动准入，配置型 MCP 提交前准入。五个侧边栏管理页面、规则即时生效、PDF 报告、哈希链审计和 Windows 一键安装/修复均在当前主机真实通过。比赛现场演示版本 **READY**；第二台洁净 Windows 证据、生产身份权限与外部审计仍未完成，生产发布保持 **NO-GO**。
+Aegis Chain 已作为 OpenClaw `2026.7.1-2` 的后台安全引擎接入：唯一“Aegis 安全中心”默认展示真实总览，并提供准入、报告、审计、规则和 MCP 五个内部标签。准入可上传 ZIP 或本地文件夹，执行静态审计与 Docker 隔离试运行，只有 `ALLOW` 才能安装；Skill/Plugin 原生安装仍自动准入，配置型 MCP 提交前准入。比赛现场演示版本 **READY**；第二台洁净 Windows 证据、生产身份权限与外部审计仍未完成，生产发布保持 **NO-GO**。
 
 ## 2. 当前可复核能力
 
@@ -17,18 +17,19 @@ Aegis Chain 已作为 OpenClaw `2026.7.1-2` 的后台安全引擎接入：准入
 | MCP 静态审计 | 可用；Tool/Prompt/Resource 与可选依赖清单统一审查 | 当前上传协议是离线 JSON，不连接未知远端服务 |
 | Python 依赖审计 | 可用；`pip-audit` + 完整性规则 + CycloneDX 导出 | 当前 SBOM 主要覆盖任务声明依赖，不代表项目自身发布 SBOM 已完成 |
 | 准入决策 | `ALLOW / REVIEW / BLOCK / UNKNOWN`；扫描异常失败闭锁 | 默认静态模式不变；显式 `required` 动态模式只允许维持或提高风险 |
-| OpenClaw 最终集成 | ZIP/本地文件夹 Skill 正式上传；扫描资格绑定 SHA-256；`ALLOW` 后安装；同名 Skill 页面内确认并事务替换；Skill/目录 Plugin 自动准入；配置型 MCP 事务提交复核；五个管理页、PDF、规则即时生效、58条审计链通过 | 稳定版不支持 warn；单文件/归档 Plugin 未专项验收；审计尚未外送 SIEM/WORM |
+| OpenClaw 最终集成 | 单一“Aegis 安全中心”入口；默认真实总览与五功能标签；ZIP/文件夹 Skill 正式上传；扫描资格绑定 SHA-256；`ALLOW` 后安装；同名确认事务替换；Skill/目录 Plugin 自动准入；配置型 MCP 事务提交复核；PDF、规则即时生效、61条审计链通过 | 稳定版不支持 warn；单文件/归档 Plugin 未专项验收；审计尚未外送 SIEM/WORM |
 | 受控动态机制 | 可用；固定良性 fixture、MCP 协议/Marker/遥测和 Skill 运行时闭包 | 不接受用户代码、路径、命令，不执行第三方数据集样本 |
 | Skill 安装前动态沙箱 | 默认 Python 后端已通过 20 样本、8 行为族、3 轮真实 Docker 回归；正式上传的安全/恶意 Skill 分别完成 ALLOW 安装与静态 BLOCK 零执行 | 正式上传验收仅覆盖选定安全与恶意样本；Falco/eBPF 未完成，不宣称沙箱可消除任意未知代码风险 |
 | 动态任务控制 | 单主机 SQLite 持久队列、全局单执行、FIFO、去重冷却、429 和重启恢复 | 不等价于多实例消息队列或高可用 worker |
 | 项目自身供应链 | 共享运行时/前端精确锁定，自身 SBOM、许可、漏洞、Secret 与仓库卫生门可复现 | 漏洞结论是 2026-08-25 的时间截面 |
-| Windows 一键部署 | 当前主机安装/修复全流程通过：固定版本、配置备份/回滚、策略自举、插件安装、Gateway 重启、五页探活和24项动态预检0警告 | 尚未取得第二台洁净 Windows 或真实 VM 的完整通过证据；首次准备扫描运行时需要联网且耗时较长 |
+| Windows 一键部署 | 当前主机安装/修复全流程通过：固定版本、配置备份/回滚、策略自举、插件安装、Gateway 重启、统一安全中心六视图探活和24项动态预检0警告 | 尚未取得第二台洁净 Windows 或真实 VM 的完整通过证据；首次准备扫描运行时需要联网且耗时较长 |
 
 ## 3. 最新冻结验证
 
 - M11 正式上传准入：ZIP 安全 Skill 扫描/安装、文件夹安全 Skill 扫描/同名确认更新、恶意文件夹静态阻断均由真实 Edge 操作 OpenClaw 页面通过；恶意样本动态执行 0、安装按钮禁用。
-- 当前真实审计：序号52–53为文件夹安全扫描/安装，54–55为 ZIP 安全扫描/安装，56–57为文件夹同名确认更新，58为恶意文件夹 BLOCK；58条 SHA-256 审计链有效。
-- 当前回归：后端 `466 passed, 1 skipped`，OpenClaw 上传边界 Node 测试 `10 passed`，前端 `10 passed`，前端生产构建通过。
+- M12 统一安全中心：插件只注册一个“Aegis 安全中心”侧边栏描述符；默认总览与五功能同层导航真实 Edge 验收通过，控制台错误 0；规则页原生 reset 方法遮蔽缺陷已修复。
+- 当前真实审计：M11 序号52–58证据保持；M12 安全 Skill 扫描/同名更新为59–60，恶意文件夹 BLOCK 为61；61条 SHA-256 审计链有效。
+- 当前回归：后端 `466 passed, 1 skipped`，OpenClaw 安全中心与上传边界 Node 测试 `14 passed`，前端 `10 passed`，前端生产构建通过。
 - 最终 PDF：`output/pdf/Aegis-OpenClaw-Final-Acceptance.pdf`，序号39，A4单页，90,040字节，渲染检查通过。
 - Docker 4.86.0 Windows AF_UNIX 遗留故障已按可恢复方式修复；Engine 29.7.2/API 1.55 和固定镜像摘要通过，恢复逻辑已纳入一键安装器。
 
@@ -56,6 +57,7 @@ Aegis Chain 已作为 OpenClaw `2026.7.1-2` 的后台安全引擎接入：准入
 - M7 OpenClaw 动态 E2E：v1 因隔离 profile 缺少 Docker context 失败并保留证据；v2 用单一环境修复后 3/3 通过。安全 Skill 真实安装，静态 ALLOW 的 Shell Skill 被 `AEGIS_DYNAMIC_SHELL_SPAWN` 阻断，配置异常失败关闭；审计链有效，输入变化、阻断目录残留、用户默认 workspace 污染和容器残留均为 0。证据：`demo_web/artifacts/experiment/2026-08-27-openclaw-skill-dynamic-e2e-v2/`。
 - M9 OpenClaw Web 控制台准入：通过官方插件 Tab 与 Gateway HTTP Route 增加“Aegis 准入”页；固定 `case_00906` 与 `case_01084`，分别实现一键真实安装放行和安装前阻断。页面底部实时展示原始子进程日志、6 阶段进度和 8 项证据，不是前端模拟动画。正常样本 `ALLOW + Docker 动态清洁 + 安装成功`，恶意样本 `BLOCK + 动态执行 0 次 + 无安装目录`，两者审计链均有效。设计与验收：`demo_web/docs/M9_OPENCLAW_CONTROL_UI_ADMISSION_DESIGN.md`。
 - M11 已取代 M9 固定演示页：准入页接受真实 ZIP/文件夹上传，实施 50 MB ZIP、200 MB 解压/文件夹、5,000 文件上限和安全解包；扫描后资格绑定内容哈希，安装时复核并由 OpenClaw 原生策略二次扫描。同名更新使用页面内明确确认与失败恢复。正式设计与验收：`demo_web/docs/M11_OPENCLAW_FORMAL_SKILL_UPLOAD_ADMISSION.md`。
+- M12 将五个 OpenClaw 侧边栏入口合并为唯一“Aegis 安全中心”，默认真实总览，保留五功能同层导航和旧 HTTP 路由跳转，且未放宽 CSP。正式发布说明：`demo_web/docs/M12_OPENCLAW_UNIFIED_SECURITY_CENTER_RELEASE.md`。
 
 ## 4. M5 完成度
 

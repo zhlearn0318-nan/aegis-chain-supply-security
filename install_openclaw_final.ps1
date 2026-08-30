@@ -453,7 +453,7 @@ function Configure-OpenClaw {
     } finally {
         if (Test-Path -LiteralPath $batchPath) { Remove-Item -LiteralPath $batchPath -Force }
     }
-    Write-Pass "Skill and Plugin installation admission is enabled; MCP admission is exposed through the Aegis MCP page"
+    Write-Pass "Skill and Plugin installation admission is enabled; MCP admission is exposed through the Aegis Security Center"
 }
 
 function Install-AegisPlugin {
@@ -481,23 +481,24 @@ function Start-AndVerifyGateway {
     $ready = $false
     for ($attempt = 1; $attempt -le 24; $attempt++) {
         try {
-            $response = Invoke-WebRequest -UseBasicParsing -Uri "$base/plugins/aegis-admission/panel" -TimeoutSec 5
+            $response = Invoke-WebRequest -UseBasicParsing -Uri "$base/plugins/aegis-security-center/panel" -TimeoutSec 5
             if ([int]$response.StatusCode -eq 200) { $ready = $true; break }
         } catch { }
         Start-Sleep -Seconds 5
     }
     if (-not $ready) { throw "OpenClaw gateway or Aegis plugin did not become ready within 120 seconds." }
     foreach ($route in @(
-        "/plugins/aegis-admission/panel",
-        "/plugins/aegis-admin/reports",
-        "/plugins/aegis-admin/audit",
-        "/plugins/aegis-admin/rules",
-        "/plugins/aegis-admin/mcp"
+        "/plugins/aegis-security-center/panel",
+        "/plugins/aegis-admission/panel?embed=1",
+        "/plugins/aegis-admin/reports?embed=1",
+        "/plugins/aegis-admin/audit?embed=1",
+        "/plugins/aegis-admin/rules?embed=1",
+        "/plugins/aegis-admin/mcp?embed=1"
     )) {
         $response = Invoke-WebRequest -UseBasicParsing -Uri ($base + $route) -TimeoutSec 15
         if ([int]$response.StatusCode -ne 200) { throw "Control UI route failed: $route" }
     }
-    Write-Pass "All five Aegis Control UI pages returned HTTP 200"
+    Write-Pass "The unified Aegis Security Center and all five feature views returned HTTP 200"
 }
 
 function Invoke-FinalPreflight {
@@ -518,14 +519,15 @@ function Write-InstallationReceipt {
         gateway_url = "http://127.0.0.1:$GatewayPort/"
         plugin_id = "aegis-admission-ui"
         install_policy_targets = @("skill", "plugin")
-        mcp_admission = "Aegis MCP page; official openclaw mcp set/show commit and verification"
+        mcp_admission = "Aegis Security Center MCP tab; official openclaw mcp set/show commit and verification"
         dynamic_skill_policy = "required"
         audit_database = $AuditDb
         custom_rule_registry = $CustomRules
         docker_cli = $Docker
         docker_repair_backups = @($DockerRepairBackups)
         config_backup = $ConfigBackup
-        control_ui_routes_verified = 5
+        control_ui_sidebar_entries = 1
+        control_ui_routes_verified = 6
         status = "ready"
     }
     $receiptPath = Join-Path $DataRoot "installation_receipt.json"

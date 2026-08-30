@@ -14,9 +14,9 @@ Aegis Chain 是 XA-202620 赛题“供应链安全”方向的本地工程原型
 Install_Aegis_OpenClaw_Final.cmd
 ```
 
-脚本会固定 OpenClaw `2026.7.1-2`，重建锁定扫描运行时，准备 Docker 隔离后端，备份并写入安装策略，安装 Aegis 插件，重启 Gateway，并验证五个 OpenClaw 侧边栏页面与完整动态预检。失败时窗口不会闪退，且会恢复原 OpenClaw 配置。
+脚本会固定 OpenClaw `2026.7.1-2`，重建锁定扫描运行时，准备 Docker 隔离后端，备份并写入安装策略，安装 Aegis 插件，重启 Gateway，并验证统一“Aegis 安全中心”的总览与五个功能视图以及完整动态预检。失败时窗口不会闪退，且会恢复原 OpenClaw 配置。
 
-最终集成与部署见 [M10 OpenClaw 最终集成与 Windows 一键部署说明](demo_web/docs/M10_OPENCLAW_FINAL_INTEGRATION_AND_WINDOWS_DEPLOYMENT.md)；正式 Skill 上传准入见 [M11 OpenClaw 正式 Skill 上传准入](demo_web/docs/M11_OPENCLAW_FORMAL_SKILL_UPLOAD_ADMISSION.md)。
+最终集成与部署见 [M10 OpenClaw 最终集成与 Windows 一键部署说明](demo_web/docs/M10_OPENCLAW_FINAL_INTEGRATION_AND_WINDOWS_DEPLOYMENT.md)；正式 Skill 上传准入见 [M11 OpenClaw 正式 Skill 上传准入](demo_web/docs/M11_OPENCLAW_FORMAL_SKILL_UPLOAD_ADMISSION.md)；最终单入口界面见 [M12 OpenClaw 统一安全中心正式发布说明](demo_web/docs/M12_OPENCLAW_UNIFIED_SECURITY_CENTER_RELEASE.md)。
 
 ## 当前能力
 
@@ -29,7 +29,7 @@ Install_Aegis_OpenClaw_Final.cmd
 - 管理员动态验证：固定 3 份自建 fixture，验证 7 类预期机制，不接受用户代码、路径或命令；
 - 受控 MCP 动态闭环：MCP 2025-06-18 stdio 真实调用、政企 Marker 源到汇证据、Linux inotify/procfs 独立遥测和 Docker 失败闭锁。
 - 动态任务控制：SQLite 持久 FIFO、全局单执行、活动/冷却去重、有界等待队列、429 和重启恢复。
-- OpenClaw 最终集成：准入页支持 ZIP/本地文件夹真实上传、扫描后安装和同名确认更新；Skill/Plugin 自动安装准入，MCP 配置提交前准入，以及准入、报告、审计、规则、MCP 五个侧边栏页面。
+- OpenClaw 最终集成：左侧只有一个“Aegis 安全中心”，默认真实总览并内含准入、报告、审计、规则、MCP 五个标签；准入支持 ZIP/本地文件夹真实上传、扫描后安装和同名确认更新。
 
 最近冻结结果：
 

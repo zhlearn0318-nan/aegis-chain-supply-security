@@ -14,8 +14,10 @@ import {
   renderRulesPage,
 } from "./admin_pages.js";
 import { renderAdmissionPage } from "./admission_page.js";
+import { renderSecurityCenterPage } from "./security_center_page.js";
 import { SESSION_TTL_MS, UploadError, UploadSessionStore } from "./upload_sessions.js";
 
+const CENTER_PATH = "/plugins/aegis-security-center/panel";
 const PANEL_PATH = "/plugins/aegis-admission/panel";
 const API_PATH = "/plugins/aegis-admission/api/run";
 const REPORTS_PATH = "/plugins/aegis-admin/reports";
@@ -73,6 +75,22 @@ function sendHtml(res, html) {
   res.setHeader("Content-Security-Policy", "default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'self'");
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.end(html);
+}
+
+function isEmbeddedRequest(req) {
+  try {
+    return new URL(String(req.url || ""), "http://127.0.0.1").searchParams.get("embed") === "1";
+  } catch {
+    return false;
+  }
+}
+
+function sendRedirect(res, tab) {
+  res.statusCode = 302;
+  res.setHeader("Location", `${CENTER_PATH}?tab=${encodeURIComponent(tab)}`);
+  res.setHeader("Cache-Control", "no-store");
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.end();
 }
 
 function escapeHtml(value) {
@@ -491,22 +509,16 @@ export default definePluginEntry({
     const uploadsRoot = path.join(projectRoot, "demo_web", "data", "openclaw-final", "uploads");
     const uploadStore = new UploadSessionStore(uploadsRoot);
     api.session.controls.registerControlUiDescriptor({
-      surface: "tab", id: "admission", label: "Aegis 准入", description: "Skill 安装前安全审计", icon: "shield", group: "control", order: 35, path: PANEL_PATH,
+      surface: "tab", id: "admission", label: "Aegis 安全中心", description: "供应链安全总览与统一管理", icon: "shield", group: "control", order: 35, path: CENTER_PATH,
     });
-    api.session.controls.registerControlUiDescriptor({
-      surface: "tab", id: "reports", label: "Aegis 报告", description: "查看并导出安装前安全报告", icon: "file-text", group: "control", order: 36, path: REPORTS_PATH,
-    });
-    api.session.controls.registerControlUiDescriptor({
-      surface: "tab", id: "audit", label: "Aegis 审计", description: "核验安装和规则变更哈希链", icon: "history", group: "control", order: 37, path: AUDIT_PATH,
-    });
-    api.session.controls.registerControlUiDescriptor({
-      surface: "tab", id: "rules", label: "Aegis 规则", description: "管理结构化规则与 YARA", icon: "sliders", group: "control", order: 38, path: RULES_PATH,
-    });
-    api.session.controls.registerControlUiDescriptor({
-      surface: "tab", id: "mcp-admission", label: "Aegis MCP", description: "MCP 配置提交前扫描", icon: "server", group: "control", order: 39, path: MCP_PATH,
-    });
+    api.registerHttpRoute({ path: CENTER_PATH, auth: "plugin", match: "exact", handler: async (req, res) => {
+      if ((req.method ?? "GET").toUpperCase() !== "GET") { res.statusCode = 405; res.end("Method Not Allowed"); return true; }
+      try { sendHtml(res, renderSecurityCenterPage(issueToken())); } catch (error) { sendJson(res, 500, { error: String(error) }); }
+      return true;
+    }});
     api.registerHttpRoute({ path: PANEL_PATH, auth: "plugin", match: "exact", handler: async (req, res) => {
       if ((req.method ?? "GET").toUpperCase() !== "GET") { res.statusCode = 405; res.end("Method Not Allowed"); return true; }
+      if (!isEmbeddedRequest(req)) { sendRedirect(res, "admission"); return true; }
       try { sendHtml(res, renderAdmissionPage(issueToken())); } catch (error) { sendJson(res, 500, { error: String(error) }); }
       return true;
     }});
@@ -611,14 +623,15 @@ export default definePluginEntry({
       }
       return true;
     }});
-    for (const [routePath, renderer] of [
-      [REPORTS_PATH, renderReportsPage],
-      [AUDIT_PATH, renderAuditPage],
-      [RULES_PATH, renderRulesPage],
-      [MCP_PATH, renderMcpPage],
+    for (const [routePath, tab, renderer] of [
+      [REPORTS_PATH, "reports", renderReportsPage],
+      [AUDIT_PATH, "audit", renderAuditPage],
+      [RULES_PATH, "rules", renderRulesPage],
+      [MCP_PATH, "mcp", renderMcpPage],
     ]) {
       api.registerHttpRoute({ path: routePath, auth: "plugin", match: "exact", handler: async (req, res) => {
         if ((req.method ?? "GET").toUpperCase() !== "GET") { res.statusCode = 405; res.end("Method Not Allowed"); return true; }
+        if (!isEmbeddedRequest(req)) { sendRedirect(res, tab); return true; }
         try { sendHtml(res, renderer(issueToken())); } catch (error) { sendJson(res, 500, { error: String(error) }); }
         return true;
       }});
