@@ -1,13 +1,13 @@
 # Aegis Chain 当前状态（唯一状态真值）
 
-> 状态日期：2026-08-30
-> 当前开发分支：`openclaw-final-integration`；本文件随 M12 统一安全中心正式发布提交承载。
+> 状态日期：2026-08-31
+> 当前发布基线：`main` / `v0.1`；完整发布范围见 [`RELEASE_V0.1.md`](RELEASE_V0.1.md)。
 > 当前工程阶段：静态审计比赛版本保持冻结；OpenClaw 左侧只保留一个“Aegis 安全中心”，默认总览并内含准入、报告、审计、规则和 MCP 五个功能标签。ZIP/文件夹正式上传、扫描后安装、同名事务更新和 Windows 一键安装器已在当前主机通过。第二台洁净 Windows/真实 VM 验收、Falco/eBPF 旁证和生产控制面继续延期且不阻断比赛交付。
 > 状态优先级：本文件高于 README 中的摘要和全部日期化阶段报告；发生冲突时以本文件及对应冻结证据为准。
 
 ## 1. 一句话结论
 
-Aegis Chain 已作为 OpenClaw `2026.7.1-2` 的后台安全引擎接入：唯一“Aegis 安全中心”默认展示真实总览，并提供准入、报告、审计、规则和 MCP 五个内部标签。准入可上传 ZIP 或本地文件夹，执行静态审计与 Docker 隔离试运行，只有 `ALLOW` 才能安装；Skill/Plugin 原生安装仍自动准入，配置型 MCP 提交前准入。比赛现场演示版本 **READY**；第二台洁净 Windows 证据、生产身份权限与外部审计仍未完成，生产发布保持 **NO-GO**。
+Aegis Chain 已作为 OpenClaw `2026.7.1-2` 的后台安全引擎接入：唯一“Aegis 安全中心”默认展示真实总览，并提供准入、报告、审计、规则和 MCP 五个内部标签。准入可上传 ZIP 或本地文件夹，执行静态审计与 Docker 隔离试运行，只有 `ALLOW` 才能安装；Skill/Plugin 原生安装仍自动准入，配置型 MCP 提交前准入。竞赛正式版 `v0.1` 的现场演示与材料提交状态 **READY**；第二台洁净 Windows 证据、生产身份权限与外部审计仍未完成，生产发布保持 **NO-GO**。
 
 ## 2. 当前可复核能力
 
@@ -27,8 +27,8 @@ Aegis Chain 已作为 OpenClaw `2026.7.1-2` 的后台安全引擎接入：唯一
 ## 3. 最新冻结验证
 
 - M11 正式上传准入：ZIP 安全 Skill 扫描/安装、文件夹安全 Skill 扫描/同名确认更新、恶意文件夹静态阻断均由真实 Edge 操作 OpenClaw 页面通过；恶意样本动态执行 0、安装按钮禁用。
-- M12 统一安全中心：插件只注册一个“Aegis 安全中心”侧边栏描述符；默认总览与五功能同层导航真实 Edge 验收通过，控制台错误 0；规则页原生 reset 方法遮蔽缺陷已修复。
-- 当前真实审计：M11 序号52–58证据保持；M12 安全 Skill 扫描/同名更新为59–60，恶意文件夹 BLOCK 为61；61条 SHA-256 审计链有效。
+- M12/v0.1 统一安全中心：插件只注册一个“Aegis 安全中心”侧边栏描述符；默认总览与五功能同层导航真实 Edge 验收通过，控制台错误 0；v0.1 采用适配 2K 的浅色政企控制台，原始执行终端保持深色并展示真实日志。
+- 当前真实审计：M11 序号52–58证据保持；后续安全 Skill、同名更新与恶意阻断记录累计至65条；65条 SHA-256 审计链有效，允许35条、阻断30条。
 - 当前回归：后端 `466 passed, 1 skipped`，OpenClaw 安全中心与上传边界 Node 测试 `14 passed`，前端 `10 passed`，前端生产构建通过。
 - 最终 PDF：`output/pdf/Aegis-OpenClaw-Final-Acceptance.pdf`，序号39，A4单页，90,040字节，渲染检查通过。
 - Docker 4.86.0 Windows AF_UNIX 遗留故障已按可恢复方式修复；Engine 29.7.2/API 1.55 和固定镜像摘要通过，恢复逻辑已纳入一键安装器。
@@ -92,6 +92,7 @@ Aegis Chain 已作为 OpenClaw `2026.7.1-2` 的后台安全引擎接入：唯一
 1. `CURRENT_STATUS.md`：唯一当前状态、发布判断和下一工程节点。
 2. `QUICKSTART.md`、`SECURITY.md`、`demo_web/docs/API_V1_CONTRACT.md`：当前操作、安全和接口契约。
 3. `demo_web/docs/M5_ENGINEERING_EXECUTION_PLAN.md`、`demo_web/PLAN.md`、`demo_web/CHECKLIST.md`：当前执行细节。
-4. `M1`–`M4`、日期化报告、`REPRODUCTION_REPORT.md`、旧评委审查：历史时间截面，仅证明当时实验，不覆盖本文件。
+4. `RELEASE_V0.1.md`：当前正式版范围、安装入口、验证摘要和 GitHub Release 说明。
+5. `M1`–`M4`、日期化报告、`REPRODUCTION_REPORT.md`、旧评委审查：历史时间截面，仅证明当时实验，不覆盖本文件。
 
 每次里程碑提交必须同步本文件中的基线、测试数、完成度和下一项；若尚未同步，不得把新里程碑称为已冻结。

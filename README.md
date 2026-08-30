@@ -2,6 +2,8 @@
 
 > 当前状态、发布判断和下一工程节点以 [`CURRENT_STATUS.md`](CURRENT_STATUS.md) 为唯一真值；阶段报告中的旧测试数和“下一步”仅代表当时快照。
 
+> **正式版 v0.1（2026-08-31）**：当前比赛交付基线与发布范围见 [`RELEASE_V0.1.md`](RELEASE_V0.1.md)。
+
 Aegis Chain 是 XA-202620 赛题“供应链安全”方向的本地工程原型，面向通用政企智能体平台，对 Agent Skill、MCP 对象和 Python 依赖提供统一静态审查、证据归一化、准入策略和管理员可信样本动态验证。
 
 当前系统已接入 Cisco AI Skill Scanner、Cisco AI MCP Scanner 和 `pip-audit`，并实现自研 Aegis Static、Network/Filesystem/Command Context，以及只运行自建哈希锁定 fixture 的 Docker/MCP 动态机制验证。
@@ -16,7 +18,7 @@ Install_Aegis_OpenClaw_Final.cmd
 
 脚本会固定 OpenClaw `2026.7.1-2`，重建锁定扫描运行时，准备 Docker 隔离后端，备份并写入安装策略，安装 Aegis 插件，重启 Gateway，并验证统一“Aegis 安全中心”的总览与五个功能视图以及完整动态预检。失败时窗口不会闪退，且会恢复原 OpenClaw 配置。
 
-最终集成与部署见 [M10 OpenClaw 最终集成与 Windows 一键部署说明](demo_web/docs/M10_OPENCLAW_FINAL_INTEGRATION_AND_WINDOWS_DEPLOYMENT.md)；正式 Skill 上传准入见 [M11 OpenClaw 正式 Skill 上传准入](demo_web/docs/M11_OPENCLAW_FORMAL_SKILL_UPLOAD_ADMISSION.md)；最终单入口界面见 [M12 OpenClaw 统一安全中心正式发布说明](demo_web/docs/M12_OPENCLAW_UNIFIED_SECURITY_CENTER_RELEASE.md)。
+正式版范围见 [v0.1 发布说明](RELEASE_V0.1.md)；最终集成与部署见 [M10 OpenClaw 最终集成与 Windows 一键部署说明](demo_web/docs/M10_OPENCLAW_FINAL_INTEGRATION_AND_WINDOWS_DEPLOYMENT.md)；正式 Skill 上传准入见 [M11 OpenClaw 正式 Skill 上传准入](demo_web/docs/M11_OPENCLAW_FORMAL_SKILL_UPLOAD_ADMISSION.md)；最终单入口界面见 [M12 OpenClaw 统一安全中心正式发布说明](demo_web/docs/M12_OPENCLAW_UNIFIED_SECURITY_CENTER_RELEASE.md)。
 
 ## 当前能力
 
@@ -113,6 +115,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\run_tests.ps1"
 ## 关键文档
 
 - [当前状态（唯一真值）](CURRENT_STATUS.md)
+- [正式版 v0.1 发布说明](RELEASE_V0.1.md)
 - [系统开发与使用说明](demo_web/README.md)
 - [供应链模块对接与开发说明](demo_web/docs/Aegis_Chain_供应链安全模块对接与开发说明.md)
 - [API v1 对接契约](demo_web/docs/API_V1_CONTRACT.md)
@@ -137,4 +140,4 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\run_tests.ps1"
 
 ## 项目状态
 
-该仓库用于挑战杯“揭榜挂帅”赛道原型开发和队内协作，目前处于 M5 工程收敛阶段。P0-1 至 P0-4 已完成；P0-5 真实 Windows VM 验收程序已实现并通过本机烟雾，但尚未取得真实 VM 证据。生产发布仍为 NO-GO，完整差距见 `CURRENT_STATUS.md`。
+该仓库当前冻结为挑战杯“揭榜挂帅”赛道 **正式比赛版本 v0.1**，现场演示和材料提交状态为 READY。它仍是研究与竞赛原型，不等价于可直接接入真实政企生产网的商业安全产品；洁净 Windows VM、企业身份权限、外部审计、高可用和更强隔离仍未完成，生产发布保持 NO-GO。完整边界见 [`CURRENT_STATUS.md`](CURRENT_STATUS.md)。
