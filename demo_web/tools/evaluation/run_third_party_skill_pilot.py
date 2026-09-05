@@ -22,7 +22,12 @@ if str(DEMO_ROOT) not in sys.path:
     sys.path.insert(0, str(DEMO_ROOT))
 
 from backend.adapters import ProcessRunner, SkillScannerAdapter  # noqa: E402
-from backend.policy import evaluate_findings, load_policy, summarize  # noqa: E402
+from backend.policy import (  # noqa: E402
+    DEFAULT_POLICY_PATH,
+    evaluate_findings,
+    load_policy,
+    summarize,
+)
 from backend.skill_static_pipeline import run_skill_static_pipeline  # noqa: E402
 from tools.datasets.prepare_third_party_skill_pilot import tree_sha256  # noqa: E402
 from tools.evaluation.run_skilltrustbench import sanitize_findings  # noqa: E402
@@ -336,7 +341,7 @@ def run(output_root: Path, workers: int, timeout_seconds: int) -> dict[str, Any]
         "policy": {
             "id": policy.policy_id,
             "version": policy.version,
-            "sha256": sha256_file(DEMO_ROOT / "config" / "admission_policy.yaml"),
+            "sha256": sha256_file(DEFAULT_POLICY_PATH),
         },
         "metric_contract": {
             "sha256": sha256_file(BASELINE_ROOT / "json" / "metric_contract.json"),

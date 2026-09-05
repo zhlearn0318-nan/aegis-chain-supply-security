@@ -26,7 +26,12 @@ if str(DEMO_ROOT) not in sys.path:
 
 from backend.adapters import ProcessRunner, SkillScannerAdapter  # noqa: E402
 from backend.normalizers import normalize_skill  # noqa: E402
-from backend.policy import evaluate_findings, load_policy, summarize  # noqa: E402
+from backend.policy import (  # noqa: E402
+    DEFAULT_POLICY_PATH,
+    evaluate_findings,
+    load_policy,
+    summarize,
+)
 from tools.datasets.prepare_skilltrustbench import tree_sha256  # noqa: E402
 
 
@@ -671,7 +676,7 @@ def run(
     version = scanner_version(runner, scanner)
     adapter = SkillScannerAdapter(scanner=scanner, runner=runner)
     policy = load_policy()
-    policy_path = DEMO_ROOT / "config" / "admission_policy.yaml"
+    policy_path = DEFAULT_POLICY_PATH
     metric_contract_path = context["metric_contract_path"]
     selected = context["selected"]
     run_id = {

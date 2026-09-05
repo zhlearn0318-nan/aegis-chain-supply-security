@@ -3,6 +3,8 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+from .analyzers.skill_semantic import SemanticProvider
+
 from .adapters.skill import SkillScannerAdapter
 from .analyzers import (
     analyze_command_context,
@@ -12,6 +14,8 @@ from .analyzers import (
     analyze_network_context,
     analyze_sensitive_flows,
     analyze_skill_tree,
+    analyze_skill_semantics,
+    analyze_skill_capability_alignment,
     analyze_static_coverage,
     analyze_untrusted_exec_flows,
 )
@@ -21,6 +25,8 @@ from .normalizers import normalize_skill
 def run_skill_static_pipeline(
     skill_path: Path,
     adapter: SkillScannerAdapter,
+    *,
+    semantic_provider: SemanticProvider | None = None,
 ) -> dict[str, Any]:
     """Run the same Cisco and Aegis Skill pipeline used by the admission API."""
     execution = adapter.scan(skill_path)
@@ -38,6 +44,10 @@ def run_skill_static_pipeline(
         skill_path, cisco_findings
     )
     custom_findings, custom_analyzers = analyze_custom_rules(skill_path, "skill")
+    semantic_findings, semantic_analyzers = analyze_skill_semantics(
+        skill_path, provider=semantic_provider
+    )
+    alignment_findings, alignment_analyzers = analyze_skill_capability_alignment(skill_path)
     findings = (
         cisco_findings
         + aegis_findings
@@ -49,6 +59,8 @@ def run_skill_static_pipeline(
         + filesystem_findings
         + command_findings
         + custom_findings
+        + semantic_findings
+        + alignment_findings
     )
     analyzers = sorted(set(
         cisco_analyzers
@@ -61,6 +73,8 @@ def run_skill_static_pipeline(
         + filesystem_analyzers
         + command_analyzers
         + custom_analyzers
+        + semantic_analyzers
+        + alignment_analyzers
     ))
     return {
         "findings": findings,

@@ -8,6 +8,7 @@ from backend.dynamic_audit.skill_sandbox import (
     SkillSandboxRejected,
     classify_dynamic_events,
     discover_python_entrypoints,
+    discover_skill_entrypoints,
     evaluate_dynamic_result,
     fuse_static_dynamic_decision,
 )
@@ -66,6 +67,24 @@ def test_rejects_multiple_root_python_entrypoints(tmp_path: Path) -> None:
     )
     with pytest.raises(SkillSandboxRejected, match="ENTRYPOINT_AMBIGUOUS"):
         discover_python_entrypoints(skill)
+
+
+def test_discovers_node_and_shell_entrypoints(tmp_path: Path) -> None:
+    skill = make_skill(
+        tmp_path / "multi-runtime",
+        "Run `scripts/check.mjs`, then `scripts/verify.sh`.\n",
+        {"scripts/check.mjs": "console.log('ok')\n", "scripts/verify.sh": "echo ok\n"},
+    )
+    plan = discover_skill_entrypoints(skill)
+    assert plan.entrypoints == ("scripts/check.mjs", "scripts/verify.sh")
+    assert plan.runtimes == ("node", "shell")
+
+
+def test_pure_instruction_skill_has_explicit_route(tmp_path: Path) -> None:
+    skill = make_skill(tmp_path / "instruction", "Summarize the supplied document.\n", {})
+    plan = discover_skill_entrypoints(skill)
+    assert plan.entrypoints == ()
+    assert plan.discovery == "pure_instruction"
 
 
 def test_rejects_ambiguous_and_linked_skill(tmp_path: Path) -> None:

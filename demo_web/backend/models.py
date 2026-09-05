@@ -6,7 +6,7 @@ from typing import Any, Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 
-SCHEMA_VERSION = "1.2"
+SCHEMA_VERSION = "1.3"
 
 
 class Severity(str, Enum):
@@ -23,6 +23,37 @@ class Decision(str, Enum):
     ALLOW = "ALLOW"
     REVIEW = "REVIEW"
     BLOCK = "BLOCK"
+    UNKNOWN = "UNKNOWN"
+
+
+class EvidenceConfidence(str, Enum):
+    POTENTIAL = "POTENTIAL"
+    CORROBORATED = "CORROBORATED"
+    CONFIRMED = "CONFIRMED"
+
+
+class FindingReachability(str, Enum):
+    REACHABLE = "REACHABLE"
+    REFERENCED = "REFERENCED"
+    EXAMPLE = "EXAMPLE"
+    TEST = "TEST"
+    UNKNOWN = "UNKNOWN"
+
+
+class BehaviorAlignment(str, Enum):
+    DECLARED = "DECLARED"
+    UNDECLARED = "UNDECLARED"
+    CONTRADICTORY = "CONTRADICTORY"
+    UNKNOWN = "UNKNOWN"
+
+
+class EvidenceSource(str, Enum):
+    CISCO = "CISCO"
+    AEGIS_STATIC = "AEGIS_STATIC"
+    AEGIS_SEMANTIC = "AEGIS_SEMANTIC"
+    AEGIS_DYNAMIC = "AEGIS_DYNAMIC"
+    CUSTOM = "CUSTOM"
+    DEPENDENCY = "DEPENDENCY"
     UNKNOWN = "UNKNOWN"
 
 
@@ -73,6 +104,10 @@ class Finding(BaseModel):
     description: str = ""
     remediation: str = ""
     rule_id: str | None = None
+    evidence_confidence: EvidenceConfidence = EvidenceConfidence.POTENTIAL
+    reachability: FindingReachability = FindingReachability.UNKNOWN
+    behavior_alignment: BehaviorAlignment = BehaviorAlignment.UNKNOWN
+    evidence_source: EvidenceSource = EvidenceSource.UNKNOWN
 
 
 class ScanSummary(BaseModel):

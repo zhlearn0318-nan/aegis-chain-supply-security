@@ -2,9 +2,11 @@
 
 > 项目当前状态以仓库根目录 [`CURRENT_STATUS.md`](../CURRENT_STATUS.md) 为唯一真值。本文件中的阶段细节若与其冲突，以该状态文件为准。
 
+> 队友首次克隆、功能分支、模块入口、插件重载和提交前检查见 [`../CONTRIBUTING.md`](../CONTRIBUTING.md)。
+
 本项目是 XA-202620 赛题“供应链安全”模块的本机原型。网页会真实调用已经复现的 Cisco Skill Scanner、MCP Scanner 和依赖漏洞审计链路，不使用伪造扫描结果。
 
-当前已完成 M1.3 的可配置准入策略、`/api/v1` 和前端 v1 适配，并完成 M2 的 SkillTrustBench v1.0 全量 5,520 条评测。M3 静态审计已在 600 条密封工程回归上完成一次性评估并冻结，结论为 `supported_with_tradeoff`。M4 已实现受控动态证据，M5 P0-1 至 P0-4 已完成。M10 已把系统接入 OpenClaw `2026.7.1-2`；M11 完成真实上传准入；M12 将五个侧边栏入口合并为唯一“Aegis 安全中心”，默认总览并保留五功能标签。后端 `466 passed, 1 skipped`，生产判断保持 `NO-GO`。动态部分不宣称可消除任意未知第三方代码风险。
+当前已完成 M1.3 的可配置准入策略、`/api/v1`、SkillTrustBench v1.0 全量 5,520 条评测与 OpenClaw `2026.7.1-2` 正式准入集成。论文驱动的 P0 已增加语义操纵、声明—实现一致性、本地 Qwen 复核与 OpenClaw 控制面规则；P1 已实现纯指令、Python、Node.js、Shell 路由和三轮 Docker 隔离试运行。真实动态验收与 OpenClaw 端到端均为 6/6；MaliciousSkillBench 官方 Source-Disjoint test 全量1,384条三版本评测，以及 6 个官方真实脚本 + 30 个受控风险孪生的 108 次容器动态主实验均已完成；后端 `507 passed, 1 skipped`。比赛工程验收完成，但生产判断仍保持 `NO-GO`，不宣称可消除任意未知第三方代码风险。
 
 ## 一键启动
 
@@ -57,7 +59,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\start_demo.ps1" -NoBr
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\run_tests.ps1"
 ```
 
-测试不会执行恶意样本，主要验证门禁决策、Cisco 结果归一化、ZIP 路径安全和 MCP JSON 拆分。
+常规回归测试不会执行恶意第三方样本，主要验证门禁决策、Cisco 结果归一化、ZIP 路径安全、MCP JSON 拆分和动态执行合同。第三方动态主实验必须使用独立评测命令，只执行人工预筛的官方原始脚本和受控风险孪生。
 
 当前后端结果以本阶段冻结报告为准；可使用上述脚本一键复核。
 
@@ -71,6 +73,13 @@ pnpm test
 ## 现在从哪里开始
 
 - 当前状态与下一项：[`../CURRENT_STATUS.md`](../CURRENT_STATUS.md)
+- 团队协作与开发约定：[`../CONTRIBUTING.md`](../CONTRIBUTING.md)
+- 主线版本变化：[`../CHANGELOG.md`](../CHANGELOG.md)
+- P0/P1 实施与验收：[`docs/M10_OPENCLAW_SKILL_P0_P1_IMPLEMENTATION_ACCEPTANCE_REPORT.md`](docs/M10_OPENCLAW_SKILL_P0_P1_IMPLEMENTATION_ACCEPTANCE_REPORT.md)
+- P2 参赛增强优先级计划：[`docs/COMPETITION_P2_PRIORITY_PLAN.md`](docs/COMPETITION_P2_PRIORITY_PLAN.md)
+- P2 真实第三方动态实验合同：[`docs/M13_REAL_THIRD_PARTY_SKILL_DYNAMIC_EXPERIMENT_CONTRACT.md`](docs/M13_REAL_THIRD_PARTY_SKILL_DYNAMIC_EXPERIMENT_CONTRACT.md)
+- P2 真实第三方动态结果与差距：[`docs/M14_REAL_THIRD_PARTY_SKILL_DYNAMIC_RESULT_AND_GAP.md`](docs/M14_REAL_THIRD_PARTY_SKILL_DYNAMIC_RESULT_AND_GAP.md)
+- 论文对照与增强方案：[`docs/M9_MALICIOUS_AGENT_SKILLS_PAPER_RULE_ENHANCEMENT_PLAN.md`](docs/M9_MALICIOUS_AGENT_SKILLS_PAPER_RULE_ENHANCEMENT_PLAN.md)
 - P0-4 自身供应链报告：[`docs/M5_P0_4_PROJECT_SUPPLY_CHAIN_REPORT.md`](docs/M5_P0_4_PROJECT_SUPPLY_CHAIN_REPORT.md)
 - 开发排期：[`docs/DEVELOPMENT_PLAN.md`](docs/DEVELOPMENT_PLAN.md)
 - 每步做了什么：[`docs/WORK_LOG.md`](docs/WORK_LOG.md)
@@ -93,7 +102,7 @@ pnpm test
 - M3 Untrusted Execution Flow v1 报告：[`docs/M3_AEGIS_UNTRUSTED_EXEC_FLOW_V1_REPORT.md`](docs/M3_AEGIS_UNTRUSTED_EXEC_FLOW_V1_REPORT.md)
 - M3 静态审计开发完成与冻结报告：[`docs/M3_STATIC_AUDIT_COMPLETION_REPORT.md`](docs/M3_STATIC_AUDIT_COMPLETION_REPORT.md)
 - M3 静态审计加固 v1 报告：[`docs/M3_STATIC_AUDIT_HARDENING_V1_REPORT.md`](docs/M3_STATIC_AUDIT_HARDENING_V1_REPORT.md)
-- Aegis 97 条静态规则注册表：[`config/aegis_rule_registry.json`](config/aegis_rule_registry.json)
+- Aegis 138 条静态规则注册表：[`config/aegis_rule_registry.json`](config/aegis_rule_registry.json)
 - M3 最小安全动态 Fixture v1 报告：[`docs/M3_SAFE_DYNAMIC_FIXTURE_V1_REPORT.md`](docs/M3_SAFE_DYNAMIC_FIXTURE_V1_REPORT.md)
 - M3 管理员动态验证 API/页面报告：[`docs/M3_ADMIN_DYNAMIC_FIXTURE_API_UI_REPORT.md`](docs/M3_ADMIN_DYNAMIC_FIXTURE_API_UI_REPORT.md)
 - M4 动态审计调研与实施计划：[`docs/M4_DYNAMIC_AUDIT_RESEARCH_AND_IMPLEMENTATION_PLAN.md`](docs/M4_DYNAMIC_AUDIT_RESEARCH_AND_IMPLEMENTATION_PLAN.md)
@@ -259,7 +268,7 @@ Docker 后端固定使用本机已有 Python 3.12-slim 镜像的不可变 digest
 - `BLOCK`：发现高危或严重风险。
 - `UNKNOWN`：扫描器异常、超时、结果缺失或外部工具执行失败。
 
-默认判定阈值位于 `config/admission_policy.yaml`。新结果使用数据契约 `1.2`，新增可选 `sbom`；`policy_trace` 会记录实际使用的策略版本、命中规则、严重度、Finding ID 和可读原因。配置无效或尝试关闭失败闭锁时，系统不会降级为 `ALLOW`。
+生产判定策略位于 `config/admission_policy.skill-evidence-v1.yaml`，冻结的 `config/admission_policy.yaml` 仅用于复核历史1.0.0实验。新结果使用数据契约 `1.3`，Finding 新增证据可信度、可达性、声明一致性和证据来源字段；`policy_trace` 会记录实际使用的策略版本、命中规则、严重度、Finding ID 和可读原因。策略 `aegis-chain-local-default@1.1.0` 只将配置清单中缺少独立佐证的上下文相关 Cisco Skill HIGH 候选送入 REVIEW；完整执行链、Cisco CRITICAL、Aegis HIGH/CRITICAL、UNKNOWN、扫描失败和源码变化仍保持失败关闭。
 
 ## 数据策略
 

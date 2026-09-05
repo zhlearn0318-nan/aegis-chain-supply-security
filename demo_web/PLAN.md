@@ -419,3 +419,21 @@
 - 补充 Plugin 依赖漏洞证据缺失 REVIEW，避免“已锁定但未查漏洞”的依赖包被错误放行。
 - 后端完整 `396 passed`，125条 Aegis 静态规则注册完整。
 - 评委结论为比赛静态版本可冻结、生产继续 NO-GO；后续只做材料、演示稳定性和阻断性缺陷修复，不再调静态规则阈值。
+
+## 21. P2 权威数据集主实验（2026-08-31）
+
+- 使用 `ProtectSkills/MaliciousSkillBench` 固定提交的官方 Source-Disjoint test 全集 1,384 条，不再对 40 条试验集做同质复制扩容。
+- 数据落地、文件哈希、标签隔离、三版本批量可续跑评测和规则级误差分析均已完成；5 条主机内容防护拦截与 11 条严格结构失败按 UNKNOWN 失败关闭。
+- Cisco-only 恶意不放行召回 3.2%、良性允许率 94.9%；Cisco+P0 为 15.6% / 74.1%；该文本快照集上 P1 决策增量为0且容器执行为0。
+- 结果证明 P0 有增量但泛化与误报控制不足。该 test v1 永久冻结；下一节点是在官方 train/validation 上复现轻量文本基线、扩大模型复核路由并开展消融，不用 test 直接调参。
+- 正式结论：`docs/M12_MALICIOUSSKILLBENCH_1384_RESULT_AND_P2_ROUTE.md`。
+
+## 22. P2 真实第三方 Skill 动态配对主实验（2026-09-02）
+
+- 在运行前冻结 `config/third_party_dynamic_pairs_eval_v1.json` 和 `docs/M13_REAL_THIRD_PARTY_SKILL_DYNAMIC_EXPERIMENT_CONTRACT.md`，固定来源、入口、许可证、风险类型、三轮参数、阈值与停止条件。
+- 从 OpenAI 官方 Skills 固定提交选择 5 个原型、Anthropic 官方 Skills 固定提交选择 1 个原型；全部为 Apache-2.0。形成 6 个原始包和 30 个受控风险孪生，已知恶意第三方样本执行数固定为 0。
+- 动态运行器增加有界固定 argv：最多16项、单项512字符、总计4096字节，结果仅保存参数数量和哈希；Python、Node.js、Shell 三类运行器均纳入哈希锁和回归。
+- 正式主实验完成 36 包×3轮共108次真实容器脚本调用。预期动态规则召回30/30、风险非放行30/30、原始脚本动态 ALLOW 6/6；三轮证明、安全门、清理、输入树不变和基础设施成功率均100%，残留容器0。
+- 静态层在30个风险孪生上先检出26个；动态补齐4个静态 ALLOW 漏检，并将14个 REVIEW 提升为 BLOCK，36包中18个获得更严格的运行时决策。
+- 不改变现行单调融合策略。6个原始包综合结果仍为1 ALLOW、4 REVIEW、1 BLOCK，证明下一瓶颈是静态证据范围和误报治理，而不是动态层“全部误杀”。
+- 后端完整回归 `507 passed, 1 skipped`。正式结论：`docs/M14_REAL_THIRD_PARTY_SKILL_DYNAMIC_RESULT_AND_GAP.md`；原始证据：`artifacts/analysis/2026-08-31-third-party-skill-dynamic-pairs-main-v1/`。

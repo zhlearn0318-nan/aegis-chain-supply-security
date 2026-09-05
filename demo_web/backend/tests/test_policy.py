@@ -7,6 +7,7 @@ import pytest
 
 from backend import app as gateway
 from backend.models import ScanJob
+from backend.normalizers import normalize_skill
 from backend.policy import (
     PolicyConfigurationError,
     evaluate_findings,
@@ -35,7 +36,10 @@ def test_default_yaml_policy_is_valid_and_versioned() -> None:
     policy = load_policy()
 
     assert policy.policy_id == "aegis-chain-local-default"
-    assert policy.version == "1.0.0"
+    assert policy.version == "1.1.0"
+    assert "YARA_jailbreak_generic" in (
+        policy.decision.review_uncorroborated_cisco_skill_high_rules
+    )
     assert policy.decision.fail_closed is True
 
 
@@ -61,7 +65,7 @@ def test_default_policy_preserves_m12_decisions(
 
     assert result.decision.value == expected_decision
     assert result.trace.rule_id == expected_rule
-    assert result.trace.policy_version == "1.0.0"
+    assert result.trace.policy_version == "1.1.0"
     assert result.trace.fail_closed is True
 
 
@@ -78,6 +82,95 @@ def test_block_precedence_and_trace_are_auditable() -> None:
     assert result.trace.matched_severities == ["CRITICAL"]
     assert result.trace.matched_finding_ids == ["critical-1"]
     assert "CRITICAL" in result.trace.reason
+
+
+def _normalized_cisco_finding(severity: str = "HIGH") -> dict:
+    findings, _ = normalize_skill(
+        {
+            "skill_name": "candidate",
+            "findings": [
+                {
+                    "id": "YARA_jailbreak_generic",
+                    "rule_id": "YARA_jailbreak_generic",
+                    "severity": severity,
+                    "analyzer": "yara_analyzer",
+                    "file_path": "SKILL.md",
+                    "line_number": 7,
+                    "description": "raw vendor text is hashed",
+                }
+            ],
+        }
+    )
+    return findings[0]
+
+
+def test_uncorroborated_normalized_cisco_high_requires_review() -> None:
+    finding = _normalized_cisco_finding()
+
+    result = evaluate_findings([finding])
+
+    assert result.decision.value == "REVIEW"
+    assert result.trace.rule_id == "POLICY_REVIEW_UNCORROBORATED_CISCO_HIGH"
+    assert result.trace.matched_severities == ["HIGH"]
+    assert result.trace.matched_finding_ids == [finding["id"]]
+    assert finding["evidence_confidence"] == "POTENTIAL"
+    assert finding["reachability"] == "UNKNOWN"
+    assert finding["behavior_alignment"] == "UNKNOWN"
+    assert finding["evidence_source"] == "CISCO"
+
+
+def test_cisco_critical_and_malformed_vendor_high_remain_blocked() -> None:
+    critical = evaluate_findings([_normalized_cisco_finding("CRITICAL")])
+    malformed_high = evaluate_findings(
+        [
+            {
+                "id": "vendor-skill-untrusted",
+                "category": "vendor_skill_finding",
+                "severity": "HIGH",
+                "analyzer": "yara_analyzer",
+            }
+        ]
+    )
+
+    assert critical.decision.value == "BLOCK"
+    assert malformed_high.decision.value == "BLOCK"
+
+
+def test_non_candidate_cisco_high_remains_blocked() -> None:
+    finding = _normalized_cisco_finding()
+    finding["rule_id"] = "COMPOUND_EXTRACT_EXECUTE"
+
+    result = evaluate_findings([finding])
+
+    assert result.decision.value == "BLOCK"
+    assert result.trace.rule_id == "POLICY_BLOCK_SEVERITY"
+
+
+def test_independent_aegis_high_corroboration_keeps_block() -> None:
+    vendor = _normalized_cisco_finding()
+    aegis = {
+        "id": "aegis-chain",
+        "rule_id": "AEGIS_REMOTE_FETCH_PIPE_SHELL",
+        "category": "remote_execution",
+        "severity": "HIGH",
+        "analyzer": "aegis-static-v1",
+        "evidence_source": "AEGIS_STATIC",
+        "evidence_confidence": "CORROBORATED",
+    }
+
+    result = evaluate_findings([vendor, aegis])
+
+    assert result.decision.value == "BLOCK"
+    assert result.trace.matched_finding_ids == ["aegis-chain"]
+
+
+def test_unknown_still_fails_closed_with_cisco_high_candidate() -> None:
+    result = evaluate_findings(
+        [_normalized_cisco_finding(), {"id": "coverage-gap", "severity": "UNKNOWN"}]
+    )
+
+    assert result.decision.value == "UNKNOWN"
+    assert result.trace.rule_id == "POLICY_UNKNOWN_SEVERITY"
 
 
 def test_policy_rejects_overlapping_severity_sets(tmp_path: Path) -> None:
@@ -199,6 +292,6 @@ def test_markdown_export_contains_policy_identity_rule_and_reason(monkeypatch) -
     response = gateway.export_scan(job["id"], format="md")
     body = response.body.decode("utf-8")
 
-    assert "aegis-chain-local-default@1.0.0" in body
+    assert "aegis-chain-local-default@1.1.0" in body
     assert "POLICY_REVIEW_SEVERITY" in body
     assert "命中人工复核严重度" in body

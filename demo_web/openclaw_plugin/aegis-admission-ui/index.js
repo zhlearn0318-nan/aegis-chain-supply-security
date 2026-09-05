@@ -7,7 +7,6 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 import {
-  renderAuditPage,
   renderMcpPage,
   renderReportHtml,
   renderReportsPage,
@@ -46,6 +45,19 @@ function setSandboxCorsHeaders(res) {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-Aegis-Action, X-Aegis-Token, X-Aegis-Demo-Token, X-Aegis-Session, X-Aegis-Relative-Path");
   res.setHeader("Access-Control-Max-Age", "300");
   res.setHeader("Vary", "Origin");
+}
+
+function isAllowedBrowserOrigin(req) {
+  const origin = String(req.headers.origin ?? "");
+  if (!origin || origin === "null") return true;
+  try {
+    const parsed = new URL(origin);
+    const requestHost = String(req.headers.host ?? "").toLowerCase();
+    return ["http:", "https:"].includes(parsed.protocol)
+      && parsed.host.toLowerCase() === requestHost;
+  } catch {
+    return false;
+  }
 }
 
 function redactLogLine(value, projectRoot = "") {
@@ -334,8 +346,13 @@ async function runUploadedSkillOperation(projectRoot, request, onEvent = () => {
         PYTHONUTF8: "1",
         PYTHONIOENCODING: "utf-8",
         AEGIS_OPENCLAW_SCAN_TIMEOUT_SECONDS: "60",
-        AEGIS_OPENCLAW_REVIEW_MODE: "block",
+        // Preserve the three-level engine verdict for the UI. REVIEW remains
+        // ineligible for installation; only its presentation is no longer
+        // collapsed into BLOCK.
+        AEGIS_OPENCLAW_REVIEW_MODE: "warn",
         AEGIS_OPENCLAW_DYNAMIC_SKILL_POLICY: "required",
+        AEGIS_SEMANTIC_MODEL_MODE: "local",
+        AEGIS_EXTERNAL_LLM_OPT_IN: "0",
         AEGIS_CUSTOM_RULES_PATH: path.join(projectRoot, "demo_web", "data", "openclaw-final", "custom_rules.json"),
         AEGIS_OPENCLAW_AUDIT_DB: path.join(projectRoot, "demo_web", "data", "openclaw-final", "admission_audit.db"),
         DOCKER_CONFIG: path.join(process.env.USERPROFILE || os.homedir(), ".docker"),
@@ -596,7 +613,9 @@ export default definePluginEntry({
           session.sourceRoot = engine.source_root;
           result = { ...engine, source_root: undefined, session_id: session.id };
           session.scan = result;
-          session.state = result.install_eligible ? "scanned" : "blocked";
+          session.state = result.install_eligible
+            ? "scanned"
+            : (["REVIEW", "WARN"].includes(String(result.decision || "").toUpperCase()) ? "review" : "blocked");
           sendStreamEvent(res, { type: "progress", percent: 100 });
         } else {
           sendStreamEvent(res, { type: "progress", percent: 10 });
@@ -625,7 +644,7 @@ export default definePluginEntry({
     }});
     for (const [routePath, tab, renderer] of [
       [REPORTS_PATH, "reports", renderReportsPage],
-      [AUDIT_PATH, "audit", renderAuditPage],
+      [AUDIT_PATH, "reports", renderReportsPage],
       [RULES_PATH, "rules", renderRulesPage],
       [MCP_PATH, "mcp", renderMcpPage],
     ]) {
@@ -638,8 +657,7 @@ export default definePluginEntry({
     }
     api.registerHttpRoute({ path: ADMIN_API_PATH, auth: "plugin", match: "exact", handler: async (req, res) => {
       const method = (req.method ?? "GET").toUpperCase();
-      const origin = String(req.headers.origin ?? "");
-      if (origin && origin !== "null") { sendJson(res, 403, { ok: false, error: { message: "不允许的浏览器来源。" } }); return true; }
+      if (!isAllowedBrowserOrigin(req)) { sendJson(res, 403, { ok: false, error: { message: "不允许的浏览器来源。" } }); return true; }
       setSandboxCorsHeaders(res);
       if (method === "OPTIONS") { res.statusCode = 204; res.end(); return true; }
       if (method !== "POST") { res.statusCode = 405; res.end("Method Not Allowed"); return true; }
@@ -656,12 +674,12 @@ export default definePluginEntry({
     }});
     api.registerHttpRoute({ path: REPORT_PDF_PATH, auth: "plugin", match: "exact", handler: async (req, res) => {
       const method = (req.method ?? "GET").toUpperCase();
-      const origin = String(req.headers.origin ?? "");
-      if (origin && origin !== "null") { sendJson(res, 403, { ok: false, error: { message: "不允许的浏览器来源。" } }); return true; }
+      if (!isAllowedBrowserOrigin(req)) { sendJson(res, 403, { ok: false, error: { message: "不允许的浏览器来源。" } }); return true; }
       setSandboxCorsHeaders(res);
       if (method === "OPTIONS") { res.statusCode = 204; res.end(); return true; }
       if (method !== "POST") { res.statusCode = 405; res.end("Method Not Allowed"); return true; }
       if (!consumeToken(req.headers["x-aegis-demo-token"])) { sendJson(res, 403, { ok: false, error: { message: "页面令牌无效或已过期，请刷新页面。" } }); return true; }
+      if (!String(req.headers["content-type"] ?? "").toLowerCase().startsWith("application/json")) { sendJson(res, 415, { ok: false, error: { message: "仅接受 JSON 请求。" } }); return true; }
       try {
         const body = await readJsonBody(req, MAX_BODY_BYTES);
         const sequence = Number(body?.sequence);

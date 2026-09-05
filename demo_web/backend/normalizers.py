@@ -5,7 +5,7 @@ import json
 import re
 from typing import Any
 
-from .models import Finding
+from .models import EvidenceSource, Finding
 from .policy import parse_severity
 
 
@@ -44,6 +44,16 @@ def _vendor_evidence(signal: str, raw: Any) -> str:
 
 def finding_dict(**values: Any) -> dict[str, Any]:
     values["severity"] = parse_severity(values.get("severity"))
+    if "evidence_source" not in values:
+        rule_id = str(values.get("rule_id") or "")
+        analyzer = str(values.get("analyzer") or "").casefold()
+        category = str(values.get("category") or "")
+        if category in {"vendor_skill_finding", "vendor_mcp_finding"}:
+            values["evidence_source"] = EvidenceSource.CISCO
+        elif rule_id.startswith("AEGIS_") or analyzer.startswith("aegis"):
+            values["evidence_source"] = EvidenceSource.AEGIS_STATIC
+        elif category == "supply_chain_vulnerability":
+            values["evidence_source"] = EvidenceSource.DEPENDENCY
     finding = Finding.model_validate(values)
     result = finding.model_dump(mode="json")
     result["location"] = finding.location.model_dump(mode="json", exclude_none=True)
@@ -91,6 +101,10 @@ def normalize_skill(report: dict[str, Any]) -> tuple[list[dict[str, Any]], list[
                 description="The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
                 remediation="Review the referenced source location and apply the control associated with the vendor rule before admission.",
                 rule_id=rule_id,
+                evidence_confidence="POTENTIAL",
+                reachability="UNKNOWN",
+                behavior_alignment="UNKNOWN",
+                evidence_source="CISCO",
             ))
     return normalized, sorted(analyzers)
 

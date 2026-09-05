@@ -49,11 +49,11 @@ def test_new_job_uses_scan_schema(monkeypatch) -> None:
     job = gateway.new_job("skill", "upload", "example.zip")
 
     validated = ScanJob.model_validate(job)
-    assert job["schema_version"] == "1.2"
+    assert job["schema_version"] == "1.3"
     assert validated.summary.unknown == 0
     assert validated.decision.value == "UNKNOWN"
     assert validated.policy_trace.policy_id == "aegis-chain-local-default"
-    assert validated.policy_trace.policy_version == "1.0.0"
+    assert validated.policy_trace.policy_version == "1.1.0"
     assert validated.policy_trace.rule_id == "PENDING_SCAN"
 
 

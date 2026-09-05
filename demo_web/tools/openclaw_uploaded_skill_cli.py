@@ -44,8 +44,9 @@ def execute(request: dict) -> dict:
             flush=True,
         )
         print(f"[hash] source_tree_sha256={prepared.source_tree_sha256}", file=sys.stderr, flush=True)
-        print("[STEP 3/5] 执行 Cisco Skill Scanner 与 Aegis 静态规则。", file=sys.stderr, flush=True)
-        print("[STEP 4/5] 静态准入后执行 Docker 隔离试运行。", file=sys.stderr, flush=True)
+        print("[STEP 3/5] 执行 Cisco 扫描、Aegis 确定性规则、文件角色/能力一致性与本地语义复核。", file=sys.stderr, flush=True)
+        print("[model] local=Ollama; external_api=disabled; model_alone_cannot_block=true", file=sys.stderr, flush=True)
+        print("[STEP 4/5] 路由 Python / Node / Shell 三轮定向容器审计；纯指令 Skill 进入三类语义场景检查。", file=sys.stderr, flush=True)
         result = scan_prepared_skill(prepared, str(request.get("target_name") or ""))
         print(
             f"[STEP 5/5] 扫描完成：decision={result['decision']} chain_valid={result['audit_integrity'].get('valid')}。",

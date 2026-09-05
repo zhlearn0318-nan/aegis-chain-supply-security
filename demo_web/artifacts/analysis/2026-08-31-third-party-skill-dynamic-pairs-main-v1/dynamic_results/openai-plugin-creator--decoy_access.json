@@ -1,0 +1,996 @@
+{
+  "success": true,
+  "error": null,
+  "runtime": "python",
+  "entrypoint": "aegis_eval/controlled_entry.py",
+  "argv_attestation": {
+    "count": 6,
+    "sha256": "1b9fe5a2f4791885b37b7d3fbb66d487e2f0ec44e52dfab52e8adbcc48471389",
+    "raw_values_retained": false
+  },
+  "image": {
+    "id": "sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65",
+    "repo_digests": [
+      "public.ecr.aws/docker/library/python@sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  "image_gates": {
+    "id_exact": true,
+    "reference_present": true,
+    "linux": true,
+    "amd64": true
+  },
+  "inspect_gates": {
+    "backend_label": true,
+    "run_label": true,
+    "runtime_label": true,
+    "image_immutable": true,
+    "network_none": true,
+    "read_only": true,
+    "non_root": true,
+    "not_privileged": true,
+    "private_pid": true,
+    "ipc_none": true,
+    "cap_drop_all": true,
+    "no_new_privileges": true,
+    "pids_limited": true,
+    "memory_limited": true,
+    "cpu_limited": true,
+    "tmpfs_exact": true,
+    "mounts_exact": true,
+    "skill_mount_exact": true,
+    "tool_mount_exact": true,
+    "entrypoint_exact": true,
+    "command_exact": true,
+    "workdir_exact": true,
+    "init_enabled": true,
+    "log_driver_none": true,
+    "no_host_control_mount": true,
+    "restart_disabled": true
+  },
+  "runner": {
+    "schema_version": "1.0",
+    "collector": "aegis-python-skill-runner-v2",
+    "entrypoint": "aegis_eval/controlled_entry.py",
+    "execution_status": "completed",
+    "telemetry_complete": true,
+    "events": [
+      {
+        "type": "telemetry.ready",
+        "collector": "python_audit_hook_v1",
+        "sequence": 1,
+        "monotonic_ns": 373181227855,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/aegis_eval/controlled_entry.py",
+        "mode": "r",
+        "sequence": 2,
+        "monotonic_ns": 373222269878,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/aegis_eval/controlled_entry.py",
+        "mode": "rb",
+        "sequence": 3,
+        "monotonic_ns": 373232897773,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/importlib/__pycache__/__init__.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 4,
+        "monotonic_ns": 373243278494,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/importlib/__init__.py",
+        "mode": "r",
+        "sequence": 5,
+        "monotonic_ns": 373243432164,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/importlib/__pycache__/_abc.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 6,
+        "monotonic_ns": 373244585147,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/importlib/_abc.py",
+        "mode": "r",
+        "sequence": 7,
+        "monotonic_ns": 373244663772,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/pkgutil.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 8,
+        "monotonic_ns": 373251470797,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/pkgutil.py",
+        "mode": "r",
+        "sequence": 9,
+        "monotonic_ns": 373251568894,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/weakref.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 10,
+        "monotonic_ns": 373256376366,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/weakref.py",
+        "mode": "r",
+        "sequence": 11,
+        "monotonic_ns": 373256460985,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/_weakrefset.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 12,
+        "monotonic_ns": 373261900018,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/_weakrefset.py",
+        "mode": "r",
+        "sequence": 13,
+        "monotonic_ns": 373261981075,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/scripts/create_basic_plugin.py",
+        "mode": "r",
+        "sequence": 14,
+        "monotonic_ns": 373265536861,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/scripts/create_basic_plugin.py",
+        "mode": "r",
+        "sequence": 15,
+        "monotonic_ns": 373271177431,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/scripts/create_basic_plugin.py",
+        "mode": "r",
+        "sequence": 16,
+        "monotonic_ns": 373273951507,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/argparse.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 17,
+        "monotonic_ns": 373279914885,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/argparse.py",
+        "mode": "r",
+        "sequence": 18,
+        "monotonic_ns": 373279989418,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/gettext.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 19,
+        "monotonic_ns": 373294177020,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/gettext.py",
+        "mode": "r",
+        "sequence": 20,
+        "monotonic_ns": 373294255192,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/locale.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 21,
+        "monotonic_ns": 373299900889,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/locale.py",
+        "mode": "r",
+        "sequence": 22,
+        "monotonic_ns": 373299977400,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/shutil.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 23,
+        "monotonic_ns": 373307085191,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/shutil.py",
+        "mode": "r",
+        "sequence": 24,
+        "monotonic_ns": 373307160742,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/bz2.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 25,
+        "monotonic_ns": 373325074454,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/bz2.py",
+        "mode": "r",
+        "sequence": 26,
+        "monotonic_ns": 373325146035,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/_compression.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 27,
+        "monotonic_ns": 373328046385,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/_compression.py",
+        "mode": "r",
+        "sequence": 28,
+        "monotonic_ns": 373328120516,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/lzma.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 29,
+        "monotonic_ns": 373332510593,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/lzma.py",
+        "mode": "r",
+        "sequence": 30,
+        "monotonic_ns": 373332590431,
+        "round": "typical"
+      },
+      {
+        "type": "file.mkdir",
+        "path": "/workspace/plugins/aegis-eval",
+        "sequence": 31,
+        "monotonic_ns": 373336839664,
+        "round": "typical"
+      },
+      {
+        "type": "file.mkdir",
+        "path": "/workspace/plugins",
+        "sequence": 32,
+        "monotonic_ns": 373336921212,
+        "round": "typical"
+      },
+      {
+        "type": "file.mkdir",
+        "path": "/workspace/plugins/aegis-eval",
+        "sequence": 33,
+        "monotonic_ns": 373336947967,
+        "round": "typical"
+      },
+      {
+        "type": "file.mkdir",
+        "path": "/workspace/plugins/aegis-eval/.codex-plugin",
+        "sequence": 34,
+        "monotonic_ns": 373337010354,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/workspace/plugins/aegis-eval/.codex-plugin/plugin.json",
+        "mode": "w",
+        "sequence": 35,
+        "monotonic_ns": 373337034190,
+        "round": "typical"
+      },
+      {
+        "type": "file.mkdir",
+        "path": "/workspace/plugins/aegis-eval/skills",
+        "sequence": 36,
+        "monotonic_ns": 373337165774,
+        "round": "typical"
+      },
+      {
+        "type": "file.mkdir",
+        "path": "/workspace/plugins/aegis-eval",
+        "sequence": 37,
+        "monotonic_ns": 373337202915,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/workspace/plugins/aegis-eval/.mcp.json",
+        "mode": "w",
+        "sequence": 38,
+        "monotonic_ns": 373337223899,
+        "round": "typical"
+      },
+      {
+        "type": "telemetry.ready",
+        "collector": "python_audit_hook_v1",
+        "sequence": 1,
+        "monotonic_ns": 374232414783,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/aegis_eval/controlled_entry.py",
+        "mode": "r",
+        "sequence": 2,
+        "monotonic_ns": 374235226515,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/aegis_eval/controlled_entry.py",
+        "mode": "rb",
+        "sequence": 3,
+        "monotonic_ns": 374244987180,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/importlib/__pycache__/__init__.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 4,
+        "monotonic_ns": 374256423135,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/importlib/__init__.py",
+        "mode": "r",
+        "sequence": 5,
+        "monotonic_ns": 374256491004,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/importlib/__pycache__/_abc.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 6,
+        "monotonic_ns": 374257343456,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/importlib/_abc.py",
+        "mode": "r",
+        "sequence": 7,
+        "monotonic_ns": 374257412830,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/pkgutil.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 8,
+        "monotonic_ns": 374265107763,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/pkgutil.py",
+        "mode": "r",
+        "sequence": 9,
+        "monotonic_ns": 374265190928,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/weakref.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 10,
+        "monotonic_ns": 374269687368,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/weakref.py",
+        "mode": "r",
+        "sequence": 11,
+        "monotonic_ns": 374269773540,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/_weakrefset.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 12,
+        "monotonic_ns": 374275571433,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/_weakrefset.py",
+        "mode": "r",
+        "sequence": 13,
+        "monotonic_ns": 374275647138,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/scripts/create_basic_plugin.py",
+        "mode": "r",
+        "sequence": 14,
+        "monotonic_ns": 374279730101,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/scripts/create_basic_plugin.py",
+        "mode": "r",
+        "sequence": 15,
+        "monotonic_ns": 374284980024,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/scripts/create_basic_plugin.py",
+        "mode": "r",
+        "sequence": 16,
+        "monotonic_ns": 374287761201,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/argparse.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 17,
+        "monotonic_ns": 374295037067,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/argparse.py",
+        "mode": "r",
+        "sequence": 18,
+        "monotonic_ns": 374295113200,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/gettext.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 19,
+        "monotonic_ns": 374308753913,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/gettext.py",
+        "mode": "r",
+        "sequence": 20,
+        "monotonic_ns": 374308835113,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/locale.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 21,
+        "monotonic_ns": 374314614061,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/locale.py",
+        "mode": "r",
+        "sequence": 22,
+        "monotonic_ns": 374314695733,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/shutil.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 23,
+        "monotonic_ns": 374324450624,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/shutil.py",
+        "mode": "r",
+        "sequence": 24,
+        "monotonic_ns": 374324522463,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/bz2.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 25,
+        "monotonic_ns": 374334398148,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/bz2.py",
+        "mode": "r",
+        "sequence": 26,
+        "monotonic_ns": 374334480457,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/_compression.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 27,
+        "monotonic_ns": 374337130766,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/_compression.py",
+        "mode": "r",
+        "sequence": 28,
+        "monotonic_ns": 374337199799,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/lzma.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 29,
+        "monotonic_ns": 374341935144,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/lzma.py",
+        "mode": "r",
+        "sequence": 30,
+        "monotonic_ns": 374342003682,
+        "round": "edge"
+      },
+      {
+        "type": "file.mkdir",
+        "path": "/workspace/plugins/aegis-eval",
+        "sequence": 31,
+        "monotonic_ns": 374345942474,
+        "round": "edge"
+      },
+      {
+        "type": "file.mkdir",
+        "path": "/workspace/plugins/aegis-eval/.codex-plugin",
+        "sequence": 32,
+        "monotonic_ns": 374346049136,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/workspace/plugins/aegis-eval/.codex-plugin/plugin.json",
+        "mode": "w",
+        "sequence": 33,
+        "monotonic_ns": 374346075191,
+        "round": "edge"
+      },
+      {
+        "type": "file.mkdir",
+        "path": "/workspace/plugins/aegis-eval/skills",
+        "sequence": 34,
+        "monotonic_ns": 374346196545,
+        "round": "edge"
+      },
+      {
+        "type": "file.mkdir",
+        "path": "/workspace/plugins/aegis-eval",
+        "sequence": 35,
+        "monotonic_ns": 374346251589,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/workspace/plugins/aegis-eval/.mcp.json",
+        "mode": "w",
+        "sequence": 36,
+        "monotonic_ns": 374346290292,
+        "round": "edge"
+      },
+      {
+        "type": "telemetry.ready",
+        "collector": "python_audit_hook_v1",
+        "sequence": 1,
+        "monotonic_ns": 375238645308,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/aegis_eval/controlled_entry.py",
+        "mode": "r",
+        "sequence": 2,
+        "monotonic_ns": 375241318860,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/aegis_eval/controlled_entry.py",
+        "mode": "rb",
+        "sequence": 3,
+        "monotonic_ns": 375250772749,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/importlib/__pycache__/__init__.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 4,
+        "monotonic_ns": 375259521078,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/importlib/__init__.py",
+        "mode": "r",
+        "sequence": 5,
+        "monotonic_ns": 375259590587,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/importlib/__pycache__/_abc.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 6,
+        "monotonic_ns": 375260552885,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/importlib/_abc.py",
+        "mode": "r",
+        "sequence": 7,
+        "monotonic_ns": 375260612988,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/workspace/decoys/ops_token.txt",
+        "mode": "r",
+        "sequence": 8,
+        "monotonic_ns": 375261141208,
+        "round": "adversarial"
+      },
+      {
+        "type": "decoy.read",
+        "marker_id": "ops_token",
+        "sequence": 9,
+        "monotonic_ns": 375261202381,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/pkgutil.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 10,
+        "monotonic_ns": 375268895911,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/pkgutil.py",
+        "mode": "r",
+        "sequence": 11,
+        "monotonic_ns": 375268982962,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/weakref.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 12,
+        "monotonic_ns": 375274255319,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/weakref.py",
+        "mode": "r",
+        "sequence": 13,
+        "monotonic_ns": 375274336270,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/_weakrefset.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 14,
+        "monotonic_ns": 375279451226,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/_weakrefset.py",
+        "mode": "r",
+        "sequence": 15,
+        "monotonic_ns": 375279549993,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/scripts/create_basic_plugin.py",
+        "mode": "r",
+        "sequence": 16,
+        "monotonic_ns": 375282655375,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/scripts/create_basic_plugin.py",
+        "mode": "r",
+        "sequence": 17,
+        "monotonic_ns": 375287304180,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/scripts/create_basic_plugin.py",
+        "mode": "r",
+        "sequence": 18,
+        "monotonic_ns": 375289898151,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/argparse.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 19,
+        "monotonic_ns": 375297819843,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/argparse.py",
+        "mode": "r",
+        "sequence": 20,
+        "monotonic_ns": 375297893539,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/gettext.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 21,
+        "monotonic_ns": 375317119850,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/gettext.py",
+        "mode": "r",
+        "sequence": 22,
+        "monotonic_ns": 375317205267,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/locale.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 23,
+        "monotonic_ns": 375326960618,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/locale.py",
+        "mode": "r",
+        "sequence": 24,
+        "monotonic_ns": 375327120909,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/shutil.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 25,
+        "monotonic_ns": 375335137345,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/shutil.py",
+        "mode": "r",
+        "sequence": 26,
+        "monotonic_ns": 375335213231,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/bz2.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 27,
+        "monotonic_ns": 375346211211,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/bz2.py",
+        "mode": "r",
+        "sequence": 28,
+        "monotonic_ns": 375346284495,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/_compression.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 29,
+        "monotonic_ns": 375349238611,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/_compression.py",
+        "mode": "r",
+        "sequence": 30,
+        "monotonic_ns": 375349300702,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/lzma.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 31,
+        "monotonic_ns": 375353980354,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/lzma.py",
+        "mode": "r",
+        "sequence": 32,
+        "monotonic_ns": 375354047087,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.mkdir",
+        "path": "/workspace/plugins/aegis-eval",
+        "sequence": 33,
+        "monotonic_ns": 375358948886,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.mkdir",
+        "path": "/workspace/plugins/aegis-eval/.codex-plugin",
+        "sequence": 34,
+        "monotonic_ns": 375359052428,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/workspace/plugins/aegis-eval/.codex-plugin/plugin.json",
+        "mode": "w",
+        "sequence": 35,
+        "monotonic_ns": 375359079115,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.mkdir",
+        "path": "/workspace/plugins/aegis-eval/skills",
+        "sequence": 36,
+        "monotonic_ns": 375359204171,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.mkdir",
+        "path": "/workspace/plugins/aegis-eval",
+        "sequence": 37,
+        "monotonic_ns": 375359236403,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/workspace/plugins/aegis-eval/.mcp.json",
+        "mode": "w",
+        "sequence": 38,
+        "monotonic_ns": 375359252191,
+        "round": "adversarial"
+      }
+    ],
+    "rounds": [
+      {
+        "id": "typical",
+        "execution_status": "completed",
+        "exit_code": 0,
+        "duration_ms": 500
+      },
+      {
+        "id": "edge",
+        "execution_status": "completed",
+        "exit_code": 0,
+        "duration_ms": 501
+      },
+      {
+        "id": "adversarial",
+        "execution_status": "completed",
+        "exit_code": 0,
+        "duration_ms": 500
+      }
+    ],
+    "internet_used": false,
+    "argv_count": 6,
+    "argv_sha256": "1b9fe5a2f4791885b37b7d3fbb66d487e2f0ec44e52dfab52e8adbcc48471389",
+    "duration_ms": 3113
+  },
+  "evaluation": {
+    "schema_version": "1.0",
+    "analyzer": "aegis-skill-sandbox-v1",
+    "decision": "BLOCK",
+    "status": "malicious",
+    "highest_severity": "CRITICAL",
+    "reason": "隔离试运行观察到高危行为，已升级为阻断。",
+    "findings": [
+      {
+        "id": "dynamic-aegis_dynamic_decoy_access-83",
+        "rule_id": "AEGIS_DYNAMIC_DECOY_ACCESS",
+        "title": "Skill 读取了政企敏感数据诱饵",
+        "category": "sensitive_data_access",
+        "severity": "CRITICAL",
+        "analyzer": "aegis-skill-sandbox-v1",
+        "location": {
+          "object": "event:83",
+          "type": "runtime_event"
+        },
+        "evidence": "marker_id=ops_token",
+        "description": "安装前隔离试运行观察到可复核的运行时安全信号。",
+        "remediation": "人工核对 Skill 行为；高危行为应保持阻断。"
+      }
+    ]
+  },
+  "cleanup": {
+    "attempted": true,
+    "removed": true,
+    "residual": false,
+    "remove_duration_ms": 208
+  },
+  "duration_ms": 5266
+}

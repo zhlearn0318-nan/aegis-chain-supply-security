@@ -167,3 +167,18 @@ function Resolve-AegisDockerCli {
         -Names @("docker.exe", "docker") `
         -Candidates $candidates
 }
+
+function Resolve-AegisOllamaCli {
+    [CmdletBinding()]
+    param()
+
+    $candidates = @()
+    if ($env:LOCALAPPDATA) {
+        $candidates += Join-Path $env:LOCALAPPDATA "Programs\Ollama\ollama.exe"
+    }
+
+    return Resolve-AegisConfiguredApplication `
+        -EnvironmentVariable "AEGIS_OLLAMA_COMMAND" `
+        -Names @("ollama.exe", "ollama") `
+        -Candidates $candidates
+}

@@ -66,7 +66,7 @@ def test_v1_scan_creation_returns_202_envelope(monkeypatch) -> None:
     assert response.status_code == 202
     assert response.json()["api_version"] == "v1"
     assert response.json()["data"]["id"] == "contract-job"
-    assert response.json()["data"]["schema_version"] == "1.2"
+    assert response.json()["data"]["schema_version"] == "1.3"
 
 
 def test_v1_known_error_has_code_and_old_error_keeps_detail_shape() -> None:

@@ -1,0 +1,137 @@
+{
+  "success": true,
+  "error": null,
+  "runtime": "node",
+  "entrypoint": "templates/generator_template.js",
+  "argv_attestation": {
+    "count": 0,
+    "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "raw_values_retained": false
+  },
+  "image": {
+    "id": "sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0",
+    "repo_digests": [
+      "node@sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  "image_gates": {
+    "id_exact": true,
+    "reference_present": true,
+    "linux": true,
+    "amd64": true
+  },
+  "inspect_gates": {
+    "backend_label": true,
+    "run_label": true,
+    "runtime_label": true,
+    "image_immutable": true,
+    "network_none": true,
+    "read_only": true,
+    "non_root": true,
+    "not_privileged": true,
+    "private_pid": true,
+    "ipc_none": true,
+    "cap_drop_all": true,
+    "no_new_privileges": true,
+    "pids_limited": true,
+    "memory_limited": true,
+    "cpu_limited": true,
+    "tmpfs_exact": true,
+    "mounts_exact": true,
+    "skill_mount_exact": true,
+    "tool_mount_exact": true,
+    "entrypoint_exact": true,
+    "command_exact": true,
+    "workdir_exact": true,
+    "init_enabled": true,
+    "log_driver_none": true,
+    "no_host_control_mount": true,
+    "restart_disabled": true
+  },
+  "runner": {
+    "schema_version": "1.0",
+    "collector": "aegis-node-skill-runner-v1",
+    "entrypoint": "templates/generator_template.js",
+    "execution_status": "completed",
+    "telemetry_complete": true,
+    "events": [
+      {
+        "type": "telemetry.ready",
+        "collector": "node_preload_v1",
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/templates/generator_template.js",
+        "operation": "readFileSync",
+        "round": "typical"
+      },
+      {
+        "type": "telemetry.ready",
+        "collector": "node_preload_v1",
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/templates/generator_template.js",
+        "operation": "readFileSync",
+        "round": "edge"
+      },
+      {
+        "type": "telemetry.ready",
+        "collector": "node_preload_v1",
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/templates/generator_template.js",
+        "operation": "readFileSync",
+        "round": "adversarial"
+      }
+    ],
+    "rounds": [
+      {
+        "id": "typical",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "id": "edge",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "id": "adversarial",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "internet_used": false,
+    "argv_count": 0,
+    "argv_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "evaluation": {
+    "schema_version": "1.0",
+    "analyzer": "aegis-skill-sandbox-v1",
+    "decision": "ALLOW",
+    "status": "clean",
+    "highest_severity": "SAFE",
+    "reason": "隔离试运行完成，未观察到影响准入的动态风险。",
+    "findings": []
+  },
+  "cleanup": {
+    "attempted": true,
+    "removed": true,
+    "residual": false,
+    "remove_duration_ms": 202
+  },
+  "duration_ms": 1826
+}

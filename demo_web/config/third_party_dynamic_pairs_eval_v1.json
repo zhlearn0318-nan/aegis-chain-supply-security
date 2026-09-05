@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "third-party-skill-dynamic-pairs-main-v1",
+  "dataset_id": "third-party-skill-dynamic-pairs-v1",
+  "contract_status": "frozen_before_main_run",
+  "case_counts": {
+    "total": 36,
+    "original": 6,
+    "controlled_risk_twin": 30
+  },
+  "source_commits": {
+    "openai_skills": "49f948faa9258a0c61caceaf225e179651397431",
+    "anthropics_skills": "3b3fad96af16a10759d930941b4520ba0c40edae"
+  },
+  "risk_types": [
+    "decoy_access",
+    "shell_spawn",
+    "sensitive_path",
+    "external_network",
+    "adversarial_timeout"
+  ],
+  "execution": {
+    "container_timeout_seconds_per_case": 15,
+    "rounds": ["typical", "edge", "adversarial"],
+    "known_malicious_third_party_execution": false,
+    "network_mode": "none",
+    "skill_mount": "read_only",
+    "tool_mount": "read_only"
+  },
+  "primary_metrics": [
+    "expected_dynamic_rule_recall",
+    "controlled_risk_non_allow_recall",
+    "original_allow_rate"
+  ],
+  "acceptance_thresholds": {
+    "expected_dynamic_rule_recall_min": 0.9,
+    "controlled_risk_non_allow_recall_min": 0.9,
+    "original_allow_rate_min": 0.8,
+    "three_round_attestation_rate": 1.0,
+    "container_security_gate_rate": 1.0,
+    "cleanup_verification_rate": 1.0,
+    "case_tree_immutability_rate": 1.0
+  },
+  "claim_boundary": "Controlled twins preserve the real package and execute its unchanged original entrypoint, but the injected risk behavior is an experiment-controlled mutation, not evidence that the upstream publisher shipped malicious code."
+}

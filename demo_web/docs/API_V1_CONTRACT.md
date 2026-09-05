@@ -1,11 +1,11 @@
 # Aegis Chain API v1 对接契约
 
-> 应用版本：`1.2.0`  
-> API 版本：`v1`  
-> 扫描结果 schema：`1.2`  
-> 默认策略：`aegis-chain-local-default@1.0.0`  
-> 更新日期：2026-08-21  
-> 状态：已实现、已测试、静态审计冻结候选
+> 应用版本：`1.3.0`
+> API 版本：`v1`
+> 扫描结果 schema：`1.3`
+> 默认策略：`aegis-chain-local-default@1.1.0`
+> 更新日期：2026-08-31
+> 状态：已实现、已测试、Skill 证据感知准入已启用
 
 ## 1. 使用原则
 
@@ -52,7 +52,7 @@ http://127.0.0.1:8000
 }
 ```
 
-扫描任务位于 `data` 中，其自身包含 `schema_version: "1.2"`。依赖任务以及带 `requirements` 的 MCP 任务还可包含可选 `sbom`。
+扫描任务位于 `data` 中，其自身包含 `schema_version: "1.3"`。依赖任务以及带 `requirements` 的 MCP 任务还可包含可选 `sbom`。
 
 ### 3.2 错误响应
 
@@ -174,7 +174,7 @@ curl.exe -X POST "http://127.0.0.1:8000/api/v1/scans/dependency" `
 {
   "api_version": "v1",
   "data": {
-    "schema_version": "1.2",
+    "schema_version": "1.3",
     "id": "b5ef8d0bb2d14d3a9144c8c0082bfbf8",
     "status": "queued",
     "target_kind": "skill",
@@ -183,7 +183,7 @@ curl.exe -X POST "http://127.0.0.1:8000/api/v1/scans/dependency" `
     "decision": "UNKNOWN",
     "policy_trace": {
       "policy_id": "aegis-chain-local-default",
-      "policy_version": "1.0.0",
+      "policy_version": "1.1.0",
       "rule_id": "PENDING_SCAN",
       "reason": "扫描尚未完成，暂未执行准入策略。",
       "matched_severities": [],
@@ -205,6 +205,19 @@ curl.exe "http://127.0.0.1:8000/api/v1/scans/{job_id}/export?format=sbom" -o res
 ```
 
 SBOM 范围是 requirements 中的声明安装集合。静态分析不运行 resolver，不推断直接/传递角色，并写明 `transitive-graph-completeness=not-proven`。对不含 requirements 的任务请求 `sbom` 返回 `400 / SBOM_UNAVAILABLE`。
+
+### 5.6 Finding 证据字段
+
+schema `1.3` 为每条 Finding 增加四个证据维度：
+
+| 字段 | 可选值 | 含义 |
+|---|---|---|
+| `evidence_confidence` | `POTENTIAL`、`CORROBORATED`、`CONFIRMED` | 当前证据对风险事实的证明程度 |
+| `reachability` | `REACHABLE`、`REFERENCED`、`EXAMPLE`、`TEST`、`UNKNOWN` | 风险位置与真实运行入口的关系 |
+| `behavior_alignment` | `DECLARED`、`UNDECLARED`、`CONTRADICTORY`、`UNKNOWN` | 实现行为与 Skill 声明是否一致 |
+| `evidence_source` | `CISCO`、`AEGIS_STATIC`、`AEGIS_SEMANTIC`、`AEGIS_DYNAMIC`、`CUSTOM`、`DEPENDENCY`、`UNKNOWN` | 证据来源 |
+
+默认策略不会因为新增字段而全面放松故障关闭。只有正规 Cisco Skill 归一化产生、同时属于策略配置的“上下文相关原语规则”的 `HIGH + POTENTIAL + CISCO` finding 可以进入 `POLICY_REVIEW_UNCORROBORATED_CISCO_HIGH`。完整执行链、未列入候选清单的 Cisco HIGH、CRITICAL、非 Cisco HIGH、UNKNOWN 和扫描失败仍不自动放行。
 
 ## 6. 查询与轮询
 
@@ -267,7 +280,7 @@ curl.exe "http://127.0.0.1:8000/api/v1/scans/{job_id}"
 2. 创建和查询响应从 `body` 改为读取 `body.data`；
 3. 接受创建状态码 202；
 4. 错误处理改为读取 `body.error.code`；
-5. 保持对 ScanJob schema `1.2` 的解析，并允许 `sbom=null`；
+5. 保持对 ScanJob schema `1.3` 的解析，并允许 `sbom=null`；
 6. 忽略未来新增的可选字段。
 
 ## 9. 当前安全边界

@@ -18,7 +18,8 @@ $RuntimePython = Join-Path $ProjectRoot ".runtime_mcp313\Scripts\python.exe"
 $InstallPolicyScript = Join-Path $DemoRoot "tools\openclaw_install_policy.py"
 $AuditDb = Join-Path $DataRoot "admission_audit.db"
 $CustomRules = Join-Path $DataRoot "custom_rules.json"
-$DockerConfigFile = Join-Path $DemoRoot "config\docker_skill_closure_backend.json"
+$DockerConfigFile = Join-Path $DemoRoot "config\skill_dynamic_sandbox_v2.json"
+$SemanticModelConfigFile = Join-Path $DemoRoot "config\skill_semantic_model.json"
 $LogRoot = Join-Path $DemoRoot "logs"
 $InstallStarted = [DateTimeOffset]::Now
 $ConfigChanged = $false
@@ -155,6 +156,12 @@ function Resolve-Docker {
     )
 }
 
+function Resolve-Ollama {
+    return Resolve-Application @("ollama.exe", "ollama") @(
+        (Join-Path $env:LOCALAPPDATA "Programs\Ollama\ollama.exe")
+    )
+}
+
 function Invoke-DockerEngineProbe {
     param([string]$Docker, [int]$TimeoutMilliseconds = 4000)
     $startInfo = New-Object System.Diagnostics.ProcessStartInfo
@@ -253,11 +260,13 @@ function Ensure-Dependencies {
     if (-not (Resolve-Git)) { Install-WingetPackage "Git.Git" "Git" }
     if (-not (Resolve-Conda)) { Install-WingetPackage "Anaconda.Miniconda3" "Miniconda" }
     if (-not (Resolve-Docker)) { Install-WingetPackage "Docker.DockerDesktop" "Docker Desktop" }
+    if (-not (Resolve-Ollama)) { Install-WingetPackage "Ollama.Ollama" "Ollama" }
     foreach ($entry in @(
         @{ Label = "Node.js"; Value = (Resolve-Node) },
         @{ Label = "Git"; Value = (Resolve-Git) },
         @{ Label = "Conda"; Value = (Resolve-Conda) },
         @{ Label = "Docker CLI"; Value = (Resolve-Docker) }
+        @{ Label = "Ollama"; Value = (Resolve-Ollama) }
     )) {
         if (-not $entry.Value) { throw "$($entry.Label) is still unavailable after dependency setup. Restart Windows and run this installer again." }
         Write-Pass "$($entry.Label): $($entry.Value)"
@@ -321,6 +330,9 @@ function Ensure-DockerReady {
     if (-not $docker) { throw "Docker CLI is unavailable." }
     $probe = Invoke-DockerEngineProbe $docker
     if (-not $probe.ready) {
+        if ($VerifyOnly) {
+            throw "Docker Desktop Linux engine is not ready; verify-only mode never starts or repairs services. $($probe.output)"
+        }
         $desktop = Resolve-Application @() @(
             (Join-Path $env:ProgramFiles "Docker\Docker\Docker Desktop.exe"),
             (Join-Path $env:LOCALAPPDATA "Programs\DockerDesktop\Docker Desktop.exe"),
@@ -349,24 +361,56 @@ function Ensure-DockerReady {
     Write-Pass "Docker Desktop Linux engine is available"
 
     $dockerContract = Get-Content -LiteralPath $DockerConfigFile -Raw -Encoding UTF8 | ConvertFrom-Json
-    $imageReference = [string]$dockerContract.image.reference
-    $expectedImageId = [string]$dockerContract.image.id
-    $priorPreference = $ErrorActionPreference
-    $ErrorActionPreference = "Continue"
-    try {
-        $actualImageId = (& $docker --context desktop-linux image inspect $imageReference --format "{{json .Id}}" 2>$null | Out-String).Trim('"', "`r", "`n", " ")
-        $imageExit = $LASTEXITCODE
-    } finally {
-        $ErrorActionPreference = $priorPreference
+    $uniqueImages = @($dockerContract.images.PSObject.Properties | ForEach-Object {
+        [pscustomobject]@{ Runtime = $_.Name; Reference = [string]$_.Value.reference; ExpectedId = [string]$_.Value.id }
+    } | Group-Object Reference | ForEach-Object { $_.Group | Select-Object -First 1 })
+    foreach ($image in $uniqueImages) {
+        $priorPreference = $ErrorActionPreference
+        $ErrorActionPreference = "Continue"
+        try {
+            $actualImageId = (& $docker --context desktop-linux image inspect $image.Reference --format "{{json .Id}}" 2>$null | Out-String).Trim('"', "`r", "`n", " ")
+            $imageExit = $LASTEXITCODE
+        } finally {
+            $ErrorActionPreference = $priorPreference
+        }
+        if ($imageExit -ne 0 -or $actualImageId -ne $image.ExpectedId) {
+            if ($VerifyOnly) { throw "The pinned Docker image is missing or mismatched: $($image.Reference)" }
+            Invoke-Checked $docker @("--context", "desktop-linux", "pull", $image.Reference) "Pinned Docker image pull failed."
+            $actualImageId = (& $docker --context desktop-linux image inspect $image.Reference --format "{{json .Id}}" 2>&1 | Out-String).Trim('"', "`r", "`n", " ")
+        }
+        if ($actualImageId -ne $image.ExpectedId) { throw "Pinned Docker image identity mismatch. Expected $($image.ExpectedId); actual $actualImageId" }
+        Write-Pass "Pinned $($image.Runtime) image identity: $actualImageId"
     }
-    if ($imageExit -ne 0 -or $actualImageId -ne $expectedImageId) {
-        if ($VerifyOnly) { throw "The pinned Docker image is missing or mismatched: $imageReference" }
-        Invoke-Checked $docker @("--context", "desktop-linux", "pull", $imageReference) "Pinned Docker image pull failed."
-        $actualImageId = (& $docker --context desktop-linux image inspect $imageReference --format "{{json .Id}}" 2>&1 | Out-String).Trim('"', "`r", "`n", " ")
-    }
-    if ($actualImageId -ne $expectedImageId) { throw "Pinned Docker image identity mismatch. Expected $expectedImageId; actual $actualImageId" }
-    Write-Pass "Pinned Docker image identity: $actualImageId"
     return $docker
+}
+
+function Ensure-SemanticModel {
+    Write-Step "Preparing the local semantic review model"
+    $ollama = Resolve-Ollama
+    if (-not $ollama) { throw "Ollama is unavailable." }
+    $contract = Get-Content -LiteralPath $SemanticModelConfigFile -Raw -Encoding UTF8 | ConvertFrom-Json
+    $model = [string]$contract.local.model
+    if ([string]::IsNullOrWhiteSpace($model)) { throw "Local semantic model configuration is invalid." }
+    $installed = $false
+    try {
+        $tags = Invoke-RestMethod -Uri "http://127.0.0.1:11434/api/tags" -TimeoutSec 5
+        $installed = @($tags.models | ForEach-Object { [string]$_.name }) -contains $model
+    } catch {
+        if ($VerifyOnly) {
+            throw "Ollama is not responding; verify-only mode never starts the service."
+        }
+        Start-Process -FilePath $ollama -ArgumentList @("serve") -WindowStyle Hidden | Out-Null
+        Start-Sleep -Seconds 5
+    }
+    if (-not $installed) {
+        if ($VerifyOnly) { throw "The local semantic model is missing: $model" }
+        Invoke-Checked $ollama @("pull", $model) "Local semantic model download failed."
+    }
+    $tags = Invoke-RestMethod -Uri "http://127.0.0.1:11434/api/tags" -TimeoutSec 10
+    if (@($tags.models | ForEach-Object { [string]$_.name }) -notcontains $model) {
+        throw "The local semantic model could not be verified: $model"
+    }
+    Write-Pass "Local semantic model: $model"
 }
 
 function New-InstallPolicyBatch {
@@ -388,6 +432,8 @@ function New-InstallPolicyBatch {
                 AEGIS_OPENCLAW_SCAN_TIMEOUT_SECONDS = "60"
                 AEGIS_OPENCLAW_REVIEW_MODE = "block"
                 AEGIS_OPENCLAW_DYNAMIC_SKILL_POLICY = "required"
+                AEGIS_SEMANTIC_MODEL_MODE = "local"
+                AEGIS_EXTERNAL_LLM_OPT_IN = "0"
                 AEGIS_OPENCLAW_AUDIT_DB = $AuditDb
                 AEGIS_CUSTOM_RULES_PATH = $CustomRules
                 DOCKER_CONFIG = (Join-Path $env:USERPROFILE ".docker")
@@ -431,7 +477,7 @@ function Backup-OpenClawConfig {
 
 function Configure-OpenClaw {
     param([string]$OpenClaw, [string]$Docker)
-    Write-Step "Applying the fail-closed installation policy"
+    Write-Step $(if ($VerifyOnly) { "Verifying the fail-closed installation policy" } else { "Applying the fail-closed installation policy" })
     if ($VerifyOnly) {
         $raw = Invoke-Checked $OpenClaw @("config", "get", "security.installPolicy", "--json") "Cannot read OpenClaw installation policy." -Capture
         $current = $raw | ConvertFrom-Json
@@ -458,7 +504,7 @@ function Configure-OpenClaw {
 
 function Install-AegisPlugin {
     param([string]$OpenClaw)
-    Write-Step "Installing the Aegis Control UI through the active policy"
+    Write-Step $(if ($VerifyOnly) { "Verifying the Aegis Control UI registration" } else { "Installing the Aegis Control UI through the active policy" })
     if ($VerifyOnly) {
         $plugins = Invoke-Checked $OpenClaw @("plugins", "list", "--json") "Cannot inspect OpenClaw plugins." -Capture
         if ($plugins -notmatch 'aegis-admission-ui') { throw "Aegis plugin is not installed." }
@@ -472,7 +518,7 @@ function Install-AegisPlugin {
 
 function Start-AndVerifyGateway {
     param([string]$OpenClaw)
-    Write-Step "Installing and restarting the local OpenClaw gateway"
+    Write-Step $(if ($VerifyOnly) { "Verifying the running OpenClaw gateway" } else { "Installing and restarting the local OpenClaw gateway" })
     if (-not $VerifyOnly) {
         Invoke-Checked $OpenClaw @("gateway", "install", "--force", "--port", [string]$GatewayPort) "OpenClaw gateway service installation failed."
         Invoke-Checked $OpenClaw @("gateway", "restart") "OpenClaw gateway restart failed."
@@ -571,6 +617,7 @@ try {
     $openclaw = Ensure-OpenClaw
     Ensure-ScannerRuntimes
     $docker = Ensure-DockerReady
+    Ensure-SemanticModel
     Configure-OpenClaw $openclaw $docker
     Install-AegisPlugin $openclaw
     Start-AndVerifyGateway $openclaw

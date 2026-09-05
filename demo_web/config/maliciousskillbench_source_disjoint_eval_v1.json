@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "2026-08-31-maliciousskillbench-source-disjoint-main-v1",
+  "dataset_id": "ProtectSkills/MaliciousSkillBench",
+  "dataset_revision": "d4b42ce5766a6e0359c987cf59c1007cb3795a90",
+  "protocol": "official_source_disjoint_test_full",
+  "expected_cases": 1384,
+  "expected_labels": {
+    "0": 545,
+    "1": 839
+  },
+  "systems": [
+    {
+      "id": "cisco_only",
+      "description": "Cisco Skill Scanner findings with the frozen v1.0 severity policy"
+    },
+    {
+      "id": "cisco_plus_p0",
+      "description": "Cisco plus Aegis P0 static, capability, and semantic evidence with the v1.1 evidence-aware policy"
+    },
+    {
+      "id": "cisco_plus_p0_p1",
+      "description": "P0 result fused monotonically with the deployed P1 pure-instruction scenario audit"
+    }
+  ],
+  "label_firewall": "scan outputs must be complete before ground_truth/labels.jsonl is joined",
+  "primary_metrics": [
+    "malicious_non_allow_recall",
+    "malicious_block_rate",
+    "benign_allow_rate",
+    "benign_block_rate",
+    "macro_f1_binary_block",
+    "balanced_accuracy_binary_block"
+  ],
+  "secondary_metrics": [
+    "decision_distribution",
+    "per_source_metrics",
+    "per_attack_category_metrics",
+    "latency_ms",
+    "unknown_rate",
+    "dynamic_code_execution_coverage"
+  ],
+  "claim_boundary": {
+    "main_benchmark": "released static Skill text snapshots",
+    "p1_execution_kind": "pure_instruction",
+    "container_code_execution_expected": false,
+    "known_malicious_code_executed": false,
+    "full_package_dynamic_evidence_source": "separate frozen third_party_skill_pilot40_v1 supplement"
+  },
+  "tuning_rule": "No rule, threshold, prompt, or policy change after this contract is frozen. Future tuning must use a new development protocol and a new version."
+}

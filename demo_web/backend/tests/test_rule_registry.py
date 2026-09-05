@@ -61,5 +61,5 @@ def test_registry_severities_match_supported_policy_values() -> None:
                 assert set(severities) <= supported
 
 
-def test_registry_contains_125_static_rule_ids() -> None:
-    assert len(registry_rule_ids(registry())) == 125
+def test_registry_contains_138_static_rule_ids() -> None:
+    assert len(registry_rule_ids(registry())) == 138

@@ -1,0 +1,24 @@
+schema_version: "1.0"
+policy_id: "aegis-chain-local-default"
+version: "1.1.0"
+description: "Aegis Chain Skill 证据感知准入策略；孤立 Cisco HIGH 进入复核，完整高危证据继续阻断。"
+
+decision:
+  block_severities:
+    - CRITICAL
+    - HIGH
+  review_severities:
+    - MEDIUM
+    - LOW
+  allow_severities:
+    - INFO
+    - SAFE
+  # These rules report context-dependent primitives rather than a complete
+  # attack chain. Their original HIGH severity remains visible, but they need
+  # independent Aegis/semantic/dynamic evidence before direct blocking.
+  review_uncorroborated_cisco_skill_high_rules:
+    - YARA_jailbreak_generic
+    - DATA_EXFIL_JS_FS_ACCESS
+    - DATA_EXFIL_SENSITIVE_FILES
+    - RESOURCE_ABUSE_INFINITE_LOOP
+  fail_closed: true

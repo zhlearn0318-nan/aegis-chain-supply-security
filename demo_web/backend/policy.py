@@ -9,7 +9,11 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError, model_valida
 from .models import Decision, PolicyTrace, ScanSummary, Severity
 
 
-DEFAULT_POLICY_PATH = Path(__file__).resolve().parents[1] / "config" / "admission_policy.yaml"
+DEFAULT_POLICY_PATH = (
+    Path(__file__).resolve().parents[1]
+    / "config"
+    / "admission_policy.skill-evidence-v1.yaml"
+)
 SEVERITY_ORDER = {
     Severity.CRITICAL: 0,
     Severity.HIGH: 1,
@@ -31,6 +35,7 @@ class DecisionPolicy(BaseModel):
     block_severities: set[Severity] = Field(min_length=1)
     review_severities: set[Severity] = Field(min_length=1)
     allow_severities: set[Severity] = Field(min_length=1)
+    review_uncorroborated_cisco_skill_high_rules: set[str] = Field(default_factory=set)
     fail_closed: bool = True
 
     @model_validator(mode="after")
@@ -99,6 +104,32 @@ def _matching_finding_ids(
     return result
 
 
+def _finding_ids(findings: list[dict[str, Any]]) -> list[str]:
+    return [
+        str(finding.get("id") or f"finding-{index}")
+        for index, finding in enumerate(findings, start=1)
+    ]
+
+
+def _is_uncorroborated_cisco_skill_high(
+    finding: dict[str, Any], review_rule_ids: set[str]
+) -> bool:
+    """Recognize only findings created by the trusted Cisco Skill normalizer.
+
+    Requiring all provenance markers keeps legacy or malformed HIGH findings
+    fail-closed. CRITICAL vendor findings are deliberately excluded.
+    """
+    return (
+        parse_severity(finding.get("severity")) == Severity.HIGH
+        and str(finding.get("rule_id") or "") in review_rule_ids
+        and finding.get("category") == "vendor_skill_finding"
+        and str(finding.get("id") or "").startswith("vendor-skill-")
+        and str(finding.get("evidence_source") or "").upper() == "CISCO"
+        and str(finding.get("evidence_confidence") or "").upper() == "POTENTIAL"
+        and bool(str(finding.get("analyzer") or "").strip())
+    )
+
+
 def _format_counts(severities: list[Severity]) -> str:
     counts: dict[Severity, int] = {}
     for severity in severities:
@@ -116,18 +147,45 @@ def evaluate_findings(
     severities = [parse_severity(item.get("severity")) for item in findings]
     configured = selected.decision
 
-    block_matches = set(severities) & configured.block_severities
+    uncorroborated_cisco_high = [
+        item
+        for item in findings
+        if _is_uncorroborated_cisco_skill_high(
+            item, configured.review_uncorroborated_cisco_skill_high_rules
+        )
+    ]
+    uncorroborated_ids = {id(item) for item in uncorroborated_cisco_high}
+    blocking_findings = [
+        item
+        for item in findings
+        if parse_severity(item.get("severity")) in configured.block_severities
+        and id(item) not in uncorroborated_ids
+    ]
+    block_severities = [parse_severity(item.get("severity")) for item in blocking_findings]
+    block_matches = set(block_severities)
+    matched_finding_ids: list[str]
     if block_matches:
         decision = Decision.BLOCK
         rule_id = "POLICY_BLOCK_SEVERITY"
-        reason = f"命中阻断严重度：{_format_counts([item for item in severities if item in block_matches])}。"
+        reason = f"命中阻断严重度：{_format_counts(block_severities)}。"
         matched = block_matches
+        matched_finding_ids = _finding_ids(blocking_findings)
     elif Severity.UNKNOWN in severities:
         decision = Decision.UNKNOWN
         rule_id = "POLICY_UNKNOWN_SEVERITY"
         unknown_count = severities.count(Severity.UNKNOWN)
         reason = f"存在 UNKNOWN 严重度 {unknown_count} 条，按照失败闭锁策略不放行。"
         matched = {Severity.UNKNOWN}
+        matched_finding_ids = _matching_finding_ids(findings, matched)
+    elif uncorroborated_cisco_high:
+        decision = Decision.REVIEW
+        rule_id = "POLICY_REVIEW_UNCORROBORATED_CISCO_HIGH"
+        reason = (
+            f"Cisco Skill Scanner 报告 HIGH 候选 {len(uncorroborated_cisco_high)} 条，"
+            "但缺少独立高置信证据佐证，保留原始严重度并进入人工复核。"
+        )
+        matched = {Severity.HIGH}
+        matched_finding_ids = _finding_ids(uncorroborated_cisco_high)
     else:
         review_matches = set(severities) & configured.review_severities
         if review_matches:
@@ -135,11 +193,13 @@ def evaluate_findings(
             rule_id = "POLICY_REVIEW_SEVERITY"
             reason = f"命中人工复核严重度：{_format_counts([item for item in severities if item in review_matches])}。"
             matched = review_matches
+            matched_finding_ids = _matching_finding_ids(findings, matched)
         else:
             decision = Decision.ALLOW
             rule_id = "POLICY_ALLOW"
             reason = "扫描成功，所有发现均处于允许严重度集合，准入策略允许继续。"
             matched = set(severities) & configured.allow_severities
+            matched_finding_ids = _matching_finding_ids(findings, matched)
 
     trace = PolicyTrace(
         policy_id=selected.policy_id,
@@ -147,7 +207,7 @@ def evaluate_findings(
         rule_id=rule_id,
         reason=reason,
         matched_severities=_sorted_severities(matched),
-        matched_finding_ids=_matching_finding_ids(findings, matched),
+        matched_finding_ids=matched_finding_ids,
         fail_closed=configured.fail_closed,
     )
     return PolicyEvaluation(decision=decision, trace=trace)

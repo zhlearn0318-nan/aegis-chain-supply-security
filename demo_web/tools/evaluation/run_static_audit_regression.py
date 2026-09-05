@@ -29,7 +29,7 @@ from backend.analyzers import (  # noqa: E402
     analyze_skill_tree,
     analyze_untrusted_exec_flows,
 )
-from backend.policy import evaluate_findings  # noqa: E402
+from backend.policy import evaluate_findings, load_policy  # noqa: E402
 from tools.datasets.prepare_skilltrustbench import tree_sha256  # noqa: E402
 from tools.evaluation.run_skilltrustbench import (  # noqa: E402
     EvaluationError,
@@ -65,6 +65,7 @@ DEFAULT_OUTPUT = DEMO_ROOT / "artifacts" / "experiment" / RUN_ID
 REGRESSION_PATH = SPLIT_ROOT / "regression_cases.jsonl"
 REGRESSION_IDS_PATH = SPLIT_ROOT / "regression_case_ids.txt"
 PARENT_RESULTS_PATH = PARENT_ROOT / "per_case_results.jsonl"
+FROZEN_POLICY_PATH = DEMO_ROOT / "config" / "admission_policy.yaml"
 
 EXPECTED_HASHES = {
     "split_manifest": (
@@ -96,7 +97,7 @@ EXPECTED_HASHES = {
         "d7c6fd64ffde14e50c1cd112a8923857b88dbcf4b1068600d75aa3650c4eb2ac",
     ),
     "policy": (
-        DEMO_ROOT / "config" / "admission_policy.yaml",
+        FROZEN_POLICY_PATH,
         "010ca27b327e5098b11d7819563b40a607cac7698ac01019740557b8eaececf5",
     ),
     "aegis_static": (
@@ -541,6 +542,7 @@ def run(output_dir: Path) -> dict[str, Any]:
     parent_rows = load_jsonl(PARENT_RESULTS_PATH)
     parent_map = {str(row["case_id"]): row for row in parent_rows}
     integrity_failures: list[dict[str, str]] = []
+    frozen_policy = load_policy(FROZEN_POLICY_PATH)
     results: list[dict[str, Any]] = []
 
     for index, regression_row in enumerate(regression, start=1):
@@ -583,7 +585,8 @@ def run(output_dir: Path) -> dict[str, Any]:
                 )
                 aegis_duration_ms = max(1, round((time.perf_counter() - case_started) * 1000))
                 evaluation = evaluate_findings(
-                    list(parent.get("finding_index") or []) + raw_aegis_findings
+                    list(parent.get("finding_index") or []) + raw_aegis_findings,
+                    frozen_policy,
                 )
                 after_hash = tree_sha256(case_root)
                 if after_hash != expected_hash:

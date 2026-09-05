@@ -8,6 +8,7 @@ from pathlib import Path
 
 import pytest
 
+from backend.normalizers import normalize_skill
 from backend.openclaw_install_policy import (
     MAX_FINDINGS,
     SourceTreeLimits,
@@ -48,6 +49,25 @@ def scan_with(*findings: dict):
     return lambda _path: {"findings": list(findings), "analyzers": ["test"]}
 
 
+def normalized_cisco_high() -> dict:
+    findings, _ = normalize_skill(
+        {
+            "skill_name": "candidate",
+            "findings": [
+                {
+                    "rule_id": "YARA_jailbreak_generic",
+                    "severity": "HIGH",
+                    "analyzer": "yara_analyzer",
+                    "file_path": "SKILL.md",
+                    "line_number": 5,
+                    "description": "raw vendor text is hashed",
+                }
+            ],
+        }
+    )
+    return findings[0]
+
+
 @pytest.mark.parametrize(
     ("severity", "expected"),
     [
@@ -71,6 +91,49 @@ def test_maps_existing_policy_without_changing_decision_semantics(
     assert response["protocolVersion"] == 1
     assert response["decision"] == expected
     assert response["reason"]
+
+
+def test_formal_openclaw_admission_warns_for_uncorroborated_cisco_high(
+    tmp_path: Path, monkeypatch
+) -> None:
+    skill = make_skill(tmp_path)
+    monkeypatch.setenv("AEGIS_OPENCLAW_REVIEW_MODE", "warn")
+
+    response = evaluate_install_request(
+        request_for(skill), skill_scan=scan_with(normalized_cisco_high())
+    )
+
+    assert response["decision"] == "warn"
+    assert "缺少独立高置信证据佐证" in response["reason"]
+    assert response["findings"][0]["ruleId"] == "YARA_jailbreak_generic"
+
+
+def test_formal_openclaw_admission_blocks_when_aegis_high_corroborates(
+    tmp_path: Path, monkeypatch
+) -> None:
+    skill = make_skill(tmp_path)
+    monkeypatch.setenv("AEGIS_OPENCLAW_REVIEW_MODE", "warn")
+    aegis = {
+        "id": "aegis-remote-chain",
+        "rule_id": "AEGIS_REMOTE_FETCH_PIPE_SHELL",
+        "title": "检测到远程下载后执行链",
+        "category": "remote_execution",
+        "severity": "HIGH",
+        "analyzer": "aegis-static-v1",
+        "evidence_source": "AEGIS_STATIC",
+        "evidence_confidence": "CORROBORATED",
+    }
+
+    response = evaluate_install_request(
+        request_for(skill),
+        skill_scan=scan_with(normalized_cisco_high(), aegis),
+    )
+
+    assert response["decision"] == "block"
+    assert any(
+        item["ruleId"] == "AEGIS_REMOTE_FETCH_PIPE_SHELL"
+        for item in response["findings"]
+    )
 
 
 @pytest.mark.parametrize(

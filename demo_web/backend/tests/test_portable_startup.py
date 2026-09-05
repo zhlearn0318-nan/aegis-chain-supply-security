@@ -210,3 +210,16 @@ def test_required_dynamic_preflight_fails_closed_without_admin_token() -> None:
     assert result["required_failures"] >= 1
     assert checks["admin_token"]["required"] is True
     assert checks["admin_token"]["status"] == "FAIL"
+
+
+def test_final_installer_verify_only_never_starts_or_repairs_services() -> None:
+    installer = (PROJECT_ROOT / "install_openclaw_final.ps1").read_text(
+        encoding="utf-8"
+    )
+
+    assert "verify-only mode never starts or repairs services" in installer
+    assert "verify-only mode never starts the service" in installer
+    assert (
+        'if (-not $VerifyOnly) {\n'
+        '        Invoke-Checked $OpenClaw @("gateway", "install"'
+    ) in installer

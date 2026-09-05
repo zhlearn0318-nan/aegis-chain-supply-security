@@ -131,7 +131,20 @@ def _read_audit_pipe(fd: int, events: list[dict[str, Any]], state: dict[str, boo
         state["complete"] = False
 
 
-def run_entrypoint(skill_root: Path, entry: str, timeout_seconds: float) -> dict[str, Any]:
+def _parse_argv_json(raw: str) -> list[str]:
+    payload = json.loads(raw)
+    if (
+        not isinstance(payload, list)
+        or len(payload) > 16
+        or any(not isinstance(item, str) or len(item) > 512 or any(ch in item for ch in ("\x00", "\r", "\n")) for item in payload)
+    ):
+        raise ValueError("ENTRYPOINT_ARGV_DENIED")
+    if len(raw.encode("utf-8")) > 4096:
+        raise ValueError("ENTRYPOINT_ARGV_LIMIT_EXCEEDED")
+    return payload
+
+
+def run_entrypoint(skill_root: Path, entry: str, timeout_seconds: float, argv: list[str] | None = None) -> dict[str, Any]:
     if os.name != "posix":
         raise RuntimeError("LINUX_CONTAINER_REQUIRED")
     target, relative = _validate_entry(skill_root, entry)
@@ -157,10 +170,14 @@ def run_entrypoint(skill_root: Path, entry: str, timeout_seconds: float) -> dict
         "AEGIS_AUDIT_FD": str(write_fd),
         "AEGIS_SINKHOLE_URL": f"http://127.0.0.1:{sinkhole.server_port}",
         "AEGIS_DECOY_DIR": "/workspace/decoys",
+        "AEGIS_TEST_ROUND": os.environ.get("AEGIS_TEST_ROUND", "typical")[:40],
+        "AEGIS_TEST_INPUT": os.environ.get("AEGIS_TEST_INPUT", "")[:1000],
     }
     started = time.perf_counter()
+    normalized_argv = list(argv or [])
+    argv_json = json.dumps(normalized_argv, ensure_ascii=False, separators=(",", ":"))
     process = subprocess.Popen(
-        [sys.executable, "-s", "-B", str(target)],
+        [sys.executable, "-s", "-B", str(target), *normalized_argv],
         cwd=workspace,
         env=env,
         stdin=subprocess.DEVNULL,
@@ -199,6 +216,8 @@ def run_entrypoint(skill_root: Path, entry: str, timeout_seconds: float) -> dict
         "stderr": {"bytes": len(stderr), "sha256": _sha256(stderr[:MAX_CAPTURE_BYTES]), "truncated": len(stderr) > MAX_CAPTURE_BYTES},
         "decoys": {marker_id: {"path": path, "value_retained": False} for marker_id, path in decoy_paths.items()},
         "internet_used": False,
+        "argv_count": len(normalized_argv),
+        "argv_sha256": _sha256(argv_json.encode("utf-8")),
     }
 
 
@@ -207,10 +226,11 @@ def main() -> int:
     parser.add_argument("--skill-root", required=True)
     parser.add_argument("--entry", required=True)
     parser.add_argument("--timeout-seconds", type=float, required=True)
+    parser.add_argument("--argv-json", default="[]")
     args = parser.parse_args()
     timeout = min(max(args.timeout_seconds, 1.0), 120.0)
     try:
-        result = run_entrypoint(Path(args.skill_root), args.entry, timeout)
+        result = run_entrypoint(Path(args.skill_root), args.entry, timeout, _parse_argv_json(args.argv_json))
     except Exception as exc:
         result = {
             "schema_version": "1.0",

@@ -454,7 +454,7 @@ v1 普通响应的最外层为 `{"api_version":"v1","data":{...}}`。以下展�
 
 ```json
 {
-  "schema_version": "1.2",
+  "schema_version": "1.3",
   "id": "2b32451815a74c5e8aac22c973454608",
   "created_at": "2026-08-07T10:00:00+08:00",
   "updated_at": "2026-08-07T10:00:04+08:00",
@@ -466,7 +466,7 @@ v1 普通响应的最外层为 `{"api_version":"v1","data":{...}}`。以下展�
   "decision": "BLOCK",
   "policy_trace": {
     "policy_id": "aegis-chain-local-default",
-    "policy_version": "1.0.0",
+    "policy_version": "1.1.0",
     "rule_id": "POLICY_BLOCK_SEVERITY",
     "reason": "命中阻断严重度：CRITICAL 1 条。",
     "matched_severities": ["CRITICAL"],
@@ -876,7 +876,7 @@ Cisco 官方样例适合作为厂商回归集，不宜单独作为证明自研�
 
 ### 15.1 已完成：YAML 策略配置与追踪
 
-- 默认策略 `aegis-chain-local-default@1.0.0` 已启用；
+- 默认策略 `aegis-chain-local-default@1.1.0` 已启用；孤立 Cisco Skill HIGH 候选进入 REVIEW，完整高危证据和故障状态继续阻断；
 - 新任务使用 schema `1.1` 和完整 `policy_trace`；
 - 无效或 fail-open 配置会被拒绝；
 - 58 项测试与旧/v1 双路真实回归均通过；

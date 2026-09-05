@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "checks": {
+    "expected_dynamic_rule_recall": true,
+    "controlled_risk_non_allow_recall": true,
+    "original_allow_rate": true,
+    "three_round_attestation_rate": true,
+    "container_security_gate_rate": true,
+    "cleanup_verification_rate": true,
+    "case_tree_immutability_rate": true
+  },
+  "residual_containers": []
+}

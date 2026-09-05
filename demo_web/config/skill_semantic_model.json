@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "default_mode": "local",
+  "timeout_seconds": 30,
+  "local": {
+    "endpoint": "http://127.0.0.1:11434",
+    "model": "qwen2.5:7b-instruct-q4_K_M"
+  },
+  "external": {
+    "enabled": false,
+    "base_url": "https://api.openai.com/v1",
+    "model": "gpt-4.1-mini",
+    "api_key_env": "AEGIS_EXTERNAL_LLM_API_KEY",
+    "allowed_hosts": ["api.openai.com"]
+  }
+}

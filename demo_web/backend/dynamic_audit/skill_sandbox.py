@@ -18,10 +18,11 @@ MAX_SKILL_FILES = 500
 MAX_SKILL_BYTES = 50 * 1024 * 1024
 MAX_EVENT_COUNT = 5_000
 MAX_EVENT_TEXT = 500
-_PYTHON_REFERENCE = re.compile(
-    r"(?<![A-Za-z0-9_.-])([A-Za-z0-9_.-]+(?:[/\\][A-Za-z0-9_.-]+)*\.py)(?![A-Za-z0-9_.-])",
+_SCRIPT_REFERENCE = re.compile(
+    r"(?<![A-Za-z0-9_.-])([A-Za-z0-9_.-]+(?:[/\\][A-Za-z0-9_.-]+)*\.(?:py|js|mjs|cjs|sh))(?![A-Za-z0-9_.-])",
     re.IGNORECASE,
 )
+_RUNTIME_BY_SUFFIX = {".py": "python", ".js": "node", ".mjs": "node", ".cjs": "node", ".sh": "shell"}
 _SHELL_NAMES = {
     "bash",
     "sh",
@@ -70,6 +71,7 @@ class EntrypointPlan:
     discovery: str
     files_seen: int
     total_bytes: int
+    runtimes: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -93,14 +95,14 @@ def _bounded_text(value: Any, limit: int = MAX_EVENT_TEXT) -> str:
     return " ".join(text.split())[:limit]
 
 
-def _relative_python_path(raw: str) -> str | None:
+def _relative_script_path(raw: str) -> str | None:
     normalized = raw.replace("\\", "/")
     if not normalized or normalized.startswith("/") or ":" in normalized:
         return None
     parts = PurePosixPath(normalized).parts
     if not parts or any(part in {"", ".", ".."} for part in parts):
         return None
-    if PurePosixPath(*parts).suffix.lower() != ".py":
+    if PurePosixPath(*parts).suffix.lower() not in _RUNTIME_BY_SUFFIX:
         return None
     return PurePosixPath(*parts).as_posix()
 
@@ -142,7 +144,7 @@ def _inventory_skill(root: Path) -> tuple[dict[str, Path], int, int]:
     return files, len(files), total_bytes
 
 
-def discover_python_entrypoints(
+def discover_skill_entrypoints(
     root: Path,
     *,
     max_entrypoints: int = MAX_ENTRYPOINTS,
@@ -159,8 +161,8 @@ def discover_python_entrypoints(
         raise SkillSandboxRejected("SKILL_MANIFEST_INVALID", "SKILL.md 必须是 UTF-8") from exc
 
     referenced: list[str] = []
-    for match in _PYTHON_REFERENCE.finditer(manifest_text):
-        relative = _relative_python_path(match.group(1))
+    for match in _SCRIPT_REFERENCE.finditer(manifest_text):
+        relative = _relative_script_path(match.group(1))
         if relative is None or relative not in files:
             continue
         if relative not in referenced:
@@ -169,14 +171,17 @@ def discover_python_entrypoints(
         if len(referenced) > max_entrypoints:
             raise SkillSandboxRejected(
                 "ENTRYPOINT_AMBIGUOUS",
-                f"SKILL.md 引用了 {len(referenced)} 个 Python 入口",
+                f"SKILL.md 引用了 {len(referenced)} 个脚本入口",
             )
-        return EntrypointPlan(tuple(referenced), "skill_manifest", files_seen, total_bytes)
+        return EntrypointPlan(
+            tuple(referenced), "skill_manifest", files_seen, total_bytes,
+            tuple(_RUNTIME_BY_SUFFIX[PurePosixPath(item).suffix.lower()] for item in referenced),
+        )
 
     fallback = sorted(
         relative
         for relative in files
-        if relative.startswith("scripts/") and relative.lower().endswith(".py")
+        if relative.startswith("scripts/") and PurePosixPath(relative).suffix.lower() in _RUNTIME_BY_SUFFIX
     )
     if fallback:
         if len(fallback) > max_entrypoints:
@@ -184,25 +189,54 @@ def discover_python_entrypoints(
                 "ENTRYPOINT_AMBIGUOUS",
                 f"scripts/ 下存在 {len(fallback)} 个候选入口",
             )
-        return EntrypointPlan(tuple(fallback), "scripts_fallback", files_seen, total_bytes)
+        return EntrypointPlan(
+            tuple(fallback), "scripts_fallback", files_seen, total_bytes,
+            tuple(_RUNTIME_BY_SUFFIX[PurePosixPath(item).suffix.lower()] for item in fallback),
+        )
 
     root_fallback = sorted(
         relative
         for relative in files
-        if "/" not in relative and relative.lower().endswith(".py")
+        if "/" not in relative and PurePosixPath(relative).suffix.lower() in _RUNTIME_BY_SUFFIX
     )
     if len(root_fallback) > 1:
         raise SkillSandboxRejected(
             "ENTRYPOINT_AMBIGUOUS",
-            f"Skill 根目录存在 {len(root_fallback)} 个 Python 候选入口",
+            f"Skill 根目录存在 {len(root_fallback)} 个脚本候选入口",
         )
     if root_fallback:
         return EntrypointPlan(
-            tuple(root_fallback), "root_single_python_fallback", files_seen, total_bytes
+            tuple(root_fallback), "root_single_script_fallback", files_seen, total_bytes,
+            tuple(_RUNTIME_BY_SUFFIX[PurePosixPath(item).suffix.lower()] for item in root_fallback),
         )
-    raise SkillSandboxRejected(
-        "PYTHON_ENTRYPOINT_NOT_FOUND",
-        "SKILL.md 未引用 Python 脚本，scripts/ 和 Skill 根目录下也没有候选",
+    return EntrypointPlan((), "pure_instruction", files_seen, total_bytes, ())
+
+
+def discover_python_entrypoints(
+    root: Path,
+    *,
+    max_entrypoints: int = MAX_ENTRYPOINTS,
+) -> EntrypointPlan:
+    """Backward-compatible Python-only discovery used by the v1 runner."""
+    plan = discover_skill_entrypoints(root, max_entrypoints=max_entrypoints)
+    if not plan.entrypoints:
+        raise SkillSandboxRejected(
+            "PYTHON_ENTRYPOINT_NOT_FOUND",
+            "SKILL.md 未引用 Python 脚本，scripts/ 和 Skill 根目录下也没有候选",
+        )
+    if any(runtime != "python" for runtime in plan.runtimes):
+        raise SkillSandboxRejected("PYTHON_ENTRYPOINT_NOT_FOUND", "Skill 入口不是 Python")
+    discovery = (
+        "root_single_python_fallback"
+        if plan.discovery == "root_single_script_fallback"
+        else plan.discovery
+    )
+    return EntrypointPlan(
+        plan.entrypoints,
+        discovery,
+        plan.files_seen,
+        plan.total_bytes,
+        plan.runtimes,
     )
 
 

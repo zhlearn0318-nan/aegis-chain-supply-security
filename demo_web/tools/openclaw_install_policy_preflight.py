@@ -95,7 +95,7 @@ def main() -> int:
         "skill_scanner": SKILL_SCANNER,
         "policy_cli": DEMO_ROOT / "tools" / "openclaw_install_policy.py",
         "policy_proxy": DEMO_ROOT / "tools" / "openclaw_install_policy_proxy.mjs",
-        "policy_config": DEMO_ROOT / "config" / "admission_policy.yaml",
+        "policy_config": DEMO_ROOT / "config" / "admission_policy.skill-evidence-v1.yaml",
         "stable_config_example": DEMO_ROOT
         / "config"
         / "openclaw.install-policy.windows-stable.example.json5",

@@ -43,7 +43,7 @@ IMAGE_ID = "sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88
 TOOL_RELATIVE_ROOT = "tools/dynamic/docker/skill_sandbox"
 TOOL_CONTAINER_ROOT = "/aegis_tool"
 EXPECTED_TOOL_HASHES = {
-    "runner.py": "1ef05198c19435bd06becb107599bb9bc28c2496bc4e98735dc4b3976873cf5f",
+    "runner.py": "cf3a1aaf1ec4963440b88229b59516c9ebd6f6ec1aae2ee3b127d6732c9117bd",
     "sitecustomize.py": "70f6e29cf83feaaf78595697b4cf98585db23da17e32400dac0f606b0fa90d32",
 }
 EXPECTED_SECURITY: dict[str, Any] = {

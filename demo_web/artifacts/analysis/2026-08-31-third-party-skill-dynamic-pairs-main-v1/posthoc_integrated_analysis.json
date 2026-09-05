@@ -1,0 +1,401 @@
+{
+  "schema_version": "1.0",
+  "analysis_kind": "posthoc_integrated_policy_analysis",
+  "main_run_unchanged": true,
+  "records": [
+    {
+      "case_id": "openai-jupyter-notebook--original",
+      "variant": "original",
+      "risk_type": "none",
+      "static_decision": "REVIEW",
+      "dynamic_decision": "ALLOW",
+      "fused_decision": "REVIEW",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": false
+    },
+    {
+      "case_id": "openai-jupyter-notebook--decoy_access",
+      "variant": "controlled_risk_twin",
+      "risk_type": "decoy_access",
+      "static_decision": "REVIEW",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": true
+    },
+    {
+      "case_id": "openai-jupyter-notebook--shell_spawn",
+      "variant": "controlled_risk_twin",
+      "risk_type": "shell_spawn",
+      "static_decision": "REVIEW",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": true
+    },
+    {
+      "case_id": "openai-jupyter-notebook--sensitive_path",
+      "variant": "controlled_risk_twin",
+      "risk_type": "sensitive_path",
+      "static_decision": "REVIEW",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": true
+    },
+    {
+      "case_id": "openai-jupyter-notebook--external_network",
+      "variant": "controlled_risk_twin",
+      "risk_type": "external_network",
+      "static_decision": "REVIEW",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": true
+    },
+    {
+      "case_id": "openai-jupyter-notebook--adversarial_timeout",
+      "variant": "controlled_risk_twin",
+      "risk_type": "adversarial_timeout",
+      "static_decision": "REVIEW",
+      "dynamic_decision": "REVIEW",
+      "fused_decision": "REVIEW",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": false
+    },
+    {
+      "case_id": "openai-plugin-creator--original",
+      "variant": "original",
+      "risk_type": "none",
+      "static_decision": "REVIEW",
+      "dynamic_decision": "ALLOW",
+      "fused_decision": "REVIEW",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": false
+    },
+    {
+      "case_id": "openai-plugin-creator--decoy_access",
+      "variant": "controlled_risk_twin",
+      "risk_type": "decoy_access",
+      "static_decision": "REVIEW",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": true
+    },
+    {
+      "case_id": "openai-plugin-creator--shell_spawn",
+      "variant": "controlled_risk_twin",
+      "risk_type": "shell_spawn",
+      "static_decision": "REVIEW",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": true
+    },
+    {
+      "case_id": "openai-plugin-creator--sensitive_path",
+      "variant": "controlled_risk_twin",
+      "risk_type": "sensitive_path",
+      "static_decision": "REVIEW",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": true
+    },
+    {
+      "case_id": "openai-plugin-creator--external_network",
+      "variant": "controlled_risk_twin",
+      "risk_type": "external_network",
+      "static_decision": "REVIEW",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": true
+    },
+    {
+      "case_id": "openai-plugin-creator--adversarial_timeout",
+      "variant": "controlled_risk_twin",
+      "risk_type": "adversarial_timeout",
+      "static_decision": "REVIEW",
+      "dynamic_decision": "REVIEW",
+      "fused_decision": "REVIEW",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": false
+    },
+    {
+      "case_id": "openai-security-ownership-map--original",
+      "variant": "original",
+      "risk_type": "none",
+      "static_decision": "BLOCK",
+      "dynamic_decision": "ALLOW",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": false
+    },
+    {
+      "case_id": "openai-security-ownership-map--decoy_access",
+      "variant": "controlled_risk_twin",
+      "risk_type": "decoy_access",
+      "static_decision": "BLOCK",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": false
+    },
+    {
+      "case_id": "openai-security-ownership-map--shell_spawn",
+      "variant": "controlled_risk_twin",
+      "risk_type": "shell_spawn",
+      "static_decision": "BLOCK",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": false
+    },
+    {
+      "case_id": "openai-security-ownership-map--sensitive_path",
+      "variant": "controlled_risk_twin",
+      "risk_type": "sensitive_path",
+      "static_decision": "BLOCK",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": false
+    },
+    {
+      "case_id": "openai-security-ownership-map--external_network",
+      "variant": "controlled_risk_twin",
+      "risk_type": "external_network",
+      "static_decision": "BLOCK",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": false
+    },
+    {
+      "case_id": "openai-security-ownership-map--adversarial_timeout",
+      "variant": "controlled_risk_twin",
+      "risk_type": "adversarial_timeout",
+      "static_decision": "BLOCK",
+      "dynamic_decision": "REVIEW",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": false
+    },
+    {
+      "case_id": "openai-chatgpt-apps--original",
+      "variant": "original",
+      "risk_type": "none",
+      "static_decision": "REVIEW",
+      "dynamic_decision": "ALLOW",
+      "fused_decision": "REVIEW",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": false
+    },
+    {
+      "case_id": "openai-chatgpt-apps--decoy_access",
+      "variant": "controlled_risk_twin",
+      "risk_type": "decoy_access",
+      "static_decision": "REVIEW",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": true
+    },
+    {
+      "case_id": "openai-chatgpt-apps--shell_spawn",
+      "variant": "controlled_risk_twin",
+      "risk_type": "shell_spawn",
+      "static_decision": "BLOCK",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": false
+    },
+    {
+      "case_id": "openai-chatgpt-apps--sensitive_path",
+      "variant": "controlled_risk_twin",
+      "risk_type": "sensitive_path",
+      "static_decision": "REVIEW",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": true
+    },
+    {
+      "case_id": "openai-chatgpt-apps--external_network",
+      "variant": "controlled_risk_twin",
+      "risk_type": "external_network",
+      "static_decision": "REVIEW",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": true
+    },
+    {
+      "case_id": "openai-chatgpt-apps--adversarial_timeout",
+      "variant": "controlled_risk_twin",
+      "risk_type": "adversarial_timeout",
+      "static_decision": "REVIEW",
+      "dynamic_decision": "REVIEW",
+      "fused_decision": "REVIEW",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": false
+    },
+    {
+      "case_id": "openai-openai-docs--original",
+      "variant": "original",
+      "risk_type": "none",
+      "static_decision": "REVIEW",
+      "dynamic_decision": "ALLOW",
+      "fused_decision": "REVIEW",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": false
+    },
+    {
+      "case_id": "openai-openai-docs--decoy_access",
+      "variant": "controlled_risk_twin",
+      "risk_type": "decoy_access",
+      "static_decision": "REVIEW",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": true
+    },
+    {
+      "case_id": "openai-openai-docs--shell_spawn",
+      "variant": "controlled_risk_twin",
+      "risk_type": "shell_spawn",
+      "static_decision": "BLOCK",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": false
+    },
+    {
+      "case_id": "openai-openai-docs--sensitive_path",
+      "variant": "controlled_risk_twin",
+      "risk_type": "sensitive_path",
+      "static_decision": "REVIEW",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": true
+    },
+    {
+      "case_id": "openai-openai-docs--external_network",
+      "variant": "controlled_risk_twin",
+      "risk_type": "external_network",
+      "static_decision": "REVIEW",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": true
+    },
+    {
+      "case_id": "openai-openai-docs--adversarial_timeout",
+      "variant": "controlled_risk_twin",
+      "risk_type": "adversarial_timeout",
+      "static_decision": "REVIEW",
+      "dynamic_decision": "REVIEW",
+      "fused_decision": "REVIEW",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": false
+    },
+    {
+      "case_id": "anthropic-algorithmic-art--original",
+      "variant": "original",
+      "risk_type": "none",
+      "static_decision": "ALLOW",
+      "dynamic_decision": "ALLOW",
+      "fused_decision": "ALLOW",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": false
+    },
+    {
+      "case_id": "anthropic-algorithmic-art--decoy_access",
+      "variant": "controlled_risk_twin",
+      "risk_type": "decoy_access",
+      "static_decision": "ALLOW",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": true,
+      "dynamic_stricter": true
+    },
+    {
+      "case_id": "anthropic-algorithmic-art--shell_spawn",
+      "variant": "controlled_risk_twin",
+      "risk_type": "shell_spawn",
+      "static_decision": "BLOCK",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": false,
+      "dynamic_stricter": false
+    },
+    {
+      "case_id": "anthropic-algorithmic-art--sensitive_path",
+      "variant": "controlled_risk_twin",
+      "risk_type": "sensitive_path",
+      "static_decision": "ALLOW",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": true,
+      "dynamic_stricter": true
+    },
+    {
+      "case_id": "anthropic-algorithmic-art--external_network",
+      "variant": "controlled_risk_twin",
+      "risk_type": "external_network",
+      "static_decision": "ALLOW",
+      "dynamic_decision": "BLOCK",
+      "fused_decision": "BLOCK",
+      "dynamic_new_non_allow": true,
+      "dynamic_stricter": true
+    },
+    {
+      "case_id": "anthropic-algorithmic-art--adversarial_timeout",
+      "variant": "controlled_risk_twin",
+      "risk_type": "adversarial_timeout",
+      "static_decision": "ALLOW",
+      "dynamic_decision": "REVIEW",
+      "fused_decision": "REVIEW",
+      "dynamic_new_non_allow": true,
+      "dynamic_stricter": true
+    }
+  ],
+  "originals": {
+    "support": 6,
+    "static_decisions": {
+      "ALLOW": 1,
+      "BLOCK": 1,
+      "REVIEW": 4
+    },
+    "dynamic_decisions": {
+      "ALLOW": 6
+    },
+    "fused_decisions": {
+      "ALLOW": 1,
+      "BLOCK": 1,
+      "REVIEW": 4
+    },
+    "dynamic_clean_rate": 1.0,
+    "integrated_allow_rate": 0.16666666666666666
+  },
+  "controlled_risks": {
+    "support": 30,
+    "static_non_allow": 26,
+    "static_non_allow_recall": 0.8666666666666667,
+    "dynamic_non_allow": 30,
+    "dynamic_non_allow_recall": 1.0,
+    "fused_non_allow": 30,
+    "fused_non_allow_recall": 1.0,
+    "dynamic_new_non_allow_cases": 4,
+    "dynamic_stricter_cases": 18
+  },
+  "interpretation": {
+    "dynamic_effect": "Dynamic audit closes four static ALLOW misses and strengthens eighteen controlled-risk decisions in total.",
+    "usability_gap": "The monotonic fusion policy correctly refuses to let a clean dynamic run erase static risk, but only one of six originals reaches final ALLOW; static false positives and package-level scope remain the usability bottleneck.",
+    "policy_changed": false
+  }
+}

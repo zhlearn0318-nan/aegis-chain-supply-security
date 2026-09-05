@@ -11,6 +11,7 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .pytest-tmp*/
+.pytest_tmp*/
 .mypy_cache/
 .ruff_cache/
 .coverage
@@ -18,6 +19,8 @@ htmlcov/
 
 # Downloaded datasets, vendor checkouts and generated scan outputs
 datasets/
+!demo_web/tools/datasets/
+!demo_web/tools/datasets/prepare_maliciousskillbench_source_disjoint.py
 third_party/
 results/*
 !results/availability_summary.json
@@ -53,6 +56,18 @@ demo_web/artifacts/experiment/*
 !demo_web/artifacts/experiment/2026-08-28-openclaw-third-party-skill-demo-v1/
 !demo_web/artifacts/experiment/2026-08-28-openclaw-third-party-skill-demo-v2/
 !demo_web/artifacts/experiment/2026-08-28-openclaw-live-demo-script-v1/
+!demo_web/artifacts/analysis/
+demo_web/artifacts/analysis/*
+!demo_web/artifacts/analysis/2026-08-31-maliciousskillbench-source-disjoint-main-v1/
+demo_web/artifacts/analysis/2026-08-31-maliciousskillbench-source-disjoint-main-v1/*
+!demo_web/artifacts/analysis/2026-08-31-maliciousskillbench-source-disjoint-main-v1/REPORT.md
+!demo_web/artifacts/analysis/2026-08-31-maliciousskillbench-source-disjoint-main-v1/metrics.json
+!demo_web/artifacts/analysis/2026-08-31-maliciousskillbench-source-disjoint-main-v1/run_manifest.json
+!demo_web/artifacts/analysis/2026-08-31-maliciousskillbench-source-disjoint-main-v1/cisco_batch_receipt.json
+!demo_web/artifacts/analysis/2026-08-31-third-party-skill-dynamic-pairs-main-v1/
+!demo_web/artifacts/analysis/2026-08-31-third-party-skill-dynamic-pairs-main-v1/*
+!demo_web/artifacts/analysis/2026-08-31-third-party-skill-dynamic-pairs-main-v1-failed-attempt1/
+!demo_web/artifacts/analysis/2026-08-31-third-party-skill-dynamic-pairs-main-v1-failed-attempt1/run_manifest.json
 demo_web/artifacts/**/pytest-temp*/
 demo_web/artifacts/**/fixture_workspaces/
 demo_web/artifacts/**/platform-acceptance-*/

@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-31-third-party-skill-dynamic-pairs-main-v1",
+  "cases": 36,
+  "container_script_invocations": 108,
+  "static_decisions": {
+    "ALLOW": 5,
+    "BLOCK": 9,
+    "REVIEW": 22
+  },
+  "dynamic_decisions": {
+    "ALLOW": 6,
+    "BLOCK": 24,
+    "REVIEW": 6
+  },
+  "expected_dynamic_rule_recall": 1.0,
+  "controlled_risk_non_allow_recall": 1.0,
+  "original_allow_rate": 1.0,
+  "original_false_positive_non_allow_rate": 0.0,
+  "adversarial_trigger_attestation_rate": 1.0,
+  "decision_lift_cases": 18,
+  "decision_lift_rate": 0.5,
+  "three_round_attestation_rate": 1.0,
+  "container_security_gate_rate": 1.0,
+  "cleanup_verification_rate": 1.0,
+  "case_tree_immutability_rate": 1.0,
+  "infrastructure_success_rate": 1.0,
+  "latency_ms": {
+    "median": 5002,
+    "mean": 4387,
+    "max": 10290
+  },
+  "per_risk_type": {
+    "adversarial_timeout": {
+      "support": 6,
+      "expected_rule_detected": 6,
+      "non_allow": 6,
+      "adversarial_round_event": 6
+    },
+    "decoy_access": {
+      "support": 6,
+      "expected_rule_detected": 6,
+      "non_allow": 6,
+      "adversarial_round_event": 6
+    },
+    "external_network": {
+      "support": 6,
+      "expected_rule_detected": 6,
+      "non_allow": 6,
+      "adversarial_round_event": 6
+    },
+    "sensitive_path": {
+      "support": 6,
+      "expected_rule_detected": 6,
+      "non_allow": 6,
+      "adversarial_round_event": 6
+    },
+    "shell_spawn": {
+      "support": 6,
+      "expected_rule_detected": 6,
+      "non_allow": 6,
+      "adversarial_round_event": 6
+    }
+  }
+}

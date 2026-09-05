@@ -140,6 +140,34 @@
       }
     },
     {
+      "analyzer": "aegis-skill-semantic-v1",
+      "scope": "openclaw_skill_manifest",
+      "decision_effect": true,
+      "model_policy": "deterministic_high_may_block; model_only_maximum_medium_review",
+      "rules": {
+        "AEGIS_SEMANTIC_CONCEALED_RISKY_BEHAVIOR": ["HIGH"],
+        "AEGIS_SEMANTIC_POLICY_OVERRIDE_CHAIN": ["HIGH"],
+        "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER": ["MEDIUM"],
+        "AEGIS_SEMANTIC_INVISIBLE_INSTRUCTION_TEXT": ["MEDIUM"],
+        "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE": ["INFO", "MEDIUM"],
+        "AEGIS_SEMANTIC_MANIFEST_TOO_LARGE": ["MEDIUM"]
+      }
+    },
+    {
+      "analyzer": "aegis-skill-capability-alignment-v1",
+      "scope": "openclaw_skill",
+      "decision_effect": true,
+      "rules": {
+        "AEGIS_UNDECLARED_NETWORK_CAPABILITY": ["MEDIUM"],
+        "AEGIS_UNDECLARED_FILESYSTEM_CAPABILITY": ["MEDIUM"],
+        "AEGIS_UNDECLARED_PROCESS_CAPABILITY": ["MEDIUM"],
+        "AEGIS_UNDECLARED_CREDENTIAL_CAPABILITY": ["MEDIUM"],
+        "AEGIS_UNDECLARED_OPENCLAW_CONTROL_CAPABILITY": ["MEDIUM"],
+        "AEGIS_OPENCLAW_CONTROL_PLANE_MUTATION": ["MEDIUM", "HIGH"],
+        "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY": ["INFO"]
+      }
+    },
+    {
       "analyzer": "aegis-context-v1-families",
       "scope": "skill",
       "decision_effect": false,

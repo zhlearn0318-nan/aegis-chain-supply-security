@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-08-31-third-party-skill-dynamic-pairs-main-v1",
+  "status": "completed",
+  "started_at": "2026-09-02T12:02:41+08:00",
+  "dataset": {
+    "source_lock_sha256": "03920cf695dae0b3006fe4446b849a6b858166c9441a820f6b9ebaee8ffb4b76",
+    "manifest_sha256": "cdeebc7b269b4cf908d1c9955c13cd1b91de6b0321ff56d53d5bb7261a5fa7d8",
+    "cases": 36
+  },
+  "contract": {
+    "path": "demo_web\\config\\third_party_dynamic_pairs_eval_v1.json",
+    "sha256": "e0500dfed74d8fedad9744dae47569f822966138947883b63f28437ffa8d11ed",
+    "status": "frozen_before_main_run"
+  },
+  "static": {
+    "scanner_version": "skill-scanner 2.0.13.dev3+g4dee90371",
+    "scanner_sha256": "b31b66fce1b8466ba5c49e1084ee972b746e00d4ebdcaeab78ad6b38a0dce366",
+    "policy_sha256": "5b08e9e17c5ca0f5c6a14b3ddfd3e1f4f9c282fcb3ff89d68e3c663c768e8b2b",
+    "workers": 4
+  },
+  "dynamic": {
+    "backend_id": "aegis-multiruntime-skill-sandbox-v2",
+    "config_sha256": "3027b9498ed1ca28b69285f424363308641c46628c184a0b20446c2f7f074be2",
+    "timeout_seconds_per_case": 15
+  },
+  "environment": {
+    "python": "3.11.13 | packaged by Anaconda, Inc. | (main, Jun  5 2025, 13:03:15) [MSC v.1929 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "known_malicious_third_party_executed": false
+  },
+  "completed_at": "2026-09-02T12:06:48+08:00",
+  "wall_seconds": 246.853,
+  "outputs": {
+    "static_results.jsonl": {
+      "sha256": "391362d2b87e9b06c08b0845de4afb4dab3c82c56ea450fef83648a91e268916",
+      "bytes": 194618
+    },
+    "dynamic_results.jsonl": {
+      "sha256": "a1758992c027afba0a22ef515193cb43316515653f10b1f51035a5fb499752b2",
+      "bytes": 27106
+    },
+    "metrics.json": {
+      "sha256": "757c0b68dac6e2a2ea478ee7ab2454a49f34698a09ef36d76ff97c553c4efe64",
+      "bytes": 1583
+    },
+    "acceptance.json": {
+      "sha256": "703cdf0566a2587427ae3af093da4caccd33d3a59e5cef8bdf7e2884330d2e9c",
+      "bytes": 353
+    }
+  }
+}

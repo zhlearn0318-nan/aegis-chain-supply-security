@@ -1,0 +1,927 @@
+{
+  "cases": 1384,
+  "claim_boundary": "Main benchmark uses released static text snapshots; P1 is pure-instruction audit and does not execute known malicious code.",
+  "contract_sha256": "bbdc0d13ebfc8bbfbf79ee210937fb6dc76e792e6b4c9b584aeb161996f37c02",
+  "error_analysis": {
+    "cisco_only": {
+      "benign_allow": {
+        "cases": 517,
+        "source_counts": {
+          "SRC011": 427,
+          "SRC012": 90
+        },
+        "top_non_info_rules": []
+      },
+      "benign_non_allow": {
+        "cases": 28,
+        "source_counts": {
+          "SRC011": 28
+        },
+        "top_non_info_rules": [
+          {
+            "count": 14,
+            "rule_id": "PIPELINE_TAINT_FLOW"
+          },
+          {
+            "count": 1,
+            "rule_id": "SOCIAL_ENG_ANTHROPIC_IMPERSONATION"
+          },
+          {
+            "count": 1,
+            "rule_id": "PROMPT_INJECTION_IGNORE_INSTRUCTIONS"
+          },
+          {
+            "count": 1,
+            "rule_id": "FILE_MAGIC_MISMATCH"
+          },
+          {
+            "count": 1,
+            "rule_id": "YARA_tool_chaining_abuse_generic"
+          }
+        ]
+      },
+      "malicious_allow": {
+        "cases": 812,
+        "source_counts": {
+          "SRC009": 726,
+          "SRC011": 10,
+          "SRC012": 76
+        },
+        "top_non_info_rules": []
+      },
+      "malicious_non_allow": {
+        "cases": 27,
+        "source_counts": {
+          "SRC009": 2,
+          "SRC011": 11,
+          "SRC012": 14
+        },
+        "top_non_info_rules": [
+          {
+            "count": 9,
+            "rule_id": "PIPELINE_TAINT_FLOW"
+          },
+          {
+            "count": 4,
+            "rule_id": "YARA_tool_chaining_abuse_generic"
+          },
+          {
+            "count": 4,
+            "rule_id": "SOCIAL_ENG_VAGUE_DESCRIPTION"
+          },
+          {
+            "count": 2,
+            "rule_id": "YARA_coercive_injection_generic"
+          },
+          {
+            "count": 1,
+            "rule_id": "YARA_prompt_injection_generic"
+          },
+          {
+            "count": 1,
+            "rule_id": "YARA_prompt_injection_unicode_steganography"
+          },
+          {
+            "count": 1,
+            "rule_id": "ASCII_SMUGGLING_TAG_BLOCK"
+          },
+          {
+            "count": 1,
+            "rule_id": "GLOB_HIDDEN_FILE_TARGETING"
+          },
+          {
+            "count": 1,
+            "rule_id": "YARA_command_injection_generic"
+          }
+        ]
+      }
+    },
+    "cisco_plus_p0": {
+      "benign_allow": {
+        "cases": 404,
+        "source_counts": {
+          "SRC011": 314,
+          "SRC012": 90
+        },
+        "top_non_info_rules": []
+      },
+      "benign_non_allow": {
+        "cases": 141,
+        "source_counts": {
+          "SRC011": 141
+        },
+        "top_non_info_rules": [
+          {
+            "count": 105,
+            "rule_id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER"
+          },
+          {
+            "count": 17,
+            "rule_id": "AEGIS_REMOTE_FETCH_PIPE_SHELL"
+          },
+          {
+            "count": 14,
+            "rule_id": "PIPELINE_TAINT_FLOW"
+          },
+          {
+            "count": 7,
+            "rule_id": "AEGIS_SEMANTIC_CONCEALED_RISKY_BEHAVIOR"
+          },
+          {
+            "count": 2,
+            "rule_id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN"
+          },
+          {
+            "count": 2,
+            "rule_id": "AEGIS_PARTIAL_PERSISTENCE_INDICATOR"
+          },
+          {
+            "count": 2,
+            "rule_id": "AEGIS_PERSISTENCE_SCHEDULED_TASK"
+          },
+          {
+            "count": 1,
+            "rule_id": "AEGIS_SEMANTIC_INVISIBLE_INSTRUCTION_TEXT"
+          },
+          {
+            "count": 1,
+            "rule_id": "AEGIS_SEMANTIC_POLICY_OVERRIDE_CHAIN"
+          },
+          {
+            "count": 1,
+            "rule_id": "SOCIAL_ENG_ANTHROPIC_IMPERSONATION"
+          },
+          {
+            "count": 1,
+            "rule_id": "PROMPT_INJECTION_IGNORE_INSTRUCTIONS"
+          },
+          {
+            "count": 1,
+            "rule_id": "FILE_MAGIC_MISMATCH"
+          },
+          {
+            "count": 1,
+            "rule_id": "AEGIS_PERSISTENCE_SERVICE_CREATE"
+          },
+          {
+            "count": 1,
+            "rule_id": "YARA_tool_chaining_abuse_generic"
+          }
+        ]
+      },
+      "malicious_allow": {
+        "cases": 708,
+        "source_counts": {
+          "SRC009": 622,
+          "SRC011": 10,
+          "SRC012": 76
+        },
+        "top_non_info_rules": []
+      },
+      "malicious_non_allow": {
+        "cases": 131,
+        "source_counts": {
+          "SRC009": 106,
+          "SRC011": 11,
+          "SRC012": 14
+        },
+        "top_non_info_rules": [
+          {
+            "count": 80,
+            "rule_id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER"
+          },
+          {
+            "count": 28,
+            "rule_id": "AEGIS_PARTIAL_PERSISTENCE_INDICATOR"
+          },
+          {
+            "count": 9,
+            "rule_id": "PIPELINE_TAINT_FLOW"
+          },
+          {
+            "count": 8,
+            "rule_id": "AEGIS_REMOTE_FETCH_PIPE_SHELL"
+          },
+          {
+            "count": 4,
+            "rule_id": "YARA_tool_chaining_abuse_generic"
+          },
+          {
+            "count": 4,
+            "rule_id": "SOCIAL_ENG_VAGUE_DESCRIPTION"
+          },
+          {
+            "count": 2,
+            "rule_id": "AEGIS_SEMANTIC_INVISIBLE_INSTRUCTION_TEXT"
+          },
+          {
+            "count": 2,
+            "rule_id": "YARA_coercive_injection_generic"
+          },
+          {
+            "count": 1,
+            "rule_id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN"
+          },
+          {
+            "count": 1,
+            "rule_id": "YARA_prompt_injection_generic"
+          },
+          {
+            "count": 1,
+            "rule_id": "AEGIS_SEMANTIC_CONCEALED_RISKY_BEHAVIOR"
+          },
+          {
+            "count": 1,
+            "rule_id": "YARA_prompt_injection_unicode_steganography"
+          },
+          {
+            "count": 1,
+            "rule_id": "ASCII_SMUGGLING_TAG_BLOCK"
+          },
+          {
+            "count": 1,
+            "rule_id": "GLOB_HIDDEN_FILE_TARGETING"
+          },
+          {
+            "count": 1,
+            "rule_id": "YARA_command_injection_generic"
+          }
+        ]
+      }
+    },
+    "cisco_plus_p0_p1": {
+      "benign_allow": {
+        "cases": 404,
+        "source_counts": {
+          "SRC011": 314,
+          "SRC012": 90
+        },
+        "top_non_info_rules": []
+      },
+      "benign_non_allow": {
+        "cases": 141,
+        "source_counts": {
+          "SRC011": 141
+        },
+        "top_non_info_rules": [
+          {
+            "count": 200,
+            "rule_id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER"
+          },
+          {
+            "count": 17,
+            "rule_id": "AEGIS_REMOTE_FETCH_PIPE_SHELL"
+          },
+          {
+            "count": 14,
+            "rule_id": "PIPELINE_TAINT_FLOW"
+          },
+          {
+            "count": 7,
+            "rule_id": "AEGIS_SEMANTIC_CONCEALED_RISKY_BEHAVIOR"
+          },
+          {
+            "count": 2,
+            "rule_id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN"
+          },
+          {
+            "count": 2,
+            "rule_id": "AEGIS_PARTIAL_PERSISTENCE_INDICATOR"
+          },
+          {
+            "count": 2,
+            "rule_id": "AEGIS_SEMANTIC_INVISIBLE_INSTRUCTION_TEXT"
+          },
+          {
+            "count": 2,
+            "rule_id": "AEGIS_PERSISTENCE_SCHEDULED_TASK"
+          },
+          {
+            "count": 1,
+            "rule_id": "AEGIS_SEMANTIC_POLICY_OVERRIDE_CHAIN"
+          },
+          {
+            "count": 1,
+            "rule_id": "SOCIAL_ENG_ANTHROPIC_IMPERSONATION"
+          },
+          {
+            "count": 1,
+            "rule_id": "PROMPT_INJECTION_IGNORE_INSTRUCTIONS"
+          },
+          {
+            "count": 1,
+            "rule_id": "FILE_MAGIC_MISMATCH"
+          },
+          {
+            "count": 1,
+            "rule_id": "AEGIS_PERSISTENCE_SERVICE_CREATE"
+          },
+          {
+            "count": 1,
+            "rule_id": "YARA_tool_chaining_abuse_generic"
+          }
+        ]
+      },
+      "malicious_allow": {
+        "cases": 708,
+        "source_counts": {
+          "SRC009": 622,
+          "SRC011": 10,
+          "SRC012": 76
+        },
+        "top_non_info_rules": []
+      },
+      "malicious_non_allow": {
+        "cases": 131,
+        "source_counts": {
+          "SRC009": 106,
+          "SRC011": 11,
+          "SRC012": 14
+        },
+        "top_non_info_rules": [
+          {
+            "count": 160,
+            "rule_id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER"
+          },
+          {
+            "count": 28,
+            "rule_id": "AEGIS_PARTIAL_PERSISTENCE_INDICATOR"
+          },
+          {
+            "count": 9,
+            "rule_id": "PIPELINE_TAINT_FLOW"
+          },
+          {
+            "count": 8,
+            "rule_id": "AEGIS_REMOTE_FETCH_PIPE_SHELL"
+          },
+          {
+            "count": 4,
+            "rule_id": "YARA_tool_chaining_abuse_generic"
+          },
+          {
+            "count": 4,
+            "rule_id": "SOCIAL_ENG_VAGUE_DESCRIPTION"
+          },
+          {
+            "count": 3,
+            "rule_id": "AEGIS_SEMANTIC_INVISIBLE_INSTRUCTION_TEXT"
+          },
+          {
+            "count": 2,
+            "rule_id": "YARA_coercive_injection_generic"
+          },
+          {
+            "count": 1,
+            "rule_id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN"
+          },
+          {
+            "count": 1,
+            "rule_id": "YARA_prompt_injection_generic"
+          },
+          {
+            "count": 1,
+            "rule_id": "AEGIS_SEMANTIC_CONCEALED_RISKY_BEHAVIOR"
+          },
+          {
+            "count": 1,
+            "rule_id": "YARA_prompt_injection_unicode_steganography"
+          },
+          {
+            "count": 1,
+            "rule_id": "ASCII_SMUGGLING_TAG_BLOCK"
+          },
+          {
+            "count": 1,
+            "rule_id": "GLOB_HIDDEN_FILE_TARGETING"
+          },
+          {
+            "count": 1,
+            "rule_id": "YARA_command_injection_generic"
+          }
+        ]
+      }
+    }
+  },
+  "evaluated_at": "2026-08-31T19:49:24+08:00",
+  "experiment_id": "2026-08-31-maliciousskillbench-source-disjoint-main-v1",
+  "label_counts": {
+    "0": 545,
+    "1": 839
+  },
+  "paired_comparisons": {
+    "p0_vs_cisco": {
+      "benign_allow_rate_delta": {
+        "ci95": [
+          -0.24036697247706423,
+          -0.1743119266055046
+        ],
+        "estimate": -0.20733944954128442,
+        "mcnemar": {
+          "discordant": 113,
+          "left_failure_right_success": 0,
+          "left_success_right_failure": 113,
+          "two_sided_exact_p": 1.925929944387236e-34
+        },
+        "rounds": 5000
+      },
+      "left": "cisco_only",
+      "malicious_non_allow_recall_delta": {
+        "ci95": [
+          0.10131108462455304,
+          0.1466030989272944
+        ],
+        "estimate": 0.12395709177592372,
+        "mcnemar": {
+          "discordant": 104,
+          "left_failure_right_success": 104,
+          "left_success_right_failure": 0,
+          "two_sided_exact_p": 9.860761315262648e-32
+        },
+        "rounds": 5000
+      },
+      "right": "cisco_plus_p0"
+    },
+    "p1_vs_p0": {
+      "benign_allow_rate_delta": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "estimate": 0.0,
+        "mcnemar": {
+          "discordant": 0,
+          "left_failure_right_success": 0,
+          "left_success_right_failure": 0,
+          "two_sided_exact_p": 1.0
+        },
+        "rounds": 5000
+      },
+      "left": "cisco_plus_p0",
+      "malicious_non_allow_recall_delta": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "estimate": 0.0,
+        "mcnemar": {
+          "discordant": 0,
+          "left_failure_right_success": 0,
+          "left_success_right_failure": 0,
+          "two_sided_exact_p": 1.0
+        },
+        "rounds": 5000
+      },
+      "right": "cisco_plus_p0_p1"
+    }
+  },
+  "per_attack_category": {
+    "credential_access": {
+      "support": 4,
+      "systems": {
+        "cisco_only": {
+          "block_rate": 0.25,
+          "non_allow_recall": 0.5
+        },
+        "cisco_plus_p0": {
+          "block_rate": 0.25,
+          "non_allow_recall": 0.5
+        },
+        "cisco_plus_p0_p1": {
+          "block_rate": 0.25,
+          "non_allow_recall": 0.5
+        }
+      }
+    },
+    "data_exfiltration_disclosure": {
+      "support": 52,
+      "systems": {
+        "cisco_only": {
+          "block_rate": 0.0,
+          "non_allow_recall": 0.057692307692307696
+        },
+        "cisco_plus_p0": {
+          "block_rate": 0.0,
+          "non_allow_recall": 0.057692307692307696
+        },
+        "cisco_plus_p0_p1": {
+          "block_rate": 0.0,
+          "non_allow_recall": 0.057692307692307696
+        }
+      }
+    },
+    "defense_evasion_obfuscation": {
+      "support": 1,
+      "systems": {
+        "cisco_only": {
+          "block_rate": 1.0,
+          "non_allow_recall": 1.0
+        },
+        "cisco_plus_p0": {
+          "block_rate": 1.0,
+          "non_allow_recall": 1.0
+        },
+        "cisco_plus_p0_p1": {
+          "block_rate": 1.0,
+          "non_allow_recall": 1.0
+        }
+      }
+    },
+    "dependency_supply_chain": {
+      "support": 8,
+      "systems": {
+        "cisco_only": {
+          "block_rate": 0.0,
+          "non_allow_recall": 0.5
+        },
+        "cisco_plus_p0": {
+          "block_rate": 0.0,
+          "non_allow_recall": 0.5
+        },
+        "cisco_plus_p0_p1": {
+          "block_rate": 0.0,
+          "non_allow_recall": 0.5
+        }
+      }
+    },
+    "execution_code_delivery": {
+      "support": 7,
+      "systems": {
+        "cisco_only": {
+          "block_rate": 0.2857142857142857,
+          "non_allow_recall": 1.0
+        },
+        "cisco_plus_p0": {
+          "block_rate": 0.2857142857142857,
+          "non_allow_recall": 1.0
+        },
+        "cisco_plus_p0_p1": {
+          "block_rate": 0.2857142857142857,
+          "non_allow_recall": 1.0
+        }
+      }
+    },
+    "instruction_goal_memory_manipulation": {
+      "support": 75,
+      "systems": {
+        "cisco_only": {
+          "block_rate": 0.013333333333333334,
+          "non_allow_recall": 0.013333333333333334
+        },
+        "cisco_plus_p0": {
+          "block_rate": 0.013333333333333334,
+          "non_allow_recall": 0.09333333333333334
+        },
+        "cisco_plus_p0_p1": {
+          "block_rate": 0.013333333333333334,
+          "non_allow_recall": 0.09333333333333334
+        }
+      }
+    },
+    "persistence_control": {
+      "support": 1,
+      "systems": {
+        "cisco_only": {
+          "block_rate": 0.0,
+          "non_allow_recall": 0.0
+        },
+        "cisco_plus_p0": {
+          "block_rate": 0.0,
+          "non_allow_recall": 0.0
+        },
+        "cisco_plus_p0_p1": {
+          "block_rate": 0.0,
+          "non_allow_recall": 0.0
+        }
+      }
+    },
+    "privilege_tool_authority_abuse": {
+      "support": 27,
+      "systems": {
+        "cisco_only": {
+          "block_rate": 0.25925925925925924,
+          "non_allow_recall": 0.25925925925925924
+        },
+        "cisco_plus_p0": {
+          "block_rate": 0.25925925925925924,
+          "non_allow_recall": 0.25925925925925924
+        },
+        "cisco_plus_p0_p1": {
+          "block_rate": 0.25925925925925924,
+          "non_allow_recall": 0.25925925925925924
+        }
+      }
+    },
+    "resource_availability_abuse": {
+      "support": 62,
+      "systems": {
+        "cisco_only": {
+          "block_rate": 0.0,
+          "non_allow_recall": 0.016129032258064516
+        },
+        "cisco_plus_p0": {
+          "block_rate": 0.0,
+          "non_allow_recall": 0.22580645161290322
+        },
+        "cisco_plus_p0_p1": {
+          "block_rate": 0.0,
+          "non_allow_recall": 0.22580645161290322
+        }
+      }
+    }
+  },
+  "per_source": {
+    "SRC009": {
+      "label_counts": {
+        "1": 728
+      },
+      "systems": {
+        "cisco_only": {
+          "balanced_accuracy_binary_block": null,
+          "benign_allow_rate": null,
+          "benign_block_rate": null,
+          "cases": 728,
+          "confusion_binary_block": {
+            "fn": 727,
+            "fp": 0,
+            "tn": 0,
+            "tp": 1
+          },
+          "decision_counts": {
+            "ALLOW": 726,
+            "BLOCK": 1,
+            "REVIEW": 1
+          },
+          "macro_f1_binary_block": null,
+          "malicious_block_rate": 0.0013736263736263737,
+          "malicious_non_allow_recall": 0.0027472527472527475,
+          "unknown_rate": 0.0
+        },
+        "cisco_plus_p0": {
+          "balanced_accuracy_binary_block": null,
+          "benign_allow_rate": null,
+          "benign_block_rate": null,
+          "cases": 728,
+          "confusion_binary_block": {
+            "fn": 726,
+            "fp": 0,
+            "tn": 0,
+            "tp": 2
+          },
+          "decision_counts": {
+            "ALLOW": 622,
+            "BLOCK": 2,
+            "REVIEW": 104
+          },
+          "macro_f1_binary_block": null,
+          "malicious_block_rate": 0.0027472527472527475,
+          "malicious_non_allow_recall": 0.14560439560439561,
+          "unknown_rate": 0.0
+        },
+        "cisco_plus_p0_p1": {
+          "balanced_accuracy_binary_block": null,
+          "benign_allow_rate": null,
+          "benign_block_rate": null,
+          "cases": 728,
+          "confusion_binary_block": {
+            "fn": 726,
+            "fp": 0,
+            "tn": 0,
+            "tp": 2
+          },
+          "decision_counts": {
+            "ALLOW": 622,
+            "BLOCK": 2,
+            "REVIEW": 104
+          },
+          "macro_f1_binary_block": null,
+          "malicious_block_rate": 0.0027472527472527475,
+          "malicious_non_allow_recall": 0.14560439560439561,
+          "unknown_rate": 0.0
+        }
+      }
+    },
+    "SRC011": {
+      "label_counts": {
+        "0": 455,
+        "1": 21
+      },
+      "systems": {
+        "cisco_only": {
+          "balanced_accuracy_binary_block": 0.6124542124542125,
+          "benign_allow_rate": 0.9384615384615385,
+          "benign_block_rate": 0.013186813186813187,
+          "cases": 476,
+          "confusion_binary_block": {
+            "fn": 16,
+            "fp": 6,
+            "tn": 449,
+            "tp": 5
+          },
+          "decision_counts": {
+            "ALLOW": 437,
+            "BLOCK": 11,
+            "REVIEW": 12,
+            "UNKNOWN": 16
+          },
+          "macro_f1_binary_block": 0.6442934782608696,
+          "malicious_block_rate": 0.23809523809523808,
+          "malicious_non_allow_recall": 0.5238095238095238,
+          "unknown_rate": 0.03361344537815126
+        },
+        "cisco_plus_p0": {
+          "balanced_accuracy_binary_block": 0.5871794871794872,
+          "benign_allow_rate": 0.6901098901098901,
+          "benign_block_rate": 0.06373626373626373,
+          "cases": 476,
+          "confusion_binary_block": {
+            "fn": 16,
+            "fp": 29,
+            "tn": 426,
+            "tp": 5
+          },
+          "decision_counts": {
+            "ALLOW": 324,
+            "BLOCK": 34,
+            "REVIEW": 102,
+            "UNKNOWN": 16
+          },
+          "macro_f1_binary_block": 0.5658254788689572,
+          "malicious_block_rate": 0.23809523809523808,
+          "malicious_non_allow_recall": 0.5238095238095238,
+          "unknown_rate": 0.03361344537815126
+        },
+        "cisco_plus_p0_p1": {
+          "balanced_accuracy_binary_block": 0.5871794871794872,
+          "benign_allow_rate": 0.6901098901098901,
+          "benign_block_rate": 0.06373626373626373,
+          "cases": 476,
+          "confusion_binary_block": {
+            "fn": 16,
+            "fp": 29,
+            "tn": 426,
+            "tp": 5
+          },
+          "decision_counts": {
+            "ALLOW": 324,
+            "BLOCK": 34,
+            "REVIEW": 102,
+            "UNKNOWN": 16
+          },
+          "macro_f1_binary_block": 0.5658254788689572,
+          "malicious_block_rate": 0.23809523809523808,
+          "malicious_non_allow_recall": 0.5238095238095238,
+          "unknown_rate": 0.03361344537815126
+        }
+      }
+    },
+    "SRC012": {
+      "label_counts": {
+        "0": 90,
+        "1": 90
+      },
+      "systems": {
+        "cisco_only": {
+          "balanced_accuracy_binary_block": 0.5388888888888889,
+          "benign_allow_rate": 1.0,
+          "benign_block_rate": 0.0,
+          "cases": 180,
+          "confusion_binary_block": {
+            "fn": 83,
+            "fp": 0,
+            "tn": 90,
+            "tp": 7
+          },
+          "decision_counts": {
+            "ALLOW": 166,
+            "BLOCK": 7,
+            "REVIEW": 7
+          },
+          "macro_f1_binary_block": 0.4143702716475246,
+          "malicious_block_rate": 0.07777777777777778,
+          "malicious_non_allow_recall": 0.15555555555555556,
+          "unknown_rate": 0.0
+        },
+        "cisco_plus_p0": {
+          "balanced_accuracy_binary_block": 0.5388888888888889,
+          "benign_allow_rate": 1.0,
+          "benign_block_rate": 0.0,
+          "cases": 180,
+          "confusion_binary_block": {
+            "fn": 83,
+            "fp": 0,
+            "tn": 90,
+            "tp": 7
+          },
+          "decision_counts": {
+            "ALLOW": 166,
+            "BLOCK": 7,
+            "REVIEW": 7
+          },
+          "macro_f1_binary_block": 0.4143702716475246,
+          "malicious_block_rate": 0.07777777777777778,
+          "malicious_non_allow_recall": 0.15555555555555556,
+          "unknown_rate": 0.0
+        },
+        "cisco_plus_p0_p1": {
+          "balanced_accuracy_binary_block": 0.5388888888888889,
+          "benign_allow_rate": 1.0,
+          "benign_block_rate": 0.0,
+          "cases": 180,
+          "confusion_binary_block": {
+            "fn": 83,
+            "fp": 0,
+            "tn": 90,
+            "tp": 7
+          },
+          "decision_counts": {
+            "ALLOW": 166,
+            "BLOCK": 7,
+            "REVIEW": 7
+          },
+          "macro_f1_binary_block": 0.4143702716475246,
+          "malicious_block_rate": 0.07777777777777778,
+          "malicious_non_allow_recall": 0.15555555555555556,
+          "unknown_rate": 0.0
+        }
+      }
+    }
+  },
+  "runtime": {
+    "case_duration_p50_ms": 109.0,
+    "case_duration_p95_ms": 180,
+    "model_cache_hits": 8,
+    "model_calls": 11,
+    "p1_container_code_execution_cases": 0,
+    "p1_pure_instruction_cases": 1325
+  },
+  "schema_version": "1.0",
+  "systems": {
+    "cisco_only": {
+      "balanced_accuracy_binary_block": 0.5022427310800319,
+      "benign_allow_rate": 0.9486238532110092,
+      "benign_block_rate": 0.011009174311926606,
+      "cases": 1384,
+      "confusion_binary_block": {
+        "fn": 826,
+        "fp": 6,
+        "tn": 539,
+        "tp": 13
+      },
+      "decision_counts": {
+        "ALLOW": 1329,
+        "BLOCK": 19,
+        "REVIEW": 20,
+        "UNKNOWN": 16
+      },
+      "macro_f1_binary_block": 0.29735046803109627,
+      "malicious_block_rate": 0.015494636471990465,
+      "malicious_non_allow_recall": 0.03218116805721097,
+      "unknown_rate": 0.011560693641618497
+    },
+    "cisco_plus_p0": {
+      "balanced_accuracy_binary_block": 0.4817377612054543,
+      "benign_allow_rate": 0.7412844036697248,
+      "benign_block_rate": 0.05321100917431193,
+      "cases": 1384,
+      "confusion_binary_block": {
+        "fn": 825,
+        "fp": 29,
+        "tn": 516,
+        "tp": 14
+      },
+      "decision_counts": {
+        "ALLOW": 1112,
+        "BLOCK": 43,
+        "REVIEW": 213,
+        "UNKNOWN": 16
+      },
+      "macro_f1_binary_block": 0.28946792573515795,
+      "malicious_block_rate": 0.0166865315852205,
+      "malicious_non_allow_recall": 0.15613825983313467,
+      "unknown_rate": 0.011560693641618497
+    },
+    "cisco_plus_p0_p1": {
+      "balanced_accuracy_binary_block": 0.4817377612054543,
+      "benign_allow_rate": 0.7412844036697248,
+      "benign_block_rate": 0.05321100917431193,
+      "cases": 1384,
+      "confusion_binary_block": {
+        "fn": 825,
+        "fp": 29,
+        "tn": 516,
+        "tp": 14
+      },
+      "decision_counts": {
+        "ALLOW": 1112,
+        "BLOCK": 43,
+        "REVIEW": 213,
+        "UNKNOWN": 16
+      },
+      "macro_f1_binary_block": 0.28946792573515795,
+      "malicious_block_rate": 0.0166865315852205,
+      "malicious_non_allow_recall": 0.15613825983313467,
+      "unknown_rate": 0.011560693641618497
+    }
+  }
+}

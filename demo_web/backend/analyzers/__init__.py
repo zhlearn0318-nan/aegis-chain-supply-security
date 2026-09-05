@@ -43,6 +43,14 @@ from .untrusted_exec_flow import (
     ANALYZER_ID as UNTRUSTED_EXEC_FLOW_ANALYZER_ID,
     analyze_untrusted_exec_flows,
 )
+from .skill_semantic import (
+    ANALYZER_ID as SKILL_SEMANTIC_ANALYZER_ID,
+    analyze_skill_semantics,
+)
+from .skill_capability_alignment import (
+    ANALYZER_ID as SKILL_CAPABILITY_ALIGNMENT_ANALYZER_ID,
+    analyze_skill_capability_alignment,
+)
 
 __all__ = [
     "ANALYZER_ID",
@@ -57,6 +65,8 @@ __all__ = [
     "SENSITIVE_FLOW_ANALYZER_ID",
     "STATIC_COVERAGE_ANALYZER_ID",
     "UNTRUSTED_EXEC_FLOW_ANALYZER_ID",
+    "SKILL_SEMANTIC_ANALYZER_ID",
+    "SKILL_CAPABILITY_ALIGNMENT_ANALYZER_ID",
     "analyze_command_context",
     "analyze_custom_rules",
     "analyze_dependency_manifest",
@@ -69,4 +79,6 @@ __all__ = [
     "analyze_static_coverage",
     "analyze_skill_tree",
     "analyze_untrusted_exec_flows",
+    "analyze_skill_semantics",
+    "analyze_skill_capability_alignment",
 ]

@@ -1,0 +1,1 @@
+echo "aegis-safe"

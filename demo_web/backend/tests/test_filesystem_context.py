@@ -197,7 +197,7 @@ def test_repeated_filesystem_features_are_bounded(tmp_path: Path) -> None:
     assert "AEGIS_CONTEXT_READ_ONLY_FILESYSTEM_BEHAVIOR" in rule_map(findings)
 
 
-def test_scan_skill_path_exposes_filesystem_analyzer_and_preserves_block(
+def test_scan_skill_path_exposes_filesystem_analyzer_and_reviews_vendor_only_high(
     tmp_path: Path, monkeypatch
 ) -> None:
     root = write_skill(tmp_path / "skill", {
@@ -240,6 +240,7 @@ def test_scan_skill_path_exposes_filesystem_analyzer_and_preserves_block(
     gateway.scan_skill_path(job, root)
 
     assert job["status"] == "completed"
-    assert job["decision"] == "BLOCK"
+    assert job["decision"] == "REVIEW"
+    assert job["policy_trace"]["rule_id"] == "POLICY_REVIEW_UNCORROBORATED_CISCO_HIGH"
     assert ANALYZER_ID in job["analyzers"]
     assert any(item["analyzer"] == ANALYZER_ID for item in job["findings"])

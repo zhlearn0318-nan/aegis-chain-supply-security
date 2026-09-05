@@ -1,0 +1,56 @@
+{
+  "schema_version": "2.0",
+  "backend_id": "aegis-multiruntime-skill-sandbox-v2",
+  "docker_context": "desktop-linux",
+  "pull_policy": "never",
+  "images": {
+    "python": {
+      "reference": "public.ecr.aws/docker/library/python@sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65",
+      "id": "sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65"
+    },
+    "shell": {
+      "reference": "public.ecr.aws/docker/library/python@sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65",
+      "id": "sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65"
+    },
+    "node": {
+      "reference": "docker.io/library/node@sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0",
+      "id": "sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0"
+    }
+  },
+  "tool": {
+    "root": "tools/dynamic/docker/skill_sandbox",
+    "container_root": "/aegis_tool",
+    "files": {
+      "runner.py": "cf3a1aaf1ec4963440b88229b59516c9ebd6f6ec1aae2ee3b127d6732c9117bd",
+      "sitecustomize.py": "70f6e29cf83feaaf78595697b4cf98585db23da17e32400dac0f606b0fa90d32",
+      "runner_python_rounds.py": "e5757e742f569550893b7cacab3c7c0f799c40c1e4c634ffac0d7db9600b2ca3",
+      "runner_shell.py": "792d36dcddd8249610dd204854286782a617badc69d07db8b6f6538483777977",
+      "runner_node.cjs": "5c1489e1210651deb9058d0dfb196ba8e0632d8dd95a584a4bf3df49397cf451",
+      "node_preload.cjs": "290d442b76410775c2168b0798d3841bea263e1c1cfd191d39e7d47fcd3cd463"
+    }
+  },
+  "execution": {
+    "total_timeout_seconds": 90,
+    "max_entrypoints": 3,
+    "rounds": ["typical", "edge", "adversarial"]
+  },
+  "security": {
+    "network_mode": "none",
+    "read_only_rootfs": true,
+    "user": "65532:65532",
+    "cap_drop": ["ALL"],
+    "no_new_privileges": true,
+    "privileged": false,
+    "pid_mode": "",
+    "ipc_mode": "none",
+    "pids_limit": 64,
+    "memory_bytes": 268435456,
+    "nano_cpus": 500000000,
+    "init": true,
+    "log_driver": "none",
+    "tmpfs": {
+      "/tmp": "rw,noexec,nosuid,nodev,size=16777216,mode=1777",
+      "/workspace": "rw,noexec,nosuid,nodev,size=67108864,mode=1777"
+    }
+  }
+}

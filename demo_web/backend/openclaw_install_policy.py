@@ -16,6 +16,7 @@ from .models import Decision, Severity
 from .policy import PolicyConfigurationError, evaluate_findings
 from .plugin_static_pipeline import run_plugin_static_pipeline
 from .runtime_paths import runtime_path_entries
+from .semantic_model import configured_semantic_provider
 from .skill_static_pipeline import run_skill_static_pipeline
 
 
@@ -30,7 +31,7 @@ MAX_FINDINGS = 3
 DEFAULT_SCAN_TIMEOUT_SECONDS = 60
 REVIEW_MODE_ENV = "AEGIS_OPENCLAW_REVIEW_MODE"
 DYNAMIC_SKILL_MODE_ENV = "AEGIS_OPENCLAW_DYNAMIC_SKILL_POLICY"
-DYNAMIC_SKILL_CONFIG = Path(__file__).resolve().parents[1] / "config" / "skill_dynamic_sandbox.json"
+DYNAMIC_SKILL_CONFIG = Path(__file__).resolve().parents[1] / "config" / "skill_dynamic_sandbox_v2.json"
 DEMO_ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 SKILL_RUNTIME = REPOSITORY_ROOT / ".runtime_skill"
@@ -184,7 +185,11 @@ def default_skill_scan(skill_path: Path) -> dict[str, Any]:
         extra_path=runtime_path_entries(SKILL_RUNTIME),
     )
     adapter = SkillScannerAdapter(scanner=SKILL_SCANNER, runner=runner)
-    return run_skill_static_pipeline(skill_path, adapter)
+    return run_skill_static_pipeline(
+        skill_path,
+        adapter,
+        semantic_provider=configured_semantic_provider(),
+    )
 
 
 def default_plugin_scan(plugin_path: Path) -> dict[str, Any]:
@@ -192,9 +197,9 @@ def default_plugin_scan(plugin_path: Path) -> dict[str, Any]:
 
 
 def default_dynamic_skill_scan(skill_path: Path) -> dict[str, Any]:
-    from .dynamic_audit.skill_sandbox_docker import run_python_skill_sandbox
+    from .dynamic_audit.skill_sandbox_multiruntime import run_skill_sandbox_v2
 
-    return run_python_skill_sandbox(DYNAMIC_SKILL_CONFIG, skill_path)
+    return run_skill_sandbox_v2(DYNAMIC_SKILL_CONFIG, skill_path)
 
 
 def _dynamic_skill_mode() -> str:
@@ -220,7 +225,10 @@ def _dynamic_failure_finding(error_name: str) -> dict[str, Any]:
 
 
 def _dynamic_clean_finding(result: dict[str, Any]) -> dict[str, Any]:
-    if result.get("backend_id") != "aegis-python-skill-sandbox-v1":
+    if result.get("backend_id") not in {
+        "aegis-python-skill-sandbox-v1",
+        "aegis-multiruntime-skill-sandbox-v2",
+    }:
         raise RuntimeError("动态流水线身份无法验证")
     if result.get("status") != "clean":
         raise RuntimeError("动态流水线状态与 ALLOW 不一致")
@@ -229,6 +237,29 @@ def _dynamic_clean_finding(result: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(plan, dict) or not isinstance(runs, list):
         raise RuntimeError("动态流水线缺少执行证据")
     entrypoints = plan.get("entrypoints")
+    if result.get("execution_kind") == "pure_instruction":
+        attestation = result.get("instruction_attestation")
+        if (
+            entrypoints != []
+            or runs != []
+            or not isinstance(attestation, dict)
+            or attestation.get("scenarios") != ["typical", "edge", "adversarial"]
+            or attestation.get("raw_content_retained") is not False
+            or attestation.get("model_may_block_alone") is not False
+        ):
+            raise RuntimeError("纯指令动态语义证明无效")
+        return {
+            "id": "dynamic-aegis_instruction_scenarios_clean",
+            "rule_id": "AEGIS_DYNAMIC_INSTRUCTION_SCENARIOS_CLEAN",
+            "title": "纯指令 Skill 已完成三类语义场景检查",
+            "category": "instruction_attestation",
+            "severity": "INFO",
+            "analyzer": "aegis-skill-sandbox-v2",
+            "location": {"object": "SKILL.md", "type": "instruction"},
+            "evidence": "scenarios=typical,edge,adversarial; raw_content_retained=false; model_block_alone=false",
+            "description": "无代码入口的 Skill 不执行脚本，使用确定性规则和可选模型完成语义场景检查。",
+            "remediation": "无需处理；该证据不代表未来所有输入均安全。",
+        }
     if (
         not isinstance(entrypoints, list)
         or not entrypoints
@@ -265,6 +296,14 @@ def _dynamic_clean_finding(result: dict[str, Any]) -> dict[str, Any]:
         if not isinstance(events, list):
             raise RuntimeError("动态流水线事件证据无效")
         event_count += len(events)
+        if result.get("backend_id") == "aegis-multiruntime-skill-sandbox-v2":
+            rounds = runner.get("rounds")
+            if (
+                not isinstance(rounds, list)
+                or [item.get("id") for item in rounds if isinstance(item, dict)]
+                != ["typical", "edge", "adversarial"]
+            ):
+                raise RuntimeError("动态流水线缺少三轮定向输入证明")
 
     return {
         "id": "dynamic-aegis_dynamic_execution_clean",

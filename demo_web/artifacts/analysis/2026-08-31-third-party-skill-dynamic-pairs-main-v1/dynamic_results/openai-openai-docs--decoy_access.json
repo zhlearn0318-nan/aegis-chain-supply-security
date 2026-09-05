@@ -1,0 +1,191 @@
+{
+  "success": true,
+  "error": null,
+  "runtime": "node",
+  "entrypoint": "aegis_eval/controlled_entry.cjs",
+  "argv_attestation": {
+    "count": 4,
+    "sha256": "7a07ee401b47da9b4ee3a0111f7c2de6880acd0f1a9d4311e9086d728057c547",
+    "raw_values_retained": false
+  },
+  "image": {
+    "id": "sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0",
+    "repo_digests": [
+      "node@sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  "image_gates": {
+    "id_exact": true,
+    "reference_present": true,
+    "linux": true,
+    "amd64": true
+  },
+  "inspect_gates": {
+    "backend_label": true,
+    "run_label": true,
+    "runtime_label": true,
+    "image_immutable": true,
+    "network_none": true,
+    "read_only": true,
+    "non_root": true,
+    "not_privileged": true,
+    "private_pid": true,
+    "ipc_none": true,
+    "cap_drop_all": true,
+    "no_new_privileges": true,
+    "pids_limited": true,
+    "memory_limited": true,
+    "cpu_limited": true,
+    "tmpfs_exact": true,
+    "mounts_exact": true,
+    "skill_mount_exact": true,
+    "tool_mount_exact": true,
+    "entrypoint_exact": true,
+    "command_exact": true,
+    "workdir_exact": true,
+    "init_enabled": true,
+    "log_driver_none": true,
+    "no_host_control_mount": true,
+    "restart_disabled": true
+  },
+  "runner": {
+    "schema_version": "1.0",
+    "collector": "aegis-node-skill-runner-v1",
+    "entrypoint": "aegis_eval/controlled_entry.cjs",
+    "execution_status": "crashed",
+    "telemetry_complete": true,
+    "events": [
+      {
+        "type": "telemetry.ready",
+        "collector": "node_preload_v1",
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/aegis_eval/controlled_entry.cjs",
+        "operation": "readFileSync",
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "file:///skill/scripts/resolve-latest-model-info.js",
+        "operation": "readFileSync",
+        "round": "typical"
+      },
+      {
+        "type": "telemetry.ready",
+        "collector": "node_preload_v1",
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/aegis_eval/controlled_entry.cjs",
+        "operation": "readFileSync",
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "file:///skill/scripts/resolve-latest-model-info.js",
+        "operation": "readFileSync",
+        "round": "edge"
+      },
+      {
+        "type": "telemetry.ready",
+        "collector": "node_preload_v1",
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/aegis_eval/controlled_entry.cjs",
+        "operation": "readFileSync",
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/workspace/decoys/ops_token.txt",
+        "operation": "readFileSync",
+        "round": "adversarial"
+      },
+      {
+        "type": "decoy.read",
+        "marker_id": "ops_token",
+        "round": "adversarial"
+      }
+    ],
+    "rounds": [
+      {
+        "id": "typical",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout_sha256": "6e0e1e5dda949da44c6ddf911f693273752f63b66c4005f53886049049006244",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "id": "edge",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout_sha256": "6e0e1e5dda949da44c6ddf911f693273752f63b66c4005f53886049049006244",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "id": "adversarial",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "d47ef3d70746df7bc2d2037bf760e5f39280cc4a1a7f63ac0b163161684aa371"
+      }
+    ],
+    "internet_used": false,
+    "argv_count": 4,
+    "argv_sha256": "7a07ee401b47da9b4ee3a0111f7c2de6880acd0f1a9d4311e9086d728057c547"
+  },
+  "evaluation": {
+    "schema_version": "1.0",
+    "analyzer": "aegis-skill-sandbox-v1",
+    "decision": "BLOCK",
+    "status": "malicious",
+    "highest_severity": "CRITICAL",
+    "reason": "隔离试运行观察到高危行为，已升级为阻断。",
+    "findings": [
+      {
+        "id": "dynamic-aegis_dynamic_decoy_access-10",
+        "rule_id": "AEGIS_DYNAMIC_DECOY_ACCESS",
+        "title": "Skill 读取了政企敏感数据诱饵",
+        "category": "sensitive_data_access",
+        "severity": "CRITICAL",
+        "analyzer": "aegis-skill-sandbox-v1",
+        "location": {
+          "object": "event:10",
+          "type": "runtime_event"
+        },
+        "evidence": "marker_id=ops_token",
+        "description": "安装前隔离试运行观察到可复核的运行时安全信号。",
+        "remediation": "人工核对 Skill 行为；高危行为应保持阻断。"
+      },
+      {
+        "id": "dynamic-aegis_dynamic_execution_inconclusive-2",
+        "rule_id": "AEGIS_DYNAMIC_EXECUTION_INCONCLUSIVE",
+        "title": "Skill 隔离试运行未可靠完成",
+        "category": "execution_failure",
+        "severity": "MEDIUM",
+        "analyzer": "aegis-skill-sandbox-v1",
+        "location": {
+          "object": "event:2",
+          "type": "runtime_event"
+        },
+        "evidence": "execution_status=crashed",
+        "description": "安装前隔离试运行观察到可复核的运行时安全信号。",
+        "remediation": "人工核对 Skill 行为；高危行为应保持阻断。"
+      }
+    ]
+  },
+  "cleanup": {
+    "attempted": true,
+    "removed": true,
+    "residual": false,
+    "remove_duration_ms": 199
+  },
+  "duration_ms": 1895
+}

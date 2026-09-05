@@ -24,7 +24,8 @@ Add-AegisRuntimeToPath -RuntimeRoots @(
     (Join-Path $ProjectRoot ".runtime_mcp313")
 ) | Out-Null
 $PolicyPath = Join-Path $DemoRoot "config\admission_policy.yaml"
-$ClosureConfigPath = Join-Path $DemoRoot "config\docker_skill_closure_backend.json"
+$ClosureConfigPath = Join-Path $DemoRoot "config\skill_dynamic_sandbox_v2.json"
+$SemanticConfigPath = Join-Path $DemoRoot "config\skill_semantic_model.json"
 $FrontendManifest = Join-Path $DemoRoot "frontend\package.json"
 $FrontendLock = Join-Path $DemoRoot "frontend\pnpm-lock.yaml"
 $BackendLock = Join-Path $DemoRoot "backend\requirements.lock"
@@ -181,7 +182,7 @@ try {
     Add-Check "data_write" "Runtime data directory" "FAIL" $true "Runtime data directory is not writable" $_.Exception.Message
 }
 
-$DynamicIds = @("dynamic_config", "admin_token", "docker_cli", "docker_engine", "docker_image")
+$DynamicIds = @("dynamic_config", "admin_token", "docker_cli", "docker_engine", "docker_images", "semantic_config", "semantic_runtime", "semantic_model")
 if ($SkipDynamic) {
     foreach ($id in $DynamicIds) {
         Add-Check $id $id "SKIP" $false "Dynamic checks skipped explicitly"
@@ -189,9 +190,50 @@ if ($SkipDynamic) {
 } else {
     $dynamicRequired = [bool]$RequireDynamic
     if (Test-Path -LiteralPath $ClosureConfigPath -PathType Leaf) {
-        Add-Check "dynamic_config" "Skill closure config" "PASS" $dynamicRequired "Available" $ClosureConfigPath
+        $configResult = Invoke-CapturedCommand $McpPython @("-c", "from backend.dynamic_audit.skill_sandbox_multiruntime import load_multiruntime_config; print(load_multiruntime_config().sha256)") $DemoRoot
+        if ($configResult.exit_code -eq 0 -and $configResult.output) {
+            Add-Check "dynamic_config" "Multi-runtime sandbox config" "PASS" $dynamicRequired "Identity, tool hashes and security policy verified" $configResult.output
+        } else {
+            Add-Check "dynamic_config" "Multi-runtime sandbox config" $(if ($dynamicRequired) { "FAIL" } else { "WARN" }) $dynamicRequired "Configuration or tool hash validation failed" $configResult.output
+        }
     } else {
-        Add-Check "dynamic_config" "Skill closure config" $(if ($dynamicRequired) { "FAIL" } else { "WARN" }) $dynamicRequired "Missing" $ClosureConfigPath
+        Add-Check "dynamic_config" "Multi-runtime sandbox config" $(if ($dynamicRequired) { "FAIL" } else { "WARN" }) $dynamicRequired "Missing" $ClosureConfigPath
+    }
+
+    if (Test-Path -LiteralPath $SemanticConfigPath -PathType Leaf) {
+        try {
+            $semanticConfig = Get-Content -LiteralPath $SemanticConfigPath -Raw -Encoding UTF8 | ConvertFrom-Json
+            $semanticModelName = [string]$semanticConfig.local.model
+            if ($semanticConfig.default_mode -eq "local" -and $semanticModelName -and -not [bool]$semanticConfig.external.enabled) {
+                Add-Check "semantic_config" "Semantic model config" "PASS" $dynamicRequired "Local-first; external API disabled by default" $semanticModelName
+            } else {
+                Add-Check "semantic_config" "Semantic model config" $(if ($dynamicRequired) { "FAIL" } else { "WARN" }) $dynamicRequired "Local model is not selected"
+            }
+        } catch {
+            Add-Check "semantic_config" "Semantic model config" $(if ($dynamicRequired) { "FAIL" } else { "WARN" }) $dynamicRequired "Invalid JSON" $_.Exception.Message
+            $semanticModelName = ""
+        }
+    } else {
+        Add-Check "semantic_config" "Semantic model config" $(if ($dynamicRequired) { "FAIL" } else { "WARN" }) $dynamicRequired "Missing" $SemanticConfigPath
+        $semanticModelName = ""
+    }
+
+    $ollama = Resolve-AegisOllamaCli
+    if ($ollama) {
+        Add-Check "semantic_runtime" "Ollama local runtime" "PASS" $dynamicRequired "Available" $ollama
+        if ($semanticModelName) {
+            $modelResult = Invoke-CapturedCommand $ollama @("show", $semanticModelName)
+            if ($modelResult.exit_code -eq 0) {
+                Add-Check "semantic_model" "Selected local semantic model" "PASS" $dynamicRequired "Available" $semanticModelName
+            } else {
+                Add-Check "semantic_model" "Selected local semantic model" $(if ($dynamicRequired) { "FAIL" } else { "WARN" }) $dynamicRequired "Run: ollama pull $semanticModelName" $modelResult.output
+            }
+        } else {
+            Add-Check "semantic_model" "Selected local semantic model" $(if ($dynamicRequired) { "FAIL" } else { "WARN" }) $dynamicRequired "No valid model is configured"
+        }
+    } else {
+        Add-Check "semantic_runtime" "Ollama local runtime" $(if ($dynamicRequired) { "FAIL" } else { "WARN" }) $dynamicRequired "Install Ollama or configure AEGIS_OLLAMA_COMMAND"
+        Add-Check "semantic_model" "Selected local semantic model" "SKIP" $dynamicRequired "Ollama is unavailable"
     }
 
     $adminToken = [Environment]::GetEnvironmentVariable("AEGIS_ADMIN_TOKEN", "Process")
@@ -225,23 +267,27 @@ if ($SkipDynamic) {
 
         if (Test-Path -LiteralPath $ClosureConfigPath -PathType Leaf) {
             $closureConfig = Get-Content -LiteralPath $ClosureConfigPath -Raw -Encoding UTF8 | ConvertFrom-Json
-            $imageReference = [string]$closureConfig.image.reference
-            $expectedImageId = [string]$closureConfig.image.id
-            $imageResult = Invoke-CapturedCommand $docker @("--context", "desktop-linux", "image", "inspect", $imageReference, "--format", "{{json .Id}}")
-            $actualImageId = $imageResult.output.Trim('"')
-            if ($imageResult.exit_code -eq 0 -and $actualImageId -eq $expectedImageId) {
-                Add-Check "docker_image" "Hash-locked Docker image" "PASS" $dynamicRequired "Digest and image ID match" $actualImageId
+            $imageChecks = @()
+            foreach ($image in @($closureConfig.images.psobject.Properties.Value | Sort-Object reference -Unique)) {
+                $imageReference = [string]$image.reference
+                $expectedImageId = [string]$image.id
+                $imageResult = Invoke-CapturedCommand $docker @("--context", "desktop-linux", "image", "inspect", $imageReference, "--format", "{{json .Id}}")
+                $actualImageId = $imageResult.output.Trim('"')
+                $imageChecks += [pscustomobject]@{ reference = $imageReference; expected = $expectedImageId; actual = $actualImageId; pass = $imageResult.exit_code -eq 0 -and $actualImageId -eq $expectedImageId }
+            }
+            if ($imageChecks.Count -gt 0 -and @($imageChecks | Where-Object { -not $_.pass }).Count -eq 0) {
+                Add-Check "docker_images" "Hash-locked runtime images" "PASS" $dynamicRequired "All unique image digests and IDs match" (($imageChecks.reference) -join "; ")
             } else {
-                Add-Check "docker_image" "Hash-locked Docker image" $(if ($dynamicRequired) { "FAIL" } else { "WARN" }) $dynamicRequired "Required local image is missing or mismatched; preflight never pulls it" $imageResult.output
+                Add-Check "docker_images" "Hash-locked runtime images" $(if ($dynamicRequired) { "FAIL" } else { "WARN" }) $dynamicRequired "A required local image is missing or mismatched; preflight never pulls images" ($imageChecks | ConvertTo-Json -Compress)
             }
         } else {
-            Add-Check "docker_image" "Hash-locked Docker image" $(if ($dynamicRequired) { "FAIL" } else { "WARN" }) $dynamicRequired "Cannot verify without closure config"
+            Add-Check "docker_images" "Hash-locked runtime images" $(if ($dynamicRequired) { "FAIL" } else { "WARN" }) $dynamicRequired "Cannot verify without sandbox config"
         }
     } else {
         $dockerMessage = if ($dockerDiscoveryError) { $dockerDiscoveryError } else { "Install or start Docker Desktop" }
         Add-Check "docker_cli" "Docker CLI" $(if ($dynamicRequired) { "FAIL" } else { "WARN" }) $dynamicRequired $dockerMessage
         Add-Check "docker_engine" "Docker Linux engine" "SKIP" $dynamicRequired "Docker CLI unavailable"
-        Add-Check "docker_image" "Hash-locked Docker image" "SKIP" $dynamicRequired "Docker CLI unavailable"
+        Add-Check "docker_images" "Hash-locked runtime images" "SKIP" $dynamicRequired "Docker CLI unavailable"
     }
 }
 

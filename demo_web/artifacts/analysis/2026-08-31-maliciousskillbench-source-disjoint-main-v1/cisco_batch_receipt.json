@@ -1,0 +1,12 @@
+{
+  "completed_at": "2026-08-31T19:43:47+08:00",
+  "contract_sha256": "bbdc0d13ebfc8bbfbf79ee210937fb6dc76e792e6b4c9b584aeb161996f37c02",
+  "duration_ms": 28533,
+  "raw_console_content_retained": false,
+  "report_sha256": "02699d923df16809fd4d633822d03dc494a18b618277977ecd49b095ce27d2bc",
+  "results": 1368,
+  "scanner_version": "skill-scanner 2.0.13.dev3+g4dee90371",
+  "schema_version": "1.0",
+  "stderr_lines": 13,
+  "stdout_lines": 1
+}
