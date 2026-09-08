@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "2026-09-06-m15-e01-static-ablation-v4",
+  "status": "procedurally_invalid_before_validation",
+  "reason_code": "TRAIN_PREFLIGHT_OPENED_VALIDATION_GROUND_TRUTH",
+  "finding": "The generic verify_materialized function parsed validation/ground_truth/labels.jsonl while checking case-ID equality.",
+  "impact": "No validation label was passed to TF-IDF, Logistic Regression, C selection, or threshold selection, but the train-process label-firewall claim was false.",
+  "frozen_model_retained_as_diagnostic_only": true,
+  "selected_c": 2.0,
+  "selected_threshold": 0.99,
+  "train_oof_malicious_recall": 0.022696929238985315,
+  "train_oof_benign_false_positive_rate": 0.0381328073635766,
+  "validation_scan_started": false,
+  "validation_evaluation_completed": false,
+  "contract_action": "Create v5 with a label-blind input verifier that cannot open ground_truth and rerun training."
+}

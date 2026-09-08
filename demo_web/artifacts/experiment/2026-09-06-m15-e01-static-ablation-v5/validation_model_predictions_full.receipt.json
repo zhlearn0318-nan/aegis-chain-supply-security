@@ -1,0 +1,20 @@
+{
+  "cases": 835,
+  "completed_at": "2026-09-06T08:25:33+08:00",
+  "experiment_id": "2026-09-06-m15-e01-static-ablation-v5",
+  "ground_truth_opened": false,
+  "input_tree_sha256_after": "fe7e0b3042ccb67ee35e0c8de9b6c6edf8344a37a406fc6af6a5fb87e252154d",
+  "input_tree_sha256_before": "fe7e0b3042ccb67ee35e0c8de9b6c6edf8344a37a406fc6af6a5fb87e252154d",
+  "input_tree_unchanged": true,
+  "labels_present_in_results": false,
+  "limit": null,
+  "model_review_cases": 108,
+  "model_sha256": "6fe9f000426aa72f27162af4e2f388319a59766c226760f6511e1c2daf5bf842",
+  "predicted_cases": 826,
+  "results_sha256": "893ce4d5131a84d4ad8c89e063a98c87a4bd2b28c364b220362f7d40d10670ce",
+  "schema_version": "1.0",
+  "split": "validation",
+  "status": "prediction_complete_labels_not_joined",
+  "threshold": 0.99,
+  "unknown_cases": 9
+}

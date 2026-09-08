@@ -4,6 +4,8 @@ from pathlib import Path
 from typing import Any
 
 from .analyzers.skill_semantic import SemanticProvider
+from .analyzers.finding_context import ANALYZER_ID as FINDING_CONTEXT_ANALYZER_ID
+from .analyzers.finding_context import apply_finding_context
 
 from .adapters.skill import SkillScannerAdapter
 from .analyzers import (
@@ -62,6 +64,11 @@ def run_skill_static_pipeline(
         + semantic_findings
         + alignment_findings
     )
+    # F3 is the release candidate accepted by the real-Skill, SkillTrustBench
+    # regression600, and MaliciousSkillBench train source-group gates. Original
+    # findings remain in the report and justified compatibility cases become
+    # INFO; complete high-risk rules are never downgraded.
+    findings = apply_finding_context(skill_path, findings, "F3")
     analyzers = sorted(set(
         cisco_analyzers
         + aegis_analyzers
@@ -75,6 +82,7 @@ def run_skill_static_pipeline(
         + custom_analyzers
         + semantic_analyzers
         + alignment_analyzers
+        + [FINDING_CONTEXT_ANALYZER_ID]
     ))
     return {
         "findings": findings,

@@ -1,0 +1,12 @@
+{
+  "completed_at": "2026-09-06T08:34:09+08:00",
+  "completed_evaluation_runs": 1,
+  "experiment_id": "2026-09-06-m15-e01-static-ablation-v5",
+  "input_tree_sha256": "fe7e0b3042ccb67ee35e0c8de9b6c6edf8344a37a406fc6af6a5fb87e252154d",
+  "label_blind_results_sha256": "3faf9b05407963b31472ed27b9473ef7182518252316b085079b02c8b6bfd943",
+  "label_sha256": "e0230724e7c2cec97f13cdfbdf8c9b59862652616e54cd6f987434733d77fac6",
+  "metrics_sha256": "9906560196bc4b5167d15dd75f18b17d942f846f75067766ee7c5bb730a4005d",
+  "report_sha256": "66cbabe71cbce5ac88ea1aad5502610422e2850d3df9b7dcbf822fa7d9800117",
+  "schema_version": "1.0",
+  "status": "complete"
+}

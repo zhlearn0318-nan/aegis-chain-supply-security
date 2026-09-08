@@ -1,0 +1,51 @@
+[
+  {
+    "error_kind": "false_positive",
+    "failure_cause": "defensive_or_prohibitive_context",
+    "support_cases": 32,
+    "recommended_route": "扩大安全语境降级规则并配套恶意反例",
+    "same_lockbox_retuning_forbidden": true
+  },
+  {
+    "error_kind": "false_positive",
+    "failure_cause": "benign_conditional_workflow",
+    "support_cases": 15,
+    "recommended_route": "缩小条件触发窗口，要求同窗高风险汇点",
+    "same_lockbox_retuning_forbidden": true
+  },
+  {
+    "error_kind": "false_negative",
+    "failure_cause": "natural_language_sensitive_flow",
+    "support_cases": 14,
+    "recommended_route": "敏感源到外部汇语义规则 + 动态诱饵",
+    "same_lockbox_retuning_forbidden": true
+  },
+  {
+    "error_kind": "false_negative",
+    "failure_cause": "contextual_instruction_paraphrase",
+    "support_cases": 11,
+    "recommended_route": "语义模型与同义改写开发集",
+    "same_lockbox_retuning_forbidden": true
+  },
+  {
+    "error_kind": "false_negative",
+    "failure_cause": "implicit_execution_semantics",
+    "support_cases": 8,
+    "recommended_route": "完整包脚本/能力图 + 动态验证；文本快照只能 REVIEW",
+    "same_lockbox_retuning_forbidden": true
+  },
+  {
+    "error_kind": "false_negative",
+    "failure_cause": "dependency_instruction_semantics",
+    "support_cases": 7,
+    "recommended_route": "依赖完整性与远程安装链规则",
+    "same_lockbox_retuning_forbidden": true
+  },
+  {
+    "error_kind": "false_negative",
+    "failure_cause": "integrity_manipulation_semantics",
+    "support_cases": 6,
+    "recommended_route": "输出/审计完整性语义规则",
+    "same_lockbox_retuning_forbidden": true
+  }
+]

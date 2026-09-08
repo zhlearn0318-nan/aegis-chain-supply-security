@@ -1,0 +1,198 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "2026-09-06-m15-e02-static-false-positive-v1",
+  "dataset_id": "third-party-skill-e02-v1",
+  "selection_protocol": {
+    "total_cases": 40,
+    "sources": {
+      "ecosystem_weak_negative": 24,
+      "official_script_original": 6,
+      "additional_pinned_public_skill": 10
+    },
+    "workload_classes": {
+      "low_permission": 24,
+      "high_privilege_legitimate": 16
+    },
+    "principle": "Publisher trust is provenance evidence only and never overrides a complete high-risk data-flow finding."
+  },
+  "pinned_repositories": {
+    "openai": {
+      "url": "https://github.com/openai/skills",
+      "commit": "49f948faa9258a0c61caceaf225e179651397431",
+      "local_root": "datasets/third_party_baselines/openai_skills"
+    },
+    "anthropic": {
+      "url": "https://github.com/anthropics/skills",
+      "commit": "3b3fad96af16a10759d930941b4520ba0c40edae",
+      "local_root": "datasets/third_party_baselines/anthropics_skills"
+    }
+  },
+  "ecosystem_case_classes": {
+    "low_permission": [
+      "masb-007-meeting-insights-analyzer",
+      "masb-011-regression-test-generator",
+      "masb-026-process-flow-generator",
+      "masb-027-flow-verifier",
+      "masb-033-proposal-formatter",
+      "masb-046-privacy-policy-generate",
+      "masb-048-api-design",
+      "masb-051-advertisement",
+      "masb-054-pattern-recognition-specialist",
+      "masb-055-retrospective-base",
+      "masb-060-general-frontend-security",
+      "masb-065-secure-code-guardian",
+      "masb-083-pg-style-editor",
+      "masb-094-similarity-led"
+    ],
+    "high_privilege_legitimate": [
+      "masb-013-mcp-builder",
+      "masb-014-remote-work",
+      "masb-015-xl-cli",
+      "masb-037-developing-with-laravel",
+      "masb-045-dev-swarm-python",
+      "masb-049-streamlit-development",
+      "masb-061-godot-mcp-auto-launcher",
+      "masb-063-claude-code-hooks",
+      "masb-079-ohmydebn-skill",
+      "masb-087-tauri-app"
+    ]
+  },
+  "official_original_classes": {
+    "low_permission": [
+      "openai-jupyter-notebook--original",
+      "openai-security-ownership-map--original",
+      "openai-openai-docs--original",
+      "anthropic-algorithmic-art--original"
+    ],
+    "high_privilege_legitimate": [
+      "openai-plugin-creator--original",
+      "openai-chatgpt-apps--original"
+    ]
+  },
+  "additional_skills": [
+    {
+      "case_id": "anthropic-brand-guidelines",
+      "publisher": "Anthropic",
+      "repository": "anthropic",
+      "skill_path": "skills/brand-guidelines",
+      "license_spdx": "Apache-2.0",
+      "license_path": "LICENSE.txt",
+      "workload_class": "low_permission",
+      "stratum": "content_design",
+      "selection_reason": "真实品牌规范说明型 Skill，用于验证安全词、禁止项和示例文本不会被误判为可执行恶意指令。"
+    },
+    {
+      "case_id": "anthropic-canvas-design",
+      "publisher": "Anthropic",
+      "repository": "anthropic",
+      "skill_path": "skills/canvas-design",
+      "license_spdx": "Apache-2.0",
+      "license_path": "LICENSE.txt",
+      "workload_class": "low_permission",
+      "stratum": "content_design",
+      "selection_reason": "包含较多模板与字体资产的完整设计 Skill，用于验证大体积、多文件合法包的静态覆盖与误报。"
+    },
+    {
+      "case_id": "anthropic-frontend-design",
+      "publisher": "Anthropic",
+      "repository": "anthropic",
+      "skill_path": "skills/frontend-design",
+      "license_spdx": "Apache-2.0",
+      "license_path": "LICENSE.txt",
+      "workload_class": "low_permission",
+      "stratum": "content_design",
+      "selection_reason": "真实前端设计指导 Skill，覆盖代码术语与设计说明混合的合法语境。"
+    },
+    {
+      "case_id": "anthropic-internal-comms",
+      "publisher": "Anthropic",
+      "repository": "anthropic",
+      "skill_path": "skills/internal-comms",
+      "license_spdx": "Apache-2.0",
+      "license_path": "LICENSE.txt",
+      "workload_class": "low_permission",
+      "stratum": "enterprise_content",
+      "selection_reason": "政企内部沟通材料生成场景，检验企业术语、事故模板和敏感词的上下文消歧。"
+    },
+    {
+      "case_id": "anthropic-theme-factory",
+      "publisher": "Anthropic",
+      "repository": "anthropic",
+      "skill_path": "skills/theme-factory",
+      "license_spdx": "Apache-2.0",
+      "license_path": "LICENSE.txt",
+      "workload_class": "low_permission",
+      "stratum": "content_design",
+      "selection_reason": "带资产和脚本片段的主题生成 Skill，用于区分模板示例与真实危险执行链。"
+    },
+    {
+      "case_id": "openai-define-goal",
+      "publisher": "OpenAI",
+      "repository": "openai",
+      "skill_path": "skills/.curated/define-goal",
+      "license_spdx": "Apache-2.0",
+      "license_path": "LICENSE.txt",
+      "workload_class": "low_permission",
+      "stratum": "workflow_guidance",
+      "selection_reason": "纯工作流指导型 Skill，作为应自动放行的低权限真实对照。"
+    },
+    {
+      "case_id": "openai-cloudflare-deploy",
+      "publisher": "OpenAI",
+      "repository": "openai",
+      "skill_path": "skills/.curated/cloudflare-deploy",
+      "license_spdx": "Apache-2.0",
+      "license_path": "LICENSE.txt",
+      "workload_class": "high_privilege_legitimate",
+      "stratum": "operations_network_install",
+      "selection_reason": "真实云部署 Skill，包含安装、网络和凭据相关说明，用于验证高权限合法用途应被解释性复核而非无依据阻断。"
+    },
+    {
+      "case_id": "openai-gh-fix-ci",
+      "publisher": "OpenAI",
+      "repository": "openai",
+      "skill_path": "skills/.curated/gh-fix-ci",
+      "license_spdx": "Apache-2.0",
+      "license_path": "LICENSE.txt",
+      "workload_class": "high_privilege_legitimate",
+      "stratum": "developer_tool",
+      "selection_reason": "真实 CI 修复 Skill，覆盖仓库读取、命令执行与外部服务交互的合法开发链。"
+    },
+    {
+      "case_id": "openai-playwright",
+      "publisher": "OpenAI",
+      "repository": "openai",
+      "skill_path": "skills/.curated/playwright",
+      "license_spdx": "Apache-2.0",
+      "license_path": "LICENSE.txt",
+      "workload_class": "high_privilege_legitimate",
+      "stratum": "developer_tool",
+      "selection_reason": "真实浏览器自动化 Skill，覆盖脚本执行、网页访问和产物写入等高能力合法行为。"
+    },
+    {
+      "case_id": "openai-vercel-deploy",
+      "publisher": "OpenAI",
+      "repository": "openai",
+      "skill_path": "skills/.curated/vercel-deploy",
+      "license_spdx": "MIT",
+      "license_path": "LICENSE.txt",
+      "workload_class": "high_privilege_legitimate",
+      "stratum": "operations_network_install",
+      "selection_reason": "真实 Web 部署 Skill，覆盖远程上传、构建和网络访问，用于验证完整数据流证据与一般部署说明的边界。"
+    }
+  ],
+  "systems": {
+    "F0": "current static rules and current admission policy",
+    "F1": "F0 plus safe prohibition, example/test and unreachable-context suppression",
+    "F2": "F1 plus same-evidence-window requirement between conditional trigger and sensitive action or sink",
+    "F3": "F2 plus installed entrypoint and actual call-closure reachability"
+  },
+  "acceptance": {
+    "low_permission_direct_block": 0,
+    "low_permission_auto_allow_min": 0.8,
+    "high_privilege_unknown": 0,
+    "unnecessary_non_allow_relative_reduction_min": 0.3,
+    "malicious_non_allow_drop_max_percentage_points": 2.0,
+    "suppressed_findings_retained_as_info": true
+  }
+}

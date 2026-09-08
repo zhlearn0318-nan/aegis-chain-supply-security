@@ -437,3 +437,27 @@
 - 静态层在30个风险孪生上先检出26个；动态补齐4个静态 ALLOW 漏检，并将14个 REVIEW 提升为 BLOCK，36包中18个获得更严格的运行时决策。
 - 不改变现行单调融合策略。6个原始包综合结果仍为1 ALLOW、4 REVIEW、1 BLOCK，证明下一瓶颈是静态证据范围和误报治理，而不是动态层“全部误杀”。
 - 后端完整回归 `507 passed, 1 skipped`。正式结论：`docs/M14_REAL_THIRD_PARTY_SKILL_DYNAMIC_RESULT_AND_GAP.md`；原始证据：`artifacts/analysis/2026-08-31-third-party-skill-dynamic-pairs-main-v1/`。
+
+## 23. M15 E01–E06 后续实验计划（2026-09-05）
+
+- 隔离分支：`experiment-m15`；父计划：`docs/M15_FUTURE_EXPERIMENT_PLAN_CONTROL_ABLATION_ROBUSTNESS_PERFORMANCE.md`。
+- 当前执行顺序：E01静态组件消融 → E02真实生态误报治理 → E03动态轮次消融 → E04动态绕过鲁棒性 → E05 OpenClaw端到端性能 → E06错误案例分析。
+- E01 先冻结 `config/m15_e01_static_ablation_v1.json` 和 `docs/M16_E01_STATIC_COMPONENT_ABLATION_EXPERIMENT_CONTRACT.md`，使用train 7,513条开发，validation 835条单次锁箱；已开封test 1,384条不再承担独立盲测主张。
+- 执行环境：单台Windows；扫描使用项目锁定运行时；CPU轻量模型使用现有Unimark环境中的pandas/PyArrow/scikit-learn/SciPy；Docker与Qwen按具体实验启动。当前约60GB磁盘可用。
+- 可追溯替代：当前环境无专用artifact/bash执行接口，因此使用独立Git分支、冻结JSON合同、版本化artifact目录、命令日志、SHA-256清单和失败回执保持证据完整。
+- E01 v1 运行前发现仅3个train来源含良性样本，五折来源分组不可行；已按合同在模型/validation前停止并保留证据。v2只调整为三折来源分组，其余条件不变。
+- E01 v2 固定三折仍产生纯恶意 held-out 折，继续在模型/validation前停止；v3最终采用八折逐来源留一，以汇总OOF选C和阈值，单类来源指标明确为空。
+- E01 v3 完成8折后发现0.90及以下没有阈值满足5%良性OOF误报门，按合同在最终拟合/validation前停止；v4增加逐折断点和保守高阈值尾部，其余变量不变。
+- E01 v4 训练成功但通用预检曾解析validation标签文件，虽未用于训练仍判程序性无效；v5使用不可能打开ground_truth的标签盲预检并重新训练。
+- E01 v5 已完成唯一一次835条validation评测：S5相对S4恶意非放行召回+9.31个百分点（95% CI +7.06至+11.56），无额外良性损失，研究接受门通过；语义层使良性ALLOW降至68.0%，故产品接入推迟到E02误报治理后。
+- E02 v1/v2执行问题与v2/v3过度降噪结果均保留为失败证据；v4收窄条件触发降级边界，v5进一步修正完整高危规则保护名并完成最终复验。
+- E02 v5真实40 Skill低权限自动放行率83.3%、直接阻断0、无必要非放行较F0下降57.1%；SkillTrustBench regression600恶意非放行召回94.0%，较F0下降0.5个百分点；MaliciousSkillBench train语义组件恶意非放行下降1.49个百分点，均通过预冻结2个百分点门槛。
+- E02 F3-v5已接入OpenClaw正式Skill静态准入流水线；146条静态规则注册完整，上下文降级保留原始严重度、理由与INFO审计证据。下一节点为E03动态0/1/3轮消融。
+- E03复用哈希锁定的108次真实容器逐轮证据并重新运行当前静态v5；v1识别出Node轮次结构兼容错误后作废，v2同时支持Python与Node轮次结构。
+- E03 v2中D0/D1风险非放行均为22/30（73.3%），D3为30/30（100%）；五类预期规则均首次出现在adversarial轮，D3补齐8个静态ALLOW并把15个静态REVIEW提升为BLOCK。
+- D3 P95总耗时18.02秒，D1保守归因P95为15.67秒，比值1.15；原始官方脚本动态层D1/D3均6/6 ALLOW，工程决策为保留三轮默认。下一节点E04动态绕过鲁棒性。
+- E04 v3真实执行发现Node回环参数误解析、Shell展开路径漏证据和一项预期标签错误；保留反例后完成最小修订、更新动态工具哈希锁并全量复测。
+- E04 v4在24组单因素配对、48个Skill、144次轮次执行中实现风险非放行24/24、预期规则24/24、安全对照ALLOW 24/24；Python/Node/Shell各8/8，三轮、安全门、清理、输入哈希与无外联成功证明均100%。
+- E05 v2正式端到端矩阵36/36通过，审计/API/PDF一致36/36，非放行安装0；普通场景P50 37.55秒、P95 48.64秒。并发1/3/5保持单执行，其他请求返回ENGINE_BUSY。模型、Cisco和Docker三类故障均失败关闭；Docker Desktop自动恢复失败后需人工重启，列为已知限制。
+- E06 v2对60个分层漏报和全部54个良性非ALLOW完成确定性错误分析，114条原文哈希全部验证，形成7项至少5例支持的开发方向和8个唯一代表案例；不在同一validation锁箱上改规则或重报独立指标。
+- M15 E01—E06已完成。正式运行时后端回归556通过、1跳过，OpenClaw插件19通过；下一阶段为版本与证据冻结、答辩材料和新开发集上的后续算法迭代。

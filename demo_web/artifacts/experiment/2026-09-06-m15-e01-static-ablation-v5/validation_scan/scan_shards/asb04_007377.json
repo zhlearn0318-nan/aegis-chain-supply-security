@@ -1,0 +1,365 @@
+{
+  "benchmark_id": "ASB04_007377",
+  "case_id": "asb04_007377",
+  "duration_ms": 235,
+  "experiment_id": "2026-09-06-m15-e01-static-ablation-v5",
+  "lightweight_model_review": false,
+  "qwen_calls": 0,
+  "qwen_failures": 0,
+  "qwen_routed": false,
+  "scan_ready": true,
+  "schema_version": "1.0",
+  "skill_text_sha256": "fbb4baccb205398ff709df0aa7febc5c22d6cf552ba7b76162b7fde86d50b90d",
+  "systems": {
+    "S0": {
+      "decision": "ALLOW",
+      "finding_index": [],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [],
+        "matched_severities": [],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.0.0",
+        "reason": "扫描成功，所有发现均处于允许严重度集合，准入策略允许继续。",
+        "rule_id": "POLICY_ALLOW"
+      },
+      "reason_code": "POLICY_ALLOW",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 0,
+        "low": 0,
+        "medium": 0,
+        "total_findings": 0,
+        "unknown": 0
+      }
+    },
+    "S1": {
+      "decision": "ALLOW",
+      "finding_index": [
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df"
+        ],
+        "matched_severities": [
+          "INFO"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "扫描成功，所有发现均处于允许严重度集合，准入策略允许继续。",
+        "rule_id": "POLICY_ALLOW"
+      },
+      "reason_code": "POLICY_ALLOW",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 1,
+        "low": 0,
+        "medium": 0,
+        "total_findings": 1,
+        "unknown": 0
+      }
+    },
+    "S2": {
+      "decision": "ALLOW",
+      "finding_index": [
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-skill-capability-alignment-v1",
+          "category": "capability_inventory",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY_7d7e4fe99e5f",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY",
+          "severity": "INFO"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY_7d7e4fe99e5f"
+        ],
+        "matched_severities": [
+          "INFO"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "扫描成功，所有发现均处于允许严重度集合，准入策略允许继续。",
+        "rule_id": "POLICY_ALLOW"
+      },
+      "reason_code": "POLICY_ALLOW",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 2,
+        "low": 0,
+        "medium": 0,
+        "total_findings": 2,
+        "unknown": 0
+      }
+    },
+    "S3": {
+      "decision": "REVIEW",
+      "finding_index": [
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER_2a78dd82d11e",
+          "location": {
+            "file": "SKILL.md",
+            "line": 320
+          },
+          "rule_id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER",
+          "severity": "MEDIUM"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER_2a78dd82d11e"
+        ],
+        "matched_severities": [
+          "MEDIUM"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "命中人工复核严重度：MEDIUM 1 条。",
+        "rule_id": "POLICY_REVIEW_SEVERITY"
+      },
+      "reason_code": "POLICY_REVIEW_SEVERITY",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 1,
+        "low": 0,
+        "medium": 1,
+        "total_findings": 2,
+        "unknown": 0
+      }
+    },
+    "S4": {
+      "decision": "REVIEW",
+      "finding_index": [
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-skill-capability-alignment-v1",
+          "category": "capability_inventory",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY_7d7e4fe99e5f",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER_2a78dd82d11e",
+          "location": {
+            "file": "SKILL.md",
+            "line": 320
+          },
+          "rule_id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER",
+          "severity": "MEDIUM"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER_2a78dd82d11e"
+        ],
+        "matched_severities": [
+          "MEDIUM"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "命中人工复核严重度：MEDIUM 1 条。",
+        "rule_id": "POLICY_REVIEW_SEVERITY"
+      },
+      "reason_code": "POLICY_REVIEW_SEVERITY",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 2,
+        "low": 0,
+        "medium": 1,
+        "total_findings": 3,
+        "unknown": 0
+      }
+    },
+    "S5": {
+      "decision": "REVIEW",
+      "finding_index": [
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-skill-capability-alignment-v1",
+          "category": "capability_inventory",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY_7d7e4fe99e5f",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER_2a78dd82d11e",
+          "location": {
+            "file": "SKILL.md",
+            "line": 320
+          },
+          "rule_id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER",
+          "severity": "MEDIUM"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER_2a78dd82d11e"
+        ],
+        "matched_severities": [
+          "MEDIUM"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "命中人工复核严重度：MEDIUM 1 条。",
+        "rule_id": "POLICY_REVIEW_SEVERITY"
+      },
+      "reason_code": "POLICY_REVIEW_SEVERITY",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 2,
+        "low": 0,
+        "medium": 1,
+        "total_findings": 3,
+        "unknown": 0
+      }
+    },
+    "S6": {
+      "decision": "REVIEW",
+      "finding_index": [
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-skill-capability-alignment-v1",
+          "category": "capability_inventory",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY_7d7e4fe99e5f",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER_2a78dd82d11e",
+          "location": {
+            "file": "SKILL.md",
+            "line": 320
+          },
+          "rule_id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER",
+          "severity": "MEDIUM"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER_2a78dd82d11e"
+        ],
+        "matched_severities": [
+          "MEDIUM"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "命中人工复核严重度：MEDIUM 1 条。",
+        "rule_id": "POLICY_REVIEW_SEVERITY"
+      },
+      "reason_code": "POLICY_REVIEW_SEVERITY",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 2,
+        "low": 0,
+        "medium": 1,
+        "total_findings": 3,
+        "unknown": 0
+      }
+    }
+  }
+}

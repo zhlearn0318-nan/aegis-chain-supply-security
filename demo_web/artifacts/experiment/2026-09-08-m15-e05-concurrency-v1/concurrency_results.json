@@ -1,0 +1,107 @@
+[
+  {
+    "concurrency": 1,
+    "completed": 1,
+    "busy": 0,
+    "attempts": [
+      {
+        "terminal": "completed",
+        "decision": "ALLOW",
+        "duration_ms": 10905,
+        "log_lines": [
+          "[gateway] 已接收正式上传会话 663786409ea9598777654c36a7f2df80；开始静态与动态审计。",
+          "[STEP 1/5] 验证上传会话与文件边界。",
+          "[STEP 2/5] 上传包预处理完成：files=2 bytes=701。",
+          "[hash] source_tree_sha256=9afadebb85746c1b2441b717407763271f1e2b9495c18a57316685cfe62dde53",
+          "[STEP 3/5] 执行 Cisco 扫描、Aegis 确定性规则、文件角色/能力一致性与本地语义复核。",
+          "[model] local=Ollama; external_api=disabled; model_alone_cannot_block=true",
+          "[STEP 4/5] 路由 Python / Node / Shell 三轮定向容器审计；纯指令 Skill 进入三类语义场景检查。",
+          "[gateway] 安全引擎仍在运行……",
+          "[gateway] 安全引擎仍在运行……",
+          "[STEP 5/5] 扫描完成：decision=ALLOW chain_valid=True。"
+        ]
+      }
+    ],
+    "passed": true
+  },
+  {
+    "concurrency": 3,
+    "completed": 1,
+    "busy": 2,
+    "attempts": [
+      {
+        "terminal": "busy",
+        "error_code": "ENGINE_BUSY",
+        "duration_ms": 6
+      },
+      {
+        "terminal": "completed",
+        "decision": "ALLOW",
+        "duration_ms": 10959,
+        "log_lines": [
+          "[gateway] 已接收正式上传会话 abf4ae61fe6e1d0a79fcb4c7a30bb2dd；开始静态与动态审计。",
+          "[STEP 1/5] 验证上传会话与文件边界。",
+          "[STEP 2/5] 上传包预处理完成：files=2 bytes=701。",
+          "[hash] source_tree_sha256=9afadebb85746c1b2441b717407763271f1e2b9495c18a57316685cfe62dde53",
+          "[STEP 3/5] 执行 Cisco 扫描、Aegis 确定性规则、文件角色/能力一致性与本地语义复核。",
+          "[model] local=Ollama; external_api=disabled; model_alone_cannot_block=true",
+          "[STEP 4/5] 路由 Python / Node / Shell 三轮定向容器审计；纯指令 Skill 进入三类语义场景检查。",
+          "[gateway] 安全引擎仍在运行……",
+          "[gateway] 安全引擎仍在运行……",
+          "[STEP 5/5] 扫描完成：decision=ALLOW chain_valid=True。"
+        ]
+      },
+      {
+        "terminal": "busy",
+        "error_code": "ENGINE_BUSY",
+        "duration_ms": 7
+      }
+    ],
+    "passed": true
+  },
+  {
+    "concurrency": 5,
+    "completed": 1,
+    "busy": 4,
+    "attempts": [
+      {
+        "terminal": "busy",
+        "error_code": "ENGINE_BUSY",
+        "duration_ms": 6
+      },
+      {
+        "terminal": "busy",
+        "error_code": "ENGINE_BUSY",
+        "duration_ms": 10
+      },
+      {
+        "terminal": "busy",
+        "error_code": "ENGINE_BUSY",
+        "duration_ms": 5
+      },
+      {
+        "terminal": "busy",
+        "error_code": "ENGINE_BUSY",
+        "duration_ms": 10
+      },
+      {
+        "terminal": "completed",
+        "decision": "ALLOW",
+        "duration_ms": 11246,
+        "log_lines": [
+          "[gateway] 已接收正式上传会话 8eb17429c38497e59e1769d922d5d185；开始静态与动态审计。",
+          "[STEP 1/5] 验证上传会话与文件边界。",
+          "[STEP 2/5] 上传包预处理完成：files=2 bytes=701。",
+          "[hash] source_tree_sha256=9afadebb85746c1b2441b717407763271f1e2b9495c18a57316685cfe62dde53",
+          "[STEP 3/5] 执行 Cisco 扫描、Aegis 确定性规则、文件角色/能力一致性与本地语义复核。",
+          "[model] local=Ollama; external_api=disabled; model_alone_cannot_block=true",
+          "[STEP 4/5] 路由 Python / Node / Shell 三轮定向容器审计；纯指令 Skill 进入三类语义场景检查。",
+          "[gateway] 安全引擎仍在运行……",
+          "[gateway] 安全引擎仍在运行……",
+          "[STEP 5/5] 扫描完成：decision=ALLOW chain_valid=True。"
+        ]
+      }
+    ],
+    "passed": true
+  }
+]

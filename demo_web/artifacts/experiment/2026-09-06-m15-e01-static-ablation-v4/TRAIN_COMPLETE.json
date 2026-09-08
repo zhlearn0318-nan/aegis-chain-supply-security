@@ -1,0 +1,10 @@
+{
+  "completed_at": "2026-09-06T07:38:13+08:00",
+  "config_sha256": "5e06c588b5395558bcfb6e15d60f668be609b4c8713d913589a014722d17fbfe",
+  "experiment_id": "2026-09-06-m15-e01-static-ablation-v4",
+  "model_sha256": "6d85bba36f5aa8197249d65a1ee2b1cd253c94a7a4d3a01725ee14073d84b352",
+  "schema_version": "1.0",
+  "status": "complete",
+  "training_report_sha256": "c26ca2bb233c3a1580d6c0b50e22be0fa54bfc2a9581f225ec9f3b3964384cc8",
+  "validation_loaded": false
+}

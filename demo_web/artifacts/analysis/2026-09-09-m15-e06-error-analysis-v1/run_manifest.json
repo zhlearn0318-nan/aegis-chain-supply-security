@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0",
+  "recorded_at": "2026-09-09T06:47:05+08:00",
+  "contract_sha256": "0a96fb74222e38e94a8dfcaa0548cb133bed9b92228c8f38f5c0881f6f5455d2",
+  "parent_results_sha256": "70afc183e7252a2cb1fbb246f22f78a7064913a3188ee0e3f45d425dc4abefcd",
+  "analysis_mode": "deterministic_metadata_text_rubric_single_annotator",
+  "rule_changes_made": false
+}

@@ -1,0 +1,139 @@
+{
+  "benchmark_id": "ASB04_000020",
+  "case_id": "asb04_000020",
+  "duration_ms": 0,
+  "experiment_id": "2026-09-06-m15-e01-static-ablation-v5",
+  "qwen_calls": 0,
+  "qwen_failures": 0,
+  "scan_ready": false,
+  "schema_version": "1.0",
+  "skill_text_sha256": "00b52cca5c1f3a29bbe3fa58fc9e99cff2674582faf3e2f0fb671d460cb11ee9",
+  "systems": {
+    "S0": {
+      "decision": "UNKNOWN",
+      "finding_index": [],
+      "policy_trace": {
+        "fail_closed": true,
+        "rule_id": "HOST_CONTENT_FILTER_BLOCKED"
+      },
+      "reason_code": "HOST_CONTENT_FILTER_BLOCKED",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 0,
+        "low": 0,
+        "medium": 0,
+        "total_findings": 0,
+        "unknown": 0
+      }
+    },
+    "S1": {
+      "decision": "UNKNOWN",
+      "finding_index": [],
+      "policy_trace": {
+        "fail_closed": true,
+        "rule_id": "HOST_CONTENT_FILTER_BLOCKED"
+      },
+      "reason_code": "HOST_CONTENT_FILTER_BLOCKED",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 0,
+        "low": 0,
+        "medium": 0,
+        "total_findings": 0,
+        "unknown": 0
+      }
+    },
+    "S2": {
+      "decision": "UNKNOWN",
+      "finding_index": [],
+      "policy_trace": {
+        "fail_closed": true,
+        "rule_id": "HOST_CONTENT_FILTER_BLOCKED"
+      },
+      "reason_code": "HOST_CONTENT_FILTER_BLOCKED",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 0,
+        "low": 0,
+        "medium": 0,
+        "total_findings": 0,
+        "unknown": 0
+      }
+    },
+    "S3": {
+      "decision": "UNKNOWN",
+      "finding_index": [],
+      "policy_trace": {
+        "fail_closed": true,
+        "rule_id": "HOST_CONTENT_FILTER_BLOCKED"
+      },
+      "reason_code": "HOST_CONTENT_FILTER_BLOCKED",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 0,
+        "low": 0,
+        "medium": 0,
+        "total_findings": 0,
+        "unknown": 0
+      }
+    },
+    "S4": {
+      "decision": "UNKNOWN",
+      "finding_index": [],
+      "policy_trace": {
+        "fail_closed": true,
+        "rule_id": "HOST_CONTENT_FILTER_BLOCKED"
+      },
+      "reason_code": "HOST_CONTENT_FILTER_BLOCKED",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 0,
+        "low": 0,
+        "medium": 0,
+        "total_findings": 0,
+        "unknown": 0
+      }
+    },
+    "S5": {
+      "decision": "UNKNOWN",
+      "finding_index": [],
+      "policy_trace": {
+        "fail_closed": true,
+        "rule_id": "HOST_CONTENT_FILTER_BLOCKED"
+      },
+      "reason_code": "HOST_CONTENT_FILTER_BLOCKED",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 0,
+        "low": 0,
+        "medium": 0,
+        "total_findings": 0,
+        "unknown": 0
+      }
+    },
+    "S6": {
+      "decision": "UNKNOWN",
+      "finding_index": [],
+      "policy_trace": {
+        "fail_closed": true,
+        "rule_id": "HOST_CONTENT_FILTER_BLOCKED"
+      },
+      "reason_code": "HOST_CONTENT_FILTER_BLOCKED",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 0,
+        "low": 0,
+        "medium": 0,
+        "total_findings": 0,
+        "unknown": 0
+      }
+    }
+  }
+}

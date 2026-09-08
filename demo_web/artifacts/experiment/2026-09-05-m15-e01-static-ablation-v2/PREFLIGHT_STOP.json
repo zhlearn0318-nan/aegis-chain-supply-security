@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "2026-09-05-m15-e01-static-ablation-v2",
+  "status": "stopped_before_model_fit_and_validation",
+  "reason_code": "STRATIFIED_GROUP_THREE_FOLD_CLASS_COVERAGE_NOT_ACHIEVED",
+  "actual_folds": [
+    {"fold": 1, "sources": ["SRC008"], "labels": {"0": 2, "1": 1}},
+    {"fold": 2, "sources": ["SRC002"], "labels": {"0": 0, "1": 134}},
+    {"fold": 3, "sources": ["SRC001", "SRC004", "SRC005", "SRC006", "SRC010", "SRC013"], "labels": {"0": 1519, "1": 5857}}
+  ],
+  "reason": "The frozen three-fold splitter produced a single-class held-out fold; lowering fold count did not solve the source-label confounding.",
+  "contract_action": "Preserve v2 unchanged and use leave-one-source-out OOF evaluation in v3, with undefined per-source class metrics reported as null.",
+  "validation_scan_started": false,
+  "validation_labels_used_for_tuning": false
+}

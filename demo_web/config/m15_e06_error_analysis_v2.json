@@ -1,0 +1,30 @@
+{
+  "schema_version": "2.0",
+  "experiment_id": "m15-e06-error-analysis-v2",
+  "status": "frozen_before_execution",
+  "revision_basis": "v1 retained for diagnosis; v2 classifies semantic false positives from the finding-local line window and enforces unique, correctly described representative cases.",
+  "parent_run": "2026-09-06-m15-e01-static-ablation-v5",
+  "parent_system": "S5",
+  "parent_results_sha256": "70afc183e7252a2cb1fbb246f22f78a7064913a3188ee0e3f45d425dc4abefcd",
+  "validation_labels_sha256": "e0230724e7c2cec97f13cdfbdf8c9b59862652616e54cd6f987434733d77fac6",
+  "validation_scan_manifest_sha256": "79d118ab0cfe0392572b9ec39206d1d9b0e6b07206333f4f767eb3c4b95b8841",
+  "sampling": {
+    "false_negatives": 60,
+    "false_positives_available_and_selected": 54,
+    "strata": ["primary_attack_category", "source_id"],
+    "within_stratum_order": "sha256(case_id)",
+    "structural_family_preference": "prefer_unique_then_fill",
+    "duplicates_allowed": false,
+    "same_sample_as_v1": true
+  },
+  "analysis_mode": "deterministic_metadata_and_finding_local_text_rubric_single_annotator",
+  "finding_context_radius_lines": 3,
+  "rule_changes_allowed": false,
+  "acceptance": {
+    "analyzed_cases": 114,
+    "classified_fraction_min": 0.9,
+    "proposal_support_cases_min": 5,
+    "representative_cases_min": 6,
+    "representative_cases_unique": true
+  }
+}

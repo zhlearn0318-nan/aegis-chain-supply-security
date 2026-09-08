@@ -275,6 +275,12 @@ def analyze_skill_semantics(
                     kinds.add("model_corroborated")
             except Exception:
                 kinds.add("model_unavailable")
+                # The candidate already contains ambiguous control language and
+                # the configured corroborator could not complete.  Preserve the
+                # three-level policy boundary: require review, never model-only
+                # BLOCK, and never interpret missing evidence as benign.
+                severity = "MEDIUM"
+                confidence = "POTENTIAL"
         findings.append(_finding(
             "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE",
             "Skill 包含需结合上下文复核的控制性指令",

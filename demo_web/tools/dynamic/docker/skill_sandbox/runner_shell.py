@@ -19,6 +19,8 @@ ROUNDS = (
 COMMAND = re.compile(r"^\+\s*(?:[^ ]+=\S+\s+)*([^\s;&|]+)")
 TRANSFER = {"curl", "wget", "nc", "ncat", "socat"}
 SHELLS = {"bash", "sh", "dash", "zsh", "powershell", "pwsh", "cmd", "cmd.exe"}
+FILE_READERS = {"cat", "head", "tail", "grep", "sed", "awk", "cut", "stat", "readlink"}
+SENSITIVE_PATH_PARTS = {"/.aws/", "/.azure/", "/.config/gcloud/", "/.docker/config.json", "/.kube/config", "/.ssh/", "/etc/passwd", "/etc/shadow", "/proc/self/environ"}
 
 
 def _sha256(value: bytes) -> str:
@@ -52,6 +54,16 @@ def _events(trace: bytes, round_id: str) -> list[dict]:
             result.append({"type": "process.spawn", "executable": name, "round": round_id})
         elif name in {"rm", "chmod", "chown", "mount", "sudo", "su"}:
             result.append({"type": "process.spawn", "executable": name, "round": round_id})
+        if name in FILE_READERS:
+            # Xtrace contains the command after shell expansion, so variable and
+            # string-split paths are visible here without trusting script text.
+            for token in raw.replace("'", "").replace('"', "").split()[2:]:
+                path = token.rstrip(";|&")[:400]
+                folded = path.casefold()
+                if folded.startswith("/workspace/decoys/"):
+                    result.append({"type": "decoy.read", "marker_id": PurePosixPath(path).stem, "round": round_id})
+                elif any(part in folded for part in SENSITIVE_PATH_PARTS):
+                    result.append({"type": "file.open", "path": path, "operation": name, "round": round_id})
     return result
 
 

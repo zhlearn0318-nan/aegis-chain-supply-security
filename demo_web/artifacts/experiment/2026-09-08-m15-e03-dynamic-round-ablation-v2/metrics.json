@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-09-08-m15-e03-dynamic-round-ablation-v2",
+  "status": "completed",
+  "completed_at": "2026-09-08T15:04:43+08:00",
+  "wall_seconds": 0.299,
+  "input_checks": {
+    "dataset_manifest": true,
+    "dataset_tree": true,
+    "source_run_manifest": true,
+    "source_dynamic_summary": true,
+    "source_dynamic_detail_tree": true
+  },
+  "metrics": {
+    "systems": {
+      "D0": {
+        "decision_counts": {
+          "ALLOW": 10,
+          "BLOCK": 3,
+          "REVIEW": 23
+        },
+        "risk_non_allow": 22,
+        "risk_non_allow_recall": 0.7333333333333333,
+        "expected_dynamic_rule_recall": 0.0,
+        "original_dynamic_allow_rate": 1.0,
+        "static_allow_to_dynamic_non_allow": 0,
+        "static_review_to_dynamic_block": 0,
+        "latency_ms": {
+          "p50": 7496,
+          "p95": 11664
+        },
+        "container_instances": 0,
+        "script_round_invocations": 0
+      },
+      "D1": {
+        "decision_counts": {
+          "ALLOW": 10,
+          "BLOCK": 3,
+          "REVIEW": 23
+        },
+        "risk_non_allow": 22,
+        "risk_non_allow_recall": 0.7333333333333333,
+        "expected_dynamic_rule_recall": 0.0,
+        "original_dynamic_allow_rate": 1.0,
+        "static_allow_to_dynamic_non_allow": 0,
+        "static_review_to_dynamic_block": 0,
+        "latency_ms": {
+          "p50": 10535,
+          "p95": 15667
+        },
+        "container_instances": 36,
+        "script_round_invocations": 36
+      },
+      "D3": {
+        "decision_counts": {
+          "ALLOW": 2,
+          "BLOCK": 24,
+          "REVIEW": 10
+        },
+        "risk_non_allow": 30,
+        "risk_non_allow_recall": 1.0,
+        "expected_dynamic_rule_recall": 1.0,
+        "original_dynamic_allow_rate": 1.0,
+        "static_allow_to_dynamic_non_allow": 8,
+        "static_review_to_dynamic_block": 15,
+        "latency_ms": {
+          "p50": 12701,
+          "p95": 18022
+        },
+        "container_instances": 36,
+        "script_round_invocations": 108
+      }
+    },
+    "first_expected_rule_round": {
+      "adversarial": 30
+    },
+    "d3_incremental_risk_types_vs_d1": [
+      "adversarial_timeout",
+      "decoy_access",
+      "external_network",
+      "sensitive_path",
+      "shell_spawn"
+    ],
+    "d3_recall_gain_percentage_points": 26.66666666666667,
+    "d3_to_d1_p95_total_latency_ratio": 1.1503159507244527,
+    "source_security_and_cleanup_gate_rate": 1.0
+  },
+  "acceptance": {
+    "d3_has_incremental_detection": true,
+    "p95_ratio_within_limit": true,
+    "original_dynamic_allow_d1": true,
+    "original_dynamic_allow_d3": true,
+    "source_security_and_cleanup": true,
+    "dataset_immutable": true
+  },
+  "accepted": true,
+  "engineering_decision": "KEEP_THREE_ROUNDS_DEFAULT",
+  "known_malicious_third_party_executed": false,
+  "d1_latency_kind": "prefix_attribution_from_same_measured_d3_container_run",
+  "static_input": {
+    "reused": true,
+    "sha256": "e514ebc22a37c60fb62a55471d90d9062b33c6cd987de9b51992273d35c21188"
+  }
+}

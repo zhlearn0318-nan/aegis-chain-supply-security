@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-09-08-m15-e04-dynamic-robustness-v1",
+  "status": "invalid_for_positive_detection_claims",
+  "failed_gates": [
+    "all_cases_executed",
+    "transformed_non_allow_24_of_24",
+    "expected_rule_recall_at_least_90pct",
+    "three_round_rate_100pct",
+    "security_gate_rate_100pct",
+    "cleanup_rate_100pct",
+    "network_success_zero"
+  ],
+  "infrastructure_failures": 48,
+  "failure_codes": [
+    "DOCKER_CLI_NOT_FOUND"
+  ],
+  "preservation_reason": "E04 requires real isolated executions. Fail-closed outcomes caused by missing infrastructure are not counted as detections or safe-control false positives."
+}

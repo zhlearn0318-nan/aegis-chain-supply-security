@@ -28,8 +28,13 @@ for (const name of ['exec', 'execSync', 'spawn', 'spawnSync', 'execFile', 'execF
 const net = require('net');
 const originalConnect = net.Socket.prototype.connect;
 net.Socket.prototype.connect = function(...args) {
-  const options = typeof args[0] === 'object' ? args[0] : {};
-  emit({type: 'socket.connect', host: clean(options.host || args[0]), port: options.port || args[1]});
+  // net.connect(options) normalizes its arguments and may call Socket.connect
+  // with an array whose first item is the original options object.
+  let first = Array.isArray(args[0]) ? args[0][0] : args[0];
+  const options = first && typeof first === 'object' ? first : {};
+  const host = options.host || (typeof first === 'number' ? args[1] : first) || 'localhost';
+  const port = options.port || (typeof first === 'number' ? first : args[1]);
+  emit({type: 'socket.connect', host: clean(host), port});
   return originalConnect.apply(this, args);
 };
 

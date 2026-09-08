@@ -1,0 +1,63 @@
+[
+  {
+    "repetition": 1,
+    "scenario_id": "s12",
+    "runtime": "python",
+    "source_kind": "zip",
+    "expected_decision": "ALLOW",
+    "observed_decision": "ALLOW",
+    "target_name": "aegis-e05-r1-s12",
+    "uploaded_bytes": 512,
+    "upload_ms": 7,
+    "scan_ms": 21040,
+    "install_ms": 65640,
+    "pdf_ms": 2454,
+    "total_ms": 89562,
+    "install_gate_verified": true,
+    "update_verified": true,
+    "audit": {
+      "sequence": 95,
+      "decision": "ALLOW",
+      "integrity_valid": true,
+      "pdf_bytes": 89170,
+      "pdf_sha256": "764c53dc9cf2dcde89599e6754a5484af121e4104c39493d6d26644b44f77f3a",
+      "pdf_duration_ms": 2454
+    },
+    "source_tree_sha256": "e5acc90ef2ec3f67260f9b438fab7ab032142c82c31262082cda8fcde25ab64e",
+    "finding_rule_ids": [
+      ""
+    ],
+    "log_lines": [
+      "[gateway] 已接收正式上传会话 e56bf360fd047967935fd6899334e026；开始静态与动态审计。",
+      "[STEP 1/5] 验证上传会话与文件边界。",
+      "[STEP 2/5] 上传包预处理完成：files=3 bytes=229。",
+      "[hash] source_tree_sha256=ca630925892c7b8015e516033dc04a2c1633ecd15d155e4f4189db82ee3aacc8",
+      "[STEP 3/5] 执行 Cisco 扫描、Aegis 确定性规则、文件角色/能力一致性与本地语义复核。",
+      "[model] local=Ollama; external_api=disabled; model_alone_cannot_block=true",
+      "[STEP 4/5] 路由 Python / Node / Shell 三轮定向容器审计；纯指令 Skill 进入三类语义场景检查。",
+      "[gateway] 安全引擎仍在运行……",
+      "[gateway] 安全引擎仍在运行……",
+      "[STEP 5/5] 扫描完成：decision=ALLOW chain_valid=True。",
+      "[verify] 扫描指纹复核通过 ca630925892c7b8015e516033dc04a2c1633ecd15d155e4f4189db82ee3aacc8",
+      "[install] 调用 OpenClaw skills install；原生 installPolicy 将执行第二次安全复扫。",
+      "[openclaw:stdout] Installing to <USER_HOME>\\.openclaw\\workspace\\skills\\aegis-e05-r1-s12…",
+      "[openclaw:stdout] Installed aegis-e05-r1-s12 from path -> <USER_HOME>\\.openclaw\\workspace\\skills\\aegis-e05-r1-s12",
+      "[gateway] 已接收正式上传会话 6666078ba9f217f5c13cdfbeafdd92e8；开始静态与动态审计。",
+      "[STEP 1/5] 验证上传会话与文件边界。",
+      "[STEP 2/5] 上传包预处理完成：files=4 bytes=261。",
+      "[hash] source_tree_sha256=e5acc90ef2ec3f67260f9b438fab7ab032142c82c31262082cda8fcde25ab64e",
+      "[STEP 3/5] 执行 Cisco 扫描、Aegis 确定性规则、文件角色/能力一致性与本地语义复核。",
+      "[model] local=Ollama; external_api=disabled; model_alone_cannot_block=true",
+      "[STEP 4/5] 路由 Python / Node / Shell 三轮定向容器审计；纯指令 Skill 进入三类语义场景检查。",
+      "[gateway] 安全引擎仍在运行……",
+      "[gateway] 安全引擎仍在运行……",
+      "[STEP 5/5] 扫描完成：decision=ALLOW chain_valid=True。",
+      "[verify] 扫描指纹复核通过 e5acc90ef2ec3f67260f9b438fab7ab032142c82c31262082cda8fcde25ab64e",
+      "[transaction] 已暂存原版本；安装失败时将自动恢复。",
+      "[install] 调用 OpenClaw skills install；原生 installPolicy 将执行第二次安全复扫。",
+      "[openclaw:stdout] Installing to <USER_HOME>\\.openclaw\\workspace\\skills\\aegis-e05-r1-s12…",
+      "[openclaw:stdout] Installed aegis-e05-r1-s12 from path -> <USER_HOME>\\.openclaw\\workspace\\skills\\aegis-e05-r1-s12"
+    ],
+    "passed": true
+  }
+]

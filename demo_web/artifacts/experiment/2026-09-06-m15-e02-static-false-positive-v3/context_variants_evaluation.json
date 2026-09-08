@@ -1,0 +1,390 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-09-06-m15-e02-static-false-positive-v3",
+  "evaluated_at": "2026-09-08T14:01:27+08:00",
+  "metrics": {
+    "F0": {
+      "decision_counts": {
+        "ALLOW": 22,
+        "BLOCK": 5,
+        "REVIEW": 12,
+        "UNKNOWN": 1
+      },
+      "by_workload_class": {
+        "low_permission": {
+          "cases": 24,
+          "decision_counts": {
+            "ALLOW": 16,
+            "BLOCK": 1,
+            "REVIEW": 6,
+            "UNKNOWN": 1
+          },
+          "allow_rate": 0.6666666666666666,
+          "review_rate": 0.25,
+          "block_rate": 0.041666666666666664,
+          "unknown_rate": 0.041666666666666664
+        },
+        "high_privilege_legitimate": {
+          "cases": 16,
+          "decision_counts": {
+            "ALLOW": 6,
+            "BLOCK": 4,
+            "REVIEW": 6
+          },
+          "allow_rate": 0.375,
+          "review_rate": 0.375,
+          "block_rate": 0.25,
+          "unknown_rate": 0.0
+        }
+      },
+      "low_permission_unnecessary_non_allow_count": 7,
+      "low_permission_direct_block_count": 1,
+      "suppressed_to_info_count": 0,
+      "suppression_reason_counts": {},
+      "suppressed_case_count": 0,
+      "high_privilege_blocks": [
+        {
+          "case_id": "masb-045-dev-swarm-python",
+          "complete_chain_present": true,
+          "blocking_rules": [
+            "AEGIS_REMOTE_FETCH_PIPE_SHELL"
+          ],
+          "complete_chain_rules": [
+            "AEGIS_REMOTE_FETCH_PIPE_SHELL"
+          ]
+        },
+        {
+          "case_id": "masb-061-godot-mcp-auto-launcher",
+          "complete_chain_present": true,
+          "blocking_rules": [
+            "COMMAND_INJECTION_EVAL",
+            "COMMAND_INJECTION_JS_CHILD_PROCESS",
+            "DATA_EXFIL_JS_FS_ACCESS"
+          ],
+          "complete_chain_rules": [
+            "COMMAND_INJECTION_EVAL",
+            "COMMAND_INJECTION_JS_CHILD_PROCESS"
+          ]
+        },
+        {
+          "case_id": "masb-079-ohmydebn-skill",
+          "complete_chain_present": false,
+          "blocking_rules": [
+            "YARA_command_injection_generic"
+          ],
+          "complete_chain_rules": []
+        },
+        {
+          "case_id": "openai-cloudflare-deploy",
+          "complete_chain_present": true,
+          "blocking_rules": [
+            "AEGIS_PERSISTENCE_SERVICE_CREATE",
+            "AEGIS_REMOTE_FETCH_PIPE_SHELL"
+          ],
+          "complete_chain_rules": [
+            "AEGIS_PERSISTENCE_SERVICE_CREATE",
+            "AEGIS_REMOTE_FETCH_PIPE_SHELL"
+          ]
+        }
+      ],
+      "all_high_privilege_blocks_have_complete_chain": false
+    },
+    "F1": {
+      "decision_counts": {
+        "ALLOW": 24,
+        "BLOCK": 4,
+        "REVIEW": 11,
+        "UNKNOWN": 1
+      },
+      "by_workload_class": {
+        "low_permission": {
+          "cases": 24,
+          "decision_counts": {
+            "ALLOW": 17,
+            "BLOCK": 1,
+            "REVIEW": 5,
+            "UNKNOWN": 1
+          },
+          "allow_rate": 0.7083333333333334,
+          "review_rate": 0.20833333333333334,
+          "block_rate": 0.041666666666666664,
+          "unknown_rate": 0.041666666666666664
+        },
+        "high_privilege_legitimate": {
+          "cases": 16,
+          "decision_counts": {
+            "ALLOW": 7,
+            "BLOCK": 3,
+            "REVIEW": 6
+          },
+          "allow_rate": 0.4375,
+          "review_rate": 0.375,
+          "block_rate": 0.1875,
+          "unknown_rate": 0.0
+        }
+      },
+      "low_permission_unnecessary_non_allow_count": 6,
+      "low_permission_direct_block_count": 1,
+      "suppressed_to_info_count": 28,
+      "suppression_reason_counts": {
+        "AEGIS_CONTEXT_GENERIC_COMMAND_WITHOUT_SINK": 1,
+        "AEGIS_CONTEXT_METADATA_QUALITY_ONLY": 1,
+        "AEGIS_CONTEXT_REFERENCE_PARTIAL_CHAIN": 10,
+        "AEGIS_CONTEXT_SAFE_NOTEBOOK_TEMPLATE": 2,
+        "AEGIS_CONTEXT_TEMPLATE_SUFFIX": 14
+      },
+      "suppressed_case_count": 6,
+      "high_privilege_blocks": [
+        {
+          "case_id": "masb-045-dev-swarm-python",
+          "complete_chain_present": true,
+          "blocking_rules": [
+            "AEGIS_REMOTE_FETCH_PIPE_SHELL"
+          ],
+          "complete_chain_rules": [
+            "AEGIS_REMOTE_FETCH_PIPE_SHELL"
+          ]
+        },
+        {
+          "case_id": "masb-061-godot-mcp-auto-launcher",
+          "complete_chain_present": true,
+          "blocking_rules": [
+            "COMMAND_INJECTION_EVAL",
+            "COMMAND_INJECTION_JS_CHILD_PROCESS",
+            "DATA_EXFIL_JS_FS_ACCESS"
+          ],
+          "complete_chain_rules": [
+            "COMMAND_INJECTION_EVAL",
+            "COMMAND_INJECTION_JS_CHILD_PROCESS"
+          ]
+        },
+        {
+          "case_id": "openai-cloudflare-deploy",
+          "complete_chain_present": true,
+          "blocking_rules": [
+            "AEGIS_PERSISTENCE_SERVICE_CREATE",
+            "AEGIS_REMOTE_FETCH_PIPE_SHELL"
+          ],
+          "complete_chain_rules": [
+            "AEGIS_PERSISTENCE_SERVICE_CREATE",
+            "AEGIS_REMOTE_FETCH_PIPE_SHELL"
+          ]
+        }
+      ],
+      "all_high_privilege_blocks_have_complete_chain": true,
+      "low_permission_non_allow_relative_reduction_vs_f0": 0.14285714285714285
+    },
+    "F2": {
+      "decision_counts": {
+        "ALLOW": 30,
+        "BLOCK": 4,
+        "REVIEW": 5,
+        "UNKNOWN": 1
+      },
+      "by_workload_class": {
+        "low_permission": {
+          "cases": 24,
+          "decision_counts": {
+            "ALLOW": 20,
+            "BLOCK": 1,
+            "REVIEW": 2,
+            "UNKNOWN": 1
+          },
+          "allow_rate": 0.8333333333333334,
+          "review_rate": 0.08333333333333333,
+          "block_rate": 0.041666666666666664,
+          "unknown_rate": 0.041666666666666664
+        },
+        "high_privilege_legitimate": {
+          "cases": 16,
+          "decision_counts": {
+            "ALLOW": 10,
+            "BLOCK": 3,
+            "REVIEW": 3
+          },
+          "allow_rate": 0.625,
+          "review_rate": 0.1875,
+          "block_rate": 0.1875,
+          "unknown_rate": 0.0
+        }
+      },
+      "low_permission_unnecessary_non_allow_count": 3,
+      "low_permission_direct_block_count": 1,
+      "suppressed_to_info_count": 38,
+      "suppression_reason_counts": {
+        "AEGIS_CONTEXT_CONDITIONAL_NO_SENSITIVE_CHAIN": 10,
+        "AEGIS_CONTEXT_GENERIC_COMMAND_WITHOUT_SINK": 1,
+        "AEGIS_CONTEXT_METADATA_QUALITY_ONLY": 1,
+        "AEGIS_CONTEXT_REFERENCE_PARTIAL_CHAIN": 10,
+        "AEGIS_CONTEXT_SAFE_NOTEBOOK_TEMPLATE": 2,
+        "AEGIS_CONTEXT_TEMPLATE_SUFFIX": 14
+      },
+      "suppressed_case_count": 12,
+      "high_privilege_blocks": [
+        {
+          "case_id": "masb-045-dev-swarm-python",
+          "complete_chain_present": true,
+          "blocking_rules": [
+            "AEGIS_REMOTE_FETCH_PIPE_SHELL"
+          ],
+          "complete_chain_rules": [
+            "AEGIS_REMOTE_FETCH_PIPE_SHELL"
+          ]
+        },
+        {
+          "case_id": "masb-061-godot-mcp-auto-launcher",
+          "complete_chain_present": true,
+          "blocking_rules": [
+            "COMMAND_INJECTION_EVAL",
+            "COMMAND_INJECTION_JS_CHILD_PROCESS",
+            "DATA_EXFIL_JS_FS_ACCESS"
+          ],
+          "complete_chain_rules": [
+            "COMMAND_INJECTION_EVAL",
+            "COMMAND_INJECTION_JS_CHILD_PROCESS"
+          ]
+        },
+        {
+          "case_id": "openai-cloudflare-deploy",
+          "complete_chain_present": true,
+          "blocking_rules": [
+            "AEGIS_PERSISTENCE_SERVICE_CREATE",
+            "AEGIS_REMOTE_FETCH_PIPE_SHELL"
+          ],
+          "complete_chain_rules": [
+            "AEGIS_PERSISTENCE_SERVICE_CREATE",
+            "AEGIS_REMOTE_FETCH_PIPE_SHELL"
+          ]
+        }
+      ],
+      "all_high_privilege_blocks_have_complete_chain": true,
+      "low_permission_non_allow_relative_reduction_vs_f0": 0.5714285714285714
+    },
+    "F3": {
+      "decision_counts": {
+        "ALLOW": 31,
+        "BLOCK": 3,
+        "REVIEW": 5,
+        "UNKNOWN": 1
+      },
+      "by_workload_class": {
+        "low_permission": {
+          "cases": 24,
+          "decision_counts": {
+            "ALLOW": 21,
+            "REVIEW": 2,
+            "UNKNOWN": 1
+          },
+          "allow_rate": 0.875,
+          "review_rate": 0.08333333333333333,
+          "block_rate": 0.0,
+          "unknown_rate": 0.041666666666666664
+        },
+        "high_privilege_legitimate": {
+          "cases": 16,
+          "decision_counts": {
+            "ALLOW": 10,
+            "BLOCK": 3,
+            "REVIEW": 3
+          },
+          "allow_rate": 0.625,
+          "review_rate": 0.1875,
+          "block_rate": 0.1875,
+          "unknown_rate": 0.0
+        }
+      },
+      "low_permission_unnecessary_non_allow_count": 2,
+      "low_permission_direct_block_count": 0,
+      "suppressed_to_info_count": 40,
+      "suppression_reason_counts": {
+        "AEGIS_CONTEXT_CONDITIONAL_NO_SENSITIVE_CHAIN": 10,
+        "AEGIS_CONTEXT_FIXED_EXECUTABLE_ARGV": 1,
+        "AEGIS_CONTEXT_GENERIC_COMMAND_WITHOUT_SINK": 1,
+        "AEGIS_CONTEXT_METADATA_QUALITY_ONLY": 1,
+        "AEGIS_CONTEXT_OUTSIDE_DECLARED_CLOSURE": 1,
+        "AEGIS_CONTEXT_REFERENCE_PARTIAL_CHAIN": 10,
+        "AEGIS_CONTEXT_SAFE_NOTEBOOK_TEMPLATE": 2,
+        "AEGIS_CONTEXT_TEMPLATE_SUFFIX": 14
+      },
+      "suppressed_case_count": 13,
+      "high_privilege_blocks": [
+        {
+          "case_id": "masb-045-dev-swarm-python",
+          "complete_chain_present": true,
+          "blocking_rules": [
+            "AEGIS_REMOTE_FETCH_PIPE_SHELL"
+          ],
+          "complete_chain_rules": [
+            "AEGIS_REMOTE_FETCH_PIPE_SHELL"
+          ]
+        },
+        {
+          "case_id": "masb-061-godot-mcp-auto-launcher",
+          "complete_chain_present": true,
+          "blocking_rules": [
+            "COMMAND_INJECTION_EVAL",
+            "COMMAND_INJECTION_JS_CHILD_PROCESS",
+            "DATA_EXFIL_JS_FS_ACCESS"
+          ],
+          "complete_chain_rules": [
+            "COMMAND_INJECTION_EVAL",
+            "COMMAND_INJECTION_JS_CHILD_PROCESS"
+          ]
+        },
+        {
+          "case_id": "openai-cloudflare-deploy",
+          "complete_chain_present": true,
+          "blocking_rules": [
+            "AEGIS_PERSISTENCE_SERVICE_CREATE",
+            "AEGIS_REMOTE_FETCH_PIPE_SHELL"
+          ],
+          "complete_chain_rules": [
+            "AEGIS_PERSISTENCE_SERVICE_CREATE",
+            "AEGIS_REMOTE_FETCH_PIPE_SHELL"
+          ]
+        }
+      ],
+      "all_high_privilege_blocks_have_complete_chain": true,
+      "low_permission_non_allow_relative_reduction_vs_f0": 0.7142857142857143
+    }
+  },
+  "transitions_vs_f0": {
+    "F1": {
+      "ALLOW->ALLOW": 22,
+      "BLOCK->BLOCK": 4,
+      "BLOCK->REVIEW": 1,
+      "REVIEW->ALLOW": 2,
+      "REVIEW->REVIEW": 10,
+      "UNKNOWN->UNKNOWN": 1
+    },
+    "F2": {
+      "ALLOW->ALLOW": 22,
+      "BLOCK->BLOCK": 4,
+      "BLOCK->REVIEW": 1,
+      "REVIEW->ALLOW": 8,
+      "REVIEW->REVIEW": 4,
+      "UNKNOWN->UNKNOWN": 1
+    },
+    "F3": {
+      "ALLOW->ALLOW": 22,
+      "BLOCK->ALLOW": 1,
+      "BLOCK->BLOCK": 3,
+      "BLOCK->REVIEW": 1,
+      "REVIEW->ALLOW": 8,
+      "REVIEW->REVIEW": 4,
+      "UNKNOWN->UNKNOWN": 1
+    }
+  },
+  "acceptance_real_skill_corpus": {
+    "low_permission_direct_block_zero": true,
+    "low_permission_auto_allow_at_least_80pct": true,
+    "high_privilege_unknown_zero": true,
+    "unnecessary_non_allow_relative_reduction_at_least_30pct": true,
+    "suppressed_findings_retained_as_info": true,
+    "protected_complete_high_downgrades_zero": true,
+    "all_high_privilege_blocks_have_complete_chain": true
+  },
+  "real_skill_acceptance_passed": true,
+  "malicious_regression_status": "PENDING",
+  "product_activation_status": "NOT_AUTHORIZED_UNTIL_MALICIOUS_REGRESSION_PASSES"
+}

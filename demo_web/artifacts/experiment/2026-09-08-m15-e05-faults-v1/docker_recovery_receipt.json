@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "fault": "docker_unavailable",
+  "fault_decision": "WARN",
+  "fault_allow": false,
+  "install_gate_blocked": true,
+  "install_gate_evidence": "The runner generated the PDF only after rejected_install returned INSTALL_NOT_ELIGIBLE.",
+  "audit": {
+    "sequence": 215,
+    "reason_code": "AEGIS_DYNAMIC_TELEMETRY_INCOMPLETE",
+    "finding_rule_ids": ["AEGIS_DYNAMIC_TELEMETRY_INCOMPLETE", "AEGIS_DYNAMIC_EXECUTION_INCONCLUSIVE", "MANIFEST_INVALID_NAME"],
+    "duration_ms": 6588,
+    "chain_valid_after_recovery": true,
+    "chain_rows": 7
+  },
+  "pdf": {
+    "bytes": 90325,
+    "sha256": "939416b5cc9fbc7f87a2431d5aaaf6e7682e045ab93b2f9decbd6a7d4c7dce33"
+  },
+  "recovery": {
+    "mode": "manual_socket_directory_recovery",
+    "automatic_recovery_completed": false,
+    "docker_engine_restored": true,
+    "docker_server_version": "29.7.2",
+    "fixed_images_present": true,
+    "scanner_restored_sha256": "b31b66fce1b8466ba5c49e1084ee972b746e00d4ebdcaeab78ad6b38a0dce366",
+    "semantic_config_restored_sha256": "9b610278132866baedc1dcdfbb3e782f9f74c6cb608434766e972dbb79ac8970"
+  },
+  "passed_fault_closed_gate": true,
+  "passed_automatic_recovery": false
+}

@@ -309,7 +309,7 @@ def run_multiruntime_entrypoint(
     argv: tuple[str, ...] | list[str] | None = None,
 ) -> dict[str, Any]:
     started = time.perf_counter()
-    docker_cli = discover_docker_cli()
+    docker_cli: Path | None = None
     name = f"aegis-skill-v2-{secrets.token_hex(8)}"
     container_id = ""
     runner_payload: dict[str, Any] = {}
@@ -319,6 +319,7 @@ def run_multiruntime_entrypoint(
     image_gates: dict[str, bool] = {}
     inspect_gates: dict[str, bool] = {}
     try:
+        docker_cli = discover_docker_cli()
         probe_docker_engine(docker_cli)
         image_payload, image_gates = _image_gates(docker_cli, config.images[runtime])
         if not all(image_gates.values()):
@@ -342,7 +343,7 @@ def run_multiruntime_entrypoint(
         error = {"code": exc.code, "operation": exc.operation}
         evaluation = evaluate_dynamic_result([], execution_status="infrastructure_failed", telemetry_complete=False)
     finally:
-        if container_id:
+        if container_id and docker_cli is not None:
             try:
                 cleanup = _cleanup_container(docker_cli, container_id)
             except DockerBackendError as exc:

@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "decision": "GO_FOR_OPENCLAW_STATIC_ADMISSION_RELEASE_CANDIDATE",
+  "candidate": "F3-v5",
+  "decided_at": "2026-09-08T14:51:00+08:00",
+  "gates": {
+    "real_skill_40": true,
+    "skilltrustbench_regression600": true,
+    "maliciousskillbench_train_source_group": true,
+    "protected_complete_rule_downgrades_zero": true,
+    "rule_registry_complete": true
+  },
+  "registry_rule_count": 146,
+  "validation_reopened": false,
+  "test_reopened": false,
+  "next_experiment": "M15-E03-dynamic-0-1-3-round-ablation"
+}

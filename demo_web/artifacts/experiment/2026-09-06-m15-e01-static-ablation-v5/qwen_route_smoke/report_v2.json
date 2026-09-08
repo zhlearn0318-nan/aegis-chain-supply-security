@@ -1,0 +1,464 @@
+{
+  "case_ids_sha256": "92d70165aa6b3b19782134ab021cdca65b2e301e192ced684ffcfe3edd3de46a",
+  "cases": 10,
+  "completed_at": "2026-09-06T08:24:30+08:00",
+  "duration_ms": 68515,
+  "experiment_id": "2026-09-06-m15-e01-static-ablation-v5",
+  "ground_truth_opened": false,
+  "input_tree_sha256_after": "4097f37f96660a7b9dcc31fa41776fe45261da7b40b8a722a6c3c70601c3e63f",
+  "input_tree_sha256_before": "4097f37f96660a7b9dcc31fa41776fe45261da7b40b8a722a6c3c70601c3e63f",
+  "input_tree_unchanged": true,
+  "ollama": {
+    "digest": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+    "endpoint": "http://127.0.0.1:11434",
+    "mode": "local",
+    "model": "qwen2.5:7b-instruct-q4_K_M",
+    "size": 4683087332
+  },
+  "qwen_calls": 10,
+  "qwen_failures": 0,
+  "results": [
+    {
+      "case_id": "asb04_000027",
+      "deterministic_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_CONCEALED_RISKY_BEHAVIOR_4ffca6263765",
+          "location": {
+            "file": "SKILL.md",
+            "line": 21
+          },
+          "rule_id": "AEGIS_SEMANTIC_CONCEALED_RISKY_BEHAVIOR",
+          "severity": "HIGH"
+        },
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE_8738c70642c8",
+          "location": {
+            "file": "SKILL.md",
+            "line": 56
+          },
+          "rule_id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE",
+          "severity": "INFO"
+        }
+      ],
+      "qwen_calls": 1,
+      "qwen_error_codes": [],
+      "qwen_failures": 0,
+      "qwen_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_CONCEALED_RISKY_BEHAVIOR_4ffca6263765",
+          "location": {
+            "file": "SKILL.md",
+            "line": 21
+          },
+          "rule_id": "AEGIS_SEMANTIC_CONCEALED_RISKY_BEHAVIOR",
+          "severity": "HIGH"
+        },
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE_8738c70642c8",
+          "location": {
+            "file": "SKILL.md",
+            "line": 56
+          },
+          "rule_id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE",
+          "severity": "INFO"
+        }
+      ],
+      "severity_changed": false,
+      "skill_text_sha256": "c5adc024c8650c6924431c8a531c0077e0ea35ed9ef0cef9c306640a95810f81"
+    },
+    {
+      "case_id": "asb04_000036",
+      "deterministic_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER_f5f905345e3c",
+          "location": {
+            "file": "SKILL.md",
+            "line": 3
+          },
+          "rule_id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER",
+          "severity": "MEDIUM"
+        },
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE_550eb2182062",
+          "location": {
+            "file": "SKILL.md",
+            "line": 19
+          },
+          "rule_id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE",
+          "severity": "INFO"
+        }
+      ],
+      "qwen_calls": 1,
+      "qwen_error_codes": [],
+      "qwen_failures": 0,
+      "qwen_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER_f5f905345e3c",
+          "location": {
+            "file": "SKILL.md",
+            "line": 3
+          },
+          "rule_id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER",
+          "severity": "MEDIUM"
+        },
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE_550eb2182062",
+          "location": {
+            "file": "SKILL.md",
+            "line": 19
+          },
+          "rule_id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE",
+          "severity": "INFO"
+        }
+      ],
+      "severity_changed": false,
+      "skill_text_sha256": "017d4cb6f0d4a29262a50891aea20879ea63955db4f4b9e47c7b99ee32ffd692"
+    },
+    {
+      "case_id": "asb04_000045",
+      "deterministic_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE_bee54b1e5d2a",
+          "location": {
+            "file": "SKILL.md",
+            "line": 46
+          },
+          "rule_id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE",
+          "severity": "INFO"
+        }
+      ],
+      "qwen_calls": 1,
+      "qwen_error_codes": [],
+      "qwen_failures": 0,
+      "qwen_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE_bee54b1e5d2a",
+          "location": {
+            "file": "SKILL.md",
+            "line": 46
+          },
+          "rule_id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE",
+          "severity": "INFO"
+        }
+      ],
+      "severity_changed": false,
+      "skill_text_sha256": "b7a2b989ed90e11556daf39d5a67e85dd85378b522084e64bcb240439f5ef13a"
+    },
+    {
+      "case_id": "asb04_000066",
+      "deterministic_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER_1517c79ad895",
+          "location": {
+            "file": "SKILL.md",
+            "line": 3
+          },
+          "rule_id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER",
+          "severity": "MEDIUM"
+        },
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE_1dfd57038f84",
+          "location": {
+            "file": "SKILL.md",
+            "line": 24
+          },
+          "rule_id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE",
+          "severity": "INFO"
+        }
+      ],
+      "qwen_calls": 1,
+      "qwen_error_codes": [],
+      "qwen_failures": 0,
+      "qwen_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER_1517c79ad895",
+          "location": {
+            "file": "SKILL.md",
+            "line": 3
+          },
+          "rule_id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER",
+          "severity": "MEDIUM"
+        },
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE_1dfd57038f84",
+          "location": {
+            "file": "SKILL.md",
+            "line": 24
+          },
+          "rule_id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE",
+          "severity": "INFO"
+        }
+      ],
+      "severity_changed": false,
+      "skill_text_sha256": "02ef355a45349681a4eec4e65908aae74e70ec82a328d7d87e4e144d4d7bae15"
+    },
+    {
+      "case_id": "asb04_000108",
+      "deterministic_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE_6386c3c8fa16",
+          "location": {
+            "file": "SKILL.md",
+            "line": 208
+          },
+          "rule_id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE",
+          "severity": "INFO"
+        }
+      ],
+      "qwen_calls": 1,
+      "qwen_error_codes": [],
+      "qwen_failures": 0,
+      "qwen_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE_6386c3c8fa16",
+          "location": {
+            "file": "SKILL.md",
+            "line": 208
+          },
+          "rule_id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE",
+          "severity": "INFO"
+        }
+      ],
+      "severity_changed": false,
+      "skill_text_sha256": "8007e4b71f1ddb680b183cfe290cb9d8f7597533bb633ce2d8e6086cb0632a4d"
+    },
+    {
+      "case_id": "asb04_000135",
+      "deterministic_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE_86d9420bf97d",
+          "location": {
+            "file": "SKILL.md",
+            "line": 186
+          },
+          "rule_id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE",
+          "severity": "INFO"
+        }
+      ],
+      "qwen_calls": 1,
+      "qwen_error_codes": [],
+      "qwen_failures": 0,
+      "qwen_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE_86d9420bf97d",
+          "location": {
+            "file": "SKILL.md",
+            "line": 186
+          },
+          "rule_id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE",
+          "severity": "INFO"
+        }
+      ],
+      "severity_changed": false,
+      "skill_text_sha256": "055ad8c0123720adea0bf3a6b1561f9ab30415c35db53829c4612012d0596d0a"
+    },
+    {
+      "case_id": "asb04_000194",
+      "deterministic_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE_08bb1c447d9c",
+          "location": {
+            "file": "SKILL.md",
+            "line": 56
+          },
+          "rule_id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE",
+          "severity": "INFO"
+        }
+      ],
+      "qwen_calls": 1,
+      "qwen_error_codes": [],
+      "qwen_failures": 0,
+      "qwen_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE_08bb1c447d9c",
+          "location": {
+            "file": "SKILL.md",
+            "line": 56
+          },
+          "rule_id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE",
+          "severity": "INFO"
+        }
+      ],
+      "severity_changed": false,
+      "skill_text_sha256": "03409303950d883ee9d8e08cefdb25c167a694968e213152f8b5a4d669d89e18"
+    },
+    {
+      "case_id": "asb04_000206",
+      "deterministic_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE_6499d15204c9",
+          "location": {
+            "file": "SKILL.md",
+            "line": 64
+          },
+          "rule_id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE",
+          "severity": "INFO"
+        }
+      ],
+      "qwen_calls": 1,
+      "qwen_error_codes": [],
+      "qwen_failures": 0,
+      "qwen_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE_6499d15204c9",
+          "location": {
+            "file": "SKILL.md",
+            "line": 64
+          },
+          "rule_id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE",
+          "severity": "INFO"
+        }
+      ],
+      "severity_changed": false,
+      "skill_text_sha256": "9245fd78a5ec09b7a310aa9c2fc1c4eaeda3ef37042659397fb8ea2d65841695"
+    },
+    {
+      "case_id": "asb04_000250",
+      "deterministic_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE_e63c6de81118",
+          "location": {
+            "file": "SKILL.md",
+            "line": 84
+          },
+          "rule_id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE",
+          "severity": "INFO"
+        }
+      ],
+      "qwen_calls": 1,
+      "qwen_error_codes": [],
+      "qwen_failures": 0,
+      "qwen_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE_e63c6de81118",
+          "location": {
+            "file": "SKILL.md",
+            "line": 84
+          },
+          "rule_id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE",
+          "severity": "INFO"
+        }
+      ],
+      "severity_changed": false,
+      "skill_text_sha256": "0925babf30550f2d9605db95eddb71fdd9f7a99943919ef5fb9d5436847a9778"
+    },
+    {
+      "case_id": "asb04_000256",
+      "deterministic_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE_d230147d528e",
+          "location": {
+            "file": "SKILL.md",
+            "line": 55
+          },
+          "rule_id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE",
+          "severity": "INFO"
+        }
+      ],
+      "qwen_calls": 1,
+      "qwen_error_codes": [],
+      "qwen_failures": 0,
+      "qwen_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "category": "malicious_instruction_semantics",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE_d230147d528e",
+          "location": {
+            "file": "SKILL.md",
+            "line": 55
+          },
+          "rule_id": "AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE",
+          "severity": "INFO"
+        }
+      ],
+      "severity_changed": false,
+      "skill_text_sha256": "3cf1329e04a280a966774bb07e28776e88d6a115e13145164e1d79bc81cec4f0"
+    }
+  ],
+  "schema_version": "1.0",
+  "severity_changed_cases": 0,
+  "status": "passed",
+  "warmup": {
+    "attempts": 1,
+    "duration_ms": 1558,
+    "errors": [],
+    "response_risk": "suspicious",
+    "status": "ready"
+  }
+}

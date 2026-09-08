@@ -1,0 +1,303 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-09-08-m15-e02-malicious-train-semantic-regression-v5",
+  "status": "completed",
+  "completed_at": "2026-09-08T14:50:12+08:00",
+  "cases": 7513,
+  "source_groups": 8,
+  "f0_semantic_only": {
+    "cases": 7513,
+    "malicious_cases": 5992,
+    "benign_cases": 1521,
+    "decision_counts": {
+      "ALLOW": 5467,
+      "BLOCK": 75,
+      "REVIEW": 1895,
+      "UNKNOWN": 76
+    },
+    "malicious_non_allow_recall": 0.25884512683578104,
+    "benign_non_allow_rate": 0.2754766600920447,
+    "unknown_count": 76
+  },
+  "f3_semantic_only": {
+    "cases": 7513,
+    "malicious_cases": 5992,
+    "benign_cases": 1521,
+    "decision_counts": {
+      "ALLOW": 5588,
+      "BLOCK": 75,
+      "REVIEW": 1774,
+      "UNKNOWN": 76
+    },
+    "malicious_non_allow_recall": 0.24399198931909213,
+    "benign_non_allow_rate": 0.25443786982248523,
+    "unknown_count": 76
+  },
+  "per_source": {
+    "SRC001": {
+      "cases": 3088,
+      "labels": {
+        "1": 3088
+      },
+      "f0": {
+        "cases": 3088,
+        "malicious_cases": 3088,
+        "benign_cases": 0,
+        "decision_counts": {
+          "ALLOW": 2596,
+          "BLOCK": 31,
+          "REVIEW": 389,
+          "UNKNOWN": 72
+        },
+        "malicious_non_allow_recall": 0.13601036269430053,
+        "benign_non_allow_rate": null,
+        "unknown_count": 72
+      },
+      "f3": {
+        "cases": 3088,
+        "malicious_cases": 3088,
+        "benign_cases": 0,
+        "decision_counts": {
+          "ALLOW": 2658,
+          "BLOCK": 31,
+          "REVIEW": 327,
+          "UNKNOWN": 72
+        },
+        "malicious_non_allow_recall": 0.11593264248704663,
+        "benign_non_allow_rate": null,
+        "unknown_count": 72
+      }
+    },
+    "SRC002": {
+      "cases": 134,
+      "labels": {
+        "1": 134
+      },
+      "f0": {
+        "cases": 134,
+        "malicious_cases": 134,
+        "benign_cases": 0,
+        "decision_counts": {
+          "ALLOW": 129,
+          "BLOCK": 1,
+          "REVIEW": 4
+        },
+        "malicious_non_allow_recall": 0.03731343283582089,
+        "benign_non_allow_rate": null,
+        "unknown_count": 0
+      },
+      "f3": {
+        "cases": 134,
+        "malicious_cases": 134,
+        "benign_cases": 0,
+        "decision_counts": {
+          "ALLOW": 129,
+          "BLOCK": 1,
+          "REVIEW": 4
+        },
+        "malicious_non_allow_recall": 0.03731343283582089,
+        "benign_non_allow_rate": null,
+        "unknown_count": 0
+      }
+    },
+    "SRC004": {
+      "cases": 31,
+      "labels": {
+        "1": 31
+      },
+      "f0": {
+        "cases": 31,
+        "malicious_cases": 31,
+        "benign_cases": 0,
+        "decision_counts": {
+          "ALLOW": 27,
+          "REVIEW": 4
+        },
+        "malicious_non_allow_recall": 0.12903225806451613,
+        "benign_non_allow_rate": null,
+        "unknown_count": 0
+      },
+      "f3": {
+        "cases": 31,
+        "malicious_cases": 31,
+        "benign_cases": 0,
+        "decision_counts": {
+          "ALLOW": 27,
+          "REVIEW": 4
+        },
+        "malicious_non_allow_recall": 0.12903225806451613,
+        "benign_non_allow_rate": null,
+        "unknown_count": 0
+      }
+    },
+    "SRC005": {
+      "cases": 27,
+      "labels": {
+        "1": 27
+      },
+      "f0": {
+        "cases": 27,
+        "malicious_cases": 27,
+        "benign_cases": 0,
+        "decision_counts": {
+          "ALLOW": 15,
+          "BLOCK": 1,
+          "REVIEW": 11
+        },
+        "malicious_non_allow_recall": 0.4444444444444444,
+        "benign_non_allow_rate": null,
+        "unknown_count": 0
+      },
+      "f3": {
+        "cases": 27,
+        "malicious_cases": 27,
+        "benign_cases": 0,
+        "decision_counts": {
+          "ALLOW": 17,
+          "BLOCK": 1,
+          "REVIEW": 9
+        },
+        "malicious_non_allow_recall": 0.37037037037037035,
+        "benign_non_allow_rate": null,
+        "unknown_count": 0
+      }
+    },
+    "SRC006": {
+      "cases": 116,
+      "labels": {
+        "0": 41,
+        "1": 75
+      },
+      "f0": {
+        "cases": 116,
+        "malicious_cases": 75,
+        "benign_cases": 41,
+        "decision_counts": {
+          "ALLOW": 81,
+          "BLOCK": 1,
+          "REVIEW": 34
+        },
+        "malicious_non_allow_recall": 0.37333333333333335,
+        "benign_non_allow_rate": 0.17073170731707318,
+        "unknown_count": 0
+      },
+      "f3": {
+        "cases": 116,
+        "malicious_cases": 75,
+        "benign_cases": 41,
+        "decision_counts": {
+          "ALLOW": 86,
+          "BLOCK": 1,
+          "REVIEW": 29
+        },
+        "malicious_non_allow_recall": 0.32,
+        "benign_non_allow_rate": 0.14634146341463414,
+        "unknown_count": 0
+      }
+    },
+    "SRC008": {
+      "cases": 3,
+      "labels": {
+        "0": 2,
+        "1": 1
+      },
+      "f0": {
+        "cases": 3,
+        "malicious_cases": 1,
+        "benign_cases": 2,
+        "decision_counts": {
+          "ALLOW": 3
+        },
+        "malicious_non_allow_recall": 0.0,
+        "benign_non_allow_rate": 0.0,
+        "unknown_count": 0
+      },
+      "f3": {
+        "cases": 3,
+        "malicious_cases": 1,
+        "benign_cases": 2,
+        "decision_counts": {
+          "ALLOW": 3
+        },
+        "malicious_non_allow_recall": 0.0,
+        "benign_non_allow_rate": 0.0,
+        "unknown_count": 0
+      }
+    },
+    "SRC010": {
+      "cases": 3973,
+      "labels": {
+        "0": 1478,
+        "1": 2495
+      },
+      "f0": {
+        "cases": 3973,
+        "malicious_cases": 2495,
+        "benign_cases": 1478,
+        "decision_counts": {
+          "ALLOW": 2502,
+          "BLOCK": 41,
+          "REVIEW": 1426,
+          "UNKNOWN": 4
+        },
+        "malicious_non_allow_recall": 0.4228456913827655,
+        "benign_non_allow_rate": 0.2787550744248985,
+        "unknown_count": 4
+      },
+      "f3": {
+        "cases": 3973,
+        "malicious_cases": 2495,
+        "benign_cases": 1478,
+        "decision_counts": {
+          "ALLOW": 2554,
+          "BLOCK": 41,
+          "REVIEW": 1374,
+          "UNKNOWN": 4
+        },
+        "malicious_non_allow_recall": 0.41442885771543087,
+        "benign_non_allow_rate": 0.2577807848443843,
+        "unknown_count": 4
+      }
+    },
+    "SRC013": {
+      "cases": 141,
+      "labels": {
+        "1": 141
+      },
+      "f0": {
+        "cases": 141,
+        "malicious_cases": 141,
+        "benign_cases": 0,
+        "decision_counts": {
+          "ALLOW": 114,
+          "REVIEW": 27
+        },
+        "malicious_non_allow_recall": 0.19148936170212766,
+        "benign_non_allow_rate": null,
+        "unknown_count": 0
+      },
+      "f3": {
+        "cases": 141,
+        "malicious_cases": 141,
+        "benign_cases": 0,
+        "decision_counts": {
+          "ALLOW": 114,
+          "REVIEW": 27
+        },
+        "malicious_non_allow_recall": 0.19148936170212766,
+        "benign_non_allow_rate": null,
+        "unknown_count": 0
+      }
+    }
+  },
+  "malicious_non_allow_drop_percentage_points": 1.4853137516688903,
+  "acceptance_max_drop_percentage_points": 2.0,
+  "acceptance_passed": true,
+  "changed_decisions": 121,
+  "suppressed_to_info": 122,
+  "input_tree_sha256": "4097f37f96660a7b9dcc31fa41776fe45261da7b40b8a722a6c3c70601c3e63f",
+  "validation_ground_truth_opened": false,
+  "sample_execution": false,
+  "vendor_scans": 0,
+  "claim_boundary": "Deterministic semantic component regression on train only; not an independent benchmark score."
+}

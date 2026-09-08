@@ -1,0 +1,142 @@
+{
+  "benchmark_id": "ASB04_002004",
+  "case_id": "asb04_002004",
+  "duration_ms": 0,
+  "exception_type": "RuntimeError",
+  "experiment_id": "2026-09-06-m15-e01-static-ablation-v5",
+  "lightweight_model_review": false,
+  "qwen_calls": 0,
+  "qwen_failures": 0,
+  "qwen_routed": false,
+  "scan_ready": true,
+  "schema_version": "1.0",
+  "skill_text_sha256": "f1d6ff634a85a718dd341a9f8d1199c94b2b41a438947e5226e63b8edf8b0a5f",
+  "systems": {
+    "S0": {
+      "decision": "UNKNOWN",
+      "finding_index": [],
+      "policy_trace": {
+        "fail_closed": true,
+        "rule_id": "CASE_SCAN_FAILED_RuntimeError"
+      },
+      "reason_code": "CASE_SCAN_FAILED_RuntimeError",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 0,
+        "low": 0,
+        "medium": 0,
+        "total_findings": 0,
+        "unknown": 0
+      }
+    },
+    "S1": {
+      "decision": "UNKNOWN",
+      "finding_index": [],
+      "policy_trace": {
+        "fail_closed": true,
+        "rule_id": "CASE_SCAN_FAILED_RuntimeError"
+      },
+      "reason_code": "CASE_SCAN_FAILED_RuntimeError",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 0,
+        "low": 0,
+        "medium": 0,
+        "total_findings": 0,
+        "unknown": 0
+      }
+    },
+    "S2": {
+      "decision": "UNKNOWN",
+      "finding_index": [],
+      "policy_trace": {
+        "fail_closed": true,
+        "rule_id": "CASE_SCAN_FAILED_RuntimeError"
+      },
+      "reason_code": "CASE_SCAN_FAILED_RuntimeError",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 0,
+        "low": 0,
+        "medium": 0,
+        "total_findings": 0,
+        "unknown": 0
+      }
+    },
+    "S3": {
+      "decision": "UNKNOWN",
+      "finding_index": [],
+      "policy_trace": {
+        "fail_closed": true,
+        "rule_id": "CASE_SCAN_FAILED_RuntimeError"
+      },
+      "reason_code": "CASE_SCAN_FAILED_RuntimeError",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 0,
+        "low": 0,
+        "medium": 0,
+        "total_findings": 0,
+        "unknown": 0
+      }
+    },
+    "S4": {
+      "decision": "UNKNOWN",
+      "finding_index": [],
+      "policy_trace": {
+        "fail_closed": true,
+        "rule_id": "CASE_SCAN_FAILED_RuntimeError"
+      },
+      "reason_code": "CASE_SCAN_FAILED_RuntimeError",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 0,
+        "low": 0,
+        "medium": 0,
+        "total_findings": 0,
+        "unknown": 0
+      }
+    },
+    "S5": {
+      "decision": "UNKNOWN",
+      "finding_index": [],
+      "policy_trace": {
+        "fail_closed": true,
+        "rule_id": "CASE_SCAN_FAILED_RuntimeError"
+      },
+      "reason_code": "CASE_SCAN_FAILED_RuntimeError",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 0,
+        "low": 0,
+        "medium": 0,
+        "total_findings": 0,
+        "unknown": 0
+      }
+    },
+    "S6": {
+      "decision": "UNKNOWN",
+      "finding_index": [],
+      "policy_trace": {
+        "fail_closed": true,
+        "rule_id": "CASE_SCAN_FAILED_RuntimeError"
+      },
+      "reason_code": "CASE_SCAN_FAILED_RuntimeError",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 0,
+        "low": 0,
+        "medium": 0,
+        "total_findings": 0,
+        "unknown": 0
+      }
+    }
+  }
+}

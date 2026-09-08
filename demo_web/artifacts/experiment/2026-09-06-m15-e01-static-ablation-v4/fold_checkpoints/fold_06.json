@@ -1,0 +1,101 @@
+{
+  "case_ids": [
+    "asb04_006168",
+    "asb04_007819",
+    "asb04_008828"
+  ],
+  "completed_at": "2026-09-06T07:31:08+08:00",
+  "config_sha256": "5e06c588b5395558bcfb6e15d60f668be609b4c8713d913589a014722d17fbfe",
+  "experiment_id": "2026-09-06-m15-e01-static-ablation-v4",
+  "fold_record": {
+    "features": 90000,
+    "fit_cases": 7510,
+    "fit_sources": [
+      "SRC001",
+      "SRC002",
+      "SRC004",
+      "SRC005",
+      "SRC006",
+      "SRC010",
+      "SRC013"
+    ],
+    "fold": 6,
+    "held_out_cases": 3,
+    "held_out_label_counts": {
+      "0": 2,
+      "1": 1
+    },
+    "held_out_sources": [
+      "SRC008"
+    ],
+    "models": [
+      {
+        "c": 0.25,
+        "fit_and_predict_ms": 4017,
+        "iterations": [
+          6
+        ]
+      },
+      {
+        "c": 0.5,
+        "fit_and_predict_ms": 4568,
+        "iterations": [
+          6
+        ]
+      },
+      {
+        "c": 1.0,
+        "fit_and_predict_ms": 5244,
+        "iterations": [
+          6
+        ]
+      },
+      {
+        "c": 2.0,
+        "fit_and_predict_ms": 6942,
+        "iterations": [
+          7
+        ]
+      },
+      {
+        "c": 4.0,
+        "fit_and_predict_ms": 7911,
+        "iterations": [
+          7
+        ]
+      }
+    ],
+    "vectorizer_and_models_ms": 148772
+  },
+  "held_out_sources": [
+    "SRC008"
+  ],
+  "probabilities_by_c": {
+    "0.25": [
+      0.7959456291143246,
+      0.7373554696003486,
+      0.5073360628857079
+    ],
+    "0.5": [
+      0.8401326562005402,
+      0.7717018965128767,
+      0.5078123668194561
+    ],
+    "1.0": [
+      0.8777964214148197,
+      0.8033100167053931,
+      0.5074419142262359
+    ],
+    "2.0": [
+      0.9097019462871728,
+      0.8332844324549968,
+      0.5040997347699454
+    ],
+    "4.0": [
+      0.9356885265427723,
+      0.860908246470036,
+      0.4910669316792575
+    ]
+  },
+  "schema_version": "1.0"
+}

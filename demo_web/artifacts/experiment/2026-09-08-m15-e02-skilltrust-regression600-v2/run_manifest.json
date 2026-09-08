@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-09-08-m15-e02-skilltrust-regression600-v2",
+  "status": "completed",
+  "completed_at": "2026-09-08T14:42:48+08:00",
+  "cases": 600,
+  "workers": 8,
+  "wall_seconds": 87.745,
+  "f0": {
+    "decision_counts": {
+      "ALLOW": 88,
+      "BLOCK": 286,
+      "REVIEW": 214,
+      "UNKNOWN": 12
+    },
+    "malicious_non_allow_recall": 0.945,
+    "malicious_block_recall": 0.815,
+    "normal_non_allow_rate": 0.585,
+    "normal_block_rate": 0.105,
+    "unknown_count": 12
+  },
+  "f3": {
+    "decision_counts": {
+      "ALLOW": 97,
+      "BLOCK": 286,
+      "REVIEW": 205,
+      "UNKNOWN": 12
+    },
+    "malicious_non_allow_recall": 0.94,
+    "malicious_block_recall": 0.815,
+    "normal_non_allow_rate": 0.545,
+    "normal_block_rate": 0.105,
+    "unknown_count": 12
+  },
+  "malicious_non_allow_drop_percentage_points": 0.5000000000000004,
+  "acceptance_max_drop_percentage_points": 2.0,
+  "acceptance_passed": true,
+  "changed_decisions": 9,
+  "transition_counts": {
+    "ALLOW->ALLOW": 88,
+    "BLOCK->BLOCK": 286,
+    "REVIEW->ALLOW": 9,
+    "REVIEW->REVIEW": 205,
+    "UNKNOWN->UNKNOWN": 12
+  },
+  "suppressed_to_info": 62,
+  "failed_current_analysis": 0,
+  "parent_failed": 12,
+  "protected_complete_downgrades": 0,
+  "input_hashes": {
+    "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\artifacts\\analysis\\2026-08-15-skilltrustbench-dev120-regression600-v1\\regression_cases.jsonl": "8ee8745594cf2d7ef643cf95e61ccd88c420b42c540780dadb7320cbe7c90492",
+    "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\artifacts\\analysis\\2026-08-15-skilltrustbench-dev120-regression600-v1\\regression_case_ids.txt": "cd83b4f4251b23701fdd98b6b9d3899777ca41f9d573d4fb502ce3307f0cc07d",
+    "F:\\揭榜挂帅\\supply_chain_reproduction\\demo_web\\artifacts\\analysis\\2026-08-14-skilltrustbench-full-cisco-parallel-v1\\per_case_results.jsonl": "15a9ec0cdb3b30d7d55d4a3f67e8a31b9f324f7724c46ede83ec07d5f79cd918"
+  },
+  "sample_execution": false,
+  "vendor_rescans": 0,
+  "outputs": {
+    "per_case_results.jsonl": "a223e23626a95b3bf5a945bb7b77e9c2cc3ac32c2f18ede3e30769813a958580",
+    "metrics.json": "654c85645750998863fd3400ea71b921d4c4cb7f878e58688220f43ea0c1cd66"
+  }
+}

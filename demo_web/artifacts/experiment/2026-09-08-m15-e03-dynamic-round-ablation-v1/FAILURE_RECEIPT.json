@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-09-08-m15-e03-dynamic-round-ablation-v1",
+  "status": "invalid_replay",
+  "reason": "The prefix replay completeness check recognized the Python round schema but not the Node round schema, producing false telemetry-incomplete findings for three original Skills.",
+  "valid_component": "static_v5_results.jsonl",
+  "corrective_action": "Support both frozen round schemas and reuse the unchanged static v5 component by hash in a new v2 output directory.",
+  "dynamic_scripts_reexecuted": false
+}

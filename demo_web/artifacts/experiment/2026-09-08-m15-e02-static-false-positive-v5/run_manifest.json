@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-09-06-m15-e02-static-false-positive-v3",
+  "status": "f0_evaluated",
+  "started_at": "2026-09-06T13:37:59+08:00",
+  "system": "F0",
+  "dataset": {
+    "id": "third-party-skill-e02-v1",
+    "case_count": 40,
+    "scan_manifest_sha256": "be4649a66dc10a4d75355946ccfec1569185cca6ec26fa0d37453521156369dd",
+    "scan_input_tree_sha256": "84f7eabf5cccf8ad776c40b4dd42cf5ca49dd647535ea55f53ed3c4813f95dba"
+  },
+  "scanner": {
+    "version": "skill-scanner 2.0.13.dev3+g4dee90371",
+    "executable_sha256": "b31b66fce1b8466ba5c49e1084ee972b746e00d4ebdcaeab78ad6b38a0dce366",
+    "workers": 4,
+    "timeout_seconds_per_case": 120
+  },
+  "policy": {
+    "id": "aegis-chain-local-default",
+    "version": "1.1.0",
+    "sha256": "5b08e9e17c5ca0f5c6a14b3ddfd3e1f4f9c282fcb3ff89d68e3c663c768e8b2b"
+  },
+  "environment": {
+    "python": "3.13.14 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:26:41) [MSC v.1942 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "sample_execution": false,
+    "sample_install": false,
+    "ground_truth_opened": false,
+    "external_model_enabled": false
+  },
+  "completed_at": "2026-09-06T13:40:22+08:00",
+  "wall_seconds": 143.514,
+  "decision_counts": {
+    "ALLOW": 22,
+    "BLOCK": 5,
+    "REVIEW": 12,
+    "UNKNOWN": 1
+  },
+  "failed_cases": 1,
+  "scan_input_tree_sha256_after": "84f7eabf5cccf8ad776c40b4dd42cf5ca49dd647535ea55f53ed3c4813f95dba",
+  "outputs": {
+    "f0_results.jsonl": {
+      "sha256": "66a7fe5d7e3db7e722637aa9ec8331f6bb7e2f359876686db3678b2a38c3dcb1",
+      "bytes": 279506
+    },
+    "f0_hotspots_label_blind.json": {
+      "sha256": "9b17307dd95ce702182cecf12448b932c2158451c71683bf195ff9e73fda7d8e",
+      "bytes": 714
+    },
+    "f0_evaluation.json": {
+      "sha256": "3d19d1305ed2350408234139f08243cc7fb208b4ce1b77e7dfe296c6d5aaa153",
+      "bytes": 84474
+    }
+  },
+  "ground_truth_opened_during_scan": false,
+  "ground_truth_opened_after_frozen_scan": true
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "started_at": "2026-09-08T22:38:04+08:00",
+  "contract_sha256": "9e17ef2ad034efe8478a790742336943d18c8e24a19f686278d48249fb83c45e",
+  "e04_manifest_sha256": "4d072c9001c588078584c18b0b41088a461db45b36b427480b533f596b8dcf49",
+  "instruction_tree_sha256": "9afadebb85746c1b2441b717407763271f1e2b9495c18a57316685cfe62dde53",
+  "base_url": "http://127.0.0.1:18789",
+  "token_retained": false,
+  "scenario_count": 1,
+  "selected_scenarios": [
+    "s12"
+  ],
+  "repetitions": 1
+}

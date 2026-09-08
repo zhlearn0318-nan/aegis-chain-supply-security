@@ -1,0 +1,69 @@
+[
+  {
+    "fault": "local_model_timeout",
+    "decision": "WARN",
+    "allow": false,
+    "install_gate_blocked": true,
+    "duration_ms": 8789,
+    "finding_rule_ids": [
+      ""
+    ],
+    "audit": {
+      "sequence": 213,
+      "decision": "WARN",
+      "integrity_valid": true,
+      "pdf_bytes": 89912,
+      "pdf_sha256": "56ec35e2af69dad4b88d94abc9ee28918b708d004c166934182d8df3bca79d31",
+      "pdf_duration_ms": 2763
+    },
+    "log_lines": [
+      "[gateway] 已接收正式上传会话 86c9f8b2356123f1f34f06fd92f572fc；开始静态与动态审计。",
+      "[STEP 1/5] 验证上传会话与文件边界。",
+      "[STEP 2/5] 上传包预处理完成：files=1 bytes=130。",
+      "[hash] source_tree_sha256=1e6af76b6ba624e2519ebb467c738db89899b33a0c26168edb56c27fa3d5f2b2",
+      "[STEP 3/5] 执行 Cisco 扫描、Aegis 确定性规则、文件角色/能力一致性与本地语义复核。",
+      "[model] local=Ollama; external_api=disabled; model_alone_cannot_block=true",
+      "[STEP 4/5] 路由 Python / Node / Shell 三轮定向容器审计；纯指令 Skill 进入三类语义场景检查。",
+      "[gateway] 安全引擎仍在运行……",
+      "[STEP 5/5] 扫描完成：decision=WARN chain_valid=True。"
+    ],
+    "passed": true,
+    "recovery": {
+      "semantic_config_restored": true,
+      "original_sha256": "9b610278132866baedc1dcdfbb3e782f9f74c6cb608434766e972dbb79ac8970"
+    }
+  },
+  {
+    "fault": "cisco_scanner_error",
+    "decision": "BLOCK",
+    "allow": false,
+    "install_gate_blocked": true,
+    "duration_ms": 497,
+    "finding_rule_ids": [
+      ""
+    ],
+    "audit": {
+      "sequence": 214,
+      "decision": "BLOCK",
+      "integrity_valid": true,
+      "pdf_bytes": 87181,
+      "pdf_sha256": "ab991aa3c7a788fcd9c741ed4c12e7066c07fb182b8599110d1187a127f8f079",
+      "pdf_duration_ms": 2559
+    },
+    "log_lines": [
+      "[gateway] 已接收正式上传会话 70461fa8005acda10a2e42e2666f5efc；开始静态与动态审计。",
+      "[STEP 1/5] 验证上传会话与文件边界。",
+      "[STEP 2/5] 上传包预处理完成：files=2 bytes=701。",
+      "[hash] source_tree_sha256=9afadebb85746c1b2441b717407763271f1e2b9495c18a57316685cfe62dde53",
+      "[STEP 3/5] 执行 Cisco 扫描、Aegis 确定性规则、文件角色/能力一致性与本地语义复核。",
+      "[model] local=Ollama; external_api=disabled; model_alone_cannot_block=true",
+      "[STEP 4/5] 路由 Python / Node / Shell 三轮定向容器审计；纯指令 Skill 进入三类语义场景检查。",
+      "[STEP 5/5] 扫描完成：decision=BLOCK chain_valid=True。"
+    ],
+    "passed": true,
+    "recovery": {
+      "scanner_restored": true,
+      "original_sha256": "b31b66fce1b8466ba5c49e1084ee972b746e00d4ebdcaeab78ad6b38a0dce366"
+    }
+  }
+]
