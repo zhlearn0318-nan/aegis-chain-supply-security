@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "2026-09-05-m15-e01-static-ablation-v1",
+  "status": "stopped_before_model_fit_and_validation",
+  "reason_code": "GROUPED_FIVE_FOLD_CLASS_COVERAGE_INFEASIBLE",
+  "reason": "Only three train source groups contain benign samples, so five source-disjoint folds cannot each contain both labels.",
+  "train_source_label_counts": {
+    "SRC001": {"0": 0, "1": 3088},
+    "SRC002": {"0": 0, "1": 134},
+    "SRC004": {"0": 0, "1": 31},
+    "SRC005": {"0": 0, "1": 27},
+    "SRC006": {"0": 41, "1": 75},
+    "SRC008": {"0": 2, "1": 1},
+    "SRC010": {"0": 1478, "1": 2495},
+    "SRC013": {"0": 0, "1": 141}
+  },
+  "contract_action": "Preserve v1 unchanged and create v2 with three StratifiedGroupKFold folds.",
+  "validation_scan_started": false,
+  "validation_labels_used_for_tuning": false
+}

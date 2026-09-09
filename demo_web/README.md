@@ -6,7 +6,7 @@
 
 本项目是 XA-202620 赛题“供应链安全”模块的本机原型。网页会真实调用已经复现的 Cisco Skill Scanner、MCP Scanner 和依赖漏洞审计链路，不使用伪造扫描结果。
 
-当前已完成 M1.3 的可配置准入策略、`/api/v1`、SkillTrustBench v1.0 全量 5,520 条评测与 OpenClaw `2026.7.1-2` 正式准入集成。论文驱动的 P0 已增加语义操纵、声明—实现一致性、本地 Qwen 复核与 OpenClaw 控制面规则；P1 已实现纯指令、Python、Node.js、Shell 路由和三轮 Docker 隔离试运行。真实动态验收与 OpenClaw 端到端均为 6/6；MaliciousSkillBench 官方 Source-Disjoint test 全量1,384条三版本评测，以及 6 个官方真实脚本 + 30 个受控风险孪生的 108 次容器动态主实验均已完成；后端 `507 passed, 1 skipped`。比赛工程验收完成，但生产判断仍保持 `NO-GO`，不宣称可消除任意未知第三方代码风险。
+当前已完成 M1.3 的可配置准入策略、`/api/v1`、SkillTrustBench v1.0 全量 5,520 条评测与 OpenClaw `2026.7.1-2` 正式准入集成。论文驱动的 P0 已增加语义操纵、声明—实现一致性、本地 Qwen 复核与 OpenClaw 控制面规则；P1 已实现纯指令、Python、Node.js、Shell 路由和三轮 Docker 隔离试运行。真实动态验收与 OpenClaw 端到端均为 6/6；MaliciousSkillBench 官方 Source-Disjoint test 全量1,384条三版本评测、6 个官方真实脚本 + 30 个受控风险孪生的 108 次容器动态主实验，以及 M15 E01—E06 六组实验均已完成；后端 `557 passed, 1 skipped`。比赛工程验收完成，但生产判断仍保持 `NO-GO`，不宣称可消除任意未知第三方代码风险。
 
 ## 一键启动
 

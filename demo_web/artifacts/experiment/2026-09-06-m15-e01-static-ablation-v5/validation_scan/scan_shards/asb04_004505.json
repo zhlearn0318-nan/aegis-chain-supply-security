@@ -1,0 +1,956 @@
+{
+  "benchmark_id": "ASB04_004505",
+  "case_id": "asb04_004505",
+  "duration_ms": 642,
+  "experiment_id": "2026-09-06-m15-e01-static-ablation-v5",
+  "lightweight_model_review": true,
+  "qwen_calls": 0,
+  "qwen_failures": 0,
+  "qwen_routed": false,
+  "scan_ready": true,
+  "schema_version": "1.0",
+  "skill_text_sha256": "3a08efe6dee3b744f59094b5da8e0488c40027847373ee6ed8755e8f14043288",
+  "systems": {
+    "S0": {
+      "decision": "BLOCK",
+      "finding_index": [
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-6db8670c0cec5dc4b6ac",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-3670b2bf9618"
+          },
+          "rule_id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "pipeline",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-fac4623900e4a4b014f1",
+          "location": {
+            "file": "SKILL.md",
+            "line": 2,
+            "object": "skill-1-3670b2bf9618"
+          },
+          "rule_id": "PIPELINE_TAINT_FLOW",
+          "severity": "HIGH"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "vendor-skill-fac4623900e4a4b014f1"
+        ],
+        "matched_severities": [
+          "HIGH"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.0.0",
+        "reason": "命中阻断严重度：HIGH 1 条。",
+        "rule_id": "POLICY_BLOCK_SEVERITY"
+      },
+      "reason_code": "POLICY_BLOCK_SEVERITY",
+      "summary": {
+        "critical": 0,
+        "high": 1,
+        "info": 1,
+        "low": 0,
+        "medium": 0,
+        "total_findings": 2,
+        "unknown": 0
+      }
+    },
+    "S1": {
+      "decision": "BLOCK",
+      "finding_index": [
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-6db8670c0cec5dc4b6ac",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-3670b2bf9618"
+          },
+          "rule_id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "pipeline",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-fac4623900e4a4b014f1",
+          "location": {
+            "file": "SKILL.md",
+            "line": 2,
+            "object": "skill-1-3670b2bf9618"
+          },
+          "rule_id": "PIPELINE_TAINT_FLOW",
+          "severity": "HIGH"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "system_persistence",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PERSISTENCE_SCHEDULED_TASK_7337dbd9f6ce",
+          "location": {
+            "file": "SKILL.md",
+            "line": 167
+          },
+          "rule_id": "AEGIS_PERSISTENCE_SCHEDULED_TASK",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "system_persistence",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PERSISTENCE_SERVICE_CREATE_7ace13a0c4db",
+          "location": {
+            "file": "SKILL.md",
+            "line": 184
+          },
+          "rule_id": "AEGIS_PERSISTENCE_SERVICE_CREATE",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "remote_payload_execution",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b",
+          "location": {
+            "file": "SKILL.md",
+            "line": 84
+          },
+          "rule_id": "AEGIS_REMOTE_FETCH_PIPE_SHELL",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "system_persistence",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PARTIAL_PERSISTENCE_INDICATOR_984e18e4e638",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_PARTIAL_PERSISTENCE_INDICATOR",
+          "severity": "MEDIUM"
+        },
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED_b9d1afa14daf",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_OUTBOUND_BEHAVIOR_DECLARED_93fd5281db5e",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_OUTBOUND_BEHAVIOR_DECLARED",
+          "severity": "INFO"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "vendor-skill-fac4623900e4a4b014f1",
+          "AEGIS_PERSISTENCE_SCHEDULED_TASK_7337dbd9f6ce",
+          "AEGIS_PERSISTENCE_SERVICE_CREATE_7ace13a0c4db",
+          "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b"
+        ],
+        "matched_severities": [
+          "CRITICAL",
+          "HIGH"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "命中阻断严重度：CRITICAL 3 条、HIGH 1 条。",
+        "rule_id": "POLICY_BLOCK_SEVERITY"
+      },
+      "reason_code": "POLICY_BLOCK_SEVERITY",
+      "summary": {
+        "critical": 3,
+        "high": 1,
+        "info": 4,
+        "low": 0,
+        "medium": 1,
+        "total_findings": 9,
+        "unknown": 0
+      }
+    },
+    "S2": {
+      "decision": "BLOCK",
+      "finding_index": [
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-6db8670c0cec5dc4b6ac",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-3670b2bf9618"
+          },
+          "rule_id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "pipeline",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-fac4623900e4a4b014f1",
+          "location": {
+            "file": "SKILL.md",
+            "line": 2,
+            "object": "skill-1-3670b2bf9618"
+          },
+          "rule_id": "PIPELINE_TAINT_FLOW",
+          "severity": "HIGH"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "system_persistence",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PERSISTENCE_SCHEDULED_TASK_7337dbd9f6ce",
+          "location": {
+            "file": "SKILL.md",
+            "line": 167
+          },
+          "rule_id": "AEGIS_PERSISTENCE_SCHEDULED_TASK",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "system_persistence",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PERSISTENCE_SERVICE_CREATE_7ace13a0c4db",
+          "location": {
+            "file": "SKILL.md",
+            "line": 184
+          },
+          "rule_id": "AEGIS_PERSISTENCE_SERVICE_CREATE",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "remote_payload_execution",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b",
+          "location": {
+            "file": "SKILL.md",
+            "line": 84
+          },
+          "rule_id": "AEGIS_REMOTE_FETCH_PIPE_SHELL",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "system_persistence",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PARTIAL_PERSISTENCE_INDICATOR_984e18e4e638",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_PARTIAL_PERSISTENCE_INDICATOR",
+          "severity": "MEDIUM"
+        },
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED_b9d1afa14daf",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_OUTBOUND_BEHAVIOR_DECLARED_93fd5281db5e",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_OUTBOUND_BEHAVIOR_DECLARED",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-skill-capability-alignment-v1",
+          "category": "capability_inventory",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY_a4fc3e125671",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY",
+          "severity": "INFO"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "vendor-skill-fac4623900e4a4b014f1",
+          "AEGIS_PERSISTENCE_SCHEDULED_TASK_7337dbd9f6ce",
+          "AEGIS_PERSISTENCE_SERVICE_CREATE_7ace13a0c4db",
+          "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b"
+        ],
+        "matched_severities": [
+          "CRITICAL",
+          "HIGH"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "命中阻断严重度：CRITICAL 3 条、HIGH 1 条。",
+        "rule_id": "POLICY_BLOCK_SEVERITY"
+      },
+      "reason_code": "POLICY_BLOCK_SEVERITY",
+      "summary": {
+        "critical": 3,
+        "high": 1,
+        "info": 5,
+        "low": 0,
+        "medium": 1,
+        "total_findings": 10,
+        "unknown": 0
+      }
+    },
+    "S3": {
+      "decision": "BLOCK",
+      "finding_index": [
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-6db8670c0cec5dc4b6ac",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-3670b2bf9618"
+          },
+          "rule_id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "pipeline",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-fac4623900e4a4b014f1",
+          "location": {
+            "file": "SKILL.md",
+            "line": 2,
+            "object": "skill-1-3670b2bf9618"
+          },
+          "rule_id": "PIPELINE_TAINT_FLOW",
+          "severity": "HIGH"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "system_persistence",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PERSISTENCE_SCHEDULED_TASK_7337dbd9f6ce",
+          "location": {
+            "file": "SKILL.md",
+            "line": 167
+          },
+          "rule_id": "AEGIS_PERSISTENCE_SCHEDULED_TASK",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "system_persistence",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PERSISTENCE_SERVICE_CREATE_7ace13a0c4db",
+          "location": {
+            "file": "SKILL.md",
+            "line": 184
+          },
+          "rule_id": "AEGIS_PERSISTENCE_SERVICE_CREATE",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "remote_payload_execution",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b",
+          "location": {
+            "file": "SKILL.md",
+            "line": 84
+          },
+          "rule_id": "AEGIS_REMOTE_FETCH_PIPE_SHELL",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "system_persistence",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PARTIAL_PERSISTENCE_INDICATOR_984e18e4e638",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_PARTIAL_PERSISTENCE_INDICATOR",
+          "severity": "MEDIUM"
+        },
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED_b9d1afa14daf",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_OUTBOUND_BEHAVIOR_DECLARED_93fd5281db5e",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_OUTBOUND_BEHAVIOR_DECLARED",
+          "severity": "INFO"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "vendor-skill-fac4623900e4a4b014f1",
+          "AEGIS_PERSISTENCE_SCHEDULED_TASK_7337dbd9f6ce",
+          "AEGIS_PERSISTENCE_SERVICE_CREATE_7ace13a0c4db",
+          "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b"
+        ],
+        "matched_severities": [
+          "CRITICAL",
+          "HIGH"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "命中阻断严重度：CRITICAL 3 条、HIGH 1 条。",
+        "rule_id": "POLICY_BLOCK_SEVERITY"
+      },
+      "reason_code": "POLICY_BLOCK_SEVERITY",
+      "summary": {
+        "critical": 3,
+        "high": 1,
+        "info": 4,
+        "low": 0,
+        "medium": 1,
+        "total_findings": 9,
+        "unknown": 0
+      }
+    },
+    "S4": {
+      "decision": "BLOCK",
+      "finding_index": [
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-6db8670c0cec5dc4b6ac",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-3670b2bf9618"
+          },
+          "rule_id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "pipeline",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-fac4623900e4a4b014f1",
+          "location": {
+            "file": "SKILL.md",
+            "line": 2,
+            "object": "skill-1-3670b2bf9618"
+          },
+          "rule_id": "PIPELINE_TAINT_FLOW",
+          "severity": "HIGH"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "system_persistence",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PERSISTENCE_SCHEDULED_TASK_7337dbd9f6ce",
+          "location": {
+            "file": "SKILL.md",
+            "line": 167
+          },
+          "rule_id": "AEGIS_PERSISTENCE_SCHEDULED_TASK",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "system_persistence",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PERSISTENCE_SERVICE_CREATE_7ace13a0c4db",
+          "location": {
+            "file": "SKILL.md",
+            "line": 184
+          },
+          "rule_id": "AEGIS_PERSISTENCE_SERVICE_CREATE",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "remote_payload_execution",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b",
+          "location": {
+            "file": "SKILL.md",
+            "line": 84
+          },
+          "rule_id": "AEGIS_REMOTE_FETCH_PIPE_SHELL",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "system_persistence",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PARTIAL_PERSISTENCE_INDICATOR_984e18e4e638",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_PARTIAL_PERSISTENCE_INDICATOR",
+          "severity": "MEDIUM"
+        },
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED_b9d1afa14daf",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_OUTBOUND_BEHAVIOR_DECLARED_93fd5281db5e",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_OUTBOUND_BEHAVIOR_DECLARED",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-skill-capability-alignment-v1",
+          "category": "capability_inventory",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY_a4fc3e125671",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY",
+          "severity": "INFO"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "vendor-skill-fac4623900e4a4b014f1",
+          "AEGIS_PERSISTENCE_SCHEDULED_TASK_7337dbd9f6ce",
+          "AEGIS_PERSISTENCE_SERVICE_CREATE_7ace13a0c4db",
+          "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b"
+        ],
+        "matched_severities": [
+          "CRITICAL",
+          "HIGH"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "命中阻断严重度：CRITICAL 3 条、HIGH 1 条。",
+        "rule_id": "POLICY_BLOCK_SEVERITY"
+      },
+      "reason_code": "POLICY_BLOCK_SEVERITY",
+      "summary": {
+        "critical": 3,
+        "high": 1,
+        "info": 5,
+        "low": 0,
+        "medium": 1,
+        "total_findings": 10,
+        "unknown": 0
+      }
+    },
+    "S5": {
+      "decision": "BLOCK",
+      "finding_index": [
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-6db8670c0cec5dc4b6ac",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-3670b2bf9618"
+          },
+          "rule_id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "pipeline",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-fac4623900e4a4b014f1",
+          "location": {
+            "file": "SKILL.md",
+            "line": 2,
+            "object": "skill-1-3670b2bf9618"
+          },
+          "rule_id": "PIPELINE_TAINT_FLOW",
+          "severity": "HIGH"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "system_persistence",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PERSISTENCE_SCHEDULED_TASK_7337dbd9f6ce",
+          "location": {
+            "file": "SKILL.md",
+            "line": 167
+          },
+          "rule_id": "AEGIS_PERSISTENCE_SCHEDULED_TASK",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "system_persistence",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PERSISTENCE_SERVICE_CREATE_7ace13a0c4db",
+          "location": {
+            "file": "SKILL.md",
+            "line": 184
+          },
+          "rule_id": "AEGIS_PERSISTENCE_SERVICE_CREATE",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "remote_payload_execution",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b",
+          "location": {
+            "file": "SKILL.md",
+            "line": 84
+          },
+          "rule_id": "AEGIS_REMOTE_FETCH_PIPE_SHELL",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "system_persistence",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PARTIAL_PERSISTENCE_INDICATOR_984e18e4e638",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_PARTIAL_PERSISTENCE_INDICATOR",
+          "severity": "MEDIUM"
+        },
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED_b9d1afa14daf",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_OUTBOUND_BEHAVIOR_DECLARED_93fd5281db5e",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_OUTBOUND_BEHAVIOR_DECLARED",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-skill-capability-alignment-v1",
+          "category": "capability_inventory",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY_a4fc3e125671",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-tfidf-logistic-v1",
+          "category": "model_risk_evidence",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_ML_TEXT_RISK_REVIEW_f7471ad7c580",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_ML_TEXT_RISK_REVIEW",
+          "severity": "MEDIUM"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "vendor-skill-fac4623900e4a4b014f1",
+          "AEGIS_PERSISTENCE_SCHEDULED_TASK_7337dbd9f6ce",
+          "AEGIS_PERSISTENCE_SERVICE_CREATE_7ace13a0c4db",
+          "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b"
+        ],
+        "matched_severities": [
+          "CRITICAL",
+          "HIGH"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "命中阻断严重度：CRITICAL 3 条、HIGH 1 条。",
+        "rule_id": "POLICY_BLOCK_SEVERITY"
+      },
+      "reason_code": "POLICY_BLOCK_SEVERITY",
+      "summary": {
+        "critical": 3,
+        "high": 1,
+        "info": 5,
+        "low": 0,
+        "medium": 2,
+        "total_findings": 11,
+        "unknown": 0
+      }
+    },
+    "S6": {
+      "decision": "BLOCK",
+      "finding_index": [
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-6db8670c0cec5dc4b6ac",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-3670b2bf9618"
+          },
+          "rule_id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "pipeline",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-fac4623900e4a4b014f1",
+          "location": {
+            "file": "SKILL.md",
+            "line": 2,
+            "object": "skill-1-3670b2bf9618"
+          },
+          "rule_id": "PIPELINE_TAINT_FLOW",
+          "severity": "HIGH"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "system_persistence",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PERSISTENCE_SCHEDULED_TASK_7337dbd9f6ce",
+          "location": {
+            "file": "SKILL.md",
+            "line": 167
+          },
+          "rule_id": "AEGIS_PERSISTENCE_SCHEDULED_TASK",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "system_persistence",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PERSISTENCE_SERVICE_CREATE_7ace13a0c4db",
+          "location": {
+            "file": "SKILL.md",
+            "line": 184
+          },
+          "rule_id": "AEGIS_PERSISTENCE_SERVICE_CREATE",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "remote_payload_execution",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b",
+          "location": {
+            "file": "SKILL.md",
+            "line": 84
+          },
+          "rule_id": "AEGIS_REMOTE_FETCH_PIPE_SHELL",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "system_persistence",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PARTIAL_PERSISTENCE_INDICATOR_984e18e4e638",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_PARTIAL_PERSISTENCE_INDICATOR",
+          "severity": "MEDIUM"
+        },
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED_b9d1afa14daf",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_OUTBOUND_BEHAVIOR_DECLARED_93fd5281db5e",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_OUTBOUND_BEHAVIOR_DECLARED",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-skill-capability-alignment-v1",
+          "category": "capability_inventory",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY_a4fc3e125671",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-tfidf-logistic-v1",
+          "category": "model_risk_evidence",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_ML_TEXT_RISK_REVIEW_f7471ad7c580",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_ML_TEXT_RISK_REVIEW",
+          "severity": "MEDIUM"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "vendor-skill-fac4623900e4a4b014f1",
+          "AEGIS_PERSISTENCE_SCHEDULED_TASK_7337dbd9f6ce",
+          "AEGIS_PERSISTENCE_SERVICE_CREATE_7ace13a0c4db",
+          "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b"
+        ],
+        "matched_severities": [
+          "CRITICAL",
+          "HIGH"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "命中阻断严重度：CRITICAL 3 条、HIGH 1 条。",
+        "rule_id": "POLICY_BLOCK_SEVERITY"
+      },
+      "reason_code": "POLICY_BLOCK_SEVERITY",
+      "summary": {
+        "critical": 3,
+        "high": 1,
+        "info": 5,
+        "low": 0,
+        "medium": 2,
+        "total_findings": 11,
+        "unknown": 0
+      }
+    }
+  }
+}

@@ -1,0 +1,432 @@
+{
+  "success": true,
+  "error": null,
+  "runtime": "python",
+  "entrypoint": "main.py",
+  "argv_attestation": {
+    "count": 0,
+    "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "raw_values_retained": false
+  },
+  "image": {
+    "id": "sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65",
+    "repo_digests": [
+      "public.ecr.aws/docker/library/python@sha256:dd29372629eeba2dd003fd9e9d35a5b8236c44727875a0364254b5127af88e65"
+    ],
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  "image_gates": {
+    "id_exact": true,
+    "reference_present": true,
+    "linux": true,
+    "amd64": true
+  },
+  "inspect_gates": {
+    "backend_label": true,
+    "run_label": true,
+    "runtime_label": true,
+    "image_immutable": true,
+    "network_none": true,
+    "read_only": true,
+    "non_root": true,
+    "not_privileged": true,
+    "private_pid": true,
+    "ipc_none": true,
+    "cap_drop_all": true,
+    "no_new_privileges": true,
+    "pids_limited": true,
+    "memory_limited": true,
+    "cpu_limited": true,
+    "tmpfs_exact": true,
+    "mounts_exact": true,
+    "skill_mount_exact": true,
+    "tool_mount_exact": true,
+    "entrypoint_exact": true,
+    "command_exact": true,
+    "workdir_exact": true,
+    "init_enabled": true,
+    "log_driver_none": true,
+    "no_host_control_mount": true,
+    "restart_disabled": true
+  },
+  "runner": {
+    "schema_version": "1.0",
+    "collector": "aegis-python-skill-runner-v2",
+    "entrypoint": "main.py",
+    "execution_status": "completed",
+    "telemetry_complete": true,
+    "events": [
+      {
+        "type": "telemetry.ready",
+        "collector": "python_audit_hook_v1",
+        "sequence": 1,
+        "monotonic_ns": 263193490497,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/main.py",
+        "mode": "r",
+        "sequence": 2,
+        "monotonic_ns": 263194792021,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/main.py",
+        "mode": "rb",
+        "sequence": 3,
+        "monotonic_ns": 263202402692,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/socket.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 4,
+        "monotonic_ns": 263207013681,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/socket.py",
+        "mode": "r",
+        "sequence": 5,
+        "monotonic_ns": 263207101863,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/selectors.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 6,
+        "monotonic_ns": 263212291396,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/selectors.py",
+        "mode": "r",
+        "sequence": 7,
+        "monotonic_ns": 263212345877,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/public.txt",
+        "mode": "r",
+        "sequence": 8,
+        "monotonic_ns": 263217706685,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/encodings/__pycache__/idna.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 9,
+        "monotonic_ns": 263221110521,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/encodings/idna.py",
+        "mode": "r",
+        "sequence": 10,
+        "monotonic_ns": 263221186246,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/stringprep.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 11,
+        "monotonic_ns": 263223467035,
+        "round": "typical"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/stringprep.py",
+        "mode": "r",
+        "sequence": 12,
+        "monotonic_ns": 263223548844,
+        "round": "typical"
+      },
+      {
+        "type": "dns.resolve",
+        "host": "127.0.0.1",
+        "sequence": 13,
+        "monotonic_ns": 263227356826,
+        "round": "typical"
+      },
+      {
+        "type": "socket.connect",
+        "host": "127.0.0.1",
+        "port": 9,
+        "sequence": 14,
+        "monotonic_ns": 263227475586,
+        "round": "typical"
+      },
+      {
+        "type": "telemetry.ready",
+        "collector": "python_audit_hook_v1",
+        "sequence": 1,
+        "monotonic_ns": 264213552664,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/main.py",
+        "mode": "r",
+        "sequence": 2,
+        "monotonic_ns": 264216332998,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/main.py",
+        "mode": "rb",
+        "sequence": 3,
+        "monotonic_ns": 264221423478,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/socket.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 4,
+        "monotonic_ns": 264227383950,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/socket.py",
+        "mode": "r",
+        "sequence": 5,
+        "monotonic_ns": 264227566085,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/selectors.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 6,
+        "monotonic_ns": 264235098243,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/selectors.py",
+        "mode": "r",
+        "sequence": 7,
+        "monotonic_ns": 264235184753,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/public.txt",
+        "mode": "r",
+        "sequence": 8,
+        "monotonic_ns": 264243042079,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/encodings/__pycache__/idna.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 9,
+        "monotonic_ns": 264247034656,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/encodings/idna.py",
+        "mode": "r",
+        "sequence": 10,
+        "monotonic_ns": 264247121762,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/stringprep.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 11,
+        "monotonic_ns": 264250207456,
+        "round": "edge"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/stringprep.py",
+        "mode": "r",
+        "sequence": 12,
+        "monotonic_ns": 264250382541,
+        "round": "edge"
+      },
+      {
+        "type": "dns.resolve",
+        "host": "127.0.0.1",
+        "sequence": 13,
+        "monotonic_ns": 264255355797,
+        "round": "edge"
+      },
+      {
+        "type": "socket.connect",
+        "host": "127.0.0.1",
+        "port": 9,
+        "sequence": 14,
+        "monotonic_ns": 264255462782,
+        "round": "edge"
+      },
+      {
+        "type": "telemetry.ready",
+        "collector": "python_audit_hook_v1",
+        "sequence": 1,
+        "monotonic_ns": 265312358580,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/main.py",
+        "mode": "r",
+        "sequence": 2,
+        "monotonic_ns": 265313515421,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/main.py",
+        "mode": "rb",
+        "sequence": 3,
+        "monotonic_ns": 265318515121,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/socket.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 4,
+        "monotonic_ns": 265324501762,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/socket.py",
+        "mode": "r",
+        "sequence": 5,
+        "monotonic_ns": 265324581181,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/selectors.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 6,
+        "monotonic_ns": 265330667595,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/selectors.py",
+        "mode": "r",
+        "sequence": 7,
+        "monotonic_ns": 265330735587,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/skill/public.txt",
+        "mode": "r",
+        "sequence": 8,
+        "monotonic_ns": 265337047044,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/encodings/__pycache__/idna.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 9,
+        "monotonic_ns": 265339618825,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/encodings/idna.py",
+        "mode": "r",
+        "sequence": 10,
+        "monotonic_ns": 265339680874,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/__pycache__/stringprep.cpython-312.pyc",
+        "mode": "r",
+        "sequence": 11,
+        "monotonic_ns": 265342358977,
+        "round": "adversarial"
+      },
+      {
+        "type": "file.open",
+        "path": "/usr/local/lib/python3.12/stringprep.py",
+        "mode": "r",
+        "sequence": 12,
+        "monotonic_ns": 265342495418,
+        "round": "adversarial"
+      },
+      {
+        "type": "dns.resolve",
+        "host": "127.0.0.1",
+        "sequence": 13,
+        "monotonic_ns": 265346129305,
+        "round": "adversarial"
+      },
+      {
+        "type": "socket.connect",
+        "host": "127.0.0.1",
+        "port": 9,
+        "sequence": 14,
+        "monotonic_ns": 265346229574,
+        "round": "adversarial"
+      }
+    ],
+    "rounds": [
+      {
+        "id": "typical",
+        "execution_status": "completed",
+        "exit_code": 0,
+        "duration_ms": 500
+      },
+      {
+        "id": "edge",
+        "execution_status": "completed",
+        "exit_code": 0,
+        "duration_ms": 501
+      },
+      {
+        "id": "adversarial",
+        "execution_status": "completed",
+        "exit_code": 0,
+        "duration_ms": 501
+      }
+    ],
+    "internet_used": false,
+    "argv_count": 0,
+    "argv_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "duration_ms": 3264
+  },
+  "evaluation": {
+    "schema_version": "1.0",
+    "analyzer": "aegis-skill-sandbox-v1",
+    "decision": "ALLOW",
+    "status": "clean",
+    "highest_severity": "SAFE",
+    "reason": "隔离试运行完成，未观察到影响准入的动态风险。",
+    "findings": []
+  },
+  "cleanup": {
+    "attempted": true,
+    "removed": true,
+    "residual": false,
+    "remove_duration_ms": 196
+  },
+  "duration_ms": 5249
+}

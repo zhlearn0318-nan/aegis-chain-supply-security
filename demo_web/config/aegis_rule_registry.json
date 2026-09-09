@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "registry_id": "aegis-static-rule-registry-v1",
-  "status": "development_locked_regression_pending",
+  "registry_id": "aegis-static-rule-registry-v2",
+  "status": "release_candidate_regression_passed",
   "policy": "aegis-chain-local-default@1.0.0",
   "families": [
     {
@@ -219,7 +219,15 @@
         "AEGIS_CONTEXT_PERSISTENCE_COMMAND_PRESENT",
         "AEGIS_CONTEXT_PRIVILEGED_COMMAND_PRESENT",
         "AEGIS_CONTEXT_NAMED_BUSINESS_TOOL_COMMAND",
-        "AEGIS_CONTEXT_QUOTED_SHELL_VARIABLE"
+        "AEGIS_CONTEXT_QUOTED_SHELL_VARIABLE",
+        "AEGIS_CONTEXT_METADATA_QUALITY_ONLY",
+        "AEGIS_CONTEXT_TEMPLATE_SUFFIX",
+        "AEGIS_CONTEXT_TEST_OR_EXAMPLE_PATH",
+        "AEGIS_CONTEXT_SAFE_NOTEBOOK_TEMPLATE",
+        "AEGIS_CONTEXT_REFERENCE_PARTIAL_CHAIN",
+        "AEGIS_CONTEXT_GENERIC_COMMAND_WITHOUT_SINK",
+        "AEGIS_CONTEXT_SAFE_USER_ACTIVATION",
+        "AEGIS_CONTEXT_FIXED_EXECUTABLE_ARGV"
       ]
     }
   ]

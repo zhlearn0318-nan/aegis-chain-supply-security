@@ -1,13 +1,13 @@
 # Aegis Chain 当前状态（唯一状态真值）
 
-> 状态日期：2026-09-05
-> 当前协作基线：`main`（包含 v0.1 后续 P0/P1 与第三方动态实验）；最新不可变比赛标签为 `v0.1`，其历史发布范围见 [`RELEASE_V0.1.md`](RELEASE_V0.1.md)。
-> 当前工程阶段：静态基线保持可复核，论文驱动的 OpenClaw Skill P0/P1 增强已完成本机工程验收。P0 覆盖语义操纵、声明—实现一致性、本地 Qwen 复核和 OpenClaw 控制面；P1 覆盖纯指令、Python、Node.js、Shell 与三轮 Docker 隔离试运行。P2 已完成 6 个官方真实脚本及 30 个受控风险孪生的第三方动态配对主实验。第二台洁净 Windows/真实 VM、eBPF/ETW 旁证和生产控制面继续延期且不阻断比赛交付。
+> 状态日期：2026-09-09
+> 当前协作基线：`main`（包含 v0.1 后续 P0/P1、第三方动态实验和 M15 E01—E06）；最新比赛发布为 `v0.2`，历史基线 `v0.1` 不改写。
+> 当前工程阶段：M15 六组 P0 实验已完成。静态层完成组件消融和真实生态误报治理；动态层完成0/1/3轮消融与八类简单绕过鲁棒性；OpenClaw完成36场景端到端、并发和故障关闭验收；最后完成114个错误样本分析。第二台洁净 Windows/真实 VM、eBPF/ETW 旁证和生产控制面继续延期且不阻断比赛交付。
 > 状态优先级：本文件高于 README 中的摘要和全部日期化阶段报告；发生冲突时以本文件及对应冻结证据为准。
 
 ## 1. 一句话结论
 
-Aegis Chain 已作为 OpenClaw `2026.7.1-2` 的后台安全引擎接入：唯一“Aegis 安全中心”默认展示真实总览，并提供准入、报告、审计、规则和 MCP 五个内部标签。准入可上传 ZIP 或本地文件夹，执行静态审计与 Docker 隔离试运行，只有 `ALLOW` 才能安装；Skill/Plugin 原生安装仍自动准入，配置型 MCP 提交前准入。竞赛正式版 `v0.1` 的现场演示与材料提交状态 **READY**；第二台洁净 Windows 证据、生产身份权限与外部审计仍未完成，生产发布保持 **NO-GO**。
+Aegis Chain 已作为 OpenClaw `2026.7.1-2` 的后台安全引擎接入：唯一“Aegis 安全中心”默认展示真实总览，并提供准入、报告、审计、规则和 MCP 五个内部标签。准入可上传 ZIP 或本地文件夹，执行静态审计与 Docker 隔离试运行，只有 `ALLOW` 才能安装；Skill/Plugin 原生安装仍自动准入，配置型 MCP 提交前准入。竞赛正式版 `v0.2` 的现场演示与材料提交状态 **READY**；第二台洁净 Windows 证据、生产身份权限与外部审计仍未完成，生产发布保持 **NO-GO**。
 
 ## 2. 当前可复核能力
 
@@ -32,7 +32,8 @@ Aegis Chain 已作为 OpenClaw `2026.7.1-2` 的后台安全引擎接入：唯一
 - M11 正式上传准入：ZIP 安全 Skill 扫描/安装、文件夹安全 Skill 扫描/同名确认更新、恶意文件夹静态阻断均由真实 Edge 操作 OpenClaw 页面通过；恶意样本动态执行 0、安装按钮禁用。
 - M12/v0.1 统一安全中心：插件只注册一个“Aegis 安全中心”侧边栏描述符；默认总览与五功能同层导航真实 Edge 验收通过，控制台错误 0；v0.1 采用适配 2K 的浅色政企控制台，原始执行终端保持深色并展示真实日志。
 - 当前真实审计：M11 序号52–58证据保持；后续安全 Skill、同名更新与恶意阻断记录累计至65条；65条 SHA-256 审计链有效，允许35条、阻断30条。
-- 当前回归：后端 `507 passed, 1 skipped`，OpenClaw 安全中心与上传边界 Node 测试 `19 passed`，前端 `10 passed`、生产构建通过。
+- 当前回归：后端 `557 passed, 1 skipped`，OpenClaw 安全中心与上传边界 Node 测试 `19 passed`，前端 `10 passed`、生产构建通过。GitHub Actions 在 PR 和 `main` 推送时执行同类自动验证。
+- M15 E01—E06：E01 S5将恶意非放行召回提升至53.6%；E02使真实低权限Skill自动ALLOW达到83.3%且直接BLOCK为0；E03三轮使30个风险孪生全部非放行；E04完成24组单因素配对、48个Skill、144次轮次；E05正常矩阵36/36通过且非放行安装0；E06分析60个漏报和全部54个良性非ALLOW。总表见 `demo_web/docs/M43_M15_P0_EXPERIMENT_FINAL_SUMMARY.md`。
 - 最终 PDF：`output/pdf/Aegis-OpenClaw-Final-Acceptance.pdf`，序号39，A4单页，90,040字节，渲染检查通过。
 - Docker 4.86.0 Windows AF_UNIX 遗留故障已按可恢复方式修复；Engine 29.7.2/API 1.55 和固定镜像摘要通过，恢复逻辑已纳入一键安装器。
 
@@ -49,7 +50,7 @@ Aegis Chain 已作为 OpenClaw `2026.7.1-2` 的后台安全引擎接入：唯一
 - M10 OpenClaw Skill P0/P1：开发集20/20；首次回归观测14/16并修复两处缺陷，修复后同集16/16，新鲜回归v2为12/12。真实 Python/Node/Shell 动态验收6/6、容器安全门和三轮证明全部通过、残留0；正式 OpenClaw 端到端6/6。报告：`demo_web/docs/M10_OPENCLAW_SKILL_P0_P1_IMPLEMENTATION_ACCEPTANCE_REPORT.md`。
 - P2 权威主实验：MaliciousSkillBench 固定提交的 Source-Disjoint test 全量1,384条；Cisco-only 恶意不放行召回3.2%/良性允许率94.9%，Cisco+P0为15.6%/74.1%，文本快照集上P1决策增量0、容器执行0。该结果已冻结且不用于直接调参；结论与下一路线：`demo_web/docs/M12_MALICIOUSSKILLBENCH_1384_RESULT_AND_P2_ROUTE.md`。
 - P2 真实第三方动态主实验：从 OpenAI 官方 Skills 选取5个原型、Anthropic 官方 Skills 选取1个原型，形成6个原始包和30个受控风险孪生；36包×3轮共108次容器调用。动态预期规则召回30/30、风险非放行30/30、原始脚本动态 ALLOW 6/6，三轮、安全门、清理、输入树不变均100%，残留容器0；动态补齐4个静态 ALLOW 漏检，并将14个静态 REVIEW 升级为 BLOCK。单调融合后原始包为1 ALLOW、4 REVIEW、1 BLOCK，因此静态可用性仍是下一瓶颈。合同与结论：`demo_web/docs/M13_REAL_THIRD_PARTY_SKILL_DYNAMIC_EXPERIMENT_CONTRACT.md`、`demo_web/docs/M14_REAL_THIRD_PARTY_SKILL_DYNAMIC_RESULT_AND_GAP.md`。
-- M7 阶段历史完整回归：`422 passed, 1 skipped`；该数字仅用于说明当时基线，当前结果以本文前述 `507 passed, 1 skipped` 为准。
+- M7 阶段历史完整回归：`422 passed, 1 skipped`；该数字仅用于说明当时基线，当前结果以本文前述 `557 passed, 1 skipped` 为准。
 - 前端 API 测试：`10 passed`。
 - 前端生产构建：通过。
 - P0-2 证据：`demo_web/artifacts/experiment/2026-08-24-dynamic-queue-recovery-dev-v1/`。

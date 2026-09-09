@@ -1,0 +1,792 @@
+{
+  "benchmark_id": "ASB04_003622",
+  "case_id": "asb04_003622",
+  "duration_ms": 96,
+  "experiment_id": "2026-09-06-m15-e01-static-ablation-v5",
+  "lightweight_model_review": false,
+  "qwen_calls": 0,
+  "qwen_failures": 0,
+  "qwen_routed": false,
+  "scan_ready": true,
+  "schema_version": "1.0",
+  "skill_text_sha256": "796dcfddf4187c2138d2a90cdecf5f0fb35f165c73a4ff198c13cd7d8139c509",
+  "systems": {
+    "S0": {
+      "decision": "REVIEW",
+      "finding_index": [
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-6db8670c0cec5dc4b6ac",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-79bc901b6b72"
+          },
+          "rule_id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "pipeline",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-89db9e6a85df7273017a",
+          "location": {
+            "file": "SKILL.md",
+            "line": 1,
+            "object": "skill-1-79bc901b6b72"
+          },
+          "rule_id": "PIPELINE_TAINT_FLOW",
+          "severity": "LOW"
+        },
+        {
+          "analyzer": "pipeline",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-71740528e63491b22dee",
+          "location": {
+            "file": "SKILL.md",
+            "line": 1,
+            "object": "skill-1-79bc901b6b72"
+          },
+          "rule_id": "PIPELINE_TAINT_FLOW",
+          "severity": "LOW"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "vendor-skill-89db9e6a85df7273017a",
+          "vendor-skill-71740528e63491b22dee"
+        ],
+        "matched_severities": [
+          "LOW"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.0.0",
+        "reason": "命中人工复核严重度：LOW 2 条。",
+        "rule_id": "POLICY_REVIEW_SEVERITY"
+      },
+      "reason_code": "POLICY_REVIEW_SEVERITY",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 1,
+        "low": 2,
+        "medium": 0,
+        "total_findings": 3,
+        "unknown": 0
+      }
+    },
+    "S1": {
+      "decision": "BLOCK",
+      "finding_index": [
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-6db8670c0cec5dc4b6ac",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-79bc901b6b72"
+          },
+          "rule_id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "pipeline",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-89db9e6a85df7273017a",
+          "location": {
+            "file": "SKILL.md",
+            "line": 1,
+            "object": "skill-1-79bc901b6b72"
+          },
+          "rule_id": "PIPELINE_TAINT_FLOW",
+          "severity": "LOW"
+        },
+        {
+          "analyzer": "pipeline",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-71740528e63491b22dee",
+          "location": {
+            "file": "SKILL.md",
+            "line": 1,
+            "object": "skill-1-79bc901b6b72"
+          },
+          "rule_id": "PIPELINE_TAINT_FLOW",
+          "severity": "LOW"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "remote_payload_execution",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b",
+          "location": {
+            "file": "SKILL.md",
+            "line": 15
+          },
+          "rule_id": "AEGIS_REMOTE_FETCH_PIPE_SHELL",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED_b9d1afa14daf",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_READ_ONLY_NETWORK_BEHAVIOR_732f01ecdf02",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_READ_ONLY_NETWORK_BEHAVIOR",
+          "severity": "INFO"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b"
+        ],
+        "matched_severities": [
+          "CRITICAL"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "命中阻断严重度：CRITICAL 1 条。",
+        "rule_id": "POLICY_BLOCK_SEVERITY"
+      },
+      "reason_code": "POLICY_BLOCK_SEVERITY",
+      "summary": {
+        "critical": 1,
+        "high": 0,
+        "info": 4,
+        "low": 2,
+        "medium": 0,
+        "total_findings": 7,
+        "unknown": 0
+      }
+    },
+    "S2": {
+      "decision": "BLOCK",
+      "finding_index": [
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-6db8670c0cec5dc4b6ac",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-79bc901b6b72"
+          },
+          "rule_id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "pipeline",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-89db9e6a85df7273017a",
+          "location": {
+            "file": "SKILL.md",
+            "line": 1,
+            "object": "skill-1-79bc901b6b72"
+          },
+          "rule_id": "PIPELINE_TAINT_FLOW",
+          "severity": "LOW"
+        },
+        {
+          "analyzer": "pipeline",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-71740528e63491b22dee",
+          "location": {
+            "file": "SKILL.md",
+            "line": 1,
+            "object": "skill-1-79bc901b6b72"
+          },
+          "rule_id": "PIPELINE_TAINT_FLOW",
+          "severity": "LOW"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "remote_payload_execution",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b",
+          "location": {
+            "file": "SKILL.md",
+            "line": 15
+          },
+          "rule_id": "AEGIS_REMOTE_FETCH_PIPE_SHELL",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED_b9d1afa14daf",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_READ_ONLY_NETWORK_BEHAVIOR_732f01ecdf02",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_READ_ONLY_NETWORK_BEHAVIOR",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-skill-capability-alignment-v1",
+          "category": "capability_inventory",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY_bf45befbc0fb",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY",
+          "severity": "INFO"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b"
+        ],
+        "matched_severities": [
+          "CRITICAL"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "命中阻断严重度：CRITICAL 1 条。",
+        "rule_id": "POLICY_BLOCK_SEVERITY"
+      },
+      "reason_code": "POLICY_BLOCK_SEVERITY",
+      "summary": {
+        "critical": 1,
+        "high": 0,
+        "info": 5,
+        "low": 2,
+        "medium": 0,
+        "total_findings": 8,
+        "unknown": 0
+      }
+    },
+    "S3": {
+      "decision": "BLOCK",
+      "finding_index": [
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-6db8670c0cec5dc4b6ac",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-79bc901b6b72"
+          },
+          "rule_id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "pipeline",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-89db9e6a85df7273017a",
+          "location": {
+            "file": "SKILL.md",
+            "line": 1,
+            "object": "skill-1-79bc901b6b72"
+          },
+          "rule_id": "PIPELINE_TAINT_FLOW",
+          "severity": "LOW"
+        },
+        {
+          "analyzer": "pipeline",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-71740528e63491b22dee",
+          "location": {
+            "file": "SKILL.md",
+            "line": 1,
+            "object": "skill-1-79bc901b6b72"
+          },
+          "rule_id": "PIPELINE_TAINT_FLOW",
+          "severity": "LOW"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "remote_payload_execution",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b",
+          "location": {
+            "file": "SKILL.md",
+            "line": 15
+          },
+          "rule_id": "AEGIS_REMOTE_FETCH_PIPE_SHELL",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED_b9d1afa14daf",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_READ_ONLY_NETWORK_BEHAVIOR_732f01ecdf02",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_READ_ONLY_NETWORK_BEHAVIOR",
+          "severity": "INFO"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b"
+        ],
+        "matched_severities": [
+          "CRITICAL"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "命中阻断严重度：CRITICAL 1 条。",
+        "rule_id": "POLICY_BLOCK_SEVERITY"
+      },
+      "reason_code": "POLICY_BLOCK_SEVERITY",
+      "summary": {
+        "critical": 1,
+        "high": 0,
+        "info": 4,
+        "low": 2,
+        "medium": 0,
+        "total_findings": 7,
+        "unknown": 0
+      }
+    },
+    "S4": {
+      "decision": "BLOCK",
+      "finding_index": [
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-6db8670c0cec5dc4b6ac",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-79bc901b6b72"
+          },
+          "rule_id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "pipeline",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-89db9e6a85df7273017a",
+          "location": {
+            "file": "SKILL.md",
+            "line": 1,
+            "object": "skill-1-79bc901b6b72"
+          },
+          "rule_id": "PIPELINE_TAINT_FLOW",
+          "severity": "LOW"
+        },
+        {
+          "analyzer": "pipeline",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-71740528e63491b22dee",
+          "location": {
+            "file": "SKILL.md",
+            "line": 1,
+            "object": "skill-1-79bc901b6b72"
+          },
+          "rule_id": "PIPELINE_TAINT_FLOW",
+          "severity": "LOW"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "remote_payload_execution",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b",
+          "location": {
+            "file": "SKILL.md",
+            "line": 15
+          },
+          "rule_id": "AEGIS_REMOTE_FETCH_PIPE_SHELL",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED_b9d1afa14daf",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_READ_ONLY_NETWORK_BEHAVIOR_732f01ecdf02",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_READ_ONLY_NETWORK_BEHAVIOR",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-skill-capability-alignment-v1",
+          "category": "capability_inventory",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY_bf45befbc0fb",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY",
+          "severity": "INFO"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b"
+        ],
+        "matched_severities": [
+          "CRITICAL"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "命中阻断严重度：CRITICAL 1 条。",
+        "rule_id": "POLICY_BLOCK_SEVERITY"
+      },
+      "reason_code": "POLICY_BLOCK_SEVERITY",
+      "summary": {
+        "critical": 1,
+        "high": 0,
+        "info": 5,
+        "low": 2,
+        "medium": 0,
+        "total_findings": 8,
+        "unknown": 0
+      }
+    },
+    "S5": {
+      "decision": "BLOCK",
+      "finding_index": [
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-6db8670c0cec5dc4b6ac",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-79bc901b6b72"
+          },
+          "rule_id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "pipeline",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-89db9e6a85df7273017a",
+          "location": {
+            "file": "SKILL.md",
+            "line": 1,
+            "object": "skill-1-79bc901b6b72"
+          },
+          "rule_id": "PIPELINE_TAINT_FLOW",
+          "severity": "LOW"
+        },
+        {
+          "analyzer": "pipeline",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-71740528e63491b22dee",
+          "location": {
+            "file": "SKILL.md",
+            "line": 1,
+            "object": "skill-1-79bc901b6b72"
+          },
+          "rule_id": "PIPELINE_TAINT_FLOW",
+          "severity": "LOW"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "remote_payload_execution",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b",
+          "location": {
+            "file": "SKILL.md",
+            "line": 15
+          },
+          "rule_id": "AEGIS_REMOTE_FETCH_PIPE_SHELL",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED_b9d1afa14daf",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_READ_ONLY_NETWORK_BEHAVIOR_732f01ecdf02",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_READ_ONLY_NETWORK_BEHAVIOR",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-skill-capability-alignment-v1",
+          "category": "capability_inventory",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY_bf45befbc0fb",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY",
+          "severity": "INFO"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b"
+        ],
+        "matched_severities": [
+          "CRITICAL"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "命中阻断严重度：CRITICAL 1 条。",
+        "rule_id": "POLICY_BLOCK_SEVERITY"
+      },
+      "reason_code": "POLICY_BLOCK_SEVERITY",
+      "summary": {
+        "critical": 1,
+        "high": 0,
+        "info": 5,
+        "low": 2,
+        "medium": 0,
+        "total_findings": 8,
+        "unknown": 0
+      }
+    },
+    "S6": {
+      "decision": "BLOCK",
+      "finding_index": [
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-6db8670c0cec5dc4b6ac",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-79bc901b6b72"
+          },
+          "rule_id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "pipeline",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-89db9e6a85df7273017a",
+          "location": {
+            "file": "SKILL.md",
+            "line": 1,
+            "object": "skill-1-79bc901b6b72"
+          },
+          "rule_id": "PIPELINE_TAINT_FLOW",
+          "severity": "LOW"
+        },
+        {
+          "analyzer": "pipeline",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-71740528e63491b22dee",
+          "location": {
+            "file": "SKILL.md",
+            "line": 1,
+            "object": "skill-1-79bc901b6b72"
+          },
+          "rule_id": "PIPELINE_TAINT_FLOW",
+          "severity": "LOW"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "category": "remote_payload_execution",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b",
+          "location": {
+            "file": "SKILL.md",
+            "line": 15
+          },
+          "rule_id": "AEGIS_REMOTE_FETCH_PIPE_SHELL",
+          "severity": "CRITICAL"
+        },
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED_b9d1afa14daf",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_NETWORK_CAPABILITY_DECLARED",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-network-context-v1",
+          "category": "network_context_support",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CONTEXT_READ_ONLY_NETWORK_BEHAVIOR_732f01ecdf02",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CONTEXT_READ_ONLY_NETWORK_BEHAVIOR",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-skill-capability-alignment-v1",
+          "category": "capability_inventory",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY_bf45befbc0fb",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY",
+          "severity": "INFO"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b"
+        ],
+        "matched_severities": [
+          "CRITICAL"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "命中阻断严重度：CRITICAL 1 条。",
+        "rule_id": "POLICY_BLOCK_SEVERITY"
+      },
+      "reason_code": "POLICY_BLOCK_SEVERITY",
+      "summary": {
+        "critical": 1,
+        "high": 0,
+        "info": 5,
+        "low": 2,
+        "medium": 0,
+        "total_findings": 8,
+        "unknown": 0
+      }
+    }
+  }
+}

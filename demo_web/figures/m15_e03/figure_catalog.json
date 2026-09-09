@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "surface_class": "paper_main",
+  "source_data": "demo_web/artifacts/experiment/2026-09-08-m15-e03-dynamic-round-ablation-v2/metrics.json",
+  "generating_script": "demo_web/figures/m15_e03/scripts/render_e03_figures.py",
+  "exports": [
+    "fig_e03_detection_ablation.png",
+    "fig_e03_detection_ablation.svg",
+    "fig_e03_gain_latency.png",
+    "fig_e03_gain_latency.svg",
+    "fig_e03_first_trigger.png",
+    "fig_e03_first_trigger.svg"
+  ],
+  "main_claim": "The adversarial third round recovers five runtime risk types and raises controlled-risk non-allow recall from 73.3% to 100% at a 1.15x attributed P95 total-latency ratio.",
+  "self_review_revision": "Moved the grouped legend below the data, moved the D3 latency annotation away from the edge, removed the redundant single-category trigger legend, and corrected portable mplstyle colors."
+}

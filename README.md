@@ -1,10 +1,13 @@
 # Aegis Chain：面向智能体生态的供应链安全原型
 
+[![CI](https://github.com/zhlearn0318-nan/aegis-chain-supply-security/actions/workflows/ci.yml/badge.svg)](https://github.com/zhlearn0318-nan/aegis-chain-supply-security/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+
 > 当前状态、发布判断和下一工程节点以 [`CURRENT_STATUS.md`](CURRENT_STATUS.md) 为唯一真值；阶段报告中的旧测试数和“下一步”仅代表当时快照。
 
-> **正式版 v0.1（2026-08-31）**：当前比赛交付基线与发布范围见 [`RELEASE_V0.1.md`](RELEASE_V0.1.md)。
+> **正式版 v0.2（2026-09-09）**：当前比赛交付基线与发布范围见 [`RELEASE_V0.2.md`](RELEASE_V0.2.md)。`v0.1` 保留为历史基线。
 
-> **团队协作快照（2026-09-05）**：`main` 已继续集成论文驱动的 P0/P1、真实第三方 Skill 动态配对实验和最新版 OpenClaw“Aegis 安全中心”。`v0.1` 标签保留为历史比赛基线，不会被改写。
+> **团队协作快照（2026-09-09）**：`main` 已集成论文驱动的 P0/P1、真实第三方 Skill 动态配对实验、M15 E01—E06 六组实验和最新版 OpenClaw“Aegis 安全中心”。
 
 Aegis Chain 是 XA-202620 赛题“供应链安全”方向的本地工程原型，面向通用政企智能体平台，对 Agent Skill、MCP 对象和 Python 依赖提供统一静态审查、证据归一化、准入策略和安装前隔离试运行。
 
@@ -12,7 +15,7 @@ Aegis Chain 是 XA-202620 赛题“供应链安全”方向的本地工程原型
 
 ## 队友克隆后从这里开始
 
-仓库是私有仓库，先确保自己的 GitHub 账号已获得访问权限。Windows PowerShell 中执行：
+仓库采用 Apache-2.0 许可证公开发布。Windows PowerShell 中执行：
 
 ```powershell
 git clone https://github.com/zhlearn0318-nan/aegis-chain-supply-security.git
@@ -67,7 +70,7 @@ Install_Aegis_OpenClaw_Final.cmd
 
 脚本会固定 OpenClaw `2026.7.1-2`，重建锁定扫描运行时，准备 Docker 隔离后端，备份并写入安装策略，安装 Aegis 插件，重启 Gateway，并验证统一“Aegis 安全中心”的总览与五个功能视图以及完整动态预检。失败时窗口不会闪退，且会恢复原 OpenClaw 配置。
 
-正式版范围见 [v0.1 发布说明](RELEASE_V0.1.md)；最终集成与部署见 [M10 OpenClaw 最终集成与 Windows 一键部署说明](demo_web/docs/M10_OPENCLAW_FINAL_INTEGRATION_AND_WINDOWS_DEPLOYMENT.md)；正式 Skill 上传准入见 [M11 OpenClaw 正式 Skill 上传准入](demo_web/docs/M11_OPENCLAW_FORMAL_SKILL_UPLOAD_ADMISSION.md)；最终单入口界面见 [M12 OpenClaw 统一安全中心正式发布说明](demo_web/docs/M12_OPENCLAW_UNIFIED_SECURITY_CENTER_RELEASE.md)。
+正式版范围见 [v0.2 发布说明](RELEASE_V0.2.md)；最终集成与部署见 [M10 OpenClaw 最终集成与 Windows 一键部署说明](demo_web/docs/M10_OPENCLAW_FINAL_INTEGRATION_AND_WINDOWS_DEPLOYMENT.md)；正式 Skill 上传准入见 [M11 OpenClaw 正式 Skill 上传准入](demo_web/docs/M11_OPENCLAW_FORMAL_SKILL_UPLOAD_ADMISSION.md)；最终单入口界面见 [M12 OpenClaw 统一安全中心正式发布说明](demo_web/docs/M12_OPENCLAW_UNIFIED_SECURITY_CENTER_RELEASE.md)。
 
 ### 修改 OpenClaw 插件后重新加载
 
@@ -100,10 +103,12 @@ Install_Aegis_OpenClaw_Final.cmd
 - 真实第三方动态配对：6 个官方原始包 + 30 个受控风险孪生，完成 108 次容器脚本调用；动态风险规则召回 30/30，原始脚本动态 ALLOW 6/6；
 - 管理员动态接口：3/3 fixture、7/7 机制，负面安全指标全部为 0；
 - MCP Docker 受控遥测实验：82/82 接受门，独立文件读取确认 1、容器残留 0；
-- 后端完整测试：507 passed，1 skipped；
+- 后端完整测试：557 passed，1 skipped；
 - OpenClaw 插件测试：19 passed；
 - 前端 API 测试：10 passed；
 - 前端生产构建：通过。
+- M15 E01—E06：静态消融、误报治理、动态轮次、绕过鲁棒性、OpenClaw E2E 和错误分析全部完成；
+- GitHub Actions 在 PR 和 main 推送时自动复验后端、插件与前端。
 
 ## 仓库结构
 
@@ -180,6 +185,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\run_tests.ps1"
 - [当前状态（唯一真值）](CURRENT_STATUS.md)
 - [版本变化记录](CHANGELOG.md)
 - [正式版 v0.1 发布说明](RELEASE_V0.1.md)
+- [正式版 v0.2 发布说明](RELEASE_V0.2.md)
 - [团队协作与开发约定](CONTRIBUTING.md)
 - [系统开发与使用说明](demo_web/README.md)
 - [供应链模块对接与开发说明](demo_web/docs/Aegis_Chain_供应链安全模块对接与开发说明.md)
@@ -207,4 +213,4 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\run_tests.ps1"
 
 ## 项目状态
 
-该仓库当前冻结为挑战杯“揭榜挂帅”赛道 **正式比赛版本 v0.1**，现场演示和材料提交状态为 READY。它仍是研究与竞赛原型，不等价于可直接接入真实政企生产网的商业安全产品；洁净 Windows VM、企业身份权限、外部审计、高可用和更强隔离仍未完成，生产发布保持 NO-GO。完整边界见 [`CURRENT_STATUS.md`](CURRENT_STATUS.md)。
+该仓库当前冻结为挑战杯“揭榜挂帅”赛道 **正式比赛版本 v0.2**，现场演示和材料提交状态为 READY。它仍是研究与竞赛原型，不等价于可直接接入真实政企生产网的商业安全产品；洁净 Windows VM、企业身份权限、外部审计、高可用和更强隔离仍未完成，生产发布保持 NO-GO。完整边界见 [`CURRENT_STATUS.md`](CURRENT_STATUS.md)。

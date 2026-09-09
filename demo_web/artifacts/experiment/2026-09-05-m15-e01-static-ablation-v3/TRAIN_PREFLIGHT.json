@@ -1,0 +1,39 @@
+{
+  "checked_at": "2026-09-06T06:53:53+08:00",
+  "config_sha256": "491b9efe653a82ad0d3431a222705975ec626dfd1c4315bcea5850dfc34d6b32",
+  "dataset_manifest_sha256": "808a89b56fff1bd8d2a4c3d505e147ed8adbea2662997971fbe2a4ee681fa157",
+  "experiment_id": "2026-09-05-m15-e01-static-ablation-v3",
+  "materialized": {
+    "dataset_revision": "d4b42ce5766a6e0359c987cf59c1007cb3795a90",
+    "schema_version": "1.0",
+    "splits": {
+      "train": {
+        "case_id_join_exact": true,
+        "cases": 7513,
+        "scan_input_tree_sha256": "4097f37f96660a7b9dcc31fa41776fe45261da7b40b8a722a6c3c70601c3e63f",
+        "scan_manifest_label_keys": 0,
+        "scan_ready_cases": 7437,
+        "unavailable_cases": 76
+      },
+      "validation": {
+        "case_id_join_exact": true,
+        "cases": 835,
+        "scan_input_tree_sha256": "fe7e0b3042ccb67ee35e0c8de9b6c6edf8344a37a406fc6af6a5fb87e252154d",
+        "scan_manifest_label_keys": 0,
+        "scan_ready_cases": 826,
+        "unavailable_cases": 9
+      }
+    },
+    "status": "verified"
+  },
+  "platform": "Windows-10-10.0.26200-SP0",
+  "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:36:49) [MSC v.1944 64 bit (AMD64)]",
+  "schema_version": "1.0",
+  "source_file_sha256": {
+    "primary.parquet": "1d6382017f259bde0b699d402318f3c03f16b2e8ed2363a346b77a5465f06a06",
+    "schema.json": "2165cc30c6555873b31800869734637fd571148bbf12c40315ce4600ae602378",
+    "source_registry.csv": "b0f776d222097c6c33b98fa4d120c44014f2eef1ece5a73a1d1769b95f7ce8a6",
+    "splits/source_disjoint.parquet": "9fae37c53b6ad47070d118e9bc4cdafd82c416a68b7e74847b4e0dd9d66bd276"
+  },
+  "status": "preflight_passed"
+}

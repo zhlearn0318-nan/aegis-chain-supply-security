@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "started_at": "2026-09-08T23:47:52+08:00",
+  "contract_sha256": "3148f1a477151a32c6f0830b6de57d3f3512e416a5fc092483277db72f6f0baa",
+  "e04_manifest_sha256": "4d072c9001c588078584c18b0b41088a461db45b36b427480b533f596b8dcf49",
+  "instruction_tree_sha256": "9afadebb85746c1b2441b717407763271f1e2b9495c18a57316685cfe62dde53",
+  "base_url": "http://127.0.0.1:18789",
+  "token_retained": false,
+  "scenario_count": 12,
+  "selected_scenarios": [
+    "s01",
+    "s02",
+    "s03",
+    "s04",
+    "s05",
+    "s06",
+    "s07",
+    "s08",
+    "s09",
+    "s10",
+    "s11",
+    "s12"
+  ],
+  "repetitions": 3
+}

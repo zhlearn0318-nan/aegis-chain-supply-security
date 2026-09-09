@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "runs": 36,
+  "passed_runs": 36,
+  "decision_matches": 36,
+  "non_allow_installations": 0,
+  "non_allow_gate_failures": 0,
+  "audit_api_pdf_consistent": 36,
+  "timing_ms": {
+    "median": 42953.5,
+    "p95": 103968.0,
+    "max": 105185
+  },
+  "standard_timing_ms": {
+    "median": 37554.0,
+    "p95": 48635.0,
+    "max": 54779
+  },
+  "elapsed_ms": 1963580,
+  "normal_matrix_passed": true
+}

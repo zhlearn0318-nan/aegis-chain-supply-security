@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "m15-e04-dynamic-robustness-v1",
+  "status": "frozen_before_execution",
+  "dataset_id": "m15-e04-robustness-pairs-v1",
+  "design": {
+    "runtimes": ["python", "node", "shell"],
+    "factors_per_runtime": 8,
+    "safe_controls": 24,
+    "transformed_risks": 24,
+    "single_factor_pairs": 24,
+    "rounds": ["typical", "edge", "adversarial"]
+  },
+  "acceptance": {
+    "transformed_non_allow": 24,
+    "minimum_expected_rule_recall": 0.9,
+    "safe_control_non_allow": 0,
+    "three_round_rate": 1.0,
+    "security_gate_rate": 1.0,
+    "cleanup_rate": 1.0,
+    "input_immutability_rate": 1.0,
+    "infrastructure_failure_must_non_allow": true
+  },
+  "safety": {
+    "known_malware_execution": false,
+    "container_decoys_only": true,
+    "network_mode": "none",
+    "skill_mount": "read_only",
+    "tool_mount": "read_only",
+    "non_root": true,
+    "resource_limits": true
+  }
+}

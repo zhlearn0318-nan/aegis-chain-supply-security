@@ -41,7 +41,7 @@ def test_rule_registry_is_complete_and_has_no_duplicates() -> None:
     registered = registry_rule_ids(payload)
 
     assert payload["schema_version"] == "1.0"
-    assert payload["status"] == "development_locked_regression_pending"
+    assert payload["status"] == "release_candidate_regression_passed"
     assert len(registered) == len(set(registered))
     assert set(registered) == source_rule_ids()
 
@@ -61,5 +61,5 @@ def test_registry_severities_match_supported_policy_values() -> None:
                 assert set(severities) <= supported
 
 
-def test_registry_contains_138_static_rule_ids() -> None:
-    assert len(registry_rule_ids(registry())) == 138
+def test_registry_contains_146_static_rule_ids() -> None:
+    assert len(registry_rule_ids(registry())) == 146

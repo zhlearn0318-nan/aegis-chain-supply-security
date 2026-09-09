@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-09-06-m15-e02-static-false-positive-v2",
+  "status": "procedurally_invalid_not_an_experiment_result",
+  "reason": "The experiment wrapper called model_dump on backend.policy.summarize output even though summarize already returns a plain dictionary.",
+  "effect": "Thirty-nine completed pipelines were converted to fail-closed UNKNOWN by an AttributeError; one case independently raised RuntimeError.",
+  "ground_truth_opened": false,
+  "input_tree_changed": false,
+  "replacement_run_id": "2026-09-06-m15-e02-static-false-positive-v3"
+}

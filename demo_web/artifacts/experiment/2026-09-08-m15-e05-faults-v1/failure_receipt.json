@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0",
+  "status": "interrupted_after_fault_evidence",
+  "failed_fault": "docker_unavailable",
+  "fault_scan_completed": true,
+  "audit_sequence": 215,
+  "pdf_generated": true,
+  "automatic_recovery_completed": false,
+  "error": "Docker Desktop CLI remained blocked beyond the recovery window; the experiment driver was interrupted and Docker was restored with the documented Windows socket-directory recovery procedure.",
+  "recorded_at": "2026-09-09T00:11:00+08:00"
+}

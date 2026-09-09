@@ -1,0 +1,107 @@
+{
+  "schema_version": "1.0",
+  "cases": 48,
+  "pairs": 24,
+  "transformed_risk_non_allow": 24,
+  "transformed_risk_executed": 24,
+  "transformed_risk_total": 24,
+  "transformed_risk_non_allow_rate": 1.0,
+  "expected_rule_detected": 24,
+  "expected_rule_total": 24,
+  "expected_rule_recall": 1.0,
+  "safe_control_non_allow": 0,
+  "safe_control_executed": 24,
+  "safe_control_total": 24,
+  "safe_control_false_positive_rate": 0.0,
+  "infrastructure_failures": 0,
+  "per_runtime": {
+    "node": {
+      "risk_support": 8,
+      "risk_non_allow": 8,
+      "expected_rule_detected": 8,
+      "safe_control_non_allow": 0
+    },
+    "python": {
+      "risk_support": 8,
+      "risk_non_allow": 8,
+      "expected_rule_detected": 8,
+      "safe_control_non_allow": 0
+    },
+    "shell": {
+      "risk_support": 8,
+      "risk_non_allow": 8,
+      "expected_rule_detected": 8,
+      "safe_control_non_allow": 0
+    }
+  },
+  "per_factor": {
+    "delayed_round_trigger": {
+      "risk_support": 3,
+      "risk_non_allow": 3,
+      "expected_rule_detected": 3,
+      "safe_control_non_allow": 0
+    },
+    "drop_then_execute": {
+      "risk_support": 3,
+      "risk_non_allow": 3,
+      "expected_rule_detected": 3,
+      "safe_control_non_allow": 0
+    },
+    "encoded_command": {
+      "risk_support": 3,
+      "risk_non_allow": 3,
+      "expected_rule_detected": 3,
+      "safe_control_non_allow": 0
+    },
+    "indirect_process_alias": {
+      "risk_support": 3,
+      "risk_non_allow": 3,
+      "expected_rule_detected": 3,
+      "safe_control_non_allow": 0
+    },
+    "parent_child_chain": {
+      "risk_support": 3,
+      "risk_non_allow": 3,
+      "expected_rule_detected": 3,
+      "safe_control_non_allow": 0
+    },
+    "split_sensitive_path": {
+      "risk_support": 3,
+      "risk_non_allow": 3,
+      "expected_rule_detected": 3,
+      "safe_control_non_allow": 0
+    },
+    "staged_read_network": {
+      "risk_support": 3,
+      "risk_non_allow": 3,
+      "expected_rule_detected": 3,
+      "safe_control_non_allow": 0
+    },
+    "timeout_fail_closed": {
+      "risk_support": 3,
+      "risk_non_allow": 3,
+      "expected_rule_detected": 3,
+      "safe_control_non_allow": 0
+    }
+  },
+  "duration_ms": {
+    "median": 2120.0,
+    "p95": 10824.0,
+    "max": 14389
+  },
+  "acceptance_gates": {
+    "all_cases_executed": true,
+    "transformed_non_allow_24_of_24": true,
+    "expected_rule_recall_at_least_90pct": true,
+    "safe_control_false_positive_zero": true,
+    "three_round_rate_100pct": true,
+    "security_gate_rate_100pct": true,
+    "cleanup_rate_100pct": true,
+    "input_immutability_100pct": true,
+    "network_success_zero": true,
+    "infrastructure_failure_fail_closed": true
+  },
+  "passed": true,
+  "missed_transformed_cases": [],
+  "safe_control_false_positives": []
+}

@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-09-06-m15-e02-static-false-positive-v1",
+  "status": "procedurally_invalid_not_an_experiment_result",
+  "reason": "The experiment runner analyzer allowlist used bytecode_analyzer, pipeline_analyzer and aegis-custom-rule-v1, while the production pipeline reports bytecode, pipeline and aegis-custom-rules-v1.",
+  "effect": "Thirty-nine completed pipelines were rejected by the runner boundary and one case raised RuntimeError; all forty were correctly fail-closed to UNKNOWN but the output is not a usable F0 baseline.",
+  "ground_truth_opened": false,
+  "input_tree_changed": false,
+  "replacement_run_id": "2026-09-06-m15-e02-static-false-positive-v2"
+}

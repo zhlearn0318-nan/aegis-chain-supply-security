@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "2026-09-05-m15-e01-static-ablation-v3",
+  "status": "stopped_after_oof_before_final_fit_and_validation",
+  "reason_code": "NO_THRESHOLD_AT_OR_BELOW_0_90_SATISFIES_BENIGN_FPR_GATE",
+  "completed_logo_folds": 8,
+  "failed_candidate_c": 0.25,
+  "benign_fpr_limit": 0.05,
+  "maximum_tested_threshold": 0.9,
+  "implementation_gap": "OOF probabilities were not checkpointed before threshold selection and cannot be recovered from the stopped process.",
+  "contract_action": "Preserve v3 and create v4 with per-fold checkpoints plus an explicit high-threshold tail through 1.0.",
+  "validation_scan_started": false,
+  "validation_labels_used_for_tuning": false
+}

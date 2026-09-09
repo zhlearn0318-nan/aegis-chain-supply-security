@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-09-08-m15-e02-malicious-train-semantic-regression-v1",
+  "status": "invalid_summary",
+  "stage": "per_source_metrics",
+  "reason": "A source group containing no benign cases caused a zero denominator while computing benign_non_allow_rate.",
+  "prediction_artifact_retained": "predictions.label_blind.jsonl",
+  "samples_scanned": 7513,
+  "sample_execution": false,
+  "corrective_action": "Represent metrics for an absent class as null and rerun under a new versioned run ID."
+}

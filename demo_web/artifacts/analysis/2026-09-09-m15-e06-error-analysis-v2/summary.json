@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "parent_cases": 835,
+  "false_negatives_available": 309,
+  "false_positives_available": 54,
+  "false_negatives_analyzed": 60,
+  "false_positives_analyzed": 54,
+  "analyzed_cases": 114,
+  "explicitly_classified": 114,
+  "classified_fraction": 1.0,
+  "top_false_negative_causes": [
+    {
+      "cause": "natural_language_sensitive_flow",
+      "count": 14
+    },
+    {
+      "cause": "contextual_instruction_paraphrase",
+      "count": 11
+    },
+    {
+      "cause": "implicit_execution_semantics",
+      "count": 8
+    },
+    {
+      "cause": "dependency_instruction_semantics",
+      "count": 7
+    },
+    {
+      "cause": "integrity_manipulation_semantics",
+      "count": 6
+    }
+  ],
+  "top_false_positive_causes": [
+    {
+      "cause": "benign_conditional_workflow",
+      "count": 39
+    },
+    {
+      "cause": "defensive_or_prohibitive_context",
+      "count": 8
+    },
+    {
+      "cause": "materialization_or_scanner_failure",
+      "count": 4
+    },
+    {
+      "cause": "static_context_scope_error",
+      "count": 1
+    },
+    {
+      "cause": "label_boundary_or_quoted_context",
+      "count": 1
+    }
+  ],
+  "supported_proposals": 7,
+  "representative_cases": 8,
+  "second_annotator": false,
+  "cohens_kappa": null,
+  "passed": true
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-09-08-m15-e04-dynamic-robustness-v4",
+  "started_at": "2026-09-08T22:01:22+08:00",
+  "elapsed_ms": 68949,
+  "dataset_lock": {
+    "schema_version": "1.0",
+    "dataset_id": "m15-e04-robustness-pairs-v2",
+    "cases": 48,
+    "pairs": 24,
+    "transformed_risks": 24,
+    "safe_controls": 24,
+    "manifest_sha256": "4d072c9001c588078584c18b0b41088a461db45b36b427480b533f596b8dcf49",
+    "dataset_tree_sha256": "bac1176cb3841f8840a80b53ae4439d16038e133b150929f14affa2a32434f26",
+    "safety": {
+      "third_party_malware": false,
+      "decoys_only": true,
+      "network_expected": "none",
+      "host_mutation_expected": false
+    }
+  },
+  "contract_sha256": "4280f860a6a14704b9d0902fd1925f5b6c1bf834e4ee49aa10d1b9af69cb5b60",
+  "sandbox_config_sha256": "146c2efb5f0daec636ce377f9e92700ff10051413526c89aade20882d2915681",
+  "workers": 3,
+  "timeout_seconds_per_case": 9
+}

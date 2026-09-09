@@ -1,0 +1,246 @@
+{
+  "benign_weighted": [
+    {
+      "feature": "word__openclaw",
+      "weight": -2.056977376788777
+    },
+    {
+      "feature": "word__use when",
+      "weight": -1.6530290651793336
+    },
+    {
+      "feature": "char__ — ",
+      "weight": -1.453629929184847
+    },
+    {
+      "feature": "word__ai",
+      "weight": -1.4384035685502492
+    },
+    {
+      "feature": "word__wants",
+      "weight": -1.2642384956182104
+    },
+    {
+      "feature": "word__or",
+      "weight": -1.1865944360705347
+    },
+    {
+      "feature": "word__references",
+      "weight": -1.1650421437720042
+    },
+    {
+      "feature": "word__every",
+      "weight": -1.1139425871306492
+    },
+    {
+      "feature": "word__risk",
+      "weight": -1.0075169664552757
+    },
+    {
+      "feature": "word__sh",
+      "weight": -0.9981834559551208
+    },
+    {
+      "feature": "word__use",
+      "weight": -0.9947497240929302
+    },
+    {
+      "feature": "word__rules",
+      "weight": -0.9629963493040512
+    },
+    {
+      "feature": "char__ / ",
+      "weight": -0.9356376348521949
+    },
+    {
+      "feature": "word__py for",
+      "weight": -0.9345584562585126
+    },
+    {
+      "feature": "word__metadata openclaw",
+      "weight": -0.9315801080638562
+    },
+    {
+      "feature": "word__pip",
+      "weight": -0.910128112433836
+    },
+    {
+      "feature": "word__agents",
+      "weight": -0.8881613459422105
+    },
+    {
+      "feature": "word__for the",
+      "weight": -0.8823144370861998
+    },
+    {
+      "feature": "word__md references",
+      "weight": -0.8764960067847438
+    },
+    {
+      "feature": "char__ `sc",
+      "weight": -0.8744508523910375
+    },
+    {
+      "feature": "word__into",
+      "weight": -0.8733616538037665
+    },
+    {
+      "feature": "word__are not",
+      "weight": -0.872813939119413
+    },
+    {
+      "feature": "word__language",
+      "weight": -0.8722670770347623
+    },
+    {
+      "feature": "word__explicit",
+      "weight": -0.8703233840209673
+    },
+    {
+      "feature": "word__use scripts",
+      "weight": -0.868258795355274
+    },
+    {
+      "feature": "char__). ",
+      "weight": -0.8656027560417016
+    },
+    {
+      "feature": "word__does not",
+      "weight": -0.8632189668816641
+    },
+    {
+      "feature": "word__optional",
+      "weight": -0.8441699875818145
+    },
+    {
+      "feature": "word__notes",
+      "weight": -0.8436537215154433
+    },
+    {
+      "feature": "word__result",
+      "weight": -0.8348475498131199
+    }
+  ],
+  "risk_weighted": [
+    {
+      "feature": "word__python scripts",
+      "weight": 4.516596538444446
+    },
+    {
+      "feature": "word__run python",
+      "weight": 4.126405407875002
+    },
+    {
+      "feature": "char__ts/_",
+      "weight": 3.3821039806535977
+    },
+    {
+      "feature": "char__pts/_",
+      "weight": 3.379680185561035
+    },
+    {
+      "feature": "char__s/_",
+      "weight": 3.3749964911007573
+    },
+    {
+      "feature": "word__initialization",
+      "weight": 2.7868368606858676
+    },
+    {
+      "feature": "word__producing",
+      "weight": 2.6213675614771477
+    },
+    {
+      "feature": "word__cache",
+      "weight": 2.5296083343031133
+    },
+    {
+      "feature": "word__before producing",
+      "weight": 2.480416185687036
+    },
+    {
+      "feature": "char__ `pyt",
+      "weight": 2.46549720778749
+    },
+    {
+      "feature": "char__ `py",
+      "weight": 2.415498377682497
+    },
+    {
+      "feature": "word__runtime",
+      "weight": 2.3394689680758027
+    },
+    {
+      "feature": "word__compatibility",
+      "weight": 2.215051257535637
+    },
+    {
+      "feature": "word__py this",
+      "weight": 2.206856910899943
+    },
+    {
+      "feature": "word__configuration",
+      "weight": 2.1817861201476627
+    },
+    {
+      "feature": "word__pre",
+      "weight": 2.1463359605938717
+    },
+    {
+      "feature": "word__pre flight",
+      "weight": 2.121448423213005
+    },
+    {
+      "feature": "word__this",
+      "weight": 2.1209737963853383
+    },
+    {
+      "feature": "word__treat it",
+      "weight": 2.066243491890746
+    },
+    {
+      "feature": "word__runtime dependency",
+      "weight": 2.0450126555368326
+    },
+    {
+      "feature": "word__sdk",
+      "weight": 1.9959123175512212
+    },
+    {
+      "feature": "word__bootstrap",
+      "weight": 1.943089515424789
+    },
+    {
+      "feature": "word__python",
+      "weight": 1.9251179407600298
+    },
+    {
+      "feature": "word__it the",
+      "weight": 1.8564709395895758
+    },
+    {
+      "feature": "word__producing the",
+      "weight": 1.850321821972083
+    },
+    {
+      "feature": "word__py to",
+      "weight": 1.8303845048437921
+    },
+    {
+      "feature": "word__be to",
+      "weight": 1.8258653072862299
+    },
+    {
+      "feature": "word__has been",
+      "weight": 1.8186758999132466
+    },
+    {
+      "feature": "word__not ask",
+      "weight": 1.8120858040431662
+    },
+    {
+      "feature": "word__action must",
+      "weight": 1.8085841239766562
+    }
+  ]
+}

@@ -1,0 +1,489 @@
+{
+  "benchmark_id": "ASB04_000589",
+  "case_id": "asb04_000589",
+  "duration_ms": 228,
+  "experiment_id": "2026-09-06-m15-e01-static-ablation-v5",
+  "lightweight_model_review": false,
+  "qwen_calls": 0,
+  "qwen_failures": 0,
+  "qwen_routed": false,
+  "scan_ready": true,
+  "schema_version": "1.0",
+  "skill_text_sha256": "149bf4e79c87f2bd317359a22a615370ebc8fc3f6eb8fe1bba7bdc70c8a2eeea",
+  "systems": {
+    "S0": {
+      "decision": "REVIEW",
+      "finding_index": [
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-d00b8f9e03709ae7a71c",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-4f545c949be9"
+          },
+          "rule_id": "SOCIAL_ENG_ANTHROPIC_IMPERSONATION",
+          "severity": "MEDIUM"
+        },
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-88ca96b4ea5ff4eb9c4e",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-4f545c949be9"
+          },
+          "rule_id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "vendor-skill-d00b8f9e03709ae7a71c"
+        ],
+        "matched_severities": [
+          "MEDIUM"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.0.0",
+        "reason": "命中人工复核严重度：MEDIUM 1 条。",
+        "rule_id": "POLICY_REVIEW_SEVERITY"
+      },
+      "reason_code": "POLICY_REVIEW_SEVERITY",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 1,
+        "low": 0,
+        "medium": 1,
+        "total_findings": 2,
+        "unknown": 0
+      }
+    },
+    "S1": {
+      "decision": "REVIEW",
+      "finding_index": [
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-d00b8f9e03709ae7a71c",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-4f545c949be9"
+          },
+          "rule_id": "SOCIAL_ENG_ANTHROPIC_IMPERSONATION",
+          "severity": "MEDIUM"
+        },
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-88ca96b4ea5ff4eb9c4e",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-4f545c949be9"
+          },
+          "rule_id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "vendor-skill-d00b8f9e03709ae7a71c"
+        ],
+        "matched_severities": [
+          "MEDIUM"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "命中人工复核严重度：MEDIUM 1 条。",
+        "rule_id": "POLICY_REVIEW_SEVERITY"
+      },
+      "reason_code": "POLICY_REVIEW_SEVERITY",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 2,
+        "low": 0,
+        "medium": 1,
+        "total_findings": 3,
+        "unknown": 0
+      }
+    },
+    "S2": {
+      "decision": "REVIEW",
+      "finding_index": [
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-d00b8f9e03709ae7a71c",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-4f545c949be9"
+          },
+          "rule_id": "SOCIAL_ENG_ANTHROPIC_IMPERSONATION",
+          "severity": "MEDIUM"
+        },
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-88ca96b4ea5ff4eb9c4e",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-4f545c949be9"
+          },
+          "rule_id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-skill-capability-alignment-v1",
+          "category": "capability_inventory",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY_7d7e4fe99e5f",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY",
+          "severity": "INFO"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "vendor-skill-d00b8f9e03709ae7a71c"
+        ],
+        "matched_severities": [
+          "MEDIUM"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "命中人工复核严重度：MEDIUM 1 条。",
+        "rule_id": "POLICY_REVIEW_SEVERITY"
+      },
+      "reason_code": "POLICY_REVIEW_SEVERITY",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 3,
+        "low": 0,
+        "medium": 1,
+        "total_findings": 4,
+        "unknown": 0
+      }
+    },
+    "S3": {
+      "decision": "REVIEW",
+      "finding_index": [
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-d00b8f9e03709ae7a71c",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-4f545c949be9"
+          },
+          "rule_id": "SOCIAL_ENG_ANTHROPIC_IMPERSONATION",
+          "severity": "MEDIUM"
+        },
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-88ca96b4ea5ff4eb9c4e",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-4f545c949be9"
+          },
+          "rule_id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "vendor-skill-d00b8f9e03709ae7a71c"
+        ],
+        "matched_severities": [
+          "MEDIUM"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "命中人工复核严重度：MEDIUM 1 条。",
+        "rule_id": "POLICY_REVIEW_SEVERITY"
+      },
+      "reason_code": "POLICY_REVIEW_SEVERITY",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 2,
+        "low": 0,
+        "medium": 1,
+        "total_findings": 3,
+        "unknown": 0
+      }
+    },
+    "S4": {
+      "decision": "REVIEW",
+      "finding_index": [
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-d00b8f9e03709ae7a71c",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-4f545c949be9"
+          },
+          "rule_id": "SOCIAL_ENG_ANTHROPIC_IMPERSONATION",
+          "severity": "MEDIUM"
+        },
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-88ca96b4ea5ff4eb9c4e",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-4f545c949be9"
+          },
+          "rule_id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-skill-capability-alignment-v1",
+          "category": "capability_inventory",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY_7d7e4fe99e5f",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY",
+          "severity": "INFO"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "vendor-skill-d00b8f9e03709ae7a71c"
+        ],
+        "matched_severities": [
+          "MEDIUM"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "命中人工复核严重度：MEDIUM 1 条。",
+        "rule_id": "POLICY_REVIEW_SEVERITY"
+      },
+      "reason_code": "POLICY_REVIEW_SEVERITY",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 3,
+        "low": 0,
+        "medium": 1,
+        "total_findings": 4,
+        "unknown": 0
+      }
+    },
+    "S5": {
+      "decision": "REVIEW",
+      "finding_index": [
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-d00b8f9e03709ae7a71c",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-4f545c949be9"
+          },
+          "rule_id": "SOCIAL_ENG_ANTHROPIC_IMPERSONATION",
+          "severity": "MEDIUM"
+        },
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-88ca96b4ea5ff4eb9c4e",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-4f545c949be9"
+          },
+          "rule_id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-skill-capability-alignment-v1",
+          "category": "capability_inventory",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY_7d7e4fe99e5f",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY",
+          "severity": "INFO"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "vendor-skill-d00b8f9e03709ae7a71c"
+        ],
+        "matched_severities": [
+          "MEDIUM"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "命中人工复核严重度：MEDIUM 1 条。",
+        "rule_id": "POLICY_REVIEW_SEVERITY"
+      },
+      "reason_code": "POLICY_REVIEW_SEVERITY",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 3,
+        "low": 0,
+        "medium": 1,
+        "total_findings": 4,
+        "unknown": 0
+      }
+    },
+    "S6": {
+      "decision": "REVIEW",
+      "finding_index": [
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-d00b8f9e03709ae7a71c",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-4f545c949be9"
+          },
+          "rule_id": "SOCIAL_ENG_ANTHROPIC_IMPERSONATION",
+          "severity": "MEDIUM"
+        },
+        {
+          "analyzer": "static",
+          "category": "vendor_skill_finding",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-88ca96b4ea5ff4eb9c4e",
+          "location": {
+            "file": "SKILL.md",
+            "object": "skill-1-4f545c949be9"
+          },
+          "rule_id": "MANIFEST_MISSING_LICENSE",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "category": "static_coverage_summary",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_COVERAGE_SUMMARY_08986dac55df",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_STATIC_COVERAGE_SUMMARY",
+          "severity": "INFO"
+        },
+        {
+          "analyzer": "aegis-skill-capability-alignment-v1",
+          "category": "capability_inventory",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY_7d7e4fe99e5f",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "rule_id": "AEGIS_CAPABILITY_ALIGNMENT_SUMMARY",
+          "severity": "INFO"
+        }
+      ],
+      "policy_trace": {
+        "fail_closed": true,
+        "matched_finding_ids": [
+          "vendor-skill-d00b8f9e03709ae7a71c"
+        ],
+        "matched_severities": [
+          "MEDIUM"
+        ],
+        "policy_id": "aegis-chain-local-default",
+        "policy_version": "1.1.0",
+        "reason": "命中人工复核严重度：MEDIUM 1 条。",
+        "rule_id": "POLICY_REVIEW_SEVERITY"
+      },
+      "reason_code": "POLICY_REVIEW_SEVERITY",
+      "summary": {
+        "critical": 0,
+        "high": 0,
+        "info": 3,
+        "low": 0,
+        "medium": 1,
+        "total_findings": 4,
+        "unknown": 0
+      }
+    }
+  }
+}

@@ -12,6 +12,7 @@ __pycache__/
 .pytest_cache/
 .pytest-tmp*/
 .pytest_tmp*/
+.test-tmp*/
 .mypy_cache/
 .ruff_cache/
 .coverage

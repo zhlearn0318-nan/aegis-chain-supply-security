@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0",
+  "faults": 3,
+  "fault_closed_passes": 3,
+  "fault_allow_count": 0,
+  "install_gate_failures": 0,
+  "dependency_restorations": 3,
+  "automatic_recovery_failures": 1,
+  "fault_closed_gate_passed": true,
+  "full_automatic_recovery_passed": false
+}

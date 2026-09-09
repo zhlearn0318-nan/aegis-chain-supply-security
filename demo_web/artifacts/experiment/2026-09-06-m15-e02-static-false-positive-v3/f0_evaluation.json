@@ -1,0 +1,1636 @@
+{
+  "schema_version": "1.0",
+  "run_id": "2026-09-06-m15-e02-static-false-positive-v3",
+  "system": "F0",
+  "evaluated_at": "2026-09-06T13:40:32+08:00",
+  "case_count": 40,
+  "decision_counts": {
+    "ALLOW": 22,
+    "BLOCK": 5,
+    "REVIEW": 12,
+    "UNKNOWN": 1
+  },
+  "by_workload_class": {
+    "low_permission": {
+      "cases": 24,
+      "decision_counts": {
+        "ALLOW": 16,
+        "BLOCK": 1,
+        "REVIEW": 6,
+        "UNKNOWN": 1
+      },
+      "allow_rate": 0.6666666666666666,
+      "review_rate": 0.25,
+      "block_rate": 0.041666666666666664,
+      "unknown_rate": 0.041666666666666664
+    },
+    "high_privilege_legitimate": {
+      "cases": 16,
+      "decision_counts": {
+        "ALLOW": 6,
+        "BLOCK": 4,
+        "REVIEW": 6
+      },
+      "allow_rate": 0.375,
+      "review_rate": 0.375,
+      "block_rate": 0.25,
+      "unknown_rate": 0.0
+    }
+  },
+  "low_permission_unnecessary_non_allow_count": 7,
+  "low_permission_direct_block_count": 1,
+  "actionable_rule_hotspots": {
+    "FILE_MAGIC_MISMATCH": 14,
+    "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN": 12,
+    "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER": 10,
+    "DATA_EXFIL_JS_FS_ACCESS": 4,
+    "COMMAND_INJECTION_JS_CHILD_PROCESS": 3,
+    "DATA_EXFIL_JS_NETWORK": 3,
+    "AEGIS_REMOTE_FETCH_PIPE_SHELL": 2,
+    "AEGIS_STATIC_UNSUPPORTED_CODE_UNINSPECTED": 2,
+    "AEGIS_DESTRUCTIVE_OPERATION_NO_GUARD": 1,
+    "AEGIS_PARTIAL_PERSISTENCE_INDICATOR": 1,
+    "AEGIS_PERSISTENCE_SERVICE_CREATE": 1,
+    "AEGIS_STATIC_TEXT_DECODE_LOSS": 1,
+    "AEGIS_UNDECLARED_PROCESS_CAPABILITY": 1,
+    "AEGIS_UNTRUSTED_DYNAMIC_EXECUTABLE": 1,
+    "COMMAND_INJECTION_EVAL": 1,
+    "LOW_ANALYZABILITY": 1,
+    "UNANALYZABLE_BINARY": 1,
+    "YARA_command_injection_generic": 1
+  },
+  "latency": {
+    "median_ms": 12915.5,
+    "p95_ms": 15298,
+    "max_ms": 32069
+  },
+  "acceptance_snapshot": {
+    "low_permission_direct_block_zero": false,
+    "low_permission_auto_allow_at_least_80pct": false,
+    "high_privilege_unknown_zero": true
+  },
+  "case_diagnostics": [
+    {
+      "case_id": "anthropic-algorithmic-art--original",
+      "workload_class": "low_permission",
+      "stratum": "content_design",
+      "decision": "ALLOW",
+      "function_summary": "anthropic algorithmic art",
+      "permission_surface": "仅标准库或随包资产；固定参数；不读取宿主数据；不访问真实外网；输出仅 /workspace。",
+      "selection_reason": "Apache-2.0；无外部依赖、无顶层副作用的真实生成式艺术模板，可作为 Node 低风险对照。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "anthropic-brand-guidelines",
+      "workload_class": "low_permission",
+      "stratum": "content_design",
+      "decision": "ALLOW",
+      "function_summary": "brand guidelines",
+      "permission_surface": "以完整 Skill 文件树和公开功能说明为准；高权限样本仍须接受数据流审查。",
+      "selection_reason": "真实品牌规范说明型 Skill，用于验证安全词、禁止项和示例文本不会被误判为可执行恶意指令。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "anthropic-canvas-design",
+      "workload_class": "low_permission",
+      "stratum": "content_design",
+      "decision": "REVIEW",
+      "function_summary": "canvas design",
+      "permission_surface": "以完整 Skill 文件树和公开功能说明为准；高权限样本仍须接受数据流审查。",
+      "selection_reason": "包含较多模板与字体资产的完整设计 Skill，用于验证大体积、多文件合法包的静态覆盖与误报。",
+      "actionable_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "behavior_alignment": "CONTRADICTORY",
+          "category": "malicious_instruction_semantics",
+          "description": "Skill 指令中存在组合语义风险；判断只保留特征码，不保存原始敏感文本。",
+          "evidence": "semantic_features=conditional_trigger,outbound; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER_d8b4e10d02c3",
+          "location": {
+            "file": "SKILL.md",
+            "line": 3
+          },
+          "reachability": "REACHABLE",
+          "remediation": "删除隐瞒、越权或条件触发指令，并明确说明能力、用户确认点与数据去向。",
+          "rule_id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER",
+          "severity": "MEDIUM",
+          "title": "Skill 包含条件触发的敏感行为"
+        }
+      ]
+    },
+    {
+      "case_id": "anthropic-frontend-design",
+      "workload_class": "low_permission",
+      "stratum": "content_design",
+      "decision": "ALLOW",
+      "function_summary": "frontend design",
+      "permission_surface": "以完整 Skill 文件树和公开功能说明为准；高权限样本仍须接受数据流审查。",
+      "selection_reason": "真实前端设计指导 Skill，覆盖代码术语与设计说明混合的合法语境。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "anthropic-internal-comms",
+      "workload_class": "low_permission",
+      "stratum": "enterprise_content",
+      "decision": "ALLOW",
+      "function_summary": "internal comms",
+      "permission_surface": "以完整 Skill 文件树和公开功能说明为准；高权限样本仍须接受数据流审查。",
+      "selection_reason": "政企内部沟通材料生成场景，检验企业术语、事故模板和敏感词的上下文消歧。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "anthropic-theme-factory",
+      "workload_class": "low_permission",
+      "stratum": "content_design",
+      "decision": "REVIEW",
+      "function_summary": "theme factory",
+      "permission_surface": "以完整 Skill 文件树和公开功能说明为准；高权限样本仍须接受数据流审查。",
+      "selection_reason": "带资产和脚本片段的主题生成 Skill，用于区分模板示例与真实危险执行链。",
+      "actionable_findings": [
+        {
+          "analyzer": "analyzability",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=LOW_ANALYZABILITY; evidence_sha256=4c21770dabaf460d111946ddc5296071fd7ebb9a451b2402a813fda813189790; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-0915a8ac19587a3d66f9",
+          "location": {
+            "object": "skill-1-a2f18aef7d94"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "LOW_ANALYZABILITY",
+          "severity": "MEDIUM",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "analyzability",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=UNANALYZABLE_BINARY; evidence_sha256=6192adeb65b95cf0684a3707bcd7945da4417e469e0027708abb3cce49818db1; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-72352023bd3bcb172716",
+          "location": {
+            "file": "theme-showcase.pdf",
+            "object": "skill-1-a2f18aef7d94"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "UNANALYZABLE_BINARY",
+          "severity": "MEDIUM",
+          "title": "Skill scanner reported a static security risk"
+        }
+      ]
+    },
+    {
+      "case_id": "masb-007-meeting-insights-analyzer",
+      "workload_class": "low_permission",
+      "stratum": "content_or_workflow",
+      "decision": "ALLOW",
+      "function_summary": "会议记录洞察与长文本分析",
+      "permission_surface": "读取用户提供的会议文本；无脚本入口",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；纯自然语言业务分析硬负例。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "masb-011-regression-test-generator",
+      "workload_class": "low_permission",
+      "stratum": "content_or_workflow",
+      "decision": "ALLOW",
+      "function_summary": "回归测试设计与模板生成",
+      "permission_surface": "读取项目说明和参考文件；生成测试建议",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；跨文件开发工具硬负例。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "masb-013-mcp-builder",
+      "workload_class": "high_privilege_legitimate",
+      "stratum": "developer_or_ops",
+      "decision": "ALLOW",
+      "function_summary": "MCP 服务设计、实现与评测",
+      "permission_surface": "Python 脚本、依赖、网络/API 与文件读写",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；多文件多能力合法开发样本。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "masb-014-remote-work",
+      "workload_class": "high_privilege_legitimate",
+      "stratum": "developer_or_ops",
+      "decision": "ALLOW",
+      "function_summary": "Azure 远程资源运维指导",
+      "permission_surface": "远程 VM、网络和云资源操作说明",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；区分合法远程运维与远程执行攻击。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "masb-015-xl-cli",
+      "workload_class": "high_privilege_legitimate",
+      "stratum": "developer_or_ops",
+      "decision": "REVIEW",
+      "function_summary": "命令行表格编辑与导出",
+      "permission_surface": "CLI 调用、办公文件读写与结果导出",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；政企办公自动化高能力样本。",
+      "actionable_findings": [
+        {
+          "analyzer": "aegis-static-v1",
+          "behavior_alignment": "UNKNOWN",
+          "category": "remote_payload_execution",
+          "description": "Two correlated primitives are present, but a complete high-confidence chain was not established.",
+          "evidence": "correlated_features=execution_sink,remote_fetch; files=SKILL.md",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN_25e1fa8d5996",
+          "location": {
+            "file": "SKILL.md",
+            "line": 18
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review data flow and prove that downloaded or decoded content cannot reach an execution sink.",
+          "rule_id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN",
+          "severity": "MEDIUM",
+          "title": "Partial remote payload execution chain requires review"
+        }
+      ]
+    },
+    {
+      "case_id": "masb-026-process-flow-generator",
+      "workload_class": "low_permission",
+      "stratum": "content_or_workflow",
+      "decision": "ALLOW",
+      "function_summary": "流程图和视觉内容生成",
+      "permission_surface": "内容生成；无脚本入口",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；低权限单文件真实对照。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "masb-027-flow-verifier",
+      "workload_class": "low_permission",
+      "stratum": "content_or_workflow",
+      "decision": "ALLOW",
+      "function_summary": "计划与流程校验",
+      "permission_surface": "读取计划文件并给出维护建议",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；区分只读校验和修改动作。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "masb-033-proposal-formatter",
+      "workload_class": "low_permission",
+      "stratum": "content_or_workflow",
+      "decision": "ALLOW",
+      "function_summary": "交易提案格式化",
+      "permission_surface": "处理用户提供的业务文本；无脚本入口",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；命令式金融文本正常对照。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "masb-037-developing-with-laravel",
+      "workload_class": "high_privilege_legitimate",
+      "stratum": "developer_or_ops",
+      "decision": "REVIEW",
+      "function_summary": "PHP/Laravel 应用开发指导",
+      "permission_surface": "项目文件、构建命令和多文件参考资料",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；复杂目录开发工具兼容性。",
+      "actionable_findings": [
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=FILE_MAGIC_MISMATCH; evidence_sha256=f815f694eaeefb39385a65375c743cdeee6a013a8a707b72b8a47e1d2ac208c0; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-ea9996f59828c8d1968d",
+          "location": {
+            "file": "templates\\command.template.php",
+            "object": "skill-1-088070e6187f"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "FILE_MAGIC_MISMATCH",
+          "severity": "MEDIUM",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=FILE_MAGIC_MISMATCH; evidence_sha256=baeb7f241a86779dc490e688905b171c4e7e4648fa245694b45ecd2eed6f7e91; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-01b212e37a125987cc25",
+          "location": {
+            "file": "templates\\command_scheduled.template.php",
+            "object": "skill-1-088070e6187f"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "FILE_MAGIC_MISMATCH",
+          "severity": "MEDIUM",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=FILE_MAGIC_MISMATCH; evidence_sha256=4b278635aa2a0308e12791c3fb56375532c90b4e00def622e22261bba8c01ef4; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-3a96e033c8187f99a883",
+          "location": {
+            "file": "templates\\controller.template.php",
+            "object": "skill-1-088070e6187f"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "FILE_MAGIC_MISMATCH",
+          "severity": "MEDIUM",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=FILE_MAGIC_MISMATCH; evidence_sha256=a58d127149331ff538489b026295889f7d880e79da002f682f965070322bc196; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-e304b5d1d4a28beb3a68",
+          "location": {
+            "file": "templates\\custom_rule.template.php",
+            "object": "skill-1-088070e6187f"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "FILE_MAGIC_MISMATCH",
+          "severity": "MEDIUM",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=FILE_MAGIC_MISMATCH; evidence_sha256=210a104ed9953c2a59e7bbf6dba98906cf52c70d956d6dec088bd021879ef972; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-3934963aaae8c927c5c2",
+          "location": {
+            "file": "templates\\form_request.template.php",
+            "object": "skill-1-088070e6187f"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "FILE_MAGIC_MISMATCH",
+          "severity": "MEDIUM",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=FILE_MAGIC_MISMATCH; evidence_sha256=65efd301050a1f9510f34265d77d4f8e8146d9e8dfd04ae3387531c37a7e3adc; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-c0739e46a97a47d45eff",
+          "location": {
+            "file": "templates\\job.template.php",
+            "object": "skill-1-088070e6187f"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "FILE_MAGIC_MISMATCH",
+          "severity": "MEDIUM",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=FILE_MAGIC_MISMATCH; evidence_sha256=c3ebb2dfa19e62cb6e155d36c53bf41a52b31810306f76556f4940842c01d035; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-c5260cb68125529f9e00",
+          "location": {
+            "file": "templates\\listener.template.php",
+            "object": "skill-1-088070e6187f"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "FILE_MAGIC_MISMATCH",
+          "severity": "MEDIUM",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=FILE_MAGIC_MISMATCH; evidence_sha256=b7bcf9a5de062cc4af42b023a72113e9420477313c549462c055d0eae3adb684; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-fd775bfaa7ccab56f01a",
+          "location": {
+            "file": "templates\\middleware.template.php",
+            "object": "skill-1-088070e6187f"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "FILE_MAGIC_MISMATCH",
+          "severity": "MEDIUM",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=FILE_MAGIC_MISMATCH; evidence_sha256=7a757e720d91e506dd1766a1957c2522fae76a36e881d2201692528177d3866b; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-0bf8718a0ae20b60d374",
+          "location": {
+            "file": "templates\\migration.template.php",
+            "object": "skill-1-088070e6187f"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "FILE_MAGIC_MISMATCH",
+          "severity": "MEDIUM",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=FILE_MAGIC_MISMATCH; evidence_sha256=ed848eb230add5d7fa1b02905ff8a3e327ea4c21da3150e14fe0b41c52b87f14; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-117de24a5f6e2dc3f74e",
+          "location": {
+            "file": "templates\\model.template.php",
+            "object": "skill-1-088070e6187f"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "FILE_MAGIC_MISMATCH",
+          "severity": "MEDIUM",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=FILE_MAGIC_MISMATCH; evidence_sha256=2f0c69ee4bce19870495958fe367d36f58438ab7e8fb1231769c9c104bb04003; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-f7213eafdd6d33603acc",
+          "location": {
+            "file": "templates\\policy.template.php",
+            "object": "skill-1-088070e6187f"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "FILE_MAGIC_MISMATCH",
+          "severity": "MEDIUM",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=FILE_MAGIC_MISMATCH; evidence_sha256=17c0e4e9a540dea452fc88b438af81fba4a57dd785dc50331af897a1de550ad9; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-c68d9e726b6c19537714",
+          "location": {
+            "file": "templates\\seeder.template.php",
+            "object": "skill-1-088070e6187f"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "FILE_MAGIC_MISMATCH",
+          "severity": "MEDIUM",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=FILE_MAGIC_MISMATCH; evidence_sha256=4fe43fe8a3c92f8174591553b22503caebcfcbc247154cec772dc34c0f079e25; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-d8d02efc84584b3e82f3",
+          "location": {
+            "file": "templates\\service_provider.template.php",
+            "object": "skill-1-088070e6187f"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "FILE_MAGIC_MISMATCH",
+          "severity": "MEDIUM",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=FILE_MAGIC_MISMATCH; evidence_sha256=04e50cc3c038a09033d7362648e1c0d6a9cec5d43ac5921d216c5c8fa326100b; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-37a70b530d6beaa583fc",
+          "location": {
+            "file": "templates\\test.template.php",
+            "object": "skill-1-088070e6187f"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "FILE_MAGIC_MISMATCH",
+          "severity": "MEDIUM",
+          "title": "Skill scanner reported a static security risk"
+        }
+      ]
+    },
+    {
+      "case_id": "masb-045-dev-swarm-python",
+      "workload_class": "high_privilege_legitimate",
+      "stratum": "developer_or_ops",
+      "decision": "BLOCK",
+      "function_summary": "Python 多代理开发环境初始化",
+      "permission_surface": "依赖安装、包源、远程下载和命令执行",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；供应链安装链合法高权限样本。",
+      "actionable_findings": [
+        {
+          "analyzer": "aegis-static-v1",
+          "behavior_alignment": "UNKNOWN",
+          "category": "remote_payload_execution",
+          "description": "The skill contains an explicit download-and-execute command chain.",
+          "evidence": "correlated_features=direct_interpreter_pipe,remote_fetch; files=SKILL.md",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_REMOTE_FETCH_PIPE_SHELL_818127d2486b",
+          "location": {
+            "file": "SKILL.md",
+            "line": 48
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Remove remote pipe-to-shell behavior; pin and verify an offline artifact before any approved execution.",
+          "rule_id": "AEGIS_REMOTE_FETCH_PIPE_SHELL",
+          "severity": "CRITICAL",
+          "title": "Remote content is piped into a command interpreter"
+        }
+      ]
+    },
+    {
+      "case_id": "masb-046-privacy-policy-generate",
+      "workload_class": "low_permission",
+      "stratum": "content_or_workflow",
+      "decision": "ALLOW",
+      "function_summary": "隐私政策生成与发布",
+      "permission_surface": "内容生成、GitHub Pages 发布说明",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；合规内容与部署语义混合样本。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "masb-048-api-design",
+      "workload_class": "low_permission",
+      "stratum": "content_or_workflow",
+      "decision": "UNKNOWN",
+      "function_summary": "API 设计与规范编写",
+      "permission_surface": "读取项目上下文和多文件说明",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；清单兼容性与开发文本对照。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "masb-049-streamlit-development",
+      "workload_class": "high_privilege_legitimate",
+      "stratum": "developer_or_ops",
+      "decision": "ALLOW",
+      "function_summary": "Snowflake/Streamlit 数据应用开发",
+      "permission_surface": "企业数据源、外部云服务和应用文件",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；政企数据应用接入样本。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "masb-051-advertisement",
+      "workload_class": "low_permission",
+      "stratum": "content_or_workflow",
+      "decision": "ALLOW",
+      "function_summary": "广告内容与对象行为生成",
+      "permission_surface": "内容生成和参考资源读取",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；非典型目录与描述结构兼容性。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "masb-054-pattern-recognition-specialist",
+      "workload_class": "low_permission",
+      "stratum": "content_or_workflow",
+      "decision": "REVIEW",
+      "function_summary": "代码模式识别与分析",
+      "permission_surface": "读取代码；超长元数据；无直接执行入口",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；元数据边界和分析型文本对照。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "masb-055-retrospective-base",
+      "workload_class": "low_permission",
+      "stratum": "content_or_workflow",
+      "decision": "ALLOW",
+      "function_summary": "团队复盘与教练式引导",
+      "permission_surface": "处理用户提供的文本；无脚本入口",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；长自然语言指令误报对照。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "masb-060-general-frontend-security",
+      "workload_class": "low_permission",
+      "stratum": "content_or_workflow",
+      "decision": "ALLOW",
+      "function_summary": "前端安全审查指导",
+      "permission_surface": "分析代码与安全概念；无脚本入口",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；含 OWASP/XSS/CSRF 等危险词的防御性硬负例。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "masb-061-godot-mcp-auto-launcher",
+      "workload_class": "high_privilege_legitimate",
+      "stratum": "developer_or_ops",
+      "decision": "BLOCK",
+      "function_summary": "Godot MCP 自动启动",
+      "permission_surface": "子进程、网络、文件访问和自动启动",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；真实自动启动器高权限样本。",
+      "actionable_findings": [
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=COMMAND_INJECTION_JS_CHILD_PROCESS; evidence_sha256=eeb690cedc8d62574114948bbcbe43cd84526a6bc1f406cd8b7b5a9913fc9b1d; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-55c30f3c0ef9e2735085",
+          "location": {
+            "file": "scripts\\start-mcp.js",
+            "line": 7,
+            "object": "skill-1-373a5f89f6c4"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "COMMAND_INJECTION_JS_CHILD_PROCESS",
+          "severity": "CRITICAL",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=DATA_EXFIL_JS_FS_ACCESS; evidence_sha256=d32a36d62062117a61324273f46067074783de8a4c105bed7f231dc3f1cdcfcd; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-d8bdd5a5474b30ac2d2f",
+          "location": {
+            "file": "scripts\\start-mcp.js",
+            "line": 25,
+            "object": "skill-1-373a5f89f6c4"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "DATA_EXFIL_JS_FS_ACCESS",
+          "severity": "HIGH",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=COMMAND_INJECTION_EVAL; evidence_sha256=d247aeb79e2de187894eb5a8496ca3007bea871e1819cdc85fea0c52c1aa77d6; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-0e20f47ce015d1980246",
+          "location": {
+            "file": "scripts\\start-mcp.js",
+            "line": 38,
+            "object": "skill-1-373a5f89f6c4"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "COMMAND_INJECTION_EVAL",
+          "severity": "CRITICAL",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=DATA_EXFIL_JS_NETWORK; evidence_sha256=5fc81a50667e70b22e1a96c3ecbfbfaa17c07f420a4d545db5a120d37124bf99; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-241bfb32145b16befab9",
+          "location": {
+            "file": "scripts\\start-mcp.js",
+            "line": 56,
+            "object": "skill-1-373a5f89f6c4"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "DATA_EXFIL_JS_NETWORK",
+          "severity": "MEDIUM",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=COMMAND_INJECTION_JS_CHILD_PROCESS; evidence_sha256=a234cb24e6ad8d554fc592953020b7779a72ce85566ed6ef9a65fcf577ef017f; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-07fecda8ab74becb6ea4",
+          "location": {
+            "file": "scripts\\start-mcp.js",
+            "line": 99,
+            "object": "skill-1-373a5f89f6c4"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "COMMAND_INJECTION_JS_CHILD_PROCESS",
+          "severity": "CRITICAL",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=COMMAND_INJECTION_JS_CHILD_PROCESS; evidence_sha256=cce98d99db34dbf5d0f4489ab3359d662eac5e1aa71c235430e8aeea783f73b6; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-22988c68ab15e8381368",
+          "location": {
+            "file": "scripts\\start-mcp.js",
+            "line": 137,
+            "object": "skill-1-373a5f89f6c4"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "COMMAND_INJECTION_JS_CHILD_PROCESS",
+          "severity": "CRITICAL",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=DATA_EXFIL_JS_FS_ACCESS; evidence_sha256=f99addf40d4ad82cd430bec28c06ee4b279407221988d41ee477a1c144560cce; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-aa1b7047f5a97565de8a",
+          "location": {
+            "file": "scripts\\start-mcp.js",
+            "line": 155,
+            "object": "skill-1-373a5f89f6c4"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "DATA_EXFIL_JS_FS_ACCESS",
+          "severity": "HIGH",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "aegis-skill-capability-alignment-v1",
+          "behavior_alignment": "UNDECLARED",
+          "category": "capability_alignment",
+          "description": "对比 SKILL.md 的能力声明与可执行文件中的实际实现。",
+          "evidence": "features=actual_process,manifest_declaration_missing; file_role=REACHABLE; raw_content_retained=false",
+          "evidence_confidence": "CORROBORATED",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_UNDECLARED_PROCESS_CAPABILITY_65ad6913b190",
+          "location": {
+            "file": "scripts/start-mcp.js"
+          },
+          "reachability": "REACHABLE",
+          "remediation": "在 SKILL.md 中准确声明能力、数据范围、外部端点和用户确认点，或删除不必要实现。",
+          "rule_id": "AEGIS_UNDECLARED_PROCESS_CAPABILITY",
+          "severity": "MEDIUM",
+          "title": "可执行入口实现了未声明的 process 能力"
+        }
+      ]
+    },
+    {
+      "case_id": "masb-063-claude-code-hooks",
+      "workload_class": "high_privilege_legitimate",
+      "stratum": "developer_or_ops",
+      "decision": "REVIEW",
+      "function_summary": "Claude Code Hook 自动化",
+      "permission_surface": "钩子、工作流命令和外部工具",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；验证自动化控制链与不可达示例。",
+      "actionable_findings": [
+        {
+          "analyzer": "aegis-static-v1",
+          "behavior_alignment": "UNKNOWN",
+          "category": "remote_payload_execution",
+          "description": "Two correlated primitives are present, but a complete high-confidence chain was not established.",
+          "evidence": "correlated_features=execution_sink,remote_fetch; files=references/best-practices.md",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN_8f3ed3bfe31b",
+          "location": {
+            "file": "references/best-practices.md",
+            "line": 14
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review data flow and prove that downloaded or decoded content cannot reach an execution sink.",
+          "rule_id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN",
+          "severity": "MEDIUM",
+          "title": "Partial remote payload execution chain requires review"
+        },
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "behavior_alignment": "CONTRADICTORY",
+          "category": "malicious_instruction_semantics",
+          "description": "Skill 指令中存在组合语义风险；判断只保留特征码，不保存原始敏感文本。",
+          "evidence": "semantic_features=conditional_trigger,execution,outbound; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER_e2266cd9d38d",
+          "location": {
+            "file": "SKILL.md",
+            "line": 86
+          },
+          "reachability": "REACHABLE",
+          "remediation": "删除隐瞒、越权或条件触发指令，并明确说明能力、用户确认点与数据去向。",
+          "rule_id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER",
+          "severity": "MEDIUM",
+          "title": "Skill 包含条件触发的敏感行为"
+        }
+      ]
+    },
+    {
+      "case_id": "masb-065-secure-code-guardian",
+      "workload_class": "low_permission",
+      "stratum": "content_or_workflow",
+      "decision": "ALLOW",
+      "function_summary": "安全编码与认证授权审查",
+      "permission_surface": "分析代码、密钥和认证术语；无直接执行入口",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；防御性安全文本硬负例。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "masb-079-ohmydebn-skill",
+      "workload_class": "high_privilege_legitimate",
+      "stratum": "developer_or_ops",
+      "decision": "BLOCK",
+      "function_summary": "Debian 系统配置与管理",
+      "permission_surface": "系统命令、配置文件和持久化相关操作",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；真实运维文本高权限样本。",
+      "actionable_findings": [
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=YARA_command_injection_generic; evidence_sha256=754d4754694818e7100399498bb50a72b8bb77265c0c89e84ee04436110fa037; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-6bfca875e1d15d6ebde7",
+          "location": {
+            "file": "SKILL.md",
+            "line": 358,
+            "object": "skill-1-846665565031"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "YARA_command_injection_generic",
+          "severity": "CRITICAL",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "behavior_alignment": "UNKNOWN",
+          "category": "system_persistence",
+          "description": "A persistence target and a write primitive occur across files without proven data flow.",
+          "evidence": "correlated_features=startup_target,write_action; files=SKILL.md",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PARTIAL_PERSISTENCE_INDICATOR_984e18e4e638",
+          "location": {
+            "file": "SKILL.md"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review cross-file control flow and prove that no write reaches an automatic-start location.",
+          "rule_id": "AEGIS_PARTIAL_PERSISTENCE_INDICATOR",
+          "severity": "MEDIUM",
+          "title": "Cross-file persistence indicators require review"
+        },
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "behavior_alignment": "CONTRADICTORY",
+          "category": "malicious_instruction_semantics",
+          "description": "Skill 指令中存在组合语义风险；判断只保留特征码，不保存原始敏感文本。",
+          "evidence": "semantic_features=conditional_trigger,execution; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER_b1d8b598ac7f",
+          "location": {
+            "file": "SKILL.md",
+            "line": 20
+          },
+          "reachability": "REACHABLE",
+          "remediation": "删除隐瞒、越权或条件触发指令，并明确说明能力、用户确认点与数据去向。",
+          "rule_id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER",
+          "severity": "MEDIUM",
+          "title": "Skill 包含条件触发的敏感行为"
+        }
+      ]
+    },
+    {
+      "case_id": "masb-083-pg-style-editor",
+      "workload_class": "low_permission",
+      "stratum": "content_or_workflow",
+      "decision": "ALLOW",
+      "function_summary": "长文风格编辑",
+      "permission_surface": "处理用户提供的文本；无脚本入口",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；低权限内容编辑正常对照。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "masb-087-tauri-app",
+      "workload_class": "high_privilege_legitimate",
+      "stratum": "developer_or_ops",
+      "decision": "ALLOW",
+      "function_summary": "Tauri 桌面应用脚手架",
+      "permission_surface": "Rust/前端构建命令、依赖与项目写入",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；多语言脚手架和构建链样本。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "masb-094-similarity-led",
+      "workload_class": "low_permission",
+      "stratum": "content_or_workflow",
+      "decision": "ALLOW",
+      "function_summary": "电子元件相似度分析",
+      "permission_surface": "读取工程数据并计算相似度；无明显执行能力",
+      "selection_reason": "固定种子选中的许可证明确真实生态 Skill；跨领域专业技术文本正常对照。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "openai-chatgpt-apps--original",
+      "workload_class": "high_privilege_legitimate",
+      "stratum": "developer_tool",
+      "decision": "REVIEW",
+      "function_summary": "openai chatgpt apps",
+      "permission_surface": "仅标准库或随包资产；固定参数；不读取宿主数据；不访问真实外网；输出仅 /workspace。",
+      "selection_reason": "Apache-2.0；Node 标准库生成 MCP Apps 脚手架，输出限定在容器临时目录。",
+      "actionable_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "behavior_alignment": "CONTRADICTORY",
+          "category": "malicious_instruction_semantics",
+          "description": "Skill 指令中存在组合语义风险；判断只保留特征码，不保存原始敏感文本。",
+          "evidence": "semantic_features=conditional_trigger,execution,outbound; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER_0ae7154d02e1",
+          "location": {
+            "file": "SKILL.md",
+            "line": 163
+          },
+          "reachability": "REACHABLE",
+          "remediation": "删除隐瞒、越权或条件触发指令，并明确说明能力、用户确认点与数据去向。",
+          "rule_id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER",
+          "severity": "MEDIUM",
+          "title": "Skill 包含条件触发的敏感行为"
+        }
+      ]
+    },
+    {
+      "case_id": "openai-cloudflare-deploy",
+      "workload_class": "high_privilege_legitimate",
+      "stratum": "operations_network_install",
+      "decision": "BLOCK",
+      "function_summary": "cloudflare deploy",
+      "permission_surface": "以完整 Skill 文件树和公开功能说明为准；高权限样本仍须接受数据流审查。",
+      "selection_reason": "真实云部署 Skill，包含安装、网络和凭据相关说明，用于验证高权限合法用途应被解释性复核而非无依据阻断。",
+      "actionable_findings": [
+        {
+          "analyzer": "aegis-static-v1",
+          "behavior_alignment": "UNKNOWN",
+          "category": "system_persistence",
+          "description": "An explicit service creation or enablement primitive establishes persistent execution.",
+          "evidence": "correlated_features=service_create_or_enable; files=references/tunnel/patterns.md",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PERSISTENCE_SERVICE_CREATE_21bab7046260",
+          "location": {
+            "file": "references/tunnel/patterns.md",
+            "line": 184
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Disallow service installation by default; require signed deployment packages and privileged change approval.",
+          "rule_id": "AEGIS_PERSISTENCE_SERVICE_CREATE",
+          "severity": "CRITICAL",
+          "title": "Skill creates or enables a persistent system service"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "behavior_alignment": "UNKNOWN",
+          "category": "remote_payload_execution",
+          "description": "The skill contains an explicit download-and-execute command chain.",
+          "evidence": "correlated_features=direct_interpreter_pipe,remote_fetch; files=references/sandbox/patterns.md",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_REMOTE_FETCH_PIPE_SHELL_5899378eb609",
+          "location": {
+            "file": "references/sandbox/patterns.md",
+            "line": 40
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Remove remote pipe-to-shell behavior; pin and verify an offline artifact before any approved execution.",
+          "rule_id": "AEGIS_REMOTE_FETCH_PIPE_SHELL",
+          "severity": "CRITICAL",
+          "title": "Remote content is piped into a command interpreter"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "behavior_alignment": "UNKNOWN",
+          "category": "remote_payload_execution",
+          "description": "Two correlated primitives are present, but a complete high-confidence chain was not established.",
+          "evidence": "correlated_features=execution_sink,remote_fetch; files=references/miniflare/api.md",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN_0c53646dedbb",
+          "location": {
+            "file": "references/miniflare/api.md",
+            "line": 36
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review data flow and prove that downloaded or decoded content cannot reach an execution sink.",
+          "rule_id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN",
+          "severity": "MEDIUM",
+          "title": "Partial remote payload execution chain requires review"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "behavior_alignment": "UNKNOWN",
+          "category": "remote_payload_execution",
+          "description": "Two correlated primitives are present, but a complete high-confidence chain was not established.",
+          "evidence": "correlated_features=execution_sink,remote_fetch; files=references/durable-objects/api.md",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN_2b7bcce4d3c3",
+          "location": {
+            "file": "references/durable-objects/api.md",
+            "line": 18
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review data flow and prove that downloaded or decoded content cannot reach an execution sink.",
+          "rule_id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN",
+          "severity": "MEDIUM",
+          "title": "Partial remote payload execution chain requires review"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "behavior_alignment": "UNKNOWN",
+          "category": "remote_payload_execution",
+          "description": "Two correlated primitives are present, but a complete high-confidence chain was not established.",
+          "evidence": "correlated_features=execution_sink,remote_fetch; files=references/do-storage/gotchas.md",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN_68fe1b9f7aa9",
+          "location": {
+            "file": "references/do-storage/gotchas.md",
+            "line": 43
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review data flow and prove that downloaded or decoded content cannot reach an execution sink.",
+          "rule_id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN",
+          "severity": "MEDIUM",
+          "title": "Partial remote payload execution chain requires review"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "behavior_alignment": "UNKNOWN",
+          "category": "remote_payload_execution",
+          "description": "Two correlated primitives are present, but a complete high-confidence chain was not established.",
+          "evidence": "correlated_features=execution_sink,remote_fetch; files=references/sandbox/README.md",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN_92d682f2df43",
+          "location": {
+            "file": "references/sandbox/README.md",
+            "line": 23
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review data flow and prove that downloaded or decoded content cannot reach an execution sink.",
+          "rule_id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN",
+          "severity": "MEDIUM",
+          "title": "Partial remote payload execution chain requires review"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "behavior_alignment": "UNKNOWN",
+          "category": "remote_payload_execution",
+          "description": "Two correlated primitives are present, but a complete high-confidence chain was not established.",
+          "evidence": "correlated_features=execution_sink,remote_fetch; files=references/sandbox/api.md",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN_9587b9622d9a",
+          "location": {
+            "file": "references/sandbox/api.md",
+            "line": 7
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review data flow and prove that downloaded or decoded content cannot reach an execution sink.",
+          "rule_id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN",
+          "severity": "MEDIUM",
+          "title": "Partial remote payload execution chain requires review"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "behavior_alignment": "UNKNOWN",
+          "category": "remote_payload_execution",
+          "description": "Two correlated primitives are present, but a complete high-confidence chain was not established.",
+          "evidence": "correlated_features=execution_sink,remote_fetch; files=references/do-storage/configuration.md",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN_b3c19e8e3045",
+          "location": {
+            "file": "references/do-storage/configuration.md",
+            "line": 44
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review data flow and prove that downloaded or decoded content cannot reach an execution sink.",
+          "rule_id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN",
+          "severity": "MEDIUM",
+          "title": "Partial remote payload execution chain requires review"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "behavior_alignment": "UNKNOWN",
+          "category": "remote_payload_execution",
+          "description": "Two correlated primitives are present, but a complete high-confidence chain was not established.",
+          "evidence": "correlated_features=execution_sink,remote_fetch; files=references/durable-objects/gotchas.md",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN_bec23e0f233b",
+          "location": {
+            "file": "references/durable-objects/gotchas.md",
+            "line": 97
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review data flow and prove that downloaded or decoded content cannot reach an execution sink.",
+          "rule_id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN",
+          "severity": "MEDIUM",
+          "title": "Partial remote payload execution chain requires review"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "behavior_alignment": "UNKNOWN",
+          "category": "remote_payload_execution",
+          "description": "Two correlated primitives are present, but a complete high-confidence chain was not established.",
+          "evidence": "correlated_features=execution_sink,remote_fetch; files=references/durable-objects/patterns.md",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN_edf8f9830548",
+          "location": {
+            "file": "references/durable-objects/patterns.md",
+            "line": 14
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review data flow and prove that downloaded or decoded content cannot reach an execution sink.",
+          "rule_id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN",
+          "severity": "MEDIUM",
+          "title": "Partial remote payload execution chain requires review"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "behavior_alignment": "UNKNOWN",
+          "category": "remote_payload_execution",
+          "description": "Two correlated primitives are present, but a complete high-confidence chain was not established.",
+          "evidence": "correlated_features=execution_sink,remote_fetch; files=references/durable-objects/README.md",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN_f3bba4184ca4",
+          "location": {
+            "file": "references/durable-objects/README.md",
+            "line": 55
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review data flow and prove that downloaded or decoded content cannot reach an execution sink.",
+          "rule_id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN",
+          "severity": "MEDIUM",
+          "title": "Partial remote payload execution chain requires review"
+        },
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "behavior_alignment": "UNKNOWN",
+          "category": "static_coverage_gap",
+          "description": "Part of the Skill cannot be fully inspected by the current bounded source-level analyzers.",
+          "evidence": "coverage_gap=utf8_decode_replacement; file=references/cache-reserve/README.md; raw_value_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_TEXT_DECODE_LOSS_71ec1b001400",
+          "location": {
+            "file": "references/cache-reserve/README.md"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Provide inspectable source, remove nested/binary payloads, split oversized code, or route the artifact to an approved specialist scanner before admission.",
+          "rule_id": "AEGIS_STATIC_TEXT_DECODE_LOSS",
+          "severity": "MEDIUM",
+          "title": "Security-relevant text could not be decoded losslessly"
+        },
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "behavior_alignment": "CONTRADICTORY",
+          "category": "malicious_instruction_semantics",
+          "description": "Skill 指令中存在组合语义风险；判断只保留特征码，不保存原始敏感文本。",
+          "evidence": "semantic_features=conditional_trigger,execution; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER_f5f905345e3c",
+          "location": {
+            "file": "SKILL.md",
+            "line": 3
+          },
+          "reachability": "REACHABLE",
+          "remediation": "删除隐瞒、越权或条件触发指令，并明确说明能力、用户确认点与数据去向。",
+          "rule_id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER",
+          "severity": "MEDIUM",
+          "title": "Skill 包含条件触发的敏感行为"
+        }
+      ]
+    },
+    {
+      "case_id": "openai-define-goal",
+      "workload_class": "low_permission",
+      "stratum": "workflow_guidance",
+      "decision": "REVIEW",
+      "function_summary": "define goal",
+      "permission_surface": "以完整 Skill 文件树和公开功能说明为准；高权限样本仍须接受数据流审查。",
+      "selection_reason": "纯工作流指导型 Skill，作为应自动放行的低权限真实对照。",
+      "actionable_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "behavior_alignment": "CONTRADICTORY",
+          "category": "malicious_instruction_semantics",
+          "description": "Skill 指令中存在组合语义风险；判断只保留特征码，不保存原始敏感文本。",
+          "evidence": "semantic_features=conditional_trigger,execution; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER_d948096b6f99",
+          "location": {
+            "file": "SKILL.md",
+            "line": 17
+          },
+          "reachability": "REACHABLE",
+          "remediation": "删除隐瞒、越权或条件触发指令，并明确说明能力、用户确认点与数据去向。",
+          "rule_id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER",
+          "severity": "MEDIUM",
+          "title": "Skill 包含条件触发的敏感行为"
+        }
+      ]
+    },
+    {
+      "case_id": "openai-gh-fix-ci",
+      "workload_class": "high_privilege_legitimate",
+      "stratum": "developer_tool",
+      "decision": "ALLOW",
+      "function_summary": "gh fix ci",
+      "permission_surface": "以完整 Skill 文件树和公开功能说明为准；高权限样本仍须接受数据流审查。",
+      "selection_reason": "真实 CI 修复 Skill，覆盖仓库读取、命令执行与外部服务交互的合法开发链。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "openai-jupyter-notebook--original",
+      "workload_class": "low_permission",
+      "stratum": "developer_tool",
+      "decision": "REVIEW",
+      "function_summary": "openai jupyter notebook",
+      "permission_surface": "仅标准库或随包资产；固定参数；不读取宿主数据；不访问真实外网；输出仅 /workspace。",
+      "selection_reason": "Apache-2.0；仅使用标准库读取随包模板并写入容器临时目录，可验证真实文件处理脚本。",
+      "actionable_findings": [
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "behavior_alignment": "UNKNOWN",
+          "category": "static_coverage_gap",
+          "description": "Part of the Skill cannot be fully inspected by the current bounded source-level analyzers.",
+          "evidence": "coverage_gap=unsupported_code_format; file=assets/experiment-template.ipynb; raw_value_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_UNSUPPORTED_CODE_UNINSPECTED_e63f74e92b2e",
+          "location": {
+            "file": "assets/experiment-template.ipynb"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Provide inspectable source, remove nested/binary payloads, split oversized code, or route the artifact to an approved specialist scanner before admission.",
+          "rule_id": "AEGIS_STATIC_UNSUPPORTED_CODE_UNINSPECTED",
+          "severity": "MEDIUM",
+          "title": "A code format is outside the supported static analyzers"
+        },
+        {
+          "analyzer": "aegis-static-coverage-v1",
+          "behavior_alignment": "UNKNOWN",
+          "category": "static_coverage_gap",
+          "description": "Part of the Skill cannot be fully inspected by the current bounded source-level analyzers.",
+          "evidence": "coverage_gap=unsupported_code_format; file=assets/tutorial-template.ipynb; raw_value_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_STATIC_UNSUPPORTED_CODE_UNINSPECTED_2f99ec8a284b",
+          "location": {
+            "file": "assets/tutorial-template.ipynb"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Provide inspectable source, remove nested/binary payloads, split oversized code, or route the artifact to an approved specialist scanner before admission.",
+          "rule_id": "AEGIS_STATIC_UNSUPPORTED_CODE_UNINSPECTED",
+          "severity": "MEDIUM",
+          "title": "A code format is outside the supported static analyzers"
+        },
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "behavior_alignment": "CONTRADICTORY",
+          "category": "malicious_instruction_semantics",
+          "description": "Skill 指令中存在组合语义风险；判断只保留特征码，不保存原始敏感文本。",
+          "evidence": "semantic_features=conditional_trigger,execution; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER_f5f905345e3c",
+          "location": {
+            "file": "SKILL.md",
+            "line": 3
+          },
+          "reachability": "REACHABLE",
+          "remediation": "删除隐瞒、越权或条件触发指令，并明确说明能力、用户确认点与数据去向。",
+          "rule_id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER",
+          "severity": "MEDIUM",
+          "title": "Skill 包含条件触发的敏感行为"
+        }
+      ]
+    },
+    {
+      "case_id": "openai-openai-docs--original",
+      "workload_class": "low_permission",
+      "stratum": "workflow_guidance",
+      "decision": "REVIEW",
+      "function_summary": "openai openai docs",
+      "permission_surface": "仅标准库或随包资产；固定参数；不读取宿主数据；不访问真实外网；输出仅 /workspace。",
+      "selection_reason": "Apache-2.0；强制读取本地固定文档而非联网，可验证真实解析逻辑与本地文件访问。",
+      "actionable_findings": [
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=DATA_EXFIL_JS_NETWORK; evidence_sha256=a725e68a631d0fd7116abc65dfb43e7aa7f8ceeb2db1634fe4581924bb92c318; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-9e6e64e5cf06881a4674",
+          "location": {
+            "file": "scripts\\fetch-codex-manual.mjs",
+            "line": 175,
+            "object": "skill-1-8db72034000c"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "DATA_EXFIL_JS_NETWORK",
+          "severity": "MEDIUM",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=DATA_EXFIL_JS_FS_ACCESS; evidence_sha256=fe1855e999201d8f989f3ed2cf46ea50f55c260abc0f32f647eddcb6b795e97a; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-09ec270b01544162933e",
+          "location": {
+            "file": "scripts\\resolve-latest-model-info.js",
+            "line": 32,
+            "object": "skill-1-8db72034000c"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "DATA_EXFIL_JS_FS_ACCESS",
+          "severity": "HIGH",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=DATA_EXFIL_JS_FS_ACCESS; evidence_sha256=aacc7f00f6038aa47143cfd3590135788a349a45102515c9c0f165566206d6ea; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-3125109178d014fe70b6",
+          "location": {
+            "file": "scripts\\resolve-latest-model-info.js",
+            "line": 36,
+            "object": "skill-1-8db72034000c"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "DATA_EXFIL_JS_FS_ACCESS",
+          "severity": "HIGH",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "static",
+          "behavior_alignment": "UNKNOWN",
+          "category": "vendor_skill_finding",
+          "description": "The vendor scanner reported a static risk; raw scanner text is deliberately not retained.",
+          "evidence": "vendor_signal=DATA_EXFIL_JS_NETWORK; evidence_sha256=863d3c0329df0f082b684dbc3bb9cf1fb72cd14798dace012c8597e8f433d3f9; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "CISCO",
+          "id": "vendor-skill-566d62b8149c3d63536d",
+          "location": {
+            "file": "scripts\\resolve-latest-model-info.js",
+            "line": 39,
+            "object": "skill-1-8db72034000c"
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review the referenced source location and apply the control associated with the vendor rule before admission.",
+          "rule_id": "DATA_EXFIL_JS_NETWORK",
+          "severity": "MEDIUM",
+          "title": "Skill scanner reported a static security risk"
+        },
+        {
+          "analyzer": "aegis-static-v1",
+          "behavior_alignment": "UNKNOWN",
+          "category": "remote_payload_execution",
+          "description": "Two correlated primitives are present, but a complete high-confidence chain was not established.",
+          "evidence": "correlated_features=execution_sink,remote_fetch; files=scripts/fetch-codex-manual.mjs",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN_8dfd9952e88d",
+          "location": {
+            "file": "scripts/fetch-codex-manual.mjs",
+            "line": 75
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Review data flow and prove that downloaded or decoded content cannot reach an execution sink.",
+          "rule_id": "AEGIS_PARTIAL_REMOTE_EXEC_CHAIN",
+          "severity": "MEDIUM",
+          "title": "Partial remote payload execution chain requires review"
+        },
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "behavior_alignment": "CONTRADICTORY",
+          "category": "malicious_instruction_semantics",
+          "description": "Skill 指令中存在组合语义风险；判断只保留特征码，不保存原始敏感文本。",
+          "evidence": "semantic_features=conditional_trigger,execution; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER_f5f905345e3c",
+          "location": {
+            "file": "SKILL.md",
+            "line": 3
+          },
+          "reachability": "REACHABLE",
+          "remediation": "删除隐瞒、越权或条件触发指令，并明确说明能力、用户确认点与数据去向。",
+          "rule_id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER",
+          "severity": "MEDIUM",
+          "title": "Skill 包含条件触发的敏感行为"
+        }
+      ]
+    },
+    {
+      "case_id": "openai-playwright",
+      "workload_class": "high_privilege_legitimate",
+      "stratum": "developer_tool",
+      "decision": "ALLOW",
+      "function_summary": "playwright",
+      "permission_surface": "以完整 Skill 文件树和公开功能说明为准；高权限样本仍须接受数据流审查。",
+      "selection_reason": "真实浏览器自动化 Skill，覆盖脚本执行、网页访问和产物写入等高能力合法行为。",
+      "actionable_findings": []
+    },
+    {
+      "case_id": "openai-plugin-creator--original",
+      "workload_class": "high_privilege_legitimate",
+      "stratum": "developer_tool",
+      "decision": "REVIEW",
+      "function_summary": "openai plugin creator",
+      "permission_surface": "仅标准库或随包资产；固定参数；不读取宿主数据；不访问真实外网；输出仅 /workspace。",
+      "selection_reason": "Apache-2.0；仅使用标准库生成插件骨架，输出限定在容器临时目录，可验证多文件写入。",
+      "actionable_findings": [
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "behavior_alignment": "CONTRADICTORY",
+          "category": "malicious_instruction_semantics",
+          "description": "Skill 指令中存在组合语义风险；判断只保留特征码，不保存原始敏感文本。",
+          "evidence": "semantic_features=conditional_trigger,execution; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER_2268af204581",
+          "location": {
+            "file": "SKILL.md",
+            "line": 145
+          },
+          "reachability": "REACHABLE",
+          "remediation": "删除隐瞒、越权或条件触发指令，并明确说明能力、用户确认点与数据去向。",
+          "rule_id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER",
+          "severity": "MEDIUM",
+          "title": "Skill 包含条件触发的敏感行为"
+        }
+      ]
+    },
+    {
+      "case_id": "openai-security-ownership-map--original",
+      "workload_class": "low_permission",
+      "stratum": "enterprise_governance",
+      "decision": "BLOCK",
+      "function_summary": "openai security ownership map",
+      "permission_surface": "仅标准库或随包资产；固定参数；不读取宿主数据；不访问真实外网；输出仅 /workspace。",
+      "selection_reason": "Apache-2.0；对随包无敏感合成数据执行只读查询，可验证真实政企代码治理类脚本。",
+      "actionable_findings": [
+        {
+          "analyzer": "aegis-untrusted-exec-flow-v1",
+          "behavior_alignment": "UNKNOWN",
+          "category": "dynamic_executable_selection",
+          "description": "A bounded static variable-flow trace links explicit external input or model output to a shell, dynamic-code, dynamic-module, or executable-selection sink. Fixed executable argument arrays do not trigger this rule family.",
+          "evidence": "verified_flow=cli_input,dynamic_executable,exact_variable_flow; file=scripts/run_ownership_map.py; raw_value_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_UNTRUSTED_DYNAMIC_EXECUTABLE_399ad8f5b6ad",
+          "location": {
+            "file": "scripts/run_ownership_map.py",
+            "line": 195
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Replace dynamic execution with an allowlisted operation map; keep shell disabled, use a fixed executable and typed argv, validate every parameter, and require explicit approval for privileged actions.",
+          "rule_id": "AEGIS_UNTRUSTED_DYNAMIC_EXECUTABLE",
+          "severity": "HIGH",
+          "title": "Untrusted input selects the executable to launch"
+        }
+      ]
+    },
+    {
+      "case_id": "openai-vercel-deploy",
+      "workload_class": "high_privilege_legitimate",
+      "stratum": "operations_network_install",
+      "decision": "REVIEW",
+      "function_summary": "vercel deploy",
+      "permission_surface": "以完整 Skill 文件树和公开功能说明为准；高权限样本仍须接受数据流审查。",
+      "selection_reason": "真实 Web 部署 Skill，覆盖远程上传、构建和网络访问，用于验证完整数据流证据与一般部署说明的边界。",
+      "actionable_findings": [
+        {
+          "analyzer": "aegis-enterprise-controls-v1",
+          "behavior_alignment": "UNKNOWN",
+          "category": "unguarded_destructive_operation",
+          "description": "A deterministic static rule found an enterprise-control violation with explicit configuration, API, or bounded source-to-sink evidence.",
+          "evidence": "verified_features=destructive_sink,no_confirmation_or_owned_temp_guard; file=scripts/deploy.sh; raw_value_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_STATIC",
+          "id": "AEGIS_DESTRUCTIVE_OPERATION_NO_GUARD_3d695b416c93",
+          "location": {
+            "file": "scripts/deploy.sh",
+            "line": 175
+          },
+          "reachability": "UNKNOWN",
+          "remediation": "Apply least privilege and an explicit allowlist; preserve audit controls, require confirmation/containment for destructive actions, enforce verified TLS, and replace unsafe deserialization with a schema-validated safe format.",
+          "rule_id": "AEGIS_DESTRUCTIVE_OPERATION_NO_GUARD",
+          "severity": "MEDIUM",
+          "title": "A destructive operation lacks an intent or containment guard"
+        },
+        {
+          "analyzer": "aegis-skill-semantic-v1",
+          "behavior_alignment": "CONTRADICTORY",
+          "category": "malicious_instruction_semantics",
+          "description": "Skill 指令中存在组合语义风险；判断只保留特征码，不保存原始敏感文本。",
+          "evidence": "semantic_features=conditional_trigger,execution; raw_content_retained=false",
+          "evidence_confidence": "POTENTIAL",
+          "evidence_source": "AEGIS_SEMANTIC",
+          "id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER_5f3b7dd685af",
+          "location": {
+            "file": "SKILL.md",
+            "line": 56
+          },
+          "reachability": "REACHABLE",
+          "remediation": "删除隐瞒、越权或条件触发指令，并明确说明能力、用户确认点与数据去向。",
+          "rule_id": "AEGIS_SEMANTIC_CONDITIONAL_RISK_TRIGGER",
+          "severity": "MEDIUM",
+          "title": "Skill 包含条件触发的敏感行为"
+        }
+      ]
+    }
+  ]
+}

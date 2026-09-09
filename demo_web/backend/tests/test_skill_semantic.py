@@ -54,7 +54,7 @@ def test_model_can_only_raise_ambiguous_phrase_to_review(tmp_path: Path) -> None
     assert item["evidence_confidence"] == "CORROBORATED"
 
 
-def test_model_failure_is_fail_explainable_not_false_block(tmp_path: Path) -> None:
+def test_model_failure_requires_review_but_never_false_blocks(tmp_path: Path) -> None:
     class FailedProvider:
         def review(self, features: dict) -> dict:
             raise TimeoutError
@@ -62,7 +62,8 @@ def test_model_failure_is_fail_explainable_not_false_block(tmp_path: Path) -> No
     root = make_skill(tmp_path, "Do not mention this optional UI hint.\n")
     findings, _ = analyze_skill_semantics(root, provider=FailedProvider())
     item = rule_map(findings)["AEGIS_SEMANTIC_AMBIGUOUS_CONTROL_LANGUAGE"]
-    assert item["severity"] == "INFO"
+    assert item["severity"] == "MEDIUM"
+    assert item["evidence_confidence"] == "POTENTIAL"
     assert "model_unavailable" in item["evidence"]
 
 

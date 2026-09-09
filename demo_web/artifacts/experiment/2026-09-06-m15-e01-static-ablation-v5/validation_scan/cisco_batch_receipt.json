@@ -1,0 +1,10 @@
+{
+  "completed_at": "2026-09-06T08:27:45+08:00",
+  "duration_ms": 59877,
+  "report_sha256": "a929519fdfd76acc2c57ef7efc2fe472381d86ff766d0c20d416479a90ab8234",
+  "results": 807,
+  "scan_contract_sha256": "f9659705d266aae5c2e819d11fae67159fdcb7ddc4066e65e746b1f3e16aebf9",
+  "schema_version": "1.0",
+  "stderr_sha256": "636e986bd5a59ff8e62e206aa1523b459087e8afceffaecfc4e5ff125b504805",
+  "stdout_sha256": "d1a22bc345f67928066af49aaa6824d4904690bee203e22d247d6e3fdb2f6868"
+}

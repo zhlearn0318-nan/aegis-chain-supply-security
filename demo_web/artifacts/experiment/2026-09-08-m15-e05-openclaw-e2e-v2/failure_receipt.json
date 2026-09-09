@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "status": "failed",
+  "completed_runs": 31,
+  "failed_repetition": 3,
+  "failed_scenario": "s08",
+  "error_type": "E05Error",
+  "error": "HTTP 403 TOKEN_INVALID while the batch reused one 30-minute page token",
+  "evidence_retained": {
+    "pdf_reports": 31,
+    "structured_rows": 0,
+    "reason_structured_rows_missing": "The first runner version only wrote result rows after the whole matrix completed."
+  },
+  "root_cause": "The experiment client treated 36 independent UI-equivalent operations as one browser token lifetime. The plugin's 30-minute CSRF-style page token expiry behaved as designed.",
+  "corrective_action": "Refresh admission and administration page tokens before every independent scenario and checkpoint rows after each completed run.",
+  "recorded_at": "2026-09-08T23:13:10+08:00"
+}
