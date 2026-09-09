@@ -45,12 +45,21 @@ def _builtin_summary() -> dict[str, Any]:
     for family in families if isinstance(families, list) else []:
         if not isinstance(family, dict):
             continue
-        rules = family.get("rules") if isinstance(family.get("rules"), dict) else {}
+        raw_rules = family.get("rules")
+        if isinstance(raw_rules, dict):
+            rule_count = len(raw_rules)
+        elif isinstance(raw_rules, list):
+            # Context families are represented as a flat list because their
+            # severities are carried by the originating finding.  They still
+            # count as first-class registry IDs in the security-center total.
+            rule_count = len({str(item) for item in raw_rules if str(item).strip()})
+        else:
+            rule_count = 0
         rows.append({
             "analyzer": str(family.get("analyzer") or "unknown"),
             "scope": str(family.get("scope") or "unknown"),
             "decision_effect": bool(family.get("decision_effect")),
-            "count": len(rules),
+            "count": rule_count,
         })
     return {
         "registry_id": payload.get("registry_id"),
