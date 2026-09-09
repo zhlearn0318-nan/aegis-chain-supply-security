@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import hashlib
+import json
 from pathlib import Path
 
 import pytest
@@ -73,10 +75,38 @@ def test_verdict_precedence_and_gates() -> None:
 
 
 def test_preflight_never_parses_regression_jsonl(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    split_root = tmp_path / "split"
+    split_root.mkdir()
+    split_manifest = split_root / "split_manifest.json"
+    verification = split_root / "verification.json"
+    split_manifest.write_text(
+        json.dumps({
+            "split_id": evaluator.SPLIT_ID,
+            "regression": {
+                "cases": evaluator.EXPECTED_CASES,
+                "selection_uses_parent_scan_outcomes": False,
+            },
+        }),
+        encoding="utf-8",
+    )
+    verification.write_text(json.dumps({"status": "verified"}), encoding="utf-8")
+
+    def digest(path: Path) -> str:
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+
     def forbidden_loader(path: Path):
         raise AssertionError(f"preflight must not parse JSONL: {path}")
 
     monkeypatch.setattr(evaluator, "load_jsonl", forbidden_loader)
+    monkeypatch.setattr(evaluator, "SPLIT_ROOT", split_root)
+    monkeypatch.setattr(
+        evaluator,
+        "EXPECTED_HASHES",
+        {
+            "split_manifest": (split_manifest, digest(split_manifest)),
+            "split_verification": (verification, digest(verification)),
+        },
+    )
 
     result = evaluator.preflight(tmp_path)
 

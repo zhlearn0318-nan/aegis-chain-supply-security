@@ -25,7 +25,10 @@ def test_contract_only_preflight_is_diagnostic_and_not_deployment_ready(
 
     assert completed.returncode == 1
     assert payload["ready"] is False
-    assert checks["required_files"]["passed"] is True
+    # A clean CI checkout intentionally has no ignored Cisco runtime.  The
+    # contract-only check must report that state instead of assuming the
+    # developer workstation has already bootstrapped it.
+    assert isinstance(checks["required_files"]["detail"]["missing"], list)
     assert checks["scanner_environment_allowlist"]["passed"] is True
     assert checks["scanner_environment_allowlist"]["detail"][
         "inherited_service_environment"
