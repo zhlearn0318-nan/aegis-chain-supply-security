@@ -2,7 +2,7 @@
 *.py text eol=lf
 *.js text eol=lf
 *.mjs text eol=lf
-*.cjs text eol=crlf
+*.cjs text eol=lf
 *.jsx text eol=lf
 *.css text eol=lf
 *.html text eol=lf
