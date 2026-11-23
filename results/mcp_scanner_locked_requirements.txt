@@ -627,9 +627,9 @@ frozenlist==1.8.0 \
     # via
     #   aiohttp
     #   aiosignal
-fsspec==2025.12.0 \
-    --hash=sha256:8bf1fe301b7d8acfa6e8571e3b1c3d158f909666642431cc78a1b7b4dbc5ec5b \
-    --hash=sha256:c505de011584597b1060ff778bb664c1bc022e87921b0e4f10cc9c44f9635973
+fsspec==2026.6.0 \
+    --hash=sha256:02e0b71817df9b2169dc30a16832045764def1191b43dcff5bb85bdee212d2a1 \
+    --hash=sha256:f5bac145310fe30e16e1471bd6840b2d990d609e872251d7e674241822abf01a
     # via huggingface-hub
 h11==0.16.0 \
     --hash=sha256:4e35b956cf45792e4caa5885e69fba00bdbc6ffafbfa020300e549b208ee5ff1 \
